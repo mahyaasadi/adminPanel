@@ -1,5 +1,3 @@
-import "components/loading/loading.css";
-
 const SmallLoader = () => {
   return (
     <>

@@ -62,10 +62,10 @@ const Header = () => {
         })
         .catch(function (error) {
           console.log(error);
-          ErrorAlert("خطا", "ارتباط با سرور در حال حاضر امکان پذیر نمی باشد!");
-          setTimeout(() => {
-            router.push("/");
-          }, 2000);
+          // ErrorAlert("خطا", "ارتباط با سرور در حال حاضر امکان پذیر نمی باشد!");
+          // setTimeout(() => {
+          //   router.push("/");
+          // }, 2000);
         });
     }
   }, []);

@@ -1,6 +1,4 @@
 "use client"; //This is a client component
-import "public/assets/css/font-awesome.min.css";
-import "public/assets/css/feathericon.min.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
