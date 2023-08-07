@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import Head from 'next/head'
+import Head from "next/head";
 import { axiosClient } from "class/axiosConfig.js";
 import Cookies from "js-cookie";
 import Select from "react-select";
 import JDate from "jalali-date";
-import Loading from "components/loading/loading";
+import Loading from "components/commonComponents/loading/loading";
 import OverviewStats from "components/dashboard/overview/overviewStats";
 
 let CenterID = Cookies.get("CenterID");
