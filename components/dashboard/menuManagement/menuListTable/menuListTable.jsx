@@ -6,8 +6,13 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const MenuListTable = ({ data, addSubMenuModal, SetSubMenuInDT }) => {
-  // console.log(data);
+const MenuListTable = ({
+  data,
+  addSubMenuModal,
+  SetSubMenuInDT,
+  deleteMenu,
+  updateMenu,
+}) => {
   const columns = [
     {
       name: "عنوان",
@@ -38,8 +43,7 @@ const MenuListTable = ({ data, addSubMenuModal, SetSubMenuInDT }) => {
           <Link
             className="btn btn-sm btn-outline-danger"
             href="#"
-            data-bs-toggle="modal"
-            data-bs-target="#deleteModal"
+            onClick={() => deleteMenu(row._id)}
           >
             <FeatherIcon
               icon="trash-2"
@@ -49,8 +53,9 @@ const MenuListTable = ({ data, addSubMenuModal, SetSubMenuInDT }) => {
           <Link
             className="btn btn-sm btn-outline-secondary btn-border-left"
             href="#"
-            data-bs-toggle="modal"
-            data-bs-target="#editModal"
+            // data-bs-toggle="modal"
+            // data-bs-target="#editMenuModal"
+            onClick={() => updateMenu(row)}
           >
             <FeatherIcon
               icon="edit-3"
@@ -78,6 +83,7 @@ const MenuListTable = ({ data, addSubMenuModal, SetSubMenuInDT }) => {
     columns,
     data,
   };
+
   return (
     <div className="card-body p-4">
       <div className="table-responsive">

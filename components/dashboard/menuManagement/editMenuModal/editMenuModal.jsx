@@ -1,24 +1,33 @@
-import { axiosClient } from "class/axiosConfig.js";
-import { useState, useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
-import Loading from "components/commonComponents/loading/loading";
 
-const AddToMenuModal = ({
+const EditMenuModal = ({
+  data,
+  editMenu,
   permissionsList,
-  addToMenu,
   handleCheckedMenuPermissions,
+  checked,
+  agreement,
+  handleChange,
+  handleSubmit,
+  checkedState,
 }) => {
   return (
     <div
       className="modal fade contentmodal"
-      id="addToMenuModal"
+      id="editMenuModal"
       tabIndex="-1"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered modal-lg">
+      <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content doctor-profile">
           <div className="modal-header">
-            <p className="mb-0 text-secondary font-14 fw-bold">افزودن منو</p>
+            <div className="loeing-header">
+              <p className="mb-0 text-secondary font-14 fw-bold">
+                ویرایش اطلاعات
+              </p>
+              <p className="mb-0 text-secondary font-13">منوی {data.Name}</p>
+            </div>
+
             <button
               type="button"
               className="close-btn"
@@ -31,16 +40,25 @@ const AddToMenuModal = ({
             </button>
           </div>
           <div className="modal-body">
-            <form onSubmit={addToMenu} id="frmAddToMenu">
+            <form onSubmit={handleSubmit}>
               <div className="form-group">
+                <input
+                  type="hidden"
+                  className="form-control floating"
+                  name="editMenuID"
+                  value={data._id}
+                />
+
                 <label className="lblAbs font-12">
                   عنوان <span className="text-danger">*</span>
                 </label>
                 <div className="col p-0">
                   <input
-                    type="text"
-                    name="addMenuName"
                     className="form-control floating inputPadding rounded"
+                    type="text"
+                    name="editMenuName"
+                    defaultValue={data.Name}
+                    key={data.Name}
                     required
                   />
                 </div>
@@ -48,20 +66,21 @@ const AddToMenuModal = ({
 
               <div className="form-group">
                 <label className="lblAbs font-12">
-                  عنوان آیکون <span className="text-danger">*</span>
+                  عنوان آیکون<span className="text-danger">*</span>
                 </label>
                 <div className="col p-0">
                   <input
-                    type="text"
-                    name="addMenuIcon"
                     className="form-control floating inputPadding rounded"
+                    type="text"
+                    name="editMenuIcon"
+                    defaultValue={data.Icon}
+                    key={data.Icon}
                     required
                   />
                 </div>
               </div>
 
               <hr />
-
               <p className="mb-4 text-secondary font-14 marginR-1" dir="rtl">
                 بخش های قابل دسترس منو
               </p>
@@ -71,10 +90,16 @@ const AddToMenuModal = ({
                     <div className="marginb-sm d-flex align-items-center">
                       <input
                         type="checkbox"
+                        className="perCheckbox-input"
                         id={permission._id}
                         value={permission._id}
-                        name="menuAccessList"
-                        onChange={handleCheckedMenuPermissions}
+                        name="editmenuAccessList"
+                        defaultChecked={checkedState}
+                        onChange={console.log(checkedState)}
+                        // onChange={handleCheckedMenuPermissions}
+                        // defaultChecked={(e) =>
+                        //   handleCheckedMenuPermissions(e.checked)
+                        // }
                       />
                       <label
                         className="permissionLabel font-13 text-secondary"
@@ -90,9 +115,9 @@ const AddToMenuModal = ({
               <div className="submit-section">
                 <button
                   type="submit"
-                  className="btn btn-primary rounded btn-save"
+                  className="btn btn-primary btn-save rounded"
                 >
-                  ثبت
+                  ثبت تغییرات
                 </button>
               </div>
             </form>
@@ -102,4 +127,5 @@ const AddToMenuModal = ({
     </div>
   );
 };
-export default AddToMenuModal;
+
+export default EditMenuModal;

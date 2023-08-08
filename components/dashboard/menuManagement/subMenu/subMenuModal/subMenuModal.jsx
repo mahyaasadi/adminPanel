@@ -5,7 +5,13 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const SubMenuModal = ({ data, openSubMenuModal, menuName }) => {
+const SubMenuModal = ({
+  data,
+  openSubMenuModal,
+  updateSubMenu,
+  deleteSubMenu,
+  menuName,
+}) => {
   const columns = [
     {
       name: "عنوان",
@@ -25,7 +31,7 @@ const SubMenuModal = ({ data, openSubMenuModal, menuName }) => {
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="حذف"
-            // onClick={() => deleteLoeing(row._id)}
+            onClick={() => deleteSubMenu(row._id)}
           >
             <FeatherIcon
               icon="trash-2"
@@ -39,7 +45,7 @@ const SubMenuModal = ({ data, openSubMenuModal, menuName }) => {
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="ویرایش"
-            // onClick={() => updateLoeing(row)}
+            onClick={() => updateSubMenu(row)}
           >
             <FeatherIcon
               icon="edit-3"

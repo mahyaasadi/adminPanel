@@ -51,10 +51,10 @@ const AddSubMenuModal = ({
 
               <hr />
 
+              <p className="mb-4 text-secondary font-14 marginR-1" dir="rtl">
+                بخش های قابل دسترس زیر منو
+              </p>
               <div className="form-group permissionsCheckboxList">
-                <p className="mb-4 text-secondary font-14 marginR-1" dir="rtl">
-                  بخش های قابل دسترس زیر منو
-                </p>
                 {permissionsList?.map((permission, index) => (
                   <div className="checkbox marginR-1" dir="rtl" key={index}>
                     <div className="marginb-sm d-flex align-items-center">
