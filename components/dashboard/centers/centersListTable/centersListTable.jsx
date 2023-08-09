@@ -47,7 +47,7 @@ const CentersListTable = ({ data }) => {
           <Link
             className="btn btn-sm btn-outline-danger"
             href="#"
-            // onClick={() => deleteMenu(row._id)}
+          // onClick={() => deleteMenu(row._id)}
           >
             <FeatherIcon
               icon="trash-2"
@@ -57,7 +57,7 @@ const CentersListTable = ({ data }) => {
           <Link
             className="btn btn-sm btn-outline-secondary btn-border-left"
             href="#"
-            // onClick={() => updateMenu(row)}
+          // onClick={() => updateMenu(row)}
           >
             <FeatherIcon
               icon="edit-3"
@@ -98,6 +98,18 @@ const CentersListTable = ({ data }) => {
               </i>
             </button>
           )}
+          <Link
+            className="btn btn-sm btn-outline-warning"
+            href={{
+              pathname: '/doctorsList',
+              query: { id: row._id },
+            }}
+          >
+            <FeatherIcon
+              icon="users"
+              style={{ width: "16px", height: "16px" }}
+            />
+          </Link>
         </div>
       ),
       width: "250px",
