@@ -60,6 +60,21 @@ const AddToMenuModal = ({
                 </div>
               </div>
 
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  url <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    dir="ltr"
+                    type="text"
+                    name="addMenuUrl"
+                    className="form-control floating inputPadding rounded"
+                    required
+                  />
+                </div>
+              </div>
+
               <hr />
 
               <p className="mb-4 text-secondary font-14 marginR-1" dir="rtl">

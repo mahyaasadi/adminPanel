@@ -53,8 +53,6 @@ const MenuListTable = ({
           <Link
             className="btn btn-sm btn-outline-secondary btn-border-left"
             href="#"
-            // data-bs-toggle="modal"
-            // data-bs-target="#editMenuModal"
             onClick={() => updateMenu(row)}
           >
             <FeatherIcon

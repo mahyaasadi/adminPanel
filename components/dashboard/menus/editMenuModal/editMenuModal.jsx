@@ -1,16 +1,29 @@
+import { useState, useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 
 const EditMenuModal = ({
   data,
   editMenu,
   permissionsList,
+  editMenuCheckList,
   handleCheckedMenuPermissions,
-  checked,
-  agreement,
-  handleChange,
-  handleSubmit,
-  checkedState,
 }) => {
+  // if (data.empty != 1) {
+  //   for (let i = 0; i < permissionsList.length; i++) {
+  //     permissionsList[i].Checked = false;
+  //   }
+  //   data.Permissions.map((per) => {
+  //     let findIndexPer = permissionsList.findIndex(
+  //       (x) => x._id === per.PermisionID
+  //     );
+  //     permissionsList[findIndexPer].Checked = true;
+  //   });
+  // }
+
+  useEffect(() => {
+    editMenuCheckList(data);
+  }, [data]);
+
   return (
     <div
       className="modal fade contentmodal"
@@ -40,7 +53,7 @@ const EditMenuModal = ({
             </button>
           </div>
           <div className="modal-body">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={editMenu}>
               <div className="form-group">
                 <input
                   type="hidden"
@@ -79,8 +92,26 @@ const EditMenuModal = ({
                   />
                 </div>
               </div>
+              
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  url <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    className="form-control floating inputPadding rounded"
+                    dir="ltr"
+                    type="text"
+                    name="editMenuUrl"
+                    defaultValue={data.Url}
+                    key={data.Url}
+                    required
+                  />
+                </div>
+              </div>
 
               <hr />
+              
               <p className="mb-4 text-secondary font-14 marginR-1" dir="rtl">
                 بخش های قابل دسترس منو
               </p>
@@ -90,20 +121,15 @@ const EditMenuModal = ({
                     <div className="marginb-sm d-flex align-items-center">
                       <input
                         type="checkbox"
-                        className="perCheckbox-input"
-                        id={permission._id}
+                        name="editPermissions"
                         value={permission._id}
-                        name="editmenuAccessList"
-                        defaultChecked={checkedState}
-                        onChange={console.log(checkedState)}
-                        // onChange={handleCheckedMenuPermissions}
-                        // defaultChecked={(e) =>
-                        //   handleCheckedMenuPermissions(e.checked)
-                        // }
+                        id={"EditPer" + permission._id}
+                        className="permission-checkbox-input EditPerCheckBox"
+                        onChange={handleCheckedMenuPermissions}
                       />
                       <label
                         className="permissionLabel font-13 text-secondary"
-                        htmlFor={permission._id}
+                        htmlFor={"EditPer" + permission._id}
                       >
                         {permission.Name}
                       </label>

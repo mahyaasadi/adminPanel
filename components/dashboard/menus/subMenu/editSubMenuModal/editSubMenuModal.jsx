@@ -1,6 +1,17 @@
+import { useState, useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 
-const EditSubMenuModal = ({ data, editSubMenu, permissionsList }) => {
+const EditSubMenuModal = ({
+  data,
+  editSubMenu,
+  permissionsList,
+  handleCheckedSubMenuPermissions,
+  editSubMenuCheckList,
+}) => {
+  useEffect(() => {
+    editSubMenuCheckList(data);
+  }, [data]);
+
   return (
     <div
       className="modal fade contentmodal"
@@ -50,7 +61,25 @@ const EditSubMenuModal = ({ data, editSubMenu, permissionsList }) => {
                 </div>
               </div>
 
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  url <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    className="form-control floating inputPadding rounded"
+                    dir="ltr"
+                    type="text"
+                    name="editSubMenuUrl"
+                    defaultValue={data.Url}
+                    key={data.Url}
+                    required
+                  />
+                </div>
+              </div>
+
               <hr />
+
               <p className="mb-4 text-secondary font-14 marginR-1" dir="rtl">
                 بخش های قابل دسترس زیر منو
               </p>
@@ -60,15 +89,16 @@ const EditSubMenuModal = ({ data, editSubMenu, permissionsList }) => {
                     <div className="marginb-sm d-flex align-items-center">
                       <input
                         type="checkbox"
-                        id={"per" + permission._id}
                         value={permission._id}
                         name="editSubMenuAccessList"
+                        id={"EditSubMenuPer" + permission._id}
                         defaultValue={permission._id}
-                        // onChange={handleCheckedSubMenuPermissions}
+                        onChange={handleCheckedSubMenuPermissions}
+                        className="EditSubMenuPerCheckBox"
                       />
                       <label
                         className="permissionLabel font-13 text-secondary"
-                        htmlFor={"per" + permission._id}
+                        htmlFor={"EditSubMenuPer" + permission._id}
                       >
                         {permission.Name}
                       </label>

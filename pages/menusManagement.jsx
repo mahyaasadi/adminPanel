@@ -1,24 +1,21 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Cookies from "js-cookie";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
-import MenuListTable from "components/dashboard/menuManagement/menuListTable/menuListTable";
-import AddToMenuModal from "components/dashboard/menuManagement/addToMenuModal/addToMenuModal";
-import SubMenuModal from "components/dashboard/menuManagement/subMenu/subMenuModal/subMenuModal";
-import AddSubMenuModal from "components/dashboard/menuManagement/subMenu/addSubMenuModal/addSubMenuModal";
-import EditMenuModal from "components/dashboard/menuManagement/editMenuModal/editMenuModal";
-import EditSubMenuModal from "components/dashboard/menuManagement/subMenu/editSubMenuModal/editSubMenuModal";
+import MenuListTable from "components/dashboard/menus/menuListTable/menuListTable";
+import AddToMenuModal from "components/dashboard/menus/addToMenuModal/addToMenuModal";
+import SubMenuModal from "components/dashboard/menus/subMenu/subMenuModal/subMenuModal";
+import AddSubMenuModal from "components/dashboard/menus/subMenu/addSubMenuModal/addSubMenuModal";
+import EditMenuModal from "components/dashboard/menus/editMenuModal/editMenuModal";
+import EditSubMenuModal from "components/dashboard/menus/subMenu/editSubMenuModal/editSubMenuModal";
 
 let ActiveMenuID = null;
 let ActiveMenuName = null;
 
-let CenterID = Cookies.get("CenterID");
-
-const MenuManagement = () => {
+const MenusManagement = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [menuList, setMenuList] = useState([]);
   const [subMenuList, setSubMenuList] = useState([]);
@@ -31,40 +28,8 @@ const MenuManagement = () => {
     subMenuAccessList: [],
   });
 
-  const [editedMenu, setEditedMenu] = useState([]);
-  const [editedSubMenu, setEditedSubMenu] = useState([]);
-
-  //
-  // let data = $(".perCheckbox-input:checked").serialize();
-  // data = data.split("&");
-  // let selectedPermission = [];
-
-  // data.map((item) => {
-  //   let permissionID = item.replace("per=", "");
-  //   var foundIndex = permissionsList.findIndex((x) => x._id == permissionID);
-  //   selectedPermission.push(foundIndex);
-  //   let arr = permissionsList[foundIndex];
-  //   arr.Checked = 1;
-  //   permissionsList[foundIndex] = arr;
-  // });
-
-  // permissionsList.forEach((item, index) => {
-  //   if (!selectedPermission.includes(index)) {
-  //     let arr = permissionsList[index];
-  //     arr.Checked = 0;
-  //     permissionsList[index] = arr;
-  //   }
-  // });
-  //
-
-  // const [agreement, setAgreement] = useState(true);
-  // const handleChange = (e) => setAgreement(e.target.checked);
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(`checked: ${agreement}`);
-  // };
-
-  const [checkedState, setCheckedState] = useState();
+  const [editMenuData, setEditMenuData] = useState({ empty: 1 });
+  const [editedSubMenu, setEditedSubMenu] = useState({ empty: 1 });
 
   // menu permission checkbox
   const handleCheckedMenuPermissions = (e) => {
@@ -72,7 +37,6 @@ const MenuManagement = () => {
     const { menuAccessList } = menuPermissionStatus;
 
     console.log(`${value} is ${checked}`);
-    setCheckedState(checked);
     // Case 1 : The user checks the box
     if (checked) {
       setMenuPermissionStatus({ menuAccessList: [...menuAccessList, value] });
@@ -149,16 +113,16 @@ const MenuManagement = () => {
     const formProps = Object.fromEntries(formData);
 
     let url = "InoMenu/add";
-    let data = {
+    let addData = {
       Name: formProps.addMenuName,
       Icon: formProps.addMenuIcon,
+      Url: formProps.addMenuUrl,
       Permissions: menuPermissionStatus.menuAccessList,
     };
 
-    console.log("data", data);
-
+    console.log("addData", addData);
     axiosClient
-      .post(url, data)
+      .post(url, addData)
       .then((response) => {
         console.log(response.data);
         setMenuList([...menuList, response.data]);
@@ -194,6 +158,7 @@ const MenuManagement = () => {
       Name: formProps.addSubMenuName,
       MenuID: ActiveMenuID,
       Permissions: subMenuPermissionStatus.subMenuAccessList,
+      Url: formProps.addSubMenuUrl,
     };
 
     console.log("addedData", data);
@@ -203,12 +168,11 @@ const MenuManagement = () => {
       .then((response) => {
         console.log("addSubResponse", response.data);
         setSubMenuList([...subMenuList, response.data]);
-        console.log("subMenuList", subMenuList);
         setIsLoading(false);
 
-        $("#addSubMenuModal").modal("hide");
         // updating the menu list overall
         getMenuData();
+        $("#addSubMenuModal").modal("hide");
         e.target.reset();
       })
       .catch((error) => {
@@ -216,6 +180,26 @@ const MenuManagement = () => {
         setIsLoading(false);
       });
   };
+
+  function editMenuCheckList(data) {
+    if (data.empty !== 1) {
+      $(".EditPerCheckBox").prop("checked", false);
+      data.Permissions.map((per) => {
+        $("#EditPer" + per.PermisionID).prop("checked", true);
+        console.log(data.Permissions);
+      });
+    }
+  }
+
+  function editSubMenuCheckList(data) {
+    if (data.empty !== 1) {
+      $(".EditSubMenuPerCheckBox").prop("checked", false);
+      data.Permissions.map((per) => {
+        $("#EditSubMenuPer" + per.PermisionID).prop("checked", true);
+        console.log(data.Permissions);
+      });
+    }
+  }
 
   // edit menu
   const editMenu = (e) => {
@@ -225,16 +209,22 @@ const MenuManagement = () => {
     const formProps = Object.fromEntries(formData);
     let menuId = formProps.editMenuID;
 
-    let url = `/InoMenu/update/${menuId}`;
+    let selected = $(".EditPerCheckBox:checkbox:checked");
+    let SelectedVal = [];
+    selected.map((element) => {
+      SelectedVal.push($(".EditPerCheckBox:checkbox:checked")[element].value);
+    });
 
+    console.log("selected", SelectedVal);
+
+    let url = `/InoMenu/update/${menuId}`;
     let data = {
-      CenterID: CenterID,
       Name: formProps.editMenuName,
       Icon: formProps.editMenuIcon,
-      Permissions: formProps.editmenuAccessList,
+      Permissions: SelectedVal,
+      Url: formProps.editMenuUrl,
     };
 
-    console.log(formProps);
     console.log("data", data, "menuId", menuId);
 
     axiosClient
@@ -266,7 +256,7 @@ const MenuManagement = () => {
   };
 
   const updateMenu = (data) => {
-    setEditedMenu(data);
+    setEditMenuData(data);
     $("#editMenuModal").modal("show");
   };
 
@@ -279,9 +269,22 @@ const MenuManagement = () => {
     let subMenuId = formProps.editSubMenuID;
 
     let url = `/InoMenu/update/${subMenuId}`;
+
+    console.log(selected);
+    let prevCheckedSubPermissions = editSubMenu.Permissions;
+    let newlyCheckedSubPermissions = subMenuPermissionStatus.subMenuAccessList;
+
+    console.log("prev", prevCheckedSubPermissions);
+    console.log("new", newlyCheckedSubPermissions);
+
+    let allCheckedSubPermissions = prevCheckedSubPermissions.concat(
+      newlyCheckedSubPermissions
+    );
+
     let data = {
-      CenterID: CenterID,
       Name: formProps.editSubMenuName,
+      Url: formProps.editSubMenuUrl,
+      Permissions: allCheckedSubPermissions,
     };
 
     console.log("data", data, "subMenuId", subMenuId);
@@ -329,10 +332,9 @@ const MenuManagement = () => {
     setIsLoading(true);
     if (result) {
       let url = `/InoMenu/delete/${id}`;
-      let data = { CenterID: CenterID };
 
       await axiosClient
-        .delete(url, { data })
+        .delete(url)
         .then((response) => {
           setMenuList(menuList.filter((a) => a._id !== id));
           setIsLoading(false);
@@ -355,7 +357,6 @@ const MenuManagement = () => {
     if (result) {
       let url = `/InoMenu/deleteSubMenu/${ActiveMenuID}`;
       let data = {
-        CenterID: CenterID,
         SubMenuID: id,
       };
 
@@ -366,6 +367,8 @@ const MenuManagement = () => {
         .then((response) => {
           console.log(response.data);
           setSubMenuList(subMenuList.filter((a) => a._id !== id));
+
+          // updating the menu list overall
           getMenuData();
           setIsLoading(false);
         })
@@ -447,16 +450,11 @@ const MenuManagement = () => {
         />
 
         <EditMenuModal
-          data={editedMenu}
+          data={editMenuData}
           editMenu={editMenu}
           permissionsList={permissionsList}
+          editMenuCheckList={editMenuCheckList}
           handleCheckedMenuPermissions={handleCheckedMenuPermissions}
-          // checked={checked}
-          // checked={(e) => handleCheckedMenuPermissions(e.checked)}
-          // handleChange={handleChange}
-          // handleSubmit={handleSubmit}
-          // agreement={agreement}
-          checkedState={checkedState}
         />
 
         <SubMenuModal
@@ -479,10 +477,12 @@ const MenuManagement = () => {
           data={editedSubMenu}
           editSubMenu={editSubMenu}
           permissionsList={permissionsList}
+          handleCheckedSubMenuPermissions={handleCheckedSubMenuPermissions}
+          editSubMenuCheckList={editSubMenuCheckList}
         />
       </div>
     </>
   );
 };
 
-export default MenuManagement;
+export default MenusManagement;

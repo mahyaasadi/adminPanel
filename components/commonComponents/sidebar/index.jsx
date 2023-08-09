@@ -24,12 +24,26 @@ const Sidebar = () => {
               </li>
 
               <li
-                className={router.pathname == "/menuManagement" ? "active" : ""}
+                className={
+                  router.pathname == "/menusManagement" ? "active" : ""
+                }
               >
-                <Link href="/menuManagement">
+                <Link href="/menusManagement">
                   <FeatherIcon icon="list" className="width-15" />
 
                   <span>مدیریت منوهای سامانه</span>
+                </Link>
+              </li>
+
+              <li
+                className={
+                  router.pathname == "/centersManagement" ? "active" : ""
+                }
+              >
+                <Link href="/centersManagement">
+                  <FeatherIcon icon="settings" className="width-15" />
+
+                  <span>مدیریت مراکز </span>
                 </Link>
               </li>
             </ul>
