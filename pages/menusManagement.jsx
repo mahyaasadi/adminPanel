@@ -225,7 +225,7 @@ const MenusManagement = () => {
       Url: formProps.editMenuUrl,
     };
 
-    console.log("data", data, "menuId", menuId);
+    console.log("data", data);
 
     axiosClient
       .put(url, data)
@@ -270,21 +270,31 @@ const MenusManagement = () => {
 
     let url = `/InoMenu/update/${subMenuId}`;
 
-    console.log(selected);
-    let prevCheckedSubPermissions = editSubMenu.Permissions;
-    let newlyCheckedSubPermissions = subMenuPermissionStatus.subMenuAccessList;
+    // console.log(selected);
+    // let prevCheckedSubPermissions = editSubMenu.Permissions;
+    // let newlyCheckedSubPermissions = subMenuPermissionStatus.subMenuAccessList;
 
-    console.log("prev", prevCheckedSubPermissions);
-    console.log("new", newlyCheckedSubPermissions);
+    // console.log("prev", prevCheckedSubPermissions);
+    // console.log("new", newlyCheckedSubPermissions);
 
-    let allCheckedSubPermissions = prevCheckedSubPermissions.concat(
-      newlyCheckedSubPermissions
-    );
+    // let allCheckedSubPermissions = prevCheckedSubPermissions.concat(
+    //   newlyCheckedSubPermissions
+    // );
+
+    let selectedPer = $(".EditSubMenuPerCheckBox:checkbox:checked");
+    let SelectedPerVal = [];
+    selectedPer.map((element) => {
+      SelectedPerVal.push(
+        $(".EditSubMenuPerCheckBox:checkbox:checked")[element].value
+      );
+    });
+
+    console.log("selected", SelectedPerVal);
 
     let data = {
       Name: formProps.editSubMenuName,
       Url: formProps.editSubMenuUrl,
-      Permissions: allCheckedSubPermissions,
+      Permissions: SelectedPerVal,
     };
 
     console.log("data", data, "subMenuId", subMenuId);
@@ -294,6 +304,8 @@ const MenusManagement = () => {
       .then((response) => {
         console.log(response.data);
         updateSubMenuItem(formProps.editSubMenuID, response.data);
+        getMenuData();
+
         $("#editSubMenuModal").modal("hide");
       })
       .catch((error) => {

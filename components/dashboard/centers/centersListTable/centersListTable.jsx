@@ -10,33 +10,18 @@ const CentersListTable = ({ data }) => {
   const columns = [
     {
       name: "نام",
-      selector: (row) => row.Name.substr(0, 40) + " ...",
+      selector: (row) => row.Name.substr(0, 60) + " ...",
       sortable: true,
       width: "auto",
     },
     // {
-    //   name: "نام",
-    //   selector: (row) => row.Name,
+    //   name: "لوگو",
+    //   selector: (row) => row.Log,
     //   sortable: true,
-    //   width: "auto",
-    // },
-    // {
-    //   name: "نام",
-    //   selector: (row) => row.Name,
-    //   sortable: true,
-    //   width: "auto",
-    // },
-    // {
-    //   name: "نام",
-    //   selector: (row) => row.Name,
-    //   sortable: true,
-    //   width: "auto",
-    // },
-    // {
-    //   name: "نام",
-    //   selector: (row) => row.Name,
-    //   sortable: true,
-    //   width: "auto",
+    //   cell: (row) => (
+    //     <img src={"https://irannobat.ir/image/" + row.Logo} alt="logo" />
+    //   ),
+    //   width: "150px",
     // },
     {
       name: "عملیات ها",
@@ -44,27 +29,6 @@ const CentersListTable = ({ data }) => {
       sortable: true,
       cell: (row) => (
         <div className="actions d-flex gap-1">
-          <Link
-            className="btn btn-sm btn-outline-danger"
-            href="#"
-          // onClick={() => deleteMenu(row._id)}
-          >
-            <FeatherIcon
-              icon="trash-2"
-              style={{ width: "16px", height: "16px" }}
-            />
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-secondary btn-border-left"
-            href="#"
-          // onClick={() => updateMenu(row)}
-          >
-            <FeatherIcon
-              icon="edit-3"
-              style={{ width: "16px", height: "16px" }}
-            />
-          </Link>
-
           {!row.Deactive ? (
             <button
               className="btn btn-sm btn-outline-success font-13"
@@ -99,20 +63,89 @@ const CentersListTable = ({ data }) => {
             </button>
           )}
           <Link
-            className="btn btn-sm btn-outline-warning"
-            href={{
-              pathname: '/doctorsList',
-              query: { id: row._id },
-            }}
+            className="btn btn-sm btn-outline-danger"
+            href="#"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="حذف"
+            // onClick={() => deleteMenu(row._id)}
           >
             <FeatherIcon
-              icon="users"
+              icon="trash-2"
               style={{ width: "16px", height: "16px" }}
             />
           </Link>
+          <Link
+            className="btn btn-sm btn-outline-secondary btn-border-left"
+            href="#"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="ویرایش"
+            // onClick={() => updateMenu(row)}
+          >
+            <FeatherIcon
+              icon="edit-3"
+              style={{ width: "16px", height: "16px" }}
+            />
+          </Link>
+
+          <Link
+            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
+            href={{
+              pathname: "/doctorsList",
+              query: { id: row._id },
+            }}
+          >
+            پزشکان
+          </Link>
+          <Link
+            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
+            href={{
+              pathname: "/specializedWorks",
+              query: { id: row._id },
+            }}
+          >
+            کارهای تخصصی
+          </Link>
+          <Link
+            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
+            href={{
+              pathname: "/certifications",
+              query: { id: row._id },
+            }}
+          >
+            مجوزها
+          </Link>
+          <Link
+            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
+            href={{
+              pathname: "/specialDiseases",
+              query: { id: row._id },
+            }}
+          >
+            بیماری های خاص
+          </Link>
+          <Link
+            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
+            href={{
+              pathname: "/insurances",
+              query: { id: row._id },
+            }}
+          >
+            بیمه های تحت پوشش
+          </Link>
+          <Link
+            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
+            href={{
+              pathname: "/imagesGallery",
+              query: { id: row._id },
+            }}
+          >
+            گالری تصاویر
+          </Link>
         </div>
       ),
-      width: "250px",
+      width: "auto",
     },
   ];
 

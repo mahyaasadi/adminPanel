@@ -3,86 +3,78 @@ import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import Head from "next/head";
 import { axiosClient } from "class/axiosConfig.js";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import DoctorsListTable from "components/dashboard/doctors/doctorsListTable/doctorsListTable";
 import AddDoctorModal from "components/dashboard/doctors/addDoctorModal/addDoctorModal";
 import EditDoctorModal from "components/dashboard/doctors/editDoctorModal/editDoctorModal";
-import { useRouter } from "next/router";
 
 // let CenterID = Cookies.get("CenterID");
 let CenterID = null;
 
 const DoctorsList = () => {
-  const router = useRouter();
-  CenterID = router.query.id;
+  const Router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
-  let [doctorsList, setDoctorsList] = useState([]);
+  const [doctorsList, setDoctorsList] = useState([]);
   const [editDoctor, setEditDoctor] = useState({});
-  const [name, setName] = useState("");
-  const [title, setTitle] = useState("");
-  const [specialty, setSpecialty] = useState("");
-
-  const handleNameInput = (e) => setName(e.target.value);
-  const handleTitleInput = (e) => setTitle(e.target.value);
-  const handleSpecialtyInput = (e) => setSpecialty(e.target.value);
-
-  //reset form inputs
-  // const reset = () => {
-  //   setName("");
-  //   setTitle("");
-  //   setSpecialty("");
-  // };
 
   //get doctors list
   const getDoctorsData = () => {
-    axiosClient
-      .get(`CenterProfile/getCenterPhysician/${CenterID}`)
-      .then(function (response) {
-        setDoctorsList(response.data);
-        setIsLoading(false);
-      });
-  };
+    CenterID = Router.query.id;
+    let url = `CenterProfile/getCenterPhysician/${CenterID}`;
+    setIsLoading(true);
 
-  useEffect(() => {
-    try {
-      getDoctorsData();
-    } catch (error) {
-      setIsLoading(true);
-      console.log(error);
+    if (CenterID) {
+      axiosClient
+        .get(url)
+        .then(function (response) {
+          setDoctorsList(response.data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
     }
-  }, []);
+  };
 
   // Add Physician
   const addPhysician = (e) => {
     e.preventDefault();
+    CenterID = Router.query.id;
 
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
     let url = "CenterProfile/AddPhysician";
+
     let data = {
       CenterID: CenterID,
-      Name: name,
-      Title: title,
-      Spe: specialty,
+      Name: formProps.addPhysicianName,
+      Title: formProps.addPhysicianTitle,
+      Spe: formProps.addPhysicianSpe,
     };
 
-    axiosClient
-      .post(url, data)
-      .then((response) => {
-        setDoctorsList([...doctorsList, response.data]);
-        $("#addPhysicianModal").modal("hide");
-        // e.target.reset();
-        // $("#frmAddPhysician")[0].reset()
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (CenterID) {
+      axiosClient
+        .post(url, data)
+        .then((response) => {
+          setDoctorsList([...doctorsList, response.data]);
+          $("#addPhysicianModal").modal("hide");
+          e.target.reset();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   // Edit Physician
   const editPhysician = (e) => {
     e.preventDefault();
+    CenterID = Router.query.id;
 
     let url = "CenterProfile/UpdatePhysician";
     let formData = new FormData(e.target);
@@ -96,6 +88,7 @@ const DoctorsList = () => {
       Spe: formProps.EditDoctorSpe,
     };
 
+    // if (CenterID) {
     axiosClient
       .put(url, Data)
       .then((response) => {
@@ -105,12 +98,14 @@ const DoctorsList = () => {
       .catch((error) => {
         console.log(error);
       });
+    // }
   };
+
   const updateItem = (id, newArr) => {
     let index = doctorsList.findIndex((x) => x._id === id);
-
     let g = doctorsList[index];
     g = newArr;
+
     if (index === -1) {
       // handle error
       console.log("no match");
@@ -135,31 +130,34 @@ const DoctorsList = () => {
     );
 
     if (result) {
+      CenterID = Router.query.id;
       let url = "CenterProfile/DeletePhysician";
       let data = {
         CenterID: CenterID,
         PhysicianID: id,
       };
 
-      await axiosClient
-        .delete(url, { data })
-        .then(function () {
-          setDoctorsList(doctorsList.filter((a) => a._id !== id));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      if (CenterID) {
+        await axiosClient
+          .delete(url, { data })
+          .then(function () {
+            setDoctorsList(doctorsList.filter((a) => a._id !== id));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     }
   };
 
-  // useEffect(() => {
-  //   if (router.isReady) {
-  //     const CenterID = router.query.id;
-  //     console.log("CenterID", CenterID);
-
-  //     if (!CenterID) return null;
-  //   }
-  // }, [router.isReady]);
+  useEffect(() => {
+    if (Router.isReady) {
+      CenterID = Router.query.id;
+      console.log("CenterID", CenterID);
+      getDoctorsData();
+      if (!CenterID) return null;
+    }
+  }, [Router.isReady]);
 
   return (
     <>
@@ -221,29 +219,13 @@ const DoctorsList = () => {
           </div>
         </div>
 
-        <AddDoctorModal
-          addPhysician={addPhysician}
-          name={name}
-          title={title}
-          specialty={specialty}
-          handleNameInput={handleNameInput}
-          handleTitleInput={handleTitleInput}
-          handleSpecialtyInput={handleSpecialtyInput}
-        />
+        <AddDoctorModal addPhysician={addPhysician} />
 
-        <EditDoctorModal
-          data={editDoctor}
-          editPhysician={editPhysician}
-          name={name}
-          title={title}
-          specialty={specialty}
-          handleNameInput={handleNameInput}
-          handleTitleInput={handleTitleInput}
-          handleSpecialtyInput={handleSpecialtyInput}
-        />
+        <EditDoctorModal data={editDoctor} editPhysician={editPhysician} />
       </div>
     </>
   );
 };
 
 export default DoctorsList;
+
