@@ -1,17 +1,9 @@
 import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
-import CitySelect from "./citySelect";
+import CitySelect from "../addCenterModal/citySelect";
 
-const AddCenterModal = ({
-  addCenter,
-  provinceOptionsList,
-  FUSelectProvince,
-  FUSelectCity,
-  setCityOption,
-  cityOptionsList,
-  defaultData,
-}) => {
+const EditCenterModal = ({ data }) => {
   const colourStyles = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
     control: (styles) => ({
@@ -22,23 +14,28 @@ const AddCenterModal = ({
     }),
   };
 
-  const displayPreview = (e) => {
-    var urlCreator = window.URL || window.webkitURL;
-    var imageUrl = urlCreator.createObjectURL(e.target.files[0]);
-    $("#logoUploadPreview").attr("src", imageUrl);
-  };
+  //   for (let i = 0; i < data.length; i++) {
+  //     const selectedProvince = {
+  //       value: data.Province.Finglish,
+  //       label: data.Province.Name,
+  //     };
+  //   }
+
+  console.log(data);
 
   return (
     <div
       className="modal fade contentmodal"
-      id="addCenterModal"
+      id="editCenterModal"
       tabIndex="-1"
       aria-hidden="true"
     >
       <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content doctor-profile">
           <div className="modal-header">
-            <p className="mb-0 text-secondary font-14 fw-bold">مرکز جدید</p>
+            <p className="mb-0 text-secondary font-14 fw-bold">
+              ویرایش اطلاعات
+            </p>
             <button
               type="button"
               className="close-btn"
@@ -51,11 +48,12 @@ const AddCenterModal = ({
             </button>
           </div>
           <div className="modal-body">
-            <form onSubmit={addCenter} id="frmAddCenter">
-              <input type="hidden" value={defaultData?._id} name="CenterID" />
+            <form>
               <div className="row">
                 <div className="col">
                   <div className="form-group">
+                    <input type="hidden" value={data._id} name="centerID" />
+
                     <label className="lblAbs font-12">
                       نام مرکز <span className="text-danger">*</span>
                     </label>
@@ -63,7 +61,8 @@ const AddCenterModal = ({
                       <input
                         type="text"
                         className="form-control floating inputPadding rounded"
-                        name="addCenterName"
+                        // name="addCenterName"
+                        defaultValue={data.Name}
                         required
                       />
                     </div>
@@ -77,7 +76,8 @@ const AddCenterModal = ({
                       <input
                         type="text"
                         className="form-control floating inputPadding rounded"
-                        name="addCenterEngName"
+                        // name="addCenterEngName"
+                        defaultValue={data.EngName}
                       />
                     </div>
                   </div>
@@ -91,21 +91,22 @@ const AddCenterModal = ({
                   </label>
                   <SelectField
                     styles={colourStyles}
-                    id="ProvinceSelectOptions"
-                    options={provinceOptionsList}
+                    // id="ProvinceSelectOptions"
+                    // options={provinceOptionsList}
                     className="text-center font-12"
                     placeholder={"انتخاب نمایید"}
                     required
-                    onChangeValue={(value) => FUSelectProvince(value?.value)}
-                    onChange={(value) => setCityOption(value.cities)}
+                    // defaultValue={selectedProvince}
+                    // onChangeValue={(value) => FUSelectProvince(value?.value)}
+                    // onChange={(value) => setCityOption(value.cities)}
                     name="addCenterProvince"
                   />
                 </div>
 
-                <CitySelect
+                {/* <CitySelect
                   cityOptionsList={cityOptionsList}
                   FUSelectCity={FUSelectCity}
-                />
+                /> */}
               </div>
 
               <div className="form-group mt-2">
@@ -116,7 +117,7 @@ const AddCenterModal = ({
                   <textarea
                     className="form-control floating inputPadding rounded"
                     type="text"
-                    name="addCenterAddress"
+                    // name="addCenterAddress"
                     required
                   ></textarea>
                 </div>
@@ -130,7 +131,8 @@ const AddCenterModal = ({
                   <input
                     className="form-control floating inputPadding rounded"
                     type="text"
-                    name="addCenterDomain"
+                    // name="addCenterDomain"
+                    defaultValue={data.Domain ? data.Domain : "-"}
                     required
                   />
                 </div>
@@ -142,7 +144,8 @@ const AddCenterModal = ({
                   <input
                     className="form-control floating inputPadding rounded"
                     type="text"
-                    name="addCenterLocation"
+                    // name="addCenterLocation"
+                    defaultValue={data.Loc}
                   />
                 </div>
               </div>
@@ -153,35 +156,10 @@ const AddCenterModal = ({
                   <textarea
                     className="form-control floating inputPadding rounded"
                     type="text"
-                    name="addCenterDescription"
+                    // name="addCenterDescription"
+                    defaultValue={data.ViewDes}
                   ></textarea>
                 </div>
-              </div>
-
-              <div className="change-photo-btn">
-                <div>
-                  <i>
-                    <FeatherIcon icon="upload" />
-                  </i>
-                  <p>آپلود لوگو</p>
-                </div>
-                <input
-                  type="file"
-                  className="upload"
-                  name="logo"
-                  onChange={displayPreview}
-                  required
-                />
-              </div>
-
-              <div className="previewImgContainer">
-                <Image
-                  src=""
-                  alt=""
-                  width="200"
-                  id="logoUploadPreview"
-                  className="d-block m-auto previewImg"
-                />
               </div>
 
               <div className="submit-section">
@@ -199,4 +177,5 @@ const AddCenterModal = ({
     </div>
   );
 };
-export default AddCenterModal;
+
+export default EditCenterModal;

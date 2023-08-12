@@ -186,7 +186,7 @@ const MenusManagement = () => {
       $(".EditPerCheckBox").prop("checked", false);
       data.Permissions.map((per) => {
         $("#EditPer" + per.PermisionID).prop("checked", true);
-        console.log(data.Permissions);
+        // console.log(data.Permissions);
       });
     }
   }
@@ -232,6 +232,7 @@ const MenusManagement = () => {
       .then((response) => {
         console.log(response.data);
         updateMenuItem(formProps.editMenuID, response.data);
+
         $("#editMenuModal").modal("hide");
       })
       .catch((error) => {
@@ -241,9 +242,9 @@ const MenusManagement = () => {
 
   const updateMenuItem = (id, newArr) => {
     let index = menuList.findIndex((x) => x._id === id);
-
     let g = menuList[index];
     g = newArr;
+
     if (index === -1) {
       // handle error
       console.log("no match");
@@ -267,19 +268,7 @@ const MenusManagement = () => {
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
     let subMenuId = formProps.editSubMenuID;
-
     let url = `/InoMenu/update/${subMenuId}`;
-
-    // console.log(selected);
-    // let prevCheckedSubPermissions = editSubMenu.Permissions;
-    // let newlyCheckedSubPermissions = subMenuPermissionStatus.subMenuAccessList;
-
-    // console.log("prev", prevCheckedSubPermissions);
-    // console.log("new", newlyCheckedSubPermissions);
-
-    // let allCheckedSubPermissions = prevCheckedSubPermissions.concat(
-    //   newlyCheckedSubPermissions
-    // );
 
     let selectedPer = $(".EditSubMenuPerCheckBox:checkbox:checked");
     let SelectedPerVal = [];
@@ -297,15 +286,15 @@ const MenusManagement = () => {
       Permissions: SelectedPerVal,
     };
 
-    console.log("data", data, "subMenuId", subMenuId);
+    console.log("data", data);
 
     axiosClient
       .put(url, data)
       .then((response) => {
         console.log(response.data);
         updateSubMenuItem(formProps.editSubMenuID, response.data);
-        getMenuData();
 
+        getMenuData();
         $("#editSubMenuModal").modal("hide");
       })
       .catch((error) => {
@@ -315,9 +304,9 @@ const MenusManagement = () => {
 
   const updateSubMenuItem = (id, newArr) => {
     let index = subMenuList.findIndex((x) => x._id === id);
-
     let g = subMenuList[index];
     g = newArr;
+
     if (index === -1) {
       // handle error
       console.log("no match");

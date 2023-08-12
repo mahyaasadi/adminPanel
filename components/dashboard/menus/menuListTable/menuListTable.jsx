@@ -64,7 +64,7 @@ const MenuListTable = ({
           {/* SubMenu */}
           <Link
             href="#"
-            className="m-0 btn btn-sm btn-outline-secondary btn-border-left"
+            className="m-0 btn btn-sm btn-outline-secondary btn-border-left font-13"
             data-bs-toggle="modal"
             data-bs-target="#subMenuModal"
             onClick={() => SetSubMenuInDT(row.subMenu, row._id, row.Name)}

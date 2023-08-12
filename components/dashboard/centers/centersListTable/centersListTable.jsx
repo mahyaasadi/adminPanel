@@ -6,7 +6,7 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const CentersListTable = ({ data }) => {
+const CentersListTable = ({ data, updateCenterInfo }) => {
   const columns = [
     {
       name: "نام",
@@ -81,7 +81,7 @@ const CentersListTable = ({ data }) => {
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="ویرایش"
-            // onClick={() => updateMenu(row)}
+            onClick={() => updateCenterInfo(row)}
           >
             <FeatherIcon
               icon="edit-3"
