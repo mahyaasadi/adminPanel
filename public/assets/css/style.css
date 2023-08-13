@@ -1821,6 +1821,11 @@ button.bg-danger:hover {
   margin-left: 0 !important;
 }
 
+.btn-border-left-warning {
+  border-left: 1px solid #ffbc34 !important;
+  margin-left: 0 !important;
+}
+
 .btn-outline-success:focus,
 .btn-outline-success.focus {
   box-shadow: none;
@@ -4246,6 +4251,13 @@ html.menu-opened body {
 
 .submitDepartments-btn {
   margin-top: 5em;
+}
+
+.noDepContainer {
+  color: gray;
+  border: 1px solid lightgray;
+  padding: 18rem 14rem;
+  border-radius: 20px;
 }
 
 @media (min-width: 1024px) {

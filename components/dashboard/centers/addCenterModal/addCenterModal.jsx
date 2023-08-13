@@ -28,6 +28,7 @@ const AddCenterModal = ({
     $("#logoUploadPreview").attr("src", imageUrl);
   };
 
+  // console.log(defaultData);
   return (
     <div
       className="modal fade contentmodal"
@@ -65,6 +66,7 @@ const AddCenterModal = ({
                         className="form-control floating inputPadding rounded"
                         name="addCenterName"
                         required
+                        // defaultValue={defaultData?.Name}
                       />
                     </div>
                   </div>
@@ -78,6 +80,7 @@ const AddCenterModal = ({
                         type="text"
                         className="form-control floating inputPadding rounded"
                         name="addCenterEngName"
+                        // defaultValue={defaultData?.EngName}
                       />
                     </div>
                   </div>

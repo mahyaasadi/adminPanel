@@ -1,6 +1,6 @@
 import SelectField from "components/commonComponents/selectfield";
 
-const CitySelect = ({ data, cityOptionsList, FUSelectCity }) => {
+const EditCitySelect = ({ data, cityOptionsList, FUSelectCity }) => {
   let selectCityData = [];
   for (let i = 0; i < cityOptionsList.length; i++) {
     const item = cityOptionsList[i];
@@ -11,13 +11,13 @@ const CitySelect = ({ data, cityOptionsList, FUSelectCity }) => {
     selectCityData.push(cityObj);
   }
 
-  // let selectedCity = null;
-  // if (data) {
-  //   selectedCity = {
-  //     value: data.City?.Finglish,
-  //     label: data.City?.Name,
-  //   };
-  // }
+  let selectedCity = null;
+  if (data) {
+    selectedCity = {
+      value: data.City?.Finglish,
+      label: data.City?.Name,
+    };
+  }
 
   const colourStyles = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
@@ -38,12 +38,12 @@ const CitySelect = ({ data, cityOptionsList, FUSelectCity }) => {
         <SelectField
           styles={colourStyles}
           className="text-center font-12 editCitySelectOptions"
-          id="citySelectOptions"
+          id="editCitySelectOptions"
           options={selectCityData}
           placeholder={"انتخاب نمایید"}
           // required
-          // defaultValue={selectedCity}
-          // key={data?.City}
+          defaultValue={selectedCity}
+          key={data?.City}
           onChangeValue={(value) => FUSelectCity(value?.value)}
           name="addCenterCity"
         />
@@ -52,4 +52,4 @@ const CitySelect = ({ data, cityOptionsList, FUSelectCity }) => {
   );
 };
 
-export default CitySelect;
+export default EditCitySelect;

@@ -9,20 +9,24 @@ import { tableCustomStyles } from "components/commonComponents/customTableStyle/
 const CentersListTable = ({ data, updateCenterInfo }) => {
   const columns = [
     {
-      name: "نام",
+      name: "نام مرکز",
       selector: (row) => row.Name.substr(0, 60) + " ...",
       sortable: true,
-      width: "auto",
+      width: "400px",
     },
-    // {
-    //   name: "لوگو",
-    //   selector: (row) => row.Log,
-    //   sortable: true,
-    //   cell: (row) => (
-    //     <img src={"https://irannobat.ir/image/" + row.Logo} alt="logo" />
-    //   ),
-    //   width: "150px",
-    // },
+    {
+      name: "لوگو",
+      selector: (row) => row.Log,
+      sortable: true,
+      cell: (row) => (
+        <img
+          style={{ width: "30px" }}
+          src={"https://irannobat.ir/CenterProfileImage/" + row.Logo}
+          alt=""
+        />
+      ),
+      width: "400px",
+    },
     {
       name: "عملیات ها",
       selector: (row) => row.action,
@@ -62,19 +66,7 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
               </i>
             </button>
           )}
-          <Link
-            className="btn btn-sm btn-outline-danger"
-            href="#"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="حذف"
-            // onClick={() => deleteMenu(row._id)}
-          >
-            <FeatherIcon
-              icon="trash-2"
-              style={{ width: "16px", height: "16px" }}
-            />
-          </Link>
+
           <Link
             className="btn btn-sm btn-outline-secondary btn-border-left"
             href="#"
@@ -92,38 +84,11 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
           <Link
             className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
             href={{
-              pathname: "/doctorsList",
+              pathname: "/imagesGallery",
               query: { id: row._id },
             }}
           >
-            پزشکان
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
-            href={{
-              pathname: "/specializedWorks",
-              query: { id: row._id },
-            }}
-          >
-            کارهای تخصصی
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
-            href={{
-              pathname: "/certifications",
-              query: { id: row._id },
-            }}
-          >
-            مجوزها
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
-            href={{
-              pathname: "/specialDiseases",
-              query: { id: row._id },
-            }}
-          >
-            بیماری های خاص
+            گالری تصاویر
           </Link>
           <Link
             className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
@@ -137,15 +102,51 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
           <Link
             className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
             href={{
-              pathname: "/imagesGallery",
+              pathname: "/specialDiseases",
               query: { id: row._id },
             }}
           >
-            گالری تصاویر
+            بیماری های خاص
+          </Link>
+          <Link
+            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
+            href={{
+              pathname: "/certifications",
+              query: { id: row._id },
+            }}
+          >
+            مجوزها
+          </Link>
+          <Link
+            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
+            href={{
+              pathname: "/specializedWorks",
+              query: { id: row._id },
+            }}
+          >
+            کارهای تخصصی
+          </Link>
+          <Link
+            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
+            href={{
+              pathname: "/doctorsList",
+              query: { id: row._id },
+            }}
+          >
+            پزشکان
+          </Link>
+          <Link
+            className="btn btn-sm btn-outline-warning font-13 btn-border-left-warning"
+            href={{
+              pathname: "/departments",
+              query: { id: row._id },
+            }}
+          >
+            انتخاب بخش
           </Link>
         </div>
       ),
-      width: "auto",
+      width: "50px",
     },
   ];
 

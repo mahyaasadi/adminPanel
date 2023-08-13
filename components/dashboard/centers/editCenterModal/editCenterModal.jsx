@@ -1,9 +1,18 @@
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
-import CitySelect from "../addCenterModal/citySelect";
+import EditCitySelect from "./editCitySelect";
 
-const EditCenterModal = ({ data }) => {
+const EditCenterModal = ({
+  data,
+  editCenter,
+  provinceOptionsList,
+  FUSelectProvince,
+  FUSelectCity,
+  setCityOption,
+  cityOptionsList,
+}) => {
   const colourStyles = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
     control: (styles) => ({
@@ -14,14 +23,35 @@ const EditCenterModal = ({ data }) => {
     }),
   };
 
-  //   for (let i = 0; i < data.length; i++) {
-  //     const selectedProvince = {
-  //       value: data.Province.Finglish,
-  //       label: data.Province.Name,
-  //     };
-  //   }
+  let selectedProvince = null;
+  if (data.Province) {
+    selectedProvince = {
+      value: data.Province.Finglish,
+      label: data.Province.Name,
+    };
+    let findCities = provinceOptionsList.find(
+      (x) => x.value === data.Province.Finglish
+    );
+    console.log(findCities);
+    if (findCities) setCityOption(findCities.cities);
+  }
 
-  console.log(data);
+  // console.log(selectedProvince);
+  // console.log(data.Logo);
+
+  const displayPreview = (e) => {
+    var urlCreator = window.URL || window.webkitURL;
+    var imageUrl = urlCreator.createObjectURL(e.target.files[0]);
+    $("#currentLogo").attr("src", imageUrl);
+    // $("currentLogoContainer").hide();
+    // $("#newLogoUploadPreview").attr("src", imageUrl);
+    // $("#newLogoUploadPreview").hide();
+    // $("#editCenterModal").on("hidden.bs.modal", function () {
+    //   $(this).find("#newLogoUploadPreview").trigger("reset");
+    // });
+  };
+
+  // const hide = ()
 
   return (
     <div
@@ -48,7 +78,7 @@ const EditCenterModal = ({ data }) => {
             </button>
           </div>
           <div className="modal-body">
-            <form>
+            <form onSubmit={editCenter}>
               <div className="row">
                 <div className="col">
                   <div className="form-group">
@@ -61,7 +91,7 @@ const EditCenterModal = ({ data }) => {
                       <input
                         type="text"
                         className="form-control floating inputPadding rounded"
-                        // name="addCenterName"
+                        name="editCenterName"
                         defaultValue={data.Name}
                         required
                       />
@@ -76,7 +106,7 @@ const EditCenterModal = ({ data }) => {
                       <input
                         type="text"
                         className="form-control floating inputPadding rounded"
-                        // name="addCenterEngName"
+                        name="editCenterEngName"
                         defaultValue={data.EngName}
                       />
                     </div>
@@ -91,22 +121,24 @@ const EditCenterModal = ({ data }) => {
                   </label>
                   <SelectField
                     styles={colourStyles}
-                    // id="ProvinceSelectOptions"
-                    // options={provinceOptionsList}
+                    id="editProvinceSelectOptions"
+                    options={provinceOptionsList}
                     className="text-center font-12"
                     placeholder={"انتخاب نمایید"}
                     required
-                    // defaultValue={selectedProvince}
-                    // onChangeValue={(value) => FUSelectProvince(value?.value)}
-                    // onChange={(value) => setCityOption(value.cities)}
-                    name="addCenterProvince"
+                    key={data?.Province}
+                    defaultValue={selectedProvince}
+                    onChangeValue={(value) => FUSelectProvince(value?.value)}
+                    onChange={(value) => setCityOption(value.cities)}
+                    name="editCenterProvince"
                   />
                 </div>
 
-                {/* <CitySelect
+                <EditCitySelect
                   cityOptionsList={cityOptionsList}
                   FUSelectCity={FUSelectCity}
-                /> */}
+                  data={data}
+                />
               </div>
 
               <div className="form-group mt-2">
@@ -117,7 +149,8 @@ const EditCenterModal = ({ data }) => {
                   <textarea
                     className="form-control floating inputPadding rounded"
                     type="text"
-                    // name="addCenterAddress"
+                    name="editCenterAddress"
+                    defaultValue={data.Address}
                     required
                   ></textarea>
                 </div>
@@ -131,8 +164,8 @@ const EditCenterModal = ({ data }) => {
                   <input
                     className="form-control floating inputPadding rounded"
                     type="text"
-                    // name="addCenterDomain"
-                    defaultValue={data.Domain ? data.Domain : "-"}
+                    name="editCenterDomain"
+                    defaultValue={data.Domain}
                     required
                   />
                 </div>
@@ -144,7 +177,7 @@ const EditCenterModal = ({ data }) => {
                   <input
                     className="form-control floating inputPadding rounded"
                     type="text"
-                    // name="addCenterLocation"
+                    name="editCenterLocation"
                     defaultValue={data.Loc}
                   />
                 </div>
@@ -156,10 +189,56 @@ const EditCenterModal = ({ data }) => {
                   <textarea
                     className="form-control floating inputPadding rounded"
                     type="text"
-                    // name="addCenterDescription"
+                    name="editCenterDescription"
                     defaultValue={data.ViewDes}
                   ></textarea>
                 </div>
+              </div>
+
+              <div className="change-photo-btn">
+                <div>
+                  <i className="">
+                    <FeatherIcon icon="upload" />
+                  </i>
+                  <p>آپلود لوگوی جدید</p>
+                </div>
+                <input
+                  type="file"
+                  className="upload"
+                  name="editLogo"
+                  onChange={displayPreview}
+                />
+
+                {/* <input
+                  type="hidden"
+                  className="upload"
+                  name="currentLogo"
+                  onChange={displayPreview}
+                  defaultValue={data.Logo}
+                /> */}
+              </div>
+
+              <div
+                className="d-flex justify-center mt-4"
+                id="currentLogoContainer previewImgContainer"
+              >
+                <img
+                  src={"https://irannobat.ir/CenterProfileImage/" + data.Logo}
+                  alt="logo"
+                  style={{ width: "100px" }}
+                  className="previewImg m-auto d-block"
+                  id="currentLogo"
+                ></img>
+              </div>
+
+              <div className="previewImgContainer">
+                <Image
+                  src=""
+                  alt=""
+                  width="200"
+                  id="newLogoUploadPreview"
+                  className="d-block m-auto previewImg"
+                />
               </div>
 
               <div className="submit-section">
