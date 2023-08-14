@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import { axiosClient } from "class/axiosConfig.js";
-// import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Loading from "components/commonComponents/loading/loading";
 import { SuccessAlert } from "class/AlertManage.js";
 import DepartmentsList from "components/dashboard/departments/departmentsList";
 
-// let CenterID = Cookies.get("CenterID");
 let CenterID = null;
 
 const Departments = () => {

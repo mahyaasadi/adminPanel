@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+"use client";
+import React from "react";
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import DataTable from "react-data-table-component";
@@ -6,74 +7,62 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const MenuListTable = ({
-  data,
-  addSubMenuModal,
-  SetSubMenuInDT,
-  deleteMenu,
-  updateMenu,
-}) => {
+const NeighbourhoodsListTable = ({ data }) => {
   const columns = [
     {
-      name: "عنوان",
-      selector: (row) => row.Name,
+      name: "محله",
+      selector: (row) => row.State,
       sortable: true,
       width: "auto",
     },
     {
-      name: "آیکون",
-      selector: (row) => row.Icon,
+      name: "استان",
+      selector: (row) => row.Province,
       sortable: true,
-      cell: (row) => (
-        <div className="actions">
-          <FeatherIcon
-            icon={row.Icon}
-            style={{ width: "16px", height: "16px" }}
-          />
-        </div>
-      ),
+      width: "auto",
+    },
+    {
+      name: "شهر",
+      selector: (row) => row.City,
+      sortable: true,
       width: "auto",
     },
     {
       name: "عملیات ها",
-      selector: (row) => row.action,
+      selector: (row) => row._id,
       sortable: true,
       cell: (row) => (
-        <div className="actions d-flex gap-1">
+        <div className="actions d-flex gap-2">
           <Link
+            href="#"
             className="btn btn-sm btn-outline-danger"
-            href="#"
-            onClick={() => deleteMenu(row._id)}
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="حذف"
+            // onClick={() => deletePhysician(row._id)}
           >
             <FeatherIcon
+              style={{ width: "16px", height: "16px" }}
               icon="trash-2"
-              style={{ width: "16px", height: "16px" }}
-            />
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-secondary btn-border-left"
-            href="#"
-            onClick={() => updateMenu(row)}
-          >
-            <FeatherIcon
-              icon="edit-3"
-              style={{ width: "16px", height: "16px" }}
             />
           </Link>
 
-          {/* SubMenu */}
           <Link
             href="#"
-            className="m-0 btn btn-sm btn-outline-primary btn-border-left-primary font-13"
-            data-bs-toggle="modal"
-            data-bs-target="#subMenuModal"
-            onClick={() => SetSubMenuInDT(row.subMenu, row._id, row.Name)}
+            className="btn btn-sm btn-outline-secondary btn-border-left"
+            // onClick={() => updatePhysician(row)}
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="ویرایش"
           >
-            <p>زیر منو</p>
+            <FeatherIcon
+              style={{ width: "16px", height: "16px" }}
+              icon="edit-3"
+            />
           </Link>
         </div>
       ),
-      width: "250px",
+      width: "200px",
     },
   ];
 
@@ -105,4 +94,4 @@ const MenuListTable = ({
   );
 };
 
-export default MenuListTable;
+export default NeighbourhoodsListTable;

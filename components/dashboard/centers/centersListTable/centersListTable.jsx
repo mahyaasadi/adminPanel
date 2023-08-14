@@ -20,7 +20,7 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
       sortable: true,
       cell: (row) => (
         <img
-          style={{ width: "30px" }}
+          style={{ width: "35px" }}
           src={"https://irannobat.ir/CenterProfileImage/" + row.Logo}
           alt=""
         />
@@ -136,7 +136,7 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
             پزشکان
           </Link>
           <Link
-            className="btn btn-sm btn-outline-warning font-13 btn-border-left-warning"
+            className="btn btn-sm btn-outline-primary btn-border-left-primary font-13"
             href={{
               pathname: "/departments",
               query: { id: row._id },

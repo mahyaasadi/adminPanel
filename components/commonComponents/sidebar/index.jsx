@@ -46,6 +46,16 @@ const Sidebar = () => {
                   <span>مدیریت مراکز </span>
                 </Link>
               </li>
+
+              <li
+                className={router.pathname == "/neighbourhoods" ? "active" : ""}
+              >
+                <Link href="/neighbourhoods">
+                  <FeatherIcon icon="settings" className="width-15" />
+
+                  <span>مدیریت محله ها </span>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

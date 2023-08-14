@@ -1826,6 +1826,11 @@ button.bg-danger:hover {
   margin-left: 0 !important;
 }
 
+.btn-border-left-primary {
+  border-left: 1px solid #0db1ca !important;
+  margin-left: 0 !important;
+}
+
 .btn-outline-success:focus,
 .btn-outline-success.focus {
   box-shadow: none;
@@ -2196,6 +2201,12 @@ button.bg-danger:hover {
 
 .modal .card {
   box-shadow: unset;
+}
+
+.centerModalBody {
+  height: 80vh;
+  overflow-y: auto;
+  direction: ltr;
 }
 
 /*-----------------
@@ -4240,9 +4251,6 @@ html.menu-opened body {
   overflow-x: auto;
   overflow-y: auto;
   padding: 3rem;
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
 }
 
 .submitDepartments {
@@ -4251,13 +4259,6 @@ html.menu-opened body {
 
 .submitDepartments-btn {
   margin-top: 5em;
-}
-
-.noDepContainer {
-  color: gray;
-  border: 1px solid lightgray;
-  padding: 18rem 14rem;
-  border-radius: 20px;
 }
 
 @media (min-width: 1024px) {

@@ -16,6 +16,7 @@ const CentersManagement = () => {
   const [cityOptionsList, setCityOptionsList] = useState([]);
 
   const [editCenterData, setEditCenterData] = useState([]);
+  const [selectedProvinceList, setSelectedProvinceList] = useState("");
 
   //get all centers
   const getCentersData = () => {
@@ -125,11 +126,10 @@ const CentersManagement = () => {
       });
   };
 
-  let SelectedProvince,
-    SelectedCity = "";
+  let SelectedCity = "";
 
   const FUSelectProvince = (province) => {
-    SelectedProvince = province;
+    setSelectedProvinceList(province);
   };
 
   const FUSelectCity = (city) => {
@@ -167,7 +167,6 @@ const CentersManagement = () => {
       Logo: newLogo,
     };
 
-    console.log(formProps);
     console.log("data", data);
 
     axiosClient
@@ -180,6 +179,7 @@ const CentersManagement = () => {
       })
       .catch((error) => {
         console.log(error);
+        ErrorAlert("خطا", "ویرایش اطلاعات");
       });
   };
 
@@ -284,6 +284,8 @@ const CentersManagement = () => {
           FUSelectCity={FUSelectCity}
           cityOptionsList={cityOptionsList}
           setCityOption={setCityOption}
+          setSelectedProvinceList={setSelectedProvinceList}
+          selectedProvinceList={selectedProvinceList}
         />
       </div>
     </>

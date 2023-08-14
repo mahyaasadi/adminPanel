@@ -1,6 +1,10 @@
 import SelectField from "components/commonComponents/selectfield";
 
-const EditCitySelect = ({ data, cityOptionsList, FUSelectCity }) => {
+const StateCitySelect = ({
+  // data,
+  cityOptionsList,
+  FUSelectCity,
+}) => {
   let selectCityData = [];
   for (let i = 0; i < cityOptionsList.length; i++) {
     const item = cityOptionsList[i];
@@ -9,14 +13,6 @@ const EditCitySelect = ({ data, cityOptionsList, FUSelectCity }) => {
       label: item.CityName,
     };
     selectCityData.push(cityObj);
-  }
-
-  let selectedCity = null;
-  if (data) {
-    selectedCity = {
-      value: data.City?.Finglish,
-      label: data.City?.Name,
-    };
   }
 
   const colourStyles = {
@@ -38,18 +34,16 @@ const EditCitySelect = ({ data, cityOptionsList, FUSelectCity }) => {
         <SelectField
           styles={colourStyles}
           className="text-center font-12 editCitySelectOptions"
-          id="editCitySelectOptions"
-          name="addCenterCity"
+          id="citySelectOptions"
           options={selectCityData}
-          key={data.City?.Name}
-          defaultValue={selectedCity}
-          onChangeValue={(value) => FUSelectCity(value?.value)}
           placeholder={"انتخاب نمایید"}
-          required
+          onChangeValue={(value) => FUSelectCity(value?.value)}
+          name="addCenterCity"
+          // required
         />
       </div>
     </>
   );
 };
 
-export default EditCitySelect;
+export default StateCitySelect;

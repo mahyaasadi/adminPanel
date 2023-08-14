@@ -51,8 +51,8 @@ const AddCenterModal = ({
               </i>
             </button>
           </div>
-          <div className="modal-body">
-            <form onSubmit={addCenter} id="frmAddCenter">
+          <div className="modal-body centerModalBody">
+            <form onSubmit={addCenter} id="frmAddCenter" dir="rtl">
               <input type="hidden" value={defaultData?._id} name="CenterID" />
               <div className="row">
                 <div className="col">
@@ -131,8 +131,9 @@ const AddCenterModal = ({
                 </label>
                 <div className="col p-0">
                   <input
-                    className="form-control floating inputPadding rounded"
+                    dir="ltr"
                     type="text"
+                    className="form-control floating inputPadding rounded"
                     name="addCenterDomain"
                     required
                   />

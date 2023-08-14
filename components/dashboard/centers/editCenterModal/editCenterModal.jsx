@@ -12,6 +12,8 @@ const EditCenterModal = ({
   FUSelectCity,
   setCityOption,
   cityOptionsList,
+  setSelectedProvinceList,
+  selectedProvinceList,
 }) => {
   const colourStyles = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
@@ -26,32 +28,31 @@ const EditCenterModal = ({
   let selectedProvince = null;
   if (data.Province) {
     selectedProvince = {
-      value: data.Province.Finglish,
-      label: data.Province.Name,
+      value: data?.Province?.Finglish,
+      label: data?.Province?.Name,
     };
+  }
+  // console.log(selectedProvince);
+
+  useEffect(() => {
+    setSelectedProvinceList(selectedProvince);
+    // console.log(selectedProvinceList);
+
     let findCities = provinceOptionsList.find(
       (x) => x.value === data.Province.Finglish
     );
-    console.log(findCities);
-    if (findCities) setCityOption(findCities.cities);
-  }
+    // console.log(findCities);
 
-  // console.log(selectedProvince);
-  // console.log(data.Logo);
+    if (findCities) setCityOption(findCities.cities);
+  }, [data]);
 
   const displayPreview = (e) => {
     var urlCreator = window.URL || window.webkitURL;
-    var imageUrl = urlCreator.createObjectURL(e.target.files[0]);
-    $("#currentLogo").attr("src", imageUrl);
-    // $("currentLogoContainer").hide();
-    // $("#newLogoUploadPreview").attr("src", imageUrl);
-    // $("#newLogoUploadPreview").hide();
-    // $("#editCenterModal").on("hidden.bs.modal", function () {
-    //   $(this).find("#newLogoUploadPreview").trigger("reset");
-    // });
+    if (e.target.files.length !== 0) {
+      var imageUrl = urlCreator.createObjectURL(e.target.files[0]);
+      $("#currentLogo").attr("src", imageUrl);
+    }
   };
-
-  // const hide = ()
 
   return (
     <div
@@ -77,8 +78,8 @@ const EditCenterModal = ({
               </i>
             </button>
           </div>
-          <div className="modal-body">
-            <form onSubmit={editCenter}>
+          <div className="modal-body centerModalBody">
+            <form onSubmit={editCenter} dir="rtl">
               <div className="row">
                 <div className="col">
                   <div className="form-group">
@@ -93,6 +94,7 @@ const EditCenterModal = ({
                         className="form-control floating inputPadding rounded"
                         name="editCenterName"
                         defaultValue={data.Name}
+                        key={data.Name}
                         required
                       />
                     </div>
@@ -104,10 +106,12 @@ const EditCenterModal = ({
                     <label className="lblAbs font-12">نام انگلیسی</label>
                     <div className="col p-0">
                       <input
+                        dir="ltr"
                         type="text"
                         className="form-control floating inputPadding rounded"
                         name="editCenterEngName"
                         defaultValue={data.EngName}
+                        key={data.EngName}
                       />
                     </div>
                   </div>
@@ -126,7 +130,7 @@ const EditCenterModal = ({
                     className="text-center font-12"
                     placeholder={"انتخاب نمایید"}
                     required
-                    key={data?.Province}
+                    key={data.Province?.Name}
                     defaultValue={selectedProvince}
                     onChangeValue={(value) => FUSelectProvince(value?.value)}
                     onChange={(value) => setCityOption(value.cities)}
@@ -151,6 +155,7 @@ const EditCenterModal = ({
                     type="text"
                     name="editCenterAddress"
                     defaultValue={data.Address}
+                    key={data.Address}
                     required
                   ></textarea>
                 </div>
@@ -162,11 +167,13 @@ const EditCenterModal = ({
                 </label>
                 <div className="col p-0">
                   <input
+                    dir="ltr"
                     className="form-control floating inputPadding rounded"
                     type="text"
                     name="editCenterDomain"
                     defaultValue={data.Domain}
                     required
+                    key={data.Domain}
                   />
                 </div>
               </div>
@@ -179,6 +186,7 @@ const EditCenterModal = ({
                     type="text"
                     name="editCenterLocation"
                     defaultValue={data.Loc}
+                    key={data.loc}
                   />
                 </div>
               </div>
@@ -191,6 +199,7 @@ const EditCenterModal = ({
                     type="text"
                     name="editCenterDescription"
                     defaultValue={data.ViewDes}
+                    key={data.ViewDes}
                   ></textarea>
                 </div>
               </div>
@@ -207,38 +216,21 @@ const EditCenterModal = ({
                   className="upload"
                   name="editLogo"
                   onChange={displayPreview}
+                  key={data.Logo}
                 />
-
-                {/* <input
-                  type="hidden"
-                  className="upload"
-                  name="currentLogo"
-                  onChange={displayPreview}
-                  defaultValue={data.Logo}
-                /> */}
               </div>
 
               <div
                 className="d-flex justify-center mt-4"
-                id="currentLogoContainer previewImgContainer"
+                id="currentLogoContainer"
               >
                 <img
                   src={"https://irannobat.ir/CenterProfileImage/" + data.Logo}
                   alt="logo"
-                  style={{ width: "100px" }}
+                  style={{ width: "130px" }}
                   className="previewImg m-auto d-block"
                   id="currentLogo"
                 ></img>
-              </div>
-
-              <div className="previewImgContainer">
-                <Image
-                  src=""
-                  alt=""
-                  width="200"
-                  id="newLogoUploadPreview"
-                  className="d-block m-auto previewImg"
-                />
               </div>
 
               <div className="submit-section">

@@ -11,14 +11,6 @@ const CitySelect = ({ data, cityOptionsList, FUSelectCity }) => {
     selectCityData.push(cityObj);
   }
 
-  // let selectedCity = null;
-  // if (data) {
-  //   selectedCity = {
-  //     value: data.City?.Finglish,
-  //     label: data.City?.Name,
-  //   };
-  // }
-
   const colourStyles = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
     control: (styles) => ({
@@ -41,11 +33,9 @@ const CitySelect = ({ data, cityOptionsList, FUSelectCity }) => {
           id="citySelectOptions"
           options={selectCityData}
           placeholder={"انتخاب نمایید"}
-          // required
-          // defaultValue={selectedCity}
-          // key={data?.City}
           onChangeValue={(value) => FUSelectCity(value?.value)}
           name="addCenterCity"
+          // required
         />
       </div>
     </>
