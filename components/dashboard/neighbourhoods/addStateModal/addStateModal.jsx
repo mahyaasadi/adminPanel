@@ -10,6 +10,7 @@ const AddStateModal = ({
   setCityOption,
   cityOptionsList,
 }) => {
+
   const colourStyles = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
     control: (styles) => ({
@@ -19,8 +20,6 @@ const AddStateModal = ({
       border: "1px solid #E6E9F4",
     }),
   };
-
-  console.log(provinceOptionsList);
 
   return (
     <div
@@ -83,14 +82,14 @@ const AddStateModal = ({
                   </label>
                   <SelectField
                     styles={colourStyles}
-                    id="ProvinceSelectOptions"
+                    id="selectStateProvince"
                     options={provinceOptionsList}
                     className="text-center font-12"
                     placeholder={"انتخاب نمایید"}
                     required
                     onChangeValue={(value) => FUSelectProvince(value?.value)}
                     onChange={(value) => setCityOption(value.cities)}
-                    name="addCenterProvince"
+                    name="addStateProvince"
                   />
                 </div>
 

@@ -7,12 +7,15 @@ import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import NeighbourhoodsListTable from "components/dashboard/neighbourhoods/neighbourhoodsListTable";
 import AddStateModal from "components/dashboard/neighbourhoods/addStateModal/addStateModal";
+import EditStateModal from "components/dashboard/neighbourhoods/editStateModal/editStateModal";
 
 const Neighbourhoods = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [neighbourhoodsData, setNeighbourhoodsData] = useState([]);
+  const [editNeighbourhoodData, setEditNeighbourhoodData] = useState([]);
   const [provinceOptionsList, setProvinceOptionsList] = useState([]);
   const [cityOptionsList, setCityOptionsList] = useState([]);
+  const [selectedProvinceList, setSelectedProvinceList] = useState("");
 
   //get all states
   const getAllStates = () => {
@@ -24,7 +27,6 @@ const Neighbourhoods = () => {
       .then((response) => {
         console.log(response.data);
         setIsLoading(false);
-
         setNeighbourhoodsData(response.data);
       })
       .catch((error) => {
@@ -36,35 +38,43 @@ const Neighbourhoods = () => {
   // Add new state
   const addNewState = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
     let url = "/State/add";
 
     let data = {
-      //   State: formProps.,
-      //   Province: formProps.,
-      //   ProvinceFin: formProps,
-      //   City: formProps,
-      //   CityFin: formProps,
+      State: formProps.addStateName,
+      Finglish: formProps.addStateEngName,
+      Province: $("#selectStateProvince").text(),
+      ProvinceFin: formProps.addStateProvince,
+      City: $("#stateCitySelect").text(),
+      CityFin: formProps.addStateCity,
     };
 
-    if (CenterID) {
-      axiosClient
-        .post(url, data)
-        .then((response) => {
-          //   setDoctorsList([...doctorsList, response.data]);
-          //   $("#addPhysicianModal").modal("hide");
-          e.target.reset();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    console.log("data", data)
+
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data)
+        setIsLoading(false);
+
+        setNeighbourhoodsData([...neighbourhoodsData, response.data]);
+        $("#addStateModal").modal("hide");
+        e.target.reset();
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
   };
 
   const getAllProvinces = () => {
     let url = "Province/getAll";
+    setIsLoading(true);
+
     axiosClient
       .get(url)
       .then((response) => {
@@ -78,10 +88,12 @@ const Neighbourhoods = () => {
           };
           selectProvinceData.push(provinceObj);
         }
+        setIsLoading(false);
         setProvinceOptionsList(selectProvinceData);
       })
       .catch((error) => {
         console.log(error);
+        setIsLoading(false);
       });
   };
 
@@ -97,6 +109,87 @@ const Neighbourhoods = () => {
 
   const setCityOption = (data) => {
     setCityOptionsList(data);
+  };
+
+  // Edit State
+  const editState = async (e) => {
+    e.preventDefault();
+    setIsLoading(true)
+
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+    const StateID = formProps.stateID;
+
+    let url = `State/update/${StateID}`;
+    let data = {
+      State: formProps.editStateName,
+      Finglish: formProps.editStateEngName,
+      Province: $("#editSelectStateProvince").text(),
+      ProvinceFin: formProps.editStateProvince,
+      City: $("#editStateCitySelect").text(),
+      CityFin: formProps.editStateCity,
+    };
+
+    console.log("data", data);
+
+    if (StateID) {
+      axiosClient
+        .put(url, data)
+        .then((response) => {
+          console.log(response.data);
+          updateItem(StateID, response.data);
+
+          setIsLoading(false);
+          $("#editStateModal").modal("hide");
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+          // ErrorAlert("خطا", "ویرایش اطلاعات با خطا همراه گرد");
+        });
+    }
+  };
+
+  const updateItem = (id, newArr) => {
+    let index = neighbourhoodsData.findIndex((x) => x._id === id);
+    let g = neighbourhoodsData[index];
+    g = newArr;
+
+    if (index === -1) {
+      // handle error
+      console.log("no match");
+    } else
+      setNeighbourhoodsData([
+        ...neighbourhoodsData.slice(0, index),
+        g,
+        ...neighbourhoodsData.slice(index + 1),
+      ]);
+  };
+
+  const updateState = (data) => {
+    setEditNeighbourhoodData(data);
+    $("#editStateModal").modal("show")
+  }
+
+  // Delete State
+  const deleteState = async (id) => {
+    let result = await QuestionAlert("حذف محله!", "آیا از حذف مطمئن هستید");
+    setIsLoading(true);
+
+    if (result) {
+      let url = `/State/Delete/${id}`;
+
+      await axiosClient
+        .delete(url)
+        .then(function () {
+          setNeighbourhoodsData(neighbourhoodsData.filter((a) => a._id !== id));
+          setIsLoading(false);
+        })
+        .catch(function (error) {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
   };
 
   useEffect(() => {
@@ -149,7 +242,11 @@ const Neighbourhoods = () => {
                 {/* {isLoading ? (
                   <Loading />
                 ) : ( */}
-                <NeighbourhoodsListTable data={neighbourhoodsData} />
+                <NeighbourhoodsListTable
+                  data={neighbourhoodsData}
+                  updateState={updateState}
+                  deleteState={deleteState}
+                />
                 {/* )} */}
               </div>
 
@@ -162,9 +259,21 @@ const Neighbourhoods = () => {
           addNewState={addNewState}
           provinceOptionsList={provinceOptionsList}
           FUSelectProvince={FUSelectProvince}
+          FUSelectCity={FUSelectCity}
           setCityOption={setCityOption}
           cityOptionsList={cityOptionsList}
+        />
+
+        <EditStateModal
+          data={editNeighbourhoodData}
+          editState={editState}
+          provinceOptionsList={provinceOptionsList}
+          FUSelectProvince={FUSelectProvince}
           FUSelectCity={FUSelectCity}
+          cityOptionsList={cityOptionsList}
+          setCityOption={setCityOption}
+          setSelectedProvinceList={setSelectedProvinceList}
+          selectedProvinceList={selectedProvinceList}
         />
       </div>
     </>

@@ -93,9 +93,6 @@ const CentersManagement = () => {
         $("#addCenterModal").modal("hide");
         setIsLoading(false);
         e.target.reset();
-        // $("#addCenterModal").on("hidden.bs.modal", function () {
-        //   $(this).find("frmAddCenter").trigger("reset");
-        // });
       })
       .catch((error) => {
         console.log(error);
@@ -179,7 +176,7 @@ const CentersManagement = () => {
       })
       .catch((error) => {
         console.log(error);
-        ErrorAlert("خطا", "ویرایش اطلاعات");
+        // ErrorAlert("خطا", "ویرایش اطلاعات");
       });
   };
 

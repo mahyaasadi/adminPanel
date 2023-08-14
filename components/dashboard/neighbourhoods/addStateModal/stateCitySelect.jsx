@@ -34,11 +34,11 @@ const StateCitySelect = ({
         <SelectField
           styles={colourStyles}
           className="text-center font-12 editCitySelectOptions"
-          id="citySelectOptions"
+          id="stateCitySelect"
           options={selectCityData}
           placeholder={"انتخاب نمایید"}
           onChangeValue={(value) => FUSelectCity(value?.value)}
-          name="addCenterCity"
+          name="addStateCity"
           // required
         />
       </div>

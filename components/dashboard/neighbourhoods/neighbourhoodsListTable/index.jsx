@@ -7,7 +7,7 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const NeighbourhoodsListTable = ({ data }) => {
+const NeighbourhoodsListTable = ({ data, deleteState, updateState }) => {
   const columns = [
     {
       name: "محله",
@@ -39,7 +39,7 @@ const NeighbourhoodsListTable = ({ data }) => {
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="حذف"
-            // onClick={() => deletePhysician(row._id)}
+            onClick={() => deleteState(row._id)}
           >
             <FeatherIcon
               style={{ width: "16px", height: "16px" }}
@@ -50,7 +50,7 @@ const NeighbourhoodsListTable = ({ data }) => {
           <Link
             href="#"
             className="btn btn-sm btn-outline-secondary btn-border-left"
-            // onClick={() => updatePhysician(row)}
+            onClick={() => updateState(row)}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="ویرایش"
