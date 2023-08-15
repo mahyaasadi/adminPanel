@@ -10,7 +10,6 @@ const AddStateModal = ({
   setCityOption,
   cityOptionsList,
 }) => {
-
   const colourStyles = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
     control: (styles) => ({
@@ -50,7 +49,7 @@ const AddStateModal = ({
               <div className="row">
                 <div className="form-group col">
                   <label className="lblAbs font-12">
-                    نام محله<span className="text-danger">*</span>
+                    نام محله <span className="text-danger">*</span>
                   </label>
                   <div className="col p-0">
                     <input
@@ -63,13 +62,16 @@ const AddStateModal = ({
                 </div>
 
                 <div className="form-group col">
-                  <label className="lblAbs font-12">نام انگلیسی محله</label>
+                  <label className="lblAbs font-12">
+                    نام انگلیسی محله <span className="text-danger">*</span>
+                  </label>
                   <div className="col p-0">
                     <input
                       dir="ltr"
                       type="text"
                       name="addStateEngName"
                       className="form-control floating inputPadding rounded"
+                      required
                     />
                   </div>
                 </div>

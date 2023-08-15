@@ -11,6 +11,14 @@ const Loading = () => {
         height="150"
         alt="loading"
         priority={true}
+        // styyle={{
+        //   "position": relative;
+        //   "color": transparent;
+        //   "margin": auto;
+        //   "display": block;
+        //   "z-index": 99
+        // }}
+        // className="loadingImg"
       />
     </div>
   );

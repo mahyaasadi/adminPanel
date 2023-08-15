@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
+import Image from "next/image";
+import { organ, neighbourhoods, article } from "components/imagepath";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -29,9 +31,9 @@ const Sidebar = () => {
                 }
               >
                 <Link href="/menusManagement">
-                  <FeatherIcon icon="list" className="width-15" />
+                  <FeatherIcon icon="list" className="width-22" />
 
-                  <span>مدیریت منوهای سامانه</span>
+                  <span>مدیریت منوها</span>
                 </Link>
               </li>
 
@@ -41,9 +43,8 @@ const Sidebar = () => {
                 }
               >
                 <Link href="/centersManagement">
-                  <FeatherIcon icon="settings" className="width-15" />
-
-                  <span>مدیریت مراکز </span>
+                  <Image src={organ} alt="" width="21" height="21" />
+                  <span>مدیریت مراکز</span>
                 </Link>
               </li>
 
@@ -51,10 +52,41 @@ const Sidebar = () => {
                 className={router.pathname == "/neighbourhoods" ? "active" : ""}
               >
                 <Link href="/neighbourhoods">
-                  <FeatherIcon icon="settings" className="width-15" />
+                  <Image src={neighbourhoods} alt="" width="20" height="20" />
 
-                  <span>مدیریت محله ها </span>
+                  <span>مدیریت محله ها</span>
                 </Link>
+              </li>
+
+              <li className="submenu">
+                <a href="#">
+                  <Image src={article} alt="" width="18" height="18" />
+                  <span>تنظیمات مقاله ها</span>
+                  <span className="menu-arrow"></span>
+                </a>
+                <ul className="hidden hiddenSidebar">
+                  <li
+                    className={
+                      router.pathname == "/articleGroupManagement"
+                        ? "active"
+                        : ""
+                    }
+                  >
+                    <Link href="/articleGroupManagement" className="font-12">
+                      گروه مقاله ها
+                    </Link>
+                  </li>
+
+                  <li
+                    className={
+                      router.pathname == "/articleTagManagement" ? "active" : ""
+                    }
+                  >
+                    <Link href="/articleTagManagement" className="font-12">
+                      تگ مقاله ها
+                    </Link>
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>

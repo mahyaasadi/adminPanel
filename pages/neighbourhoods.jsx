@@ -53,12 +53,12 @@ const Neighbourhoods = () => {
       CityFin: formProps.addStateCity,
     };
 
-    console.log("data", data)
+    console.log("data", data);
 
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         setIsLoading(false);
 
         setNeighbourhoodsData([...neighbourhoodsData, response.data]);
@@ -114,7 +114,7 @@ const Neighbourhoods = () => {
   // Edit State
   const editState = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
 
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
@@ -168,8 +168,8 @@ const Neighbourhoods = () => {
 
   const updateState = (data) => {
     setEditNeighbourhoodData(data);
-    $("#editStateModal").modal("show")
-  }
+    $("#editStateModal").modal("show");
+  };
 
   // Delete State
   const deleteState = async (id) => {
@@ -239,15 +239,15 @@ const Neighbourhoods = () => {
                   </div>
                 </div>
 
-                {/* {isLoading ? (
+                {isLoading ? (
                   <Loading />
-                ) : ( */}
-                <NeighbourhoodsListTable
-                  data={neighbourhoodsData}
-                  updateState={updateState}
-                  deleteState={deleteState}
-                />
-                {/* )} */}
+                ) : (
+                  <NeighbourhoodsListTable
+                    data={neighbourhoodsData}
+                    updateState={updateState}
+                    deleteState={deleteState}
+                  />
+                )}
               </div>
 
               <div id="tablepagination" className="dataTables_wrapper"></div>

@@ -4101,6 +4101,10 @@ html.menu-opened body {
   width: 15px !important;
 }
 
+.width-22 {
+  width: 22px !important;
+}
+
 .sidebar-menu ul ul {
   display: none;
   padding: 0;

@@ -1,10 +1,6 @@
 import SelectField from "components/commonComponents/selectfield";
 
-const StateCitySelect = ({
-  // data,
-  cityOptionsList,
-  FUSelectCity,
-}) => {
+const StateCitySelect = ({ cityOptionsList, FUSelectCity }) => {
   let selectCityData = [];
   for (let i = 0; i < cityOptionsList.length; i++) {
     const item = cityOptionsList[i];
@@ -39,7 +35,7 @@ const StateCitySelect = ({
           placeholder={"انتخاب نمایید"}
           onChangeValue={(value) => FUSelectCity(value?.value)}
           name="addStateCity"
-          // required
+          required
         />
       </div>
     </>
