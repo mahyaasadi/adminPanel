@@ -209,6 +209,9 @@ const CentersManagement = () => {
   return (
     <>
       <div className="page-wrapper">
+        {isLoading ? (
+                  <Loading />
+                ) : (
         <div className="content container-fluid">
           <div className="page-header">
             <div className="row align-items-center">
@@ -248,20 +251,19 @@ const CentersManagement = () => {
                   </div>
                 </div>
 
-                {isLoading ? (
-                  <Loading />
-                ) : (
+                
                   <CentersListTable
                     data={centersData}
                     updateCenterInfo={updateCenterInfo}
                   />
-                )}
+              
               </div>
 
               <div id="tablepagination" className="dataTables_wrapper"></div>
             </div>
           </div>
         </div>
+          )}
 
         <AddCenterModal
           addCenter={addCenter}

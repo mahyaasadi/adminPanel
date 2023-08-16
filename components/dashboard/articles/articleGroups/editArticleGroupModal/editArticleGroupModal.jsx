@@ -1,10 +1,10 @@
 import FeatherIcon from "feather-icons-react";
 
-const AddArticleGroupModal = ({ addArticleGroup }) => {
+const EditArticleGroupModal = ({ data, editArticleGroup }) => {
   return (
     <div
       className="modal fade contentmodal"
-      id="addArticleGroupModal"
+      id="editArticleGroupModal"
       tabIndex="-1"
       aria-hidden="true"
     >
@@ -12,7 +12,7 @@ const AddArticleGroupModal = ({ addArticleGroup }) => {
         <div className="modal-content doctor-profile">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">
-              افزودن گروه مقاله
+              ویرایش اطلاعات
             </p>
             <button
               type="button"
@@ -26,29 +26,42 @@ const AddArticleGroupModal = ({ addArticleGroup }) => {
             </button>
           </div>
           <div className="modal-body">
-            <form onSubmit={addArticleGroup}>
+            <form onSubmit={editArticleGroup}>
               <div className="form-group">
+                <input
+                  type="hidden"
+                  className="form-control floating"
+                  name="editArticleGrpID"
+                  value={data._id}
+                />
+
                 <label className="lblAbs font-12">
-                  عنوان<span className="text-danger">*</span>
+                  عنوان <span className="text-danger">*</span>
                 </label>
                 <div className="col p-0">
                   <input
-                    type="text"
-                    name="articleGroupTitle"
                     className="form-control floating inputPadding rounded"
+                    type="text"
+                    name="editArticleGrpTitle"
+                    defaultValue={data.Title}
+                    key={data.Title}
                     required
                   />
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="lblAbs font-12">مشخصات</label>
+                <label className="lblAbs font-12">
+                  مشخصات <span className="text-danger">*</span>
+                </label>
                 <div className="col p-0">
                   <input
-                    type="text"
-                    name="articleGroupDescription"
                     className="form-control floating inputPadding rounded"
-                    // required
+                    type="text"
+                    name="editArticleGrpDes"
+                    defaultValue={data.Des}
+                    key={data.Des}
+                    required
                   />
                 </div>
               </div>
@@ -56,9 +69,9 @@ const AddArticleGroupModal = ({ addArticleGroup }) => {
               <div className="submit-section">
                 <button
                   type="submit"
-                  className="btn btn-primary rounded btn-save"
+                  className="btn btn-primary btn-save rounded"
                 >
-                  ثبت
+                  ثبت تغییرات
                 </button>
               </div>
             </form>
@@ -69,4 +82,4 @@ const AddArticleGroupModal = ({ addArticleGroup }) => {
   );
 };
 
-export default AddArticleGroupModal;
+export default EditArticleGroupModal;

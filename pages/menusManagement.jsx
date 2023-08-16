@@ -388,61 +388,64 @@ const MenusManagement = () => {
   return (
     <>
       <div className="page-wrapper">
+          {isLoading ? (
+            <Loading />
+          ) : (
         <div className="content container-fluid">
-          <div className="page-header">
-            <div className="row align-items-center">
-              <div className="col-md-12 d-flex justify-content-end">
-                <Link
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#addToMenuModal"
-                  className="btn btn-primary btn-add"
-                >
-                  <i className="me-1">
-                    <FeatherIcon icon="plus-square" />
-                  </i>{" "}
-                  افزودن
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* <!-- Menu List --> */}
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="card">
-                <div className="card-header border-bottom-0">
-                  <div className="row align-items-center">
-                    <div className="col">
-                      <h5 className="card-title font-16">لیست منوها</h5>
-                    </div>
-                    <div className="col-auto d-flex flex-wrap">
-                      <div className="form-custom me-2">
-                        <div
-                          id="tableSearch"
-                          className="dataTables_wrapper"
-                        ></div>
-                      </div>
-                    </div>
+              <div className="page-header">
+                <div className="row align-items-center">
+                  <div className="col-md-12 d-flex justify-content-end">
+                    <Link
+                      href="#"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addToMenuModal"
+                      className="btn btn-primary btn-add"
+                    >
+                      <i className="me-1">
+                        <FeatherIcon icon="plus-square" />
+                      </i>{" "}
+                      افزودن
+                    </Link>
                   </div>
                 </div>
-
-                {isLoading ? (
-                  <Loading />
-                ) : (
-                  <MenuListTable
-                    data={menuList}
-                    SetSubMenuInDT={SetSubMenuInDT}
-                    deleteMenu={deleteMenu}
-                    updateMenu={updateMenu}
-                  />
-                )}
               </div>
+            
+              <div className="row">
+                <div className="col-sm-12">
+                  <div className="card">
+                    <div className="card-header border-bottom-0">
+                      <div className="row align-items-center">
+                        <div className="col">
+                          <h5 className="card-title font-16">لیست منوها</h5>
+                        </div>
+                        <div className="col-auto d-flex flex-wrap">
+                          <div className="form-custom me-2">
+                            <div
+                              id="tableSearch"
+                              className="dataTables_wrapper"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-              <div id="tablepagination" className="dataTables_wrapper"></div>
-            </div>
-          </div>
+                    <MenuListTable
+                      data={menuList}
+                      SetSubMenuInDT={SetSubMenuInDT}
+                      deleteMenu={deleteMenu}
+                      updateMenu={updateMenu}
+                    />
+                  </div>
+
+                  <div
+                    id="tablepagination"
+                    className="dataTables_wrapper"
+                  ></div>
+                </div>
+              </div>
+          
         </div>
+          )}
 
         <AddToMenuModal
           permissionsList={permissionsList}

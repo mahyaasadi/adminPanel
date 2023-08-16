@@ -61,10 +61,17 @@ const Sidebar = () => {
               <li className="submenu">
                 <a href="#">
                   <Image src={article} alt="" width="18" height="18" />
-                  <span>تنظیمات مقاله ها</span>
+                  <span>مدیریت مقالات</span>
                   <span className="menu-arrow"></span>
                 </a>
                 <ul className="hidden hiddenSidebar">
+                  <li
+                    className={router.pathname == "/articles" ? "active" : ""}
+                  >
+                    <Link href="/articles" className="font-12">
+                      مقالات
+                    </Link>
+                  </li>
                   <li
                     className={
                       router.pathname == "/articleGroupManagement"
@@ -73,7 +80,7 @@ const Sidebar = () => {
                     }
                   >
                     <Link href="/articleGroupManagement" className="font-12">
-                      گروه مقاله ها
+                      گروه مقالات
                     </Link>
                   </li>
 
@@ -83,7 +90,7 @@ const Sidebar = () => {
                     }
                   >
                     <Link href="/articleTagManagement" className="font-12">
-                      تگ مقاله ها
+                      تگ مقالات
                     </Link>
                   </li>
                 </ul>

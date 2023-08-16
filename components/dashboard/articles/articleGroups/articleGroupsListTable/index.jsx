@@ -7,7 +7,13 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const ArticleGroupsListTable = ({ data, deleteArticleGroup }) => {
+const ArticleGroupsListTable = ({
+  data,
+  updateArticleGroup,
+  deleteArticleGroup,
+  checkImportantArticle,
+  checkUnimportantArticle
+}) => {
   const columns = [
     {
       name: "عنوان",
@@ -45,7 +51,7 @@ const ArticleGroupsListTable = ({ data, deleteArticleGroup }) => {
           <Link
             href="#"
             className="btn btn-sm btn-outline-secondary btn-border-left"
-            // onClick={() => updatePhysician(row)}
+            onClick={() => updateArticleGroup(row, row._id)}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="ویرایش"
@@ -55,6 +61,40 @@ const ArticleGroupsListTable = ({ data, deleteArticleGroup }) => {
               icon="edit-3"
             />
           </Link>
+
+          {!row.Important ? (
+            <button
+              className="btn btn-sm btn-outline-light font-13"
+              type="button"
+              onClick={() => checkImportantArticle(row._id)}
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="تغییر وضعیت اهمیت"
+            >
+              <i className="d-flex align-items-center gap-3">
+                <FeatherIcon
+                  style={{ width: "16px", height: "16px" }}
+                  icon="star"
+                />
+              </i>
+            </button>
+          ) : (
+            <button
+              className="btn btn-sm btn-outline-warning"
+              type="button"
+              onClick={() => checkUnimportantArticle(row._id)}
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="تغییر وضعیت اهمیت"
+            >
+              <i className="d-flex align-items-center gap-3">
+                <FeatherIcon
+                  style={{ width: "16px", height: "16px" }}
+                  icon="star"
+                />
+              </i>
+            </button>
+          )}
         </div>
       ),
       width: "200px",

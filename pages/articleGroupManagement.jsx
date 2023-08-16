@@ -7,12 +7,16 @@ import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import ArticleGroupsListTable from "components/dashboard/articles/articleGroups/articleGroupsListTable";
 import AddArticleGroupModal from "components/dashboard/articles/articleGroups/addArticleGroupModal/addArticleGroupModal";
+import EditArticleGroupModal from "components/dashboard/articles/articleGroups/editArticleGroupModal/editArticleGroupModal";
+
+let ActiveArticleGrpID = null;
 
 const ArticleGroupsManagement = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [articleGroupsData, setArticleGroupsData] = useState([]);
+  const [editArticleGroupData, setEditArticleGroupData] = useState([]);
 
-  //get all states
+  // Get all
   const getAllArticleGroups = () => {
     let url = "/ArticleGroup/getAll";
     setIsLoading(true);
@@ -31,7 +35,7 @@ const ArticleGroupsManagement = () => {
   };
 
   // Add Article Group
-  const addArticelGroup = (e) => {
+  const addArticleGroup = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -47,10 +51,9 @@ const ArticleGroupsManagement = () => {
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
         setArticleGroupsData([...articleGroupsData, response.data]);
-
         setIsLoading(false);
+
         $("#addArticleGroupModal").modal("hide");
         e.target.reset();
       })
@@ -60,11 +63,122 @@ const ArticleGroupsManagement = () => {
       });
   };
 
+  // Edit Article Group
+  const updateArticleGroup = (data, articleGrpId) => {
+    setEditArticleGroupData(data);
+    ActiveArticleGrpID = articleGrpId;
+    $("#editArticleGroupModal").modal("show");
+  };
+
+  const editArticleGroup = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let url = `ArticleGroup/update/${ActiveArticleGrpID}`;
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+
+    let data = {
+      Title: formProps.editArticleGrpTitle,
+      Des: formProps.editArticleGrpDes,
+    };
+
+    axiosClient
+      .put(url, data)
+      .then((response) => {
+        console.log(response.data);
+        updateArticleGroupItem(formProps.editArticleGrpID, response.data);
+
+        setIsLoading(false);
+        $("#editArticleGroupModal").modal("hide");
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  };
+
+  const updateArticleGroupItem = (id, newArr) => {
+    let index = articleGroupsData.findIndex((x) => x._id === id);
+
+    let g = articleGroupsData[index];
+    g = newArr;
+    if (index === -1) {
+      // handle error
+      console.log("no match");
+    } else
+      setArticleGroupsData([
+        ...articleGroupsData.slice(0, index),
+        g,
+        ...articleGroupsData.slice(index + 1),
+      ]);
+  };
+
+  // Importance State
+  const ChangeImportanceState = (id, type) => {
+    let findArticleGroup = articleGroupsData.find((x) => x._id === id);
+    findArticleGroup.Important = type;
+    let findIndex = articleGroupsData.findIndex((x) => x._id === id);
+    articleGroupsData[findIndex] = findArticleGroup;
+    console.log(findArticleGroup);
+    setArticleGroupsData(articleGroupsData);
+  };
+
+  // Important
+  const checkImportantArticle = async (id) => {
+    let result = await QuestionAlert(
+      "تغییر وضعیت اهمیت مقاله!",
+      "آیا از ثبت وضیت مقاله به با اهمیت اطمینان دارید؟"
+    );
+
+    if (result) {
+      let url = `ArticleGroup/setImportant/${id}`;
+      setIsLoading(true);
+
+      await axiosClient
+        .put(url)
+        .then((response) => {
+          console.log(response.data);
+          ChangeImportanceState(id, true);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
+  // Unimportant
+  const checkUnimportantArticle = async (id) => {
+    let result = await QuestionAlert(
+      "تغییر وضعیت اهمیت مقاله!",
+      "آیا از ثبت وضعیت مقاله به بدون اهمیت اطمینان دارید؟"
+    );
+
+    if (result) {
+      let url = `/ArticleGroup/removeImportant/${id}`;
+      setIsLoading(true);
+
+      await axiosClient
+        .put(url)
+        .then((response) => {
+          console.log(response.data);
+          ChangeImportanceState(id, false);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
   // Delete ArticleGroup
   const deleteArticleGroup = async (id) => {
     let result = await QuestionAlert(
       "حذف گروه مقاله !",
-      "?آیا از حذف مطمئن هستید"
+      "آیا از حذف گروه مقاله اطمینان دارید؟"
     );
     setIsLoading(true);
 
@@ -91,61 +205,70 @@ const ArticleGroupsManagement = () => {
   return (
     <>
       <div className="page-wrapper">
-        <div className="content container-fluid">
-          <div className="page-header">
-            <div className="row align-items-center">
-              <div className="col-md-12 d-flex justify-content-end">
-                <Link
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#addArticleGroupModal"
-                  className="btn btn-primary btn-add"
-                >
-                  <i className="me-1">
-                    <FeatherIcon icon="plus-square" />
-                  </i>{" "}
-                  افزودن
-                </Link>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className="content container-fluid">
+            <div className="page-header">
+              <div className="row align-items-center">
+                <div className="col-md-12 d-flex justify-content-end">
+                  <Link
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addArticleGroupModal"
+                    className="btn btn-primary btn-add"
+                  >
+                    <i className="me-1">
+                      <FeatherIcon icon="plus-square" />
+                    </i>{" "}
+                    افزودن
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* <!-- Menu List --> */}
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="card">
-                <div className="card-header border-bottom-0">
-                  <div className="row align-items-center">
-                    <div className="col">
-                      <h5 className="card-title font-16">لیست گروه مقاله ها</h5>
-                    </div>
-                    <div className="col-auto d-flex flex-wrap">
-                      <div className="form-custom me-2">
-                        <div
-                          id="tableSearch"
-                          className="dataTables_wrapper"
-                        ></div>
+            {/* <!-- Menu List --> */}
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="card">
+                  <div className="card-header border-bottom-0">
+                    <div className="row align-items-center">
+                      <div className="col">
+                        <h5 className="card-title font-16">
+                          لیست گروه مقالات
+                        </h5>
+                      </div>
+                      <div className="col-auto d-flex flex-wrap">
+                        <div className="form-custom me-2">
+                          <div
+                            id="tableSearch"
+                            className="dataTables_wrapper"
+                          ></div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {isLoading ? (
-                  <Loading />
-                ) : (
                   <ArticleGroupsListTable
                     data={articleGroupsData}
+                    updateArticleGroup={updateArticleGroup}
                     deleteArticleGroup={deleteArticleGroup}
+                    checkImportantArticle={checkImportantArticle}
+                    checkUnimportantArticle={checkUnimportantArticle}
                   />
-                )}
-              </div>
+                </div>
 
-              <div id="tablepagination" className="dataTables_wrapper"></div>
+                <div id="tablepagination" className="dataTables_wrapper"></div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+        <AddArticleGroupModal addArticleGroup={addArticleGroup} />
 
-        <AddArticleGroupModal addArticelGroup={addArticelGroup} />
+        <EditArticleGroupModal
+          data={editArticleGroupData}
+          editArticleGroup={editArticleGroup}
+        />
       </div>
     </>
   );

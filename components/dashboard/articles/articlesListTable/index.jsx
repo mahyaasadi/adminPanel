@@ -7,11 +7,43 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const ArticleTagsListTable = ({ data, updateArticleTag, deleteArticleTag }) => {
+const ArticlesListTable = ({
+  data,
+  // updateArticleGroup,
+  deleteArticle,
+}) => {
+  const dateFormat = (str) => {
+    if (str !== "" || str !== null) {
+      let date =
+        str.substr(0, 4) + "/" + str.substr(4, 1) + "/" + str.substr(5, 6);
+      return date;
+    } else {
+      return 0;
+    }
+  };
+
   const columns = [
     {
       name: "عنوان",
       selector: (row) => row.Title,
+      sortable: true,
+      width: "auto",
+    },
+    {
+      name: "عنوان انگلیسی",
+      selector: (row) => row.EngTitle,
+      sortable: true,
+      width: "auto",
+    },
+    {
+      name: "نویسنده",
+      selector: (row) => row.Creator,
+      sortable: true,
+      width: "auto",
+    },
+    {
+      name: "تاریخ",
+      selector: (row) => dateFormat(row.Date),
       sortable: true,
       width: "auto",
     },
@@ -28,7 +60,7 @@ const ArticleTagsListTable = ({ data, updateArticleTag, deleteArticleTag }) => {
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="حذف"
-            onClick={() => deleteArticleTag(row._id)}
+            onClick={() => deleteArticle(row._id)}
           >
             <FeatherIcon
               style={{ width: "16px", height: "16px" }}
@@ -39,7 +71,7 @@ const ArticleTagsListTable = ({ data, updateArticleTag, deleteArticleTag }) => {
           <Link
             href="#"
             className="btn btn-sm btn-outline-secondary btn-border-left"
-            onClick={() => updateArticleTag(row, row._id)}
+            // onClick={() => updateArticleGroup(row, row._id)}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="ویرایش"
@@ -83,4 +115,4 @@ const ArticleTagsListTable = ({ data, updateArticleTag, deleteArticleTag }) => {
   );
 };
 
-export default ArticleTagsListTable;
+export default ArticlesListTable;

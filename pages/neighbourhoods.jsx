@@ -200,6 +200,9 @@ const Neighbourhoods = () => {
   return (
     <>
       <div className="page-wrapper">
+        {isLoading ? (
+                  <Loading />
+                ) : (
         <div className="content container-fluid">
           <div className="page-header">
             <div className="row align-items-center">
@@ -239,21 +242,20 @@ const Neighbourhoods = () => {
                   </div>
                 </div>
 
-                {isLoading ? (
-                  <Loading />
-                ) : (
+                
                   <NeighbourhoodsListTable
                     data={neighbourhoodsData}
                     updateState={updateState}
                     deleteState={deleteState}
                   />
-                )}
+                
               </div>
 
               <div id="tablepagination" className="dataTables_wrapper"></div>
             </div>
           </div>
         </div>
+        )}
 
         <AddStateModal
           addNewState={addNewState}
