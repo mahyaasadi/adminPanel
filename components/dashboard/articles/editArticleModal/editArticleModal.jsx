@@ -4,8 +4,9 @@ import SelectField from "components/commonComponents/selectfield";
 import DatePicker from "components/commonComponents/datepicker/DatePicker";
 import articleLanguageDataClass from "class/articleLanguageDataClass.js";
 
-const AddArticleModal = ({
-  addArticle,
+const EditArticleModal = ({
+  data,
+  editArticle,
   setArticleDateInDB,
   FUSelectArticleLanguage,
 }) => {
@@ -32,21 +33,23 @@ const AddArticleModal = ({
     var urlCreator = window.URL || window.webkitURL;
     if (e.target.files.length !== 0) {
       var imageUrl = urlCreator.createObjectURL(e.target.files[0]);
-      $("#articleFileUploadPreview").attr("src", imageUrl);
+      $("#editArticleImgUploadPreview").attr("src", imageUrl);
     }
   };
 
   return (
     <div
       className="modal fade contentmodal"
-      id="addArticleModal"
+      id="editArticleModal"
       tabIndex="-1"
       aria-hidden="true"
     >
       <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content doctor-profile">
           <div className="modal-header">
-            <p className="mb-0 text-secondary font-14 fw-bold">افزودن مقاله</p>
+            <p className="mb-0 text-secondary font-14 fw-bold">
+              ویرایش اطلاعات
+            </p>
             <button
               type="button"
               className="close-btn"
@@ -59,34 +62,43 @@ const AddArticleModal = ({
             </button>
           </div>
           <div className="modal-body centerModalBody">
-            <form dir="rtl" onSubmit={addArticle}>
-              <div className="row">
-                <div className="form-group col">
-                  <label className="lblAbs font-12">
-                    عنوان <span className="text-danger">*</span>
-                  </label>
-                  <div className="col p-0">
-                    <input
-                      type="text"
-                      name="addArticleTitle"
-                      className="form-control floating inputPadding rounded"
-                      required
-                    />
-                  </div>
-                </div>
+            <form onSubmit={editArticle} dir="rtl">
+              <div className="form-group">
+                <input
+                  type="hidden"
+                  className="form-control floating"
+                  name="editArticleID"
+                  value={data._id}
+                />
 
-                <div className="form-group col">
-                  <label className="lblAbs font-12">
-                    عنوان انگلیسی <span className="text-danger">*</span>
-                  </label>
-                  <div className="col p-0">
-                    <input
-                      type="text"
-                      name="addArticleEngName"
-                      className="form-control floating inputPadding rounded"
-                      required
-                    />
-                  </div>
+                <label className="lblAbs font-12">
+                  عنوان<span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    className="form-control floating inputPadding rounded"
+                    type="text"
+                    name="EditDoctorName"
+                    defaultValue={data.Title}
+                    key={data.Title}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  عنوان انگلیسی <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    className="form-control floating inputPadding rounded"
+                    type="text"
+                    name="editArticleEngName"
+                    defaultValue={data.EngTitle}
+                    key={data.EngTitle}
+                    required
+                  />
                 </div>
               </div>
 
@@ -96,9 +108,11 @@ const AddArticleModal = ({
                 </label>
                 <div className="col p-0">
                   <input
-                    type="text"
-                    name="addArticleAuthor"
                     className="form-control floating inputPadding rounded"
+                    type="text"
+                    name="editArticleAuthor"
+                    defaultValue={data.Creator}
+                    key={data.Creator}
                     required
                   />
                 </div>
@@ -116,8 +130,10 @@ const AddArticleModal = ({
                   <div className="col p-0">
                     <input
                       type="number"
-                      name="addArticlePOT"
+                      name="editArticlePOT"
                       className="form-control floating inputPadding rounded"
+                      defaultValue={data.POT}
+                      key={data.POT}
                       required
                     />
                   </div>
@@ -131,7 +147,9 @@ const AddArticleModal = ({
                     type="checkbox"
                     hidden="hidden"
                     id="showInSlider"
-                    name="articleShowInSlider"
+                    name="editArticleShowInSlider"
+                    defaultValue={data.editArticleShowInSlider}
+                    key={data.editArticleShowInSlider}
                     required
                   />
                   <label
@@ -154,11 +172,11 @@ const AddArticleModal = ({
                   label={true}
                   placeholder={"انتخاب کنید"}
                   className="text-center"
-                  name="addArticleLanguage"
+                  name="editArticleLanguage"
                   onChangeValue={(value) =>
                     FUSelectArticleLanguage(value?.value)
                   }
-                  defaultValue={articleLanguageDataClass[1]}
+                  //   defaultValue={articleLanguageDataClass[1]}
                   required
                 />
               </div>
@@ -170,7 +188,9 @@ const AddArticleModal = ({
                 <div className="col p-0">
                   <textarea
                     type="text"
-                    name="addArticleDes"
+                    name="editArticleDes"
+                    defaultValue={data.Des}
+                    key={data.Des}
                     className="form-control floating inputPadding rounded"
                     required
                   ></textarea>
@@ -185,8 +205,10 @@ const AddArticleModal = ({
                   <textarea
                     type="text"
                     dir="ltr"
-                    name="addArticleSchema"
+                    name="editArticleSchema"
                     className="form-control floating inputPadding rounded"
+                    defaultValue={data.Schema}
+                    key={data.Schema}
                     required
                   ></textarea>
                 </div>
@@ -202,7 +224,7 @@ const AddArticleModal = ({
                 <input
                   type="file"
                   className="upload"
-                  name="addArticleImg"
+                  name="editArticleImg"
                   onChange={displayPreview}
                   required
                 />
@@ -213,7 +235,7 @@ const AddArticleModal = ({
                   src=""
                   alt=""
                   width="200"
-                  id="articleFileUploadPreview"
+                  id="editArticleImgUploadPreview"
                   className="d-block m-auto previewImg"
                 />
               </div>
@@ -221,9 +243,9 @@ const AddArticleModal = ({
               <div className="submit-section">
                 <button
                   type="submit"
-                  className="btn btn-primary rounded btn-save"
+                  className="btn btn-primary btn-save rounded"
                 >
-                  ثبت
+                  ثبت تغییرات
                 </button>
               </div>
             </form>
@@ -234,4 +256,4 @@ const AddArticleModal = ({
   );
 };
 
-export default AddArticleModal;
+export default EditArticleModal;
