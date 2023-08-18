@@ -8,7 +8,7 @@ import Loading from "components/commonComponents/loading/loading";
 import ArticlesListTable from "components/dashboard/articles/articlesListTable";
 import AddArticleModal from "components/dashboard/articles/addArticleModal/addArticleModal";
 import EditArticleModal from "components/dashboard/articles/editArticleModal/editArticleModal";
-import ArticleItem from "components/dashboard/articles/articleItem/articleItem";
+import ArticleDetails from "components/dashboard/articles/articleDetails/articleDetails";
 
 let ActiveArticleID,
   selectedArticleLanguage = null;
@@ -18,6 +18,7 @@ const Articles = () => {
   const [articlesData, setArticlesData] = useState([]);
   const [editArticleData, setEditArticleData] = useState([]);
   const [newArticleDate, setNewArticleDate] = useState("");
+  const [articleDetailsData, setArticleDetailsData] = useState([]);
 
   // Get all articles
   const getAllArticles = () => {
@@ -181,6 +182,11 @@ const Articles = () => {
     }
   };
 
+  const openArticleDetails = (data) => {
+    setArticleDetailsData(data);
+    $("#articleDetailsModal").modal("show")
+  }
+
   useEffect(() => {
     getAllArticles();
   }, []);
@@ -204,7 +210,7 @@ const Articles = () => {
                     <i className="me-1">
                       <FeatherIcon icon="plus-square" />
                     </i>{" "}
-                    افزودن
+                    افزودن مقاله
                   </Link>
                 </div>
               </div>
@@ -216,9 +222,6 @@ const Articles = () => {
                 <div className="card">
                   <div className="card-header border-bottom-0">
                     <div className="row align-items-center">
-                      <div className="col">
-                        <h5 className="card-title font-16">لیست مقالات</h5>
-                      </div>
                       <div className="col-auto d-flex flex-wrap">
                         <div className="form-custom me-2">
                           <div
@@ -234,6 +237,7 @@ const Articles = () => {
                     articlesData={articlesData}
                     updateArticle={updateArticle}
                     deleteArticle={deleteArticle}
+                    openArticleDetails={openArticleDetails}
                   />
                 </div>
 
@@ -255,7 +259,7 @@ const Articles = () => {
           setArticleDateInDB={setArticleDateInDB}
         />
 
-        {/* <ArticleItem data={articlesData}/> */}
+        <ArticleDetails data={articleDetailsData} />
       </div>
     </>
   );
