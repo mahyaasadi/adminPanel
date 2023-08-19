@@ -31,7 +31,7 @@ const EditMenuModal = ({
       tabIndex="-1"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content doctor-profile">
           <div className="modal-header">
             <div className="loeing-header">
@@ -92,7 +92,7 @@ const EditMenuModal = ({
                   />
                 </div>
               </div>
-              
+
               <div className="form-group">
                 <label className="lblAbs font-12">
                   url <span className="text-danger">*</span>
@@ -111,8 +111,11 @@ const EditMenuModal = ({
               </div>
 
               <hr />
-              
-              <p className="mb-4 text-secondary font-14 marginR-1" dir="rtl">
+
+              <p
+                className="mb-4 text-secondary font-14 marginR-1 padding-r-10 "
+                dir="rtl"
+              >
                 بخش های قابل دسترس منو
               </p>
               <div className="form-group permissionsCheckboxList">

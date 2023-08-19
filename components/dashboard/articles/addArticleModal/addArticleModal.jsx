@@ -8,6 +8,7 @@ const AddArticleModal = ({
   addArticle,
   setArticleDateInDB,
   FUSelectArticleLanguage,
+  handleCheckedShowInSlider
 }) => {
   // article date
   const setArticleDate = (value) => {
@@ -111,7 +112,8 @@ const AddArticleModal = ({
 
                 <div className="form-group col">
                   <label className="lblAbs font-12">
-                    مدت زمان مطالعه <span className="text-danger">*</span>
+                    مدت زمان مطالعه (دقیقه){" "}
+                    <span className="text-danger">*</span>
                   </label>
                   <div className="col p-0">
                     <input
@@ -132,7 +134,9 @@ const AddArticleModal = ({
                     hidden="hidden"
                     id="showInSlider"
                     name="articleShowInSlider"
-                    required
+                    defaultChecked="checked"
+                    // required
+                    onChange={handleCheckedShowInSlider}
                   />
                   <label
                     className="showInsliderSwitch font-12"
@@ -165,20 +169,6 @@ const AddArticleModal = ({
 
               <div className="form-group">
                 <label className="lblAbs font-12">
-                  توضیحات <span className="text-danger">*</span>
-                </label>
-                <div className="col p-0">
-                  <textarea
-                    type="text"
-                    name="addArticleDes"
-                    className="form-control floating inputPadding rounded"
-                    required
-                  ></textarea>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label className="lblAbs font-12">
                   اسکیما <span className="text-danger">*</span>
                 </label>
                 <div className="col p-0">
@@ -188,6 +178,17 @@ const AddArticleModal = ({
                     name="addArticleSchema"
                     className="form-control floating inputPadding rounded"
                     required
+                  ></textarea>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="lblAbs font-12">توضیحات</label>
+                <div className="col p-0">
+                  <textarea
+                    type="text"
+                    name="addArticleDes"
+                    className="form-control floating inputPadding rounded"
                   ></textarea>
                 </div>
               </div>

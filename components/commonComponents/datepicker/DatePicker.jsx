@@ -9,12 +9,32 @@ const currentYear = jdate.getFullYear();
 const currentMonth = jdate.getMonth();
 const currentDay = jdate.getDate();
 
-const DatePicker = ({ setArticleDate }) => {
-  const [todaysDate, setTodaysDate] = useState({
-    year: currentYear,
-    month: currentMonth,
-    day: currentDay,
-  });
+const DatePicker = ({ setArticleDate, defDate }) => {
+  let artDate = null;
+  if (defDate) {
+    artDate = {
+      year: parseInt(defDate.substr(0, 4)),
+      month: parseInt(defDate.substr(4, 2)),
+      day: parseInt(defDate.substr(6, 2)),
+    };
+  } else {
+    artDate = {
+      year: currentYear,
+      month: currentMonth,
+      day: currentDay,
+    };
+  }
+  // console.log(artDate);
+  const [todaysDate, setTodaysDate] = useState(artDate);
+  const test = (e) => {
+    if (e?.month.toString().length == 1) {
+      e.month = "0" + e.month.toString();
+    }
+    if (e?.day.toString().length == 1) {
+      e.day = "0" + e.day;
+    }
+    setArticleDate(e);
+  };
 
   return (
     <>
@@ -23,17 +43,18 @@ const DatePicker = ({ setArticleDate }) => {
           تاریخ <span className="text-danger">*</span>
         </label>
         <DtPicker
-          onChange={setArticleDate}
+          onChange={test}
           type="single"
           local="fa"
           inputClass="datePickerInput rounded font-12"
           headerClass="datePickerHeader"
           calenderModalClass="calenderModalContainer"
           placeholder="&nbsp;"
+          daysClass="fullDay"
           inputName="date"
           required
           name="articleDate"
-          initValue={todaysDate}
+          initValue={artDate}
         />
 
         <i className="calendarIcon text-secondary">

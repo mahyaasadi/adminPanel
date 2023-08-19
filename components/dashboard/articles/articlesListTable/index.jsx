@@ -1,7 +1,12 @@
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 
-const ArticlesListTable = ({ articlesData, updateArticle, deleteArticle, openArticleDetails }) => {
+const ArticlesListTable = ({
+  articlesData,
+  updateArticle,
+  deleteArticle,
+  openArticleDetails,
+}) => {
   return (
     <>
       <div className="row p-4">
@@ -10,18 +15,17 @@ const ArticlesListTable = ({ articlesData, updateArticle, deleteArticle, openArt
             {/* cardImage */}
             <div className="card">
               <div className="card-body">
-                <img
-                  className="w-100 h-50 rounded-md articleImg"
-                  src={"https://irannobat.ir/blog/images/" + articleData.Img}
-                  alt="articleImg"
-                ></img>
+                <div className="articleImgContainer">
+                  <img
+                    className="w-100 h-50 rounded-md articleImg"
+                    src={"https://irannobat.ir/blog/images/" + articleData.Img}
+                    alt="articleImg"
+                  ></img>
 
-                {/* <div className="articleLink">
-              <Link to={`/course/${data.id}`}
-                className="border font-semibold border-gray-400 rounded-md p-3 bg-white hover:bg-[#093d41] hover:text-white">
-              مشاهده مقاله
-              </Link>
-            </div> */}
+                  <div className="articleLink">
+                    <div className="">مشاهده مقاله</div>
+                  </div>
+                </div>
 
                 {/* cardDetails */}
                 <div className="px-4">
@@ -80,6 +84,6 @@ const ArticlesListTable = ({ articlesData, updateArticle, deleteArticle, openArt
       </div>
     </>
   );
-}
+};
 
 export default ArticlesListTable;

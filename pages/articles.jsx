@@ -9,6 +9,8 @@ import ArticlesListTable from "components/dashboard/articles/articlesListTable";
 import AddArticleModal from "components/dashboard/articles/addArticleModal/addArticleModal";
 import EditArticleModal from "components/dashboard/articles/editArticleModal/editArticleModal";
 import ArticleDetails from "components/dashboard/articles/articleDetails/articleDetails";
+import GetPng from "/class/webp2png.js";
+import { convertToFa } from "react-calendar-datetime-picker";
 
 let ActiveArticleID,
   selectedArticleLanguage = null;
@@ -16,9 +18,9 @@ let ActiveArticleID,
 const Articles = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [articlesData, setArticlesData] = useState([]);
-  const [editArticleData, setEditArticleData] = useState([]);
   const [newArticleDate, setNewArticleDate] = useState("");
   const [articleDetailsData, setArticleDetailsData] = useState([]);
+  const [editArticleData, setEditArticleData] = useState({ empty: 1 });
 
   // Get all articles
   const getAllArticles = () => {
@@ -38,10 +40,12 @@ const Articles = () => {
       });
   };
 
+  // Article Date
   const setArticleDateInDB = (newDate) => {
     setNewArticleDate(newDate);
   };
 
+  // Article language
   const FUSelectArticleLanguage = (lang) => {
     selectedArticleLanguage = lang;
   };
@@ -57,18 +61,44 @@ const Articles = () => {
     });
   };
 
+  const [showInSliderStatus, setShowInSliderStatus] = useState({
+    showInSliderOptions: [],
+  });
+
+  // showInSlider Checkbox
+  const handleCheckedShowInSlider = (e) => {
+    const { value, checked } = e.target;
+    const { showInSliderOptions } = showInSliderStatus;
+
+    console.log(`${value} is ${checked}`);
+    // Case 1 : The user checks the box
+    if (checked) {
+      setShowInSliderStatus({
+        setShowInSliderOptions: [...showInSliderOptions, value],
+      });
+    }
+    // Case 2  : The user unchecks the box
+    else {
+      setShowInSliderStatus({
+        setShowInSliderOptions: showInSliderOptions.filter((e) => e !== value),
+      });
+    }
+
+    console.log(showInSliderStatus)
+  };
+
   // Add Article
   let articleImg = null;
   const addArticle = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
     let url = "Article/add";
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
     if (formProps.addArticleImg && formProps.addArticleImg.size != 0) {
       articleImg = await convertBase64(formProps.addArticleImg);
+      console.log(articleImg);
     }
 
     let data = {
@@ -85,12 +115,14 @@ const Articles = () => {
     };
 
     console.log("data", data);
+    console.log("clicked outside");
 
     axiosClient
       .post(url, data)
       .then((response) => {
         console.log(response.data);
         setArticlesData([...articlesData, response.data]);
+        console.log("clicked inside");
         setIsLoading(false);
 
         $("#addArticleModal").modal("hide");
@@ -109,12 +141,17 @@ const Articles = () => {
     $("#editArticleModal").modal("show");
   };
 
-  const editArticle = (e) => {
+  let newArticleImg = null;
+  const editArticle = async (e) => {
     e.preventDefault();
 
     let url = `Article/update/${ActiveArticleID}`;
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
+
+    if (formProps.editArticleImg && formProps.editArticleImg.size != 0) {
+      newArticleImg = await convertBase64(formProps.editArticleImg);
+    }
 
     let Data = {
       Title: formProps.editArticleTitle,
@@ -126,21 +163,30 @@ const Articles = () => {
       EngArticle: formProps.editArticleLanguage,
       ShowInSlider: formProps.editArticleShowInSlider === "on" ? "1" : "0",
       Date: newArticleDate,
-      // Image: articleImg,
+      Image: newArticleImg,
     };
 
-    // if (CenterID) {
+    console.log("data", Data);
+
     axiosClient
       .put(url, Data)
       .then((response) => {
+        console.log(response.data);
         updateArticleItem(formProps.editArticleID, response.data);
-        // $("#editPhysicianModal").modal("hide");
+        $("#editArticleModal").modal("hide");
       })
       .catch((error) => {
         console.log(error);
       });
-    // }
   };
+
+  function handleShowInSliderCheckbox(data) {
+    if (data?.empty !== 1) {
+      data === true
+        ? $(".showInSliderCheckbox").prop("checked", true)
+        : $(".showInSliderCheckbox").prop("checked", false);
+    }
+  }
 
   const updateArticleItem = (id, newArr) => {
     let index = articlesData.findIndex((x) => x._id === id);
@@ -164,7 +210,7 @@ const Articles = () => {
       "حذف مقاله !",
       "آیا از حذف مقاله اطمینان دارید؟"
     );
-    // setIsLoading(true);
+    setIsLoading(true);
 
     if (result) {
       let url = `Article/delete/${id}`;
@@ -173,19 +219,21 @@ const Articles = () => {
         .delete(url)
         .then((response) => {
           setArticlesData(articlesData.filter((a) => a._id !== id));
-          // setIsLoading(false);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
-          // setIsLoading(false);
+          setIsLoading(false);
         });
+    } else {
+      setIsLoading(false);
     }
   };
 
   const openArticleDetails = (data) => {
     setArticleDetailsData(data);
-    $("#articleDetailsModal").modal("show")
-  }
+    $("#articleDetailsModal").modal("show");
+  };
 
   useEffect(() => {
     getAllArticles();
@@ -251,12 +299,16 @@ const Articles = () => {
           addArticle={addArticle}
           setArticleDateInDB={setArticleDateInDB}
           FUSelectArticleLanguage={FUSelectArticleLanguage}
+          handleCheckedShowInSlider={handleCheckedShowInSlider}
         />
 
         <EditArticleModal
           data={editArticleData}
           editArticle={editArticle}
           setArticleDateInDB={setArticleDateInDB}
+          handleShowInSliderCheckbox={handleShowInSliderCheckbox}
+          FUSelectArticleLanguage={FUSelectArticleLanguage}
+          handleCheckedShowInSlider={handleCheckedShowInSlider}
         />
 
         <ArticleDetails data={articleDetailsData} />

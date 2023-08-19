@@ -77,7 +77,10 @@ const AddToMenuModal = ({
 
               <hr />
 
-              <p className="mb-4 text-secondary font-14 marginR-1" dir="rtl">
+              <p
+                className="mb-4 text-secondary font-14 marginR-1 padding-r-10 "
+                dir="rtl"
+              >
                 بخش های قابل دسترس منو
               </p>
               <div className="form-group permissionsCheckboxList">

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
@@ -9,6 +10,8 @@ const EditArticleModal = ({
   editArticle,
   setArticleDateInDB,
   FUSelectArticleLanguage,
+  handleShowInSliderCheckbox,
+  handleCheckedShowInSlider
 }) => {
   // article date
   const setArticleDate = (value) => {
@@ -33,9 +36,25 @@ const EditArticleModal = ({
     var urlCreator = window.URL || window.webkitURL;
     if (e.target.files.length !== 0) {
       var imageUrl = urlCreator.createObjectURL(e.target.files[0]);
-      $("#editArticleImgUploadPreview").attr("src", imageUrl);
+      $("#currentArticleImg").attr("src", imageUrl);
     }
   };
+
+  let languageLabel,
+    languageValue = null;
+  data.EngArticle
+    ? ((languageLabel = "انگلیسی"), (languageValue = 1))
+    : ((languageLabel = "فارسی"), (languageValue = 0));
+
+  const selectedArticleLanguage = {
+    value: languageValue,
+    label: languageLabel,
+  };
+
+  // console.log(data);
+  useEffect(() => {
+    handleShowInSliderCheckbox(data.ShowInSlider);
+  }, [data.ShowInSlider]);
 
   return (
     <div
@@ -63,42 +82,43 @@ const EditArticleModal = ({
           </div>
           <div className="modal-body centerModalBody">
             <form onSubmit={editArticle} dir="rtl">
-              <div className="form-group">
-                <input
-                  type="hidden"
-                  className="form-control floating"
-                  name="editArticleID"
-                  value={data._id}
-                />
-
-                <label className="lblAbs font-12">
-                  عنوان<span className="text-danger">*</span>
-                </label>
-                <div className="col p-0">
+              <div className="row">
+                <div className="form-group col">
                   <input
-                    className="form-control floating inputPadding rounded"
-                    type="text"
-                    name="EditDoctorName"
-                    defaultValue={data.Title}
-                    key={data.Title}
-                    required
+                    type="hidden"
+                    className="form-control floating"
+                    name="editArticleID"
+                    value={data._id}
                   />
+                  <label className="lblAbs font-12">
+                    عنوان<span className="text-danger">*</span>
+                  </label>
+                  <div className="col p-0">
+                    <input
+                      className="form-control floating inputPadding rounded"
+                      type="text"
+                      name="editArticleTitle"
+                      defaultValue={data.Title}
+                      key={data.Title}
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="form-group">
-                <label className="lblAbs font-12">
-                  عنوان انگلیسی <span className="text-danger">*</span>
-                </label>
-                <div className="col p-0">
-                  <input
-                    className="form-control floating inputPadding rounded"
-                    type="text"
-                    name="editArticleEngName"
-                    defaultValue={data.EngTitle}
-                    key={data.EngTitle}
-                    required
-                  />
+                <div className="form-group col">
+                  <label className="lblAbs font-12">
+                    عنوان انگلیسی <span className="text-danger">*</span>
+                  </label>
+                  <div className="col p-0">
+                    <input
+                      className="form-control floating inputPadding rounded"
+                      type="text"
+                      name="editArticleEngName"
+                      defaultValue={data.EngTitle}
+                      key={data.EngTitle}
+                      required
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -120,12 +140,16 @@ const EditArticleModal = ({
 
               <div className="row media-flex-col">
                 <div className="form-group col">
-                  <DatePicker setArticleDate={setArticleDate} />
+                  <DatePicker
+                    defDate={data.Date}
+                    setArticleDate={setArticleDate}
+                  />
                 </div>
 
                 <div className="form-group col">
                   <label className="lblAbs font-12">
-                    مدت زمان مطالعه <span className="text-danger">*</span>
+                    مدت زمان مطالعه (دقیقه){" "}
+                    <span className="text-danger">*</span>
                   </label>
                   <div className="col p-0">
                     <input
@@ -146,11 +170,12 @@ const EditArticleModal = ({
                   <input
                     type="checkbox"
                     hidden="hidden"
-                    id="showInSlider"
+                    id={"editArticleSlider" + data._id}
                     name="editArticleShowInSlider"
-                    defaultValue={data.editArticleShowInSlider}
                     key={data.editArticleShowInSlider}
+                    className="showInSliderCheckbox"
                     required
+                    onChange={handleCheckedShowInSlider}
                   />
                   <label
                     className="showInsliderSwitch font-12"
@@ -176,7 +201,8 @@ const EditArticleModal = ({
                   onChangeValue={(value) =>
                     FUSelectArticleLanguage(value?.value)
                   }
-                  //   defaultValue={articleLanguageDataClass[1]}
+                  defaultValue={selectedArticleLanguage}
+                  key={data.EngTitle}
                   required
                 />
               </div>
@@ -226,8 +252,24 @@ const EditArticleModal = ({
                   className="upload"
                   name="editArticleImg"
                   onChange={displayPreview}
-                  required
+                  // required
                 />
+              </div>
+
+              <div
+                className="d-flex justify-center mt-4"
+                id="currentArticleImgContainer"
+              >
+                <img
+                  src={"https://irannobat.ir/blog/images/" + data.Img}
+                  alt="articleImg"
+                  style={{
+                    width: "20rem !important",
+                    height: "auto !important",
+                  }}
+                  className="previewImg m-auto d-block"
+                  id="currentArticleImg"
+                ></img>
               </div>
 
               <div className="previewImgContainer">
