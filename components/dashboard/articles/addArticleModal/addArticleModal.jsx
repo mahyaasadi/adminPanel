@@ -8,7 +8,6 @@ const AddArticleModal = ({
   addArticle,
   setArticleDateInDB,
   FUSelectArticleLanguage,
-  handleCheckedShowInSlider
 }) => {
   // article date
   const setArticleDate = (value) => {
@@ -136,7 +135,6 @@ const AddArticleModal = ({
                     name="articleShowInSlider"
                     defaultChecked="checked"
                     // required
-                    onChange={handleCheckedShowInSlider}
                   />
                   <label
                     className="showInsliderSwitch font-12"

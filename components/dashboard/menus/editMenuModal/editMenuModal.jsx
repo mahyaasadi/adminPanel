@@ -8,18 +8,6 @@ const EditMenuModal = ({
   editMenuCheckList,
   handleCheckedMenuPermissions,
 }) => {
-  // if (data.empty != 1) {
-  //   for (let i = 0; i < permissionsList.length; i++) {
-  //     permissionsList[i].Checked = false;
-  //   }
-  //   data.Permissions.map((per) => {
-  //     let findIndexPer = permissionsList.findIndex(
-  //       (x) => x._id === per.PermisionID
-  //     );
-  //     permissionsList[findIndexPer].Checked = true;
-  //   });
-  // }
-
   useEffect(() => {
     editMenuCheckList(data);
   }, [data]);

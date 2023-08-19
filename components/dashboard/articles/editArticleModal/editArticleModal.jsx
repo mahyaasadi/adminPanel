@@ -11,8 +11,9 @@ const EditArticleModal = ({
   setArticleDateInDB,
   FUSelectArticleLanguage,
   handleShowInSliderCheckbox,
-  handleCheckedShowInSlider
+  handleCheckedSliderOptions
 }) => {
+
   // article date
   const setArticleDate = (value) => {
     let articleDate =
@@ -53,8 +54,8 @@ const EditArticleModal = ({
 
   // console.log(data);
   useEffect(() => {
-    handleShowInSliderCheckbox(data.ShowInSlider);
-  }, [data.ShowInSlider]);
+    handleShowInSliderCheckbox(data);
+  }, [data]);
 
   return (
     <div
@@ -172,14 +173,15 @@ const EditArticleModal = ({
                     hidden="hidden"
                     id={"editArticleSlider" + data._id}
                     name="editArticleShowInSlider"
-                    key={data.editArticleShowInSlider}
+                    key={data.ShowInSlider}
+                    // defaultValue={data.ShowInSlider}
                     className="showInSliderCheckbox"
                     required
-                    onChange={handleCheckedShowInSlider}
+                    onChange={handleCheckedSliderOptions}
                   />
                   <label
                     className="showInsliderSwitch font-12"
-                    htmlFor="showInSlider"
+                    htmlFor={"editArticleSlider" + data._id}
                   ></label>
                 </div>
               </div>
@@ -252,7 +254,7 @@ const EditArticleModal = ({
                   className="upload"
                   name="editArticleImg"
                   onChange={displayPreview}
-                  // required
+                // required
                 />
               </div>
 

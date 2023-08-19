@@ -49,7 +49,7 @@ const ArticleDetails = ({ data }) => {
                 <p>مدت زمان مطالعه : {data.POT} دقیقه</p>
 
                 <div className="w-100 d-flex justify-center">
-                  <hr className="w-85" />
+                  <hr className="w-90" />
                 </div>
 
                 <p>توضیحات : {data.Des}</p>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
+// import { useEffect } from "react";
 
 const ArticlesListTable = ({
   articlesData,
@@ -7,6 +8,15 @@ const ArticlesListTable = ({
   deleteArticle,
   openArticleDetails,
 }) => {
+
+  // const handleToggleInfoBox = () => {
+  //   $("#infoContainer").show("");
+  // }
+
+  // useEffect(() => {
+  //   $("#infoContainer").hide("")
+  // }, []);
+
   return (
     <>
       <div className="row p-4">
@@ -42,16 +52,25 @@ const ArticlesListTable = ({
 
                 <hr />
 
-                <div className="d-flex justify-flex-end gap-1 ">
-                  <Link
-                    href="#"
+                {/* <button onClick={handleToggleInfoBox}>
+                  <FeatherIcon icon="more-vetical" />
+                </button> */}
+                <div className="d-flex justify-flex-end gap-1" id="infoContainer">
+                  <button
+                    type="button"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="جزئیات"
                     className="btn btn-sm btn-outline-primary font-12"
                     onClick={() => openArticleDetails(articleData)}
                   >
-                    جزئیات
-                  </Link>
-                  <Link
-                    href="#"
+                    <FeatherIcon
+                      style={{ width: "15px", height: "15px" }}
+                      icon="info"
+                    />
+                  </button>
+                  <button
+                    button="button"
                     className="btn btn-sm btn-outline-secondary btn-border-left"
                     onClick={() => updateArticle(articleData, articleData._id)}
                     data-bs-toggle="tooltip"
@@ -62,9 +81,9 @@ const ArticlesListTable = ({
                       style={{ width: "14px", height: "14px" }}
                       icon="edit-3"
                     />
-                  </Link>
-                  <Link
-                    href="#"
+                  </button>
+                  <button
+                    type="button"
                     className="btn btn-sm btn-outline-danger"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -75,7 +94,7 @@ const ArticlesListTable = ({
                       style={{ width: "14px", height: "14px" }}
                       icon="trash-2"
                     />
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>

@@ -9,8 +9,6 @@ import ArticlesListTable from "components/dashboard/articles/articlesListTable";
 import AddArticleModal from "components/dashboard/articles/addArticleModal/addArticleModal";
 import EditArticleModal from "components/dashboard/articles/editArticleModal/editArticleModal";
 import ArticleDetails from "components/dashboard/articles/articleDetails/articleDetails";
-import GetPng from "/class/webp2png.js";
-import { convertToFa } from "react-calendar-datetime-picker";
 
 let ActiveArticleID,
   selectedArticleLanguage = null;
@@ -50,6 +48,30 @@ const Articles = () => {
     selectedArticleLanguage = lang;
   };
 
+  let sliderCheckbox = null;
+  const [sliderCheckboxStatus, setSliderCheckboxStatus] = useState({ sliderCheckbox });
+
+  // showInSlider checkbox
+  const handleCheckedSliderOptions = (e) => {
+    const { value, checked } = e.target;
+    const { sliderCheckbox } = sliderCheckboxStatus;
+
+    console.log(`${value} is ${checked}`);
+
+    // Case 1 : The user checks the box
+    if (checked) {
+      setSliderCheckboxStatus({ sliderCheckbox: 1 });
+    }
+    // Case 2  : The user unchecks the box
+    else {
+      setSliderCheckboxStatus({
+        sliderCheckbox: 0,
+      });
+    }
+
+    console.log("sliderCheckboxStatus", sliderCheckboxStatus)
+  };
+
   // Convert imageUrl to Base64
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -59,32 +81,6 @@ const Articles = () => {
       fileReader.onload = () => resolve(fileReader.result);
       fileReader.onerror = (error) => reject(error);
     });
-  };
-
-  const [showInSliderStatus, setShowInSliderStatus] = useState({
-    showInSliderOptions: [],
-  });
-
-  // showInSlider Checkbox
-  const handleCheckedShowInSlider = (e) => {
-    const { value, checked } = e.target;
-    const { showInSliderOptions } = showInSliderStatus;
-
-    console.log(`${value} is ${checked}`);
-    // Case 1 : The user checks the box
-    if (checked) {
-      setShowInSliderStatus({
-        setShowInSliderOptions: [...showInSliderOptions, value],
-      });
-    }
-    // Case 2  : The user unchecks the box
-    else {
-      setShowInSliderStatus({
-        setShowInSliderOptions: showInSliderOptions.filter((e) => e !== value),
-      });
-    }
-
-    console.log(showInSliderStatus)
   };
 
   // Add Article
@@ -115,14 +111,12 @@ const Articles = () => {
     };
 
     console.log("data", data);
-    console.log("clicked outside");
 
     axiosClient
       .post(url, data)
       .then((response) => {
         console.log(response.data);
         setArticlesData([...articlesData, response.data]);
-        console.log("clicked inside");
         setIsLoading(false);
 
         $("#addArticleModal").modal("hide");
@@ -161,7 +155,7 @@ const Articles = () => {
       Des: formProps.editArticleDes,
       Schema: formProps.editArticleSchema,
       EngArticle: formProps.editArticleLanguage,
-      ShowInSlider: formProps.editArticleShowInSlider === "on" ? "1" : "0",
+      ShowInSlider: sliderCheckboxStatus.sliderCheckbox,
       Date: newArticleDate,
       Image: newArticleImg,
     };
@@ -182,9 +176,10 @@ const Articles = () => {
 
   function handleShowInSliderCheckbox(data) {
     if (data?.empty !== 1) {
-      data === true
+      $("#editArticleSlider" + data?._id).prop("checked", false);
+      data?.ShowInSlider === true
         ? $(".showInSliderCheckbox").prop("checked", true)
-        : $(".showInSliderCheckbox").prop("checked", false);
+        : $(".showInSliderCheckbox").prop("checked", false)
     }
   }
 
@@ -299,7 +294,6 @@ const Articles = () => {
           addArticle={addArticle}
           setArticleDateInDB={setArticleDateInDB}
           FUSelectArticleLanguage={FUSelectArticleLanguage}
-          handleCheckedShowInSlider={handleCheckedShowInSlider}
         />
 
         <EditArticleModal
@@ -308,7 +302,7 @@ const Articles = () => {
           setArticleDateInDB={setArticleDateInDB}
           handleShowInSliderCheckbox={handleShowInSliderCheckbox}
           FUSelectArticleLanguage={FUSelectArticleLanguage}
-          handleCheckedShowInSlider={handleCheckedShowInSlider}
+          handleCheckedSliderOptions={handleCheckedSliderOptions}
         />
 
         <ArticleDetails data={articleDetailsData} />
