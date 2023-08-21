@@ -11,9 +11,8 @@ const EditArticleModal = ({
   setArticleDateInDB,
   FUSelectArticleLanguage,
   handleShowInSliderCheckbox,
-  handleCheckedSliderOptions
+  handleCheckedSliderOptions,
 }) => {
-
   // article date
   const setArticleDate = (value) => {
     let articleDate =
@@ -55,6 +54,7 @@ const EditArticleModal = ({
   // console.log(data);
   useEffect(() => {
     handleShowInSliderCheckbox(data);
+    console.log(data);
   }, [data]);
 
   return (
@@ -65,7 +65,7 @@ const EditArticleModal = ({
       aria-hidden="true"
     >
       <div className="modal-dialog modal-dialog-centered modal-lg">
-        <div className="modal-content doctor-profile">
+        <div className="modal-content">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">
               ویرایش اطلاعات
@@ -112,6 +112,7 @@ const EditArticleModal = ({
                   </label>
                   <div className="col p-0">
                     <input
+                      dir="ltr"
                       className="form-control floating inputPadding rounded"
                       type="text"
                       name="editArticleEngName"
@@ -165,9 +166,7 @@ const EditArticleModal = ({
                 </div>
 
                 <div className="form-group col d-flex align-items-center justify-center gap-3">
-                  <p className="font-12 mt-1 text-secondary">
-                    نمایش در اسلاید <span className="text-danger">*</span>
-                  </p>
+                  <p className="font-12 mt-1 text-secondary">نمایش در اسلاید</p>
                   <input
                     type="checkbox"
                     hidden="hidden"
@@ -176,8 +175,11 @@ const EditArticleModal = ({
                     key={data.ShowInSlider}
                     // defaultValue={data.ShowInSlider}
                     className="showInSliderCheckbox"
-                    required
-                    onChange={handleCheckedSliderOptions}
+                    // required
+                    onChange={
+                      // (e) => console.log(e.target.checked)
+                      handleCheckedSliderOptions
+                    }
                   />
                   <label
                     className="showInsliderSwitch font-12"
@@ -254,7 +256,7 @@ const EditArticleModal = ({
                   className="upload"
                   name="editArticleImg"
                   onChange={displayPreview}
-                // required
+                  // required
                 />
               </div>
 
@@ -269,19 +271,9 @@ const EditArticleModal = ({
                     width: "20rem !important",
                     height: "auto !important",
                   }}
-                  className="previewImg m-auto d-block"
+                  className="articlePreviewImg m-auto d-block"
                   id="currentArticleImg"
                 ></img>
-              </div>
-
-              <div className="previewImgContainer">
-                <Image
-                  src=""
-                  alt=""
-                  width="200"
-                  id="editArticleImgUploadPreview"
-                  className="d-block m-auto previewImg"
-                />
               </div>
 
               <div className="submit-section">

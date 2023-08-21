@@ -3,22 +3,39 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
-import { QuestionAlert } from "class/AlertManage.js";
+import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import ArticlesListTable from "components/dashboard/articles/articlesListTable";
+import ArticleSearch from "components/dashboard/articles/articleSearch/articleSearch";
 import AddArticleModal from "components/dashboard/articles/addArticleModal/addArticleModal";
 import EditArticleModal from "components/dashboard/articles/editArticleModal/editArticleModal";
-import ArticleDetails from "components/dashboard/articles/articleDetails/articleDetails";
+// import ArticleDetails from "components/dashboard/articles/articleDetails/articleDetails";
+import SubArticlesModal from "components/dashboard/articles/subArticles/subArticleModal/subArticleModal";
+import AddSubArticleModal from "components/dashboard/articles/subArticles/addSubArticleModal/addSubArticleModal";
+import EditSubArticleModal from "components/dashboard/articles/subArticles/editSubArticleModal/editSubArticleModal";
 
 let ActiveArticleID,
+  ActiveSubArticleID,
   selectedArticleLanguage = null;
 
 const Articles = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [articlesData, setArticlesData] = useState([]);
   const [newArticleDate, setNewArticleDate] = useState("");
-  const [articleDetailsData, setArticleDetailsData] = useState([]);
+  // const [articleDetailsData, setArticleDetailsData] = useState([]);
   const [editArticleData, setEditArticleData] = useState({ empty: 1 });
+  const [subArticlesData, setSubArticlesData] = useState();
+  const [editSubArticleData, setEditSubArticleData] = useState({ empty: 1 });
+
+  let sliderCheckbox = false;
+  const [sliderCheckboxStatus, setSliderCheckboxStatus] = useState({
+    sliderCheckbox,
+  });
+
+  let callToActionCheckbox = false;
+  const [actionCheckboxStatus, setActionCheckboxStatus] = useState({
+    callToActionCheckbox,
+  });
 
   // Get all articles
   const getAllArticles = () => {
@@ -38,6 +55,14 @@ const Articles = () => {
       });
   };
 
+  // Search Articles
+  const [articleSearchInput, setArticleSearchInput] = useState("");
+  const searchedArticles = articlesData.filter(
+    (article) =>
+      article.Title.toLowerCase().includes(articleSearchInput.toLowerCase()) ||
+      article.EngTitle.toLowerCase().includes(articleSearchInput.toLowerCase())
+  );
+
   // Article Date
   const setArticleDateInDB = (newDate) => {
     setNewArticleDate(newDate);
@@ -48,35 +73,57 @@ const Articles = () => {
     selectedArticleLanguage = lang;
   };
 
-  let sliderCheckbox = null;
-  const [sliderCheckboxStatus, setSliderCheckboxStatus] = useState({ sliderCheckbox });
-
-  // showInSlider checkbox
+  // Article showInSlider checkbox
   const handleCheckedSliderOptions = (e) => {
     const { value, checked } = e.target;
     const { sliderCheckbox } = sliderCheckboxStatus;
 
     console.log(`${value} is ${checked}`);
 
-    // Case 1 : The user checks the box
-    if (checked) {
-      setSliderCheckboxStatus({ sliderCheckbox: 1 });
-    }
-    // Case 2  : The user unchecks the box
-    else {
-      setSliderCheckboxStatus({
-        sliderCheckbox: 0,
-      });
-    }
-
-    console.log("sliderCheckboxStatus", sliderCheckboxStatus)
+    checked
+        // Case 1 : The user checks the box
+      ? setSliderCheckboxStatus({ sliderCheckbox: true })
+      : // Case 2  : The user unchecks the box
+        setSliderCheckboxStatus({ sliderCheckbox: false });
   };
+
+  function handleShowInSliderCheckbox(data) {
+    if (data?.empty !== 1) {
+      $("#editArticleSlider" + data?._id).prop("checked", false);
+      data?.ShowInSlider === true
+        ? ($(".showInSliderCheckbox").prop("checked", true),
+          setSliderCheckboxStatus({ sliderCheckbox: true }))
+        : ($(".showInSliderCheckbox").prop("checked", false),
+          setSliderCheckboxStatus({ sliderCheckbox: false }));
+    }
+  }
+
+  // SubArticle callToAction checkbox
+  const handleCheckedCallToActionOptions = (e) => {
+    const { value, checked } = e.target;
+    const { callToActionCheckbox } = sliderCheckboxStatus;
+    // console.log(`${value} is ${checked}`);
+
+    checked
+      ? setActionCheckboxStatus({ callToActionCheckbox: true })
+      : setActionCheckboxStatus({ callToActionCheckbox: false });
+  };
+
+  function handleCallToActionSwitch(data) {
+    if (data?.empty !== 1) {
+      $("#editSubArticleCallToAction" + data?._id).prop("checked", false);
+      data?.CalToAction === true
+        ? ($(".callToActionCheckbox").prop("checked", true),
+          setActionCheckboxStatus({ callToActionCheckbox: true }))
+        : ($(".callToActionCheckbox").prop("checked", false),
+          setActionCheckboxStatus({ callToActionCheckbox: false }));
+    }
+  }
 
   // Convert imageUrl to Base64
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
-
       fileReader.readAsDataURL(file);
       fileReader.onload = () => resolve(fileReader.result);
       fileReader.onerror = (error) => reject(error);
@@ -94,7 +141,6 @@ const Articles = () => {
 
     if (formProps.addArticleImg && formProps.addArticleImg.size != 0) {
       articleImg = await convertBase64(formProps.addArticleImg);
-      console.log(articleImg);
     }
 
     let data = {
@@ -120,6 +166,7 @@ const Articles = () => {
         setIsLoading(false);
 
         $("#addArticleModal").modal("hide");
+        $("#articleFileUploadPreview").attr("src", "");
         e.target.reset();
       })
       .catch((error) => {
@@ -174,15 +221,6 @@ const Articles = () => {
       });
   };
 
-  function handleShowInSliderCheckbox(data) {
-    if (data?.empty !== 1) {
-      $("#editArticleSlider" + data?._id).prop("checked", false);
-      data?.ShowInSlider === true
-        ? $(".showInSliderCheckbox").prop("checked", true)
-        : $(".showInSliderCheckbox").prop("checked", false)
-    }
-  }
-
   const updateArticleItem = (id, newArr) => {
     let index = articlesData.findIndex((x) => x._id === id);
     let g = articlesData[index];
@@ -225,9 +263,164 @@ const Articles = () => {
     }
   };
 
-  const openArticleDetails = (data) => {
-    setArticleDetailsData(data);
-    $("#articleDetailsModal").modal("show");
+  // const openArticleDetails = (data) => {
+  //   setArticleDetailsData(data);
+  //   $("#articleDetailsModal").modal("show");
+  // };
+
+  // -------------SubArticles----------------------
+
+  const openSubArticleModal = (data, id) => {
+    setSubArticlesData(data.Sub);
+    $("#subArticlesModal").modal("show");
+    ActiveArticleID = id;
+  };
+
+  let articleId = null;
+  const openAddSubArticleModal = (id) => {
+    $("#addSubArticleModal").modal("show");
+    articleId = id;
+  };
+
+  // add SubArticle
+  let subArticleImg = null;
+  const addSubArticle = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let url = `Article/addSubArticle/${articleId}`;
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+
+    if (formProps.addSubArticleImg && formProps.addSubArticleImg.size != 0) {
+      subArticleImg = await convertBase64(formProps.addSubArticleImg);
+    }
+
+    let data = {
+      Title: formProps.addSubArticleTitle,
+      Text: formProps.addSubArticleText,
+      Des: formProps.addSubArticleDes,
+      Image: subArticleImg,
+      CalToAction: formProps.articleCallToAction === "on" ? true : false,
+    };
+
+    console.log("data", data);
+
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data);
+        setSubArticlesData([...subArticlesData, response.data]);
+
+        $("#addSubArticleModal").modal("hide");
+
+        // reseting articles
+        getAllArticles();
+        setIsLoading(false);
+        e.target.reset();
+        $("#subArticleImgPreview").attr("src", "");
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        ErrorAlert("خطا", "افزودن زیر مقاله با خطا مواجه گردید!");
+      });
+  };
+
+  // Edit SubArticle
+  const updateSubArticle = (data, id) => {
+    $("#editSubArticleModal").modal("show");
+    setEditSubArticleData(data);
+    ActiveSubArticleID = id;
+    console.log("ActiveSubArticleID", ActiveSubArticleID);
+  };
+
+  let newSubArticleImg = null;
+  const editSubArticle = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let url = `Article/updateSubArticle/${ActiveArticleID}/${ActiveSubArticleID}`;
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+
+    if (formProps.editSubArticleImg && formProps.editSubArticleImg.size != 0) {
+      newSubArticleImg = await convertBase64(formProps.editSubArticleImg);
+    }
+
+    let Data = {
+      Title: formProps.editSubArticleTitle,
+      Text: formProps.editSubArticleText,
+      Des: formProps.editSubArticleDes,
+      CalToAction: actionCheckboxStatus.callToActionCheckbox,
+      Image: newSubArticleImg,
+      Img: formProps.defaultSubArticleImg,
+      ImgMed: formProps.defaultSubArticleImgMed,
+      ImgThumb: formProps.defaultSubArticleImgThumb,
+      WImg: formProps.defaultSubArticleWImg,
+      WImgMed: formProps.defaultSubArticleWImgMed,
+      WImgThumb: formProps.defaultSubArticleWImgThumb,
+    };
+
+    console.log(formProps);
+    console.log("data", Data);
+
+    axiosClient
+      .put(url, Data)
+      .then((response) => {
+        console.log(response.data);
+        updateSubArticleItem(formProps.editSubArticleID, response.data);
+
+        getAllArticles();
+        setIsLoading(false);
+        $("#editSubArticleModal").modal("hide");
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
+      });
+  };
+
+  const updateSubArticleItem = (id, newArr) => {
+    let index = subArticlesData.findIndex((x) => x._id === id);
+    let g = subArticlesData[index];
+    g = newArr;
+
+    if (index === -1) {
+      // handle error
+      console.log("no match");
+    } else
+      setSubArticlesData([
+        ...subArticlesData.slice(0, index),
+        g,
+        ...subArticlesData.slice(index + 1),
+      ]);
+  };
+
+  // Delete SubArticle
+  const deleteSubArticle = async (id) => {
+    let result = await QuestionAlert(
+      "حذف زیر مقاله !",
+      "آیا از حذف زیر مقاله اطمینان دارید؟"
+    );
+    setIsLoading(true);
+
+    if (result) {
+      let url = `Article/deleteSubArticle/${ActiveArticleID}/${id}`;
+
+      await axiosClient
+        .delete(url)
+        .then((response) => {
+          setSubArticlesData(subArticlesData.filter((a) => a._id !== id));
+          getAllArticles();
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
   };
 
   useEffect(() => {
@@ -243,7 +436,12 @@ const Articles = () => {
           <div className="content container-fluid">
             <div className="page-header">
               <div className="row align-items-center">
-                <div className="col-md-12 d-flex justify-content-end">
+                <div className="col-md-12 d-flex gap-2 justify-content-end media-srvHeader">
+                  <ArticleSearch
+                    articleSearchInput={articleSearchInput}
+                    setArticleSearchInput={setArticleSearchInput}
+                  />
+
                   <Link
                     href="#"
                     data-bs-toggle="modal"
@@ -277,10 +475,11 @@ const Articles = () => {
                   </div>
 
                   <ArticlesListTable
-                    articlesData={articlesData}
+                    articlesData={searchedArticles}
                     updateArticle={updateArticle}
                     deleteArticle={deleteArticle}
-                    openArticleDetails={openArticleDetails}
+                    // openArticleDetails={openArticleDetails}
+                    openSubArticleModal={openSubArticleModal}
                   />
                 </div>
 
@@ -300,12 +499,32 @@ const Articles = () => {
           data={editArticleData}
           editArticle={editArticle}
           setArticleDateInDB={setArticleDateInDB}
-          handleShowInSliderCheckbox={handleShowInSliderCheckbox}
           FUSelectArticleLanguage={FUSelectArticleLanguage}
+          handleShowInSliderCheckbox={handleShowInSliderCheckbox}
           handleCheckedSliderOptions={handleCheckedSliderOptions}
         />
 
-        <ArticleDetails data={articleDetailsData} />
+        {/* <ArticleDetails
+          data={articleDetailsData}
+          openSubArticleModal={openSubArticleModal}
+        /> */}
+
+        <SubArticlesModal
+          data={subArticlesData}
+          ActiveArticleID={ActiveArticleID}
+          openAddSubArticleModal={openAddSubArticleModal}
+          updateSubArticle={updateSubArticle}
+          deleteSubArticle={deleteSubArticle}
+        />
+
+        <AddSubArticleModal addSubArticle={addSubArticle} />
+
+        <EditSubArticleModal
+          data={editSubArticleData}
+          editSubArticle={editSubArticle}
+          handleCallToActionSwitch={handleCallToActionSwitch}
+          handleCheckedCallToActionOptions={handleCheckedCallToActionOptions}
+        />
       </div>
     </>
   );

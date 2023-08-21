@@ -6,17 +6,9 @@ const ArticlesListTable = ({
   articlesData,
   updateArticle,
   deleteArticle,
-  openArticleDetails,
+  // openArticleDetails,
+  openSubArticleModal,
 }) => {
-
-  // const handleToggleInfoBox = () => {
-  //   $("#infoContainer").show("");
-  // }
-
-  // useEffect(() => {
-  //   $("#infoContainer").hide("")
-  // }, []);
-
   return (
     <>
       <div className="row p-4">
@@ -27,7 +19,7 @@ const ArticlesListTable = ({
               <div className="card-body">
                 <div className="articleImgContainer">
                   <img
-                    className="w-100 h-50 rounded-md articleImg"
+                    className="w-100 rounded-md articleImg"
                     src={"https://irannobat.ir/blog/images/" + articleData.Img}
                     alt="articleImg"
                   ></img>
@@ -43,6 +35,9 @@ const ArticlesListTable = ({
                     {articleData.EngTitle}
                   </p>
                   <div className="pb-2 font-12 text-secondary">
+                    عنوان فارسی : {articleData.Title}
+                  </div>
+                  <div className="pb-2 font-12 text-secondary">
                     نویسنده : {articleData.Creator}
                   </div>
                   <div className="pb-4 font-12 text-secondary">
@@ -52,21 +47,38 @@ const ArticlesListTable = ({
 
                 <hr />
 
-                {/* <button onClick={handleToggleInfoBox}>
-                  <FeatherIcon icon="more-vetical" />
-                </button> */}
-                <div className="d-flex justify-flex-end gap-1" id="infoContainer">
+                <div
+                  className="d-flex justify-flex-end gap-1"
+                  id="infoContainer"
+                >
                   <button
                     type="button"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
-                    title="جزئیات"
+                    title="زیر مقاله ها"
                     className="btn btn-sm btn-outline-primary font-12"
-                    onClick={() => openArticleDetails(articleData)}
+                    onClick={() =>
+                      openSubArticleModal(articleData, articleData._id)
+                    }
                   >
                     <FeatherIcon
                       style={{ width: "15px", height: "15px" }}
-                      icon="info"
+                      icon="file-text"
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="ویدیوها"
+                    className="btn btn-sm btn-outline-primary font-12"
+                    // onClick={() =>
+                    //   openSubArticleModal(articleData, articleData._id)
+                    // }
+                  >
+                    <FeatherIcon
+                      style={{ width: "15px", height: "15px" }}
+                      icon="video"
                     />
                   </button>
                   <button

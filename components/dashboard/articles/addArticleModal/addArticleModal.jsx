@@ -81,6 +81,7 @@ const AddArticleModal = ({
                   </label>
                   <div className="col p-0">
                     <input
+                      dir="ltr"
                       type="text"
                       name="addArticleEngName"
                       className="form-control floating inputPadding rounded"
@@ -125,15 +126,13 @@ const AddArticleModal = ({
                 </div>
 
                 <div className="form-group col d-flex align-items-center justify-center gap-3">
-                  <p className="font-12 mt-1 text-secondary">
-                    نمایش در اسلاید <span className="text-danger">*</span>
-                  </p>
+                  <p className="font-12 mt-1 text-secondary">نمایش در اسلاید</p>
                   <input
                     type="checkbox"
                     hidden="hidden"
                     id="showInSlider"
                     name="articleShowInSlider"
-                    defaultChecked="checked"
+                    // defaultChecked="checked"
                     // required
                   />
                   <label
