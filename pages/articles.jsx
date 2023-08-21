@@ -9,10 +9,10 @@ import ArticlesListTable from "components/dashboard/articles/articlesListTable";
 import ArticleSearch from "components/dashboard/articles/articleSearch/articleSearch";
 import AddArticleModal from "components/dashboard/articles/addArticleModal/addArticleModal";
 import EditArticleModal from "components/dashboard/articles/editArticleModal/editArticleModal";
-// import ArticleDetails from "components/dashboard/articles/articleDetails/articleDetails";
 import SubArticlesModal from "components/dashboard/articles/subArticles/subArticleModal/subArticleModal";
 import AddSubArticleModal from "components/dashboard/articles/subArticles/addSubArticleModal/addSubArticleModal";
 import EditSubArticleModal from "components/dashboard/articles/subArticles/editSubArticleModal/editSubArticleModal";
+import ArticleVideosModal from "components/dashboard/articles/articleVideosModal/articleVideosModal";
 
 let ActiveArticleID,
   ActiveSubArticleID,
@@ -22,10 +22,10 @@ const Articles = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [articlesData, setArticlesData] = useState([]);
   const [newArticleDate, setNewArticleDate] = useState("");
-  // const [articleDetailsData, setArticleDetailsData] = useState([]);
   const [editArticleData, setEditArticleData] = useState({ empty: 1 });
-  const [subArticlesData, setSubArticlesData] = useState();
   const [editSubArticleData, setEditSubArticleData] = useState({ empty: 1 });
+  const [subArticlesData, setSubArticlesData] = useState();
+  const [articleVideosData, setArticleVideosData] = useState();
 
   let sliderCheckbox = false;
   const [sliderCheckboxStatus, setSliderCheckboxStatus] = useState({
@@ -81,10 +81,10 @@ const Articles = () => {
     console.log(`${value} is ${checked}`);
 
     checked
-        // Case 1 : The user checks the box
+      // Case 1 : The user checks the box
       ? setSliderCheckboxStatus({ sliderCheckbox: true })
       : // Case 2  : The user unchecks the box
-        setSliderCheckboxStatus({ sliderCheckbox: false });
+      setSliderCheckboxStatus({ sliderCheckbox: false });
   };
 
   function handleShowInSliderCheckbox(data) {
@@ -102,7 +102,6 @@ const Articles = () => {
   const handleCheckedCallToActionOptions = (e) => {
     const { value, checked } = e.target;
     const { callToActionCheckbox } = sliderCheckboxStatus;
-    // console.log(`${value} is ${checked}`);
 
     checked
       ? setActionCheckboxStatus({ callToActionCheckbox: true })
@@ -226,15 +225,13 @@ const Articles = () => {
     let g = articlesData[index];
     g = newArr;
 
-    if (index === -1) {
-      // handle error
-      console.log("no match");
-    } else
+    index === -1 ? console.log("no match") : (
       setArticlesData([
         ...articlesData.slice(0, index),
         g,
         ...articlesData.slice(index + 1),
-      ]);
+      ])
+    )
   };
 
   // Delete Article
@@ -262,11 +259,6 @@ const Articles = () => {
       setIsLoading(false);
     }
   };
-
-  // const openArticleDetails = (data) => {
-  //   setArticleDetailsData(data);
-  //   $("#articleDetailsModal").modal("show");
-  // };
 
   // -------------SubArticles----------------------
 
@@ -388,7 +380,6 @@ const Articles = () => {
     g = newArr;
 
     if (index === -1) {
-      // handle error
       console.log("no match");
     } else
       setSubArticlesData([
@@ -421,6 +412,13 @@ const Articles = () => {
           setIsLoading(false);
         });
     }
+  };
+
+  // --------- videos ----------
+
+  const openArticleVideoModal = (data) => {
+    setArticleVideosData(data.Videos);
+    $("#articleVideosModal").modal("show");
   };
 
   useEffect(() => {
@@ -478,7 +476,7 @@ const Articles = () => {
                     articlesData={searchedArticles}
                     updateArticle={updateArticle}
                     deleteArticle={deleteArticle}
-                    // openArticleDetails={openArticleDetails}
+                    openArticleVideoModal={openArticleVideoModal}
                     openSubArticleModal={openSubArticleModal}
                   />
                 </div>
@@ -504,11 +502,6 @@ const Articles = () => {
           handleCheckedSliderOptions={handleCheckedSliderOptions}
         />
 
-        {/* <ArticleDetails
-          data={articleDetailsData}
-          openSubArticleModal={openSubArticleModal}
-        /> */}
-
         <SubArticlesModal
           data={subArticlesData}
           ActiveArticleID={ActiveArticleID}
@@ -525,6 +518,8 @@ const Articles = () => {
           handleCallToActionSwitch={handleCallToActionSwitch}
           handleCheckedCallToActionOptions={handleCheckedCallToActionOptions}
         />
+
+        <ArticleVideosModal data={articleVideosData} />
       </div>
     </>
   );

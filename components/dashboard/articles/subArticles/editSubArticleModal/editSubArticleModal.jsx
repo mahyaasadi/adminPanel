@@ -46,8 +46,8 @@ const EditSubArticleModal = ({
               </i>
             </button>
           </div>
-          <div className="modal-body">
-            <form onSubmit={editSubArticle}>
+          <div className="modal-body centerModalBody">
+            <form dir="rtl" onSubmit={editSubArticle}>
               <div className="row">
                 <div className="form-group col">
                   <input
@@ -109,8 +109,8 @@ const EditSubArticleModal = ({
                   className="upload"
                   name="editSubArticleImg"
                   onChange={displayPreview}
-                  // required
-                  // id="SubArticleImg"
+                // required
+                // id="SubArticleImg"
                 />
 
                 {/* Img variations */}
@@ -163,7 +163,7 @@ const EditSubArticleModal = ({
               </div>
 
               <div className="form-group col d-flex align-items-center justify-center gap-3 margint-2">
-                <p className="font-12 mt-1 text-secondary">Call To Action</p>
+                <p className="font-12 mt-2 text-secondary">Call To Action</p>
                 <input
                   type="checkbox"
                   hidden="hidden"

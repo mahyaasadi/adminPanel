@@ -46,7 +46,7 @@ const AddSubArticleModal = ({ addSubArticle }) => {
                     type="text"
                     name="addSubArticleTitle"
                     className="form-control floating inputPadding rounded"
-                    // required
+                  // required
                   />
                 </div>
               </div>
@@ -101,14 +101,14 @@ const AddSubArticleModal = ({ addSubArticle }) => {
               </div>
 
               <div className="form-group col d-flex align-items-center justify-center gap-3">
-                <p className="font-12 mt-1 text-secondary">Call To Action</p>
+                <p className="font-12 mt-2 text-secondary">Call To Action</p>
                 <input
                   type="checkbox"
                   hidden="hidden"
                   id="articleCallToAction"
                   name="articleCallToAction"
-                  // defaultChecked="checked"
-                  // required
+                // defaultChecked="checked"
+                // required
                 />
                 <label
                   className="showInsliderSwitch font-12"

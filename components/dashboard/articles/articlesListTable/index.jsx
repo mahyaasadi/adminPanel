@@ -6,8 +6,8 @@ const ArticlesListTable = ({
   articlesData,
   updateArticle,
   deleteArticle,
-  // openArticleDetails,
   openSubArticleModal,
+  openArticleVideoModal,
 }) => {
   return (
     <>
@@ -72,9 +72,9 @@ const ArticlesListTable = ({
                     data-bs-placement="top"
                     title="ویدیوها"
                     className="btn btn-sm btn-outline-primary font-12"
-                    // onClick={() =>
-                    //   openSubArticleModal(articleData, articleData._id)
-                    // }
+                    onClick={() =>
+                      openArticleVideoModal(articleData)
+                    }
                   >
                     <FeatherIcon
                       style={{ width: "15px", height: "15px" }}
