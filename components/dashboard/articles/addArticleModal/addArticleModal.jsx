@@ -165,16 +165,13 @@ const AddArticleModal = ({
               </div>
 
               <div className="form-group">
-                <label className="lblAbs font-12">
-                  اسکیما <span className="text-danger">*</span>
-                </label>
+                <label className="lblAbs font-12">اسکیما</label>
                 <div className="col p-0">
                   <textarea
                     type="text"
                     dir="ltr"
                     name="addArticleSchema"
                     className="form-control floating inputPadding rounded"
-                    required
                   ></textarea>
                 </div>
               </div>

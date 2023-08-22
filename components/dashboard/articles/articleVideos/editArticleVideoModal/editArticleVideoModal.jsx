@@ -1,18 +1,19 @@
+import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 
-const AddArticleGroupModal = ({ addArticleGroup }) => {
+const EditArticleModal = ({ data, editArticleVideo }) => {
   return (
     <div
       className="modal fade contentmodal"
-      id="addArticleGroupModal"
+      id="editArticleVideoModal"
       tabIndex="-1"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content doctor-profile">
+      <div className="modal-dialog modal-dialog-centered modal-lg">
+        <div className="modal-content">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">
-              افزودن گروه مقاله
+              ویرایش اطلاعات
             </p>
             <button
               type="button"
@@ -26,28 +27,33 @@ const AddArticleGroupModal = ({ addArticleGroup }) => {
             </button>
           </div>
           <div className="modal-body">
-            <form onSubmit={addArticleGroup}>
-              <div className="form-group">
+            <form onSubmit={editArticleVideo}>
+              <div className="form-group col">
+                <input
+                  type="hidden"
+                  className="form-control floating"
+                  name="editVideoID"
+                  value={data._id}
+                />
+                <input
+                  type="hidden"
+                  className="form-control floating"
+                  name="editVideoName"
+                  value={data.Name}
+                  key={data.Name}
+                />
+
                 <label className="lblAbs font-12">
                   عنوان<span className="text-danger">*</span>
                 </label>
                 <div className="col p-0">
                   <input
-                    type="text"
-                    name="articleGroupTitle"
                     className="form-control floating inputPadding rounded"
+                    type="text"
+                    name="editVideoTitle"
+                    defaultValue={data.Title}
+                    key={data.Title}
                     required
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label className="lblAbs font-12">توضیحات</label>
-                <div className="col p-0">
-                  <input
-                    type="text"
-                    name="articleGroupDescription"
-                    className="form-control floating inputPadding rounded"
                   />
                 </div>
               </div>
@@ -55,9 +61,9 @@ const AddArticleGroupModal = ({ addArticleGroup }) => {
               <div className="submit-section">
                 <button
                   type="submit"
-                  className="btn btn-primary rounded btn-save"
+                  className="btn btn-primary btn-save rounded"
                 >
-                  ثبت
+                  ثبت تغییرات
                 </button>
               </div>
             </form>
@@ -68,4 +74,4 @@ const AddArticleGroupModal = ({ addArticleGroup }) => {
   );
 };
 
-export default AddArticleGroupModal;
+export default EditArticleModal;

@@ -1,4 +1,4 @@
-const DepartmentsList = ({ departmentsData }) => {
+const DepartmentsList = ({ departmentsData, handleCheckedDepartments }) => {
   console.log(departmentsData);
   return (
     <>
@@ -13,6 +13,7 @@ const DepartmentsList = ({ departmentsData }) => {
                 id={"Dep" + departmentData._id}
                 className="checkbox-input"
                 defaultChecked={departmentData.Checked}
+                onChange={handleCheckedDepartments}
               />
               <div className="checkbox-tile">
                 <span className="checkbox-icon"></span>

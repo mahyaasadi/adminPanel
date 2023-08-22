@@ -192,7 +192,7 @@ const EditCenterModal = ({
               </div>
 
               <div className="form-group">
-                <label className="lblAbs font-12">مشخصات</label>
+                <label className="lblAbs font-12">توضیحات</label>
                 <div className="col p-0">
                   <textarea
                     className="form-control floating inputPadding rounded"
@@ -236,7 +236,7 @@ const EditCenterModal = ({
               <div className="submit-section">
                 <button
                   type="submit"
-                  className="btn btn-primary rounded btn-save"
+                  className="btn btn-primary rounded btn-save mt-4"
                 >
                   ثبت
                 </button>

@@ -12,7 +12,7 @@ const ArticleGroupsListTable = ({
   updateArticleGroup,
   deleteArticleGroup,
   checkImportantArticle,
-  checkUnimportantArticle
+  checkUnimportantArticle,
 }) => {
   const columns = [
     {
@@ -22,7 +22,7 @@ const ArticleGroupsListTable = ({
       width: "auto",
     },
     {
-      name: "مشخصات",
+      name: "توضیحات",
       selector: (row) => row.Des,
       sortable: true,
       width: "auto",

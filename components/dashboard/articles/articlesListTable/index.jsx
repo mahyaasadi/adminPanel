@@ -1,6 +1,7 @@
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
-// import { useEffect } from "react";
+import { axiosClient } from "class/axiosConfig.js";
 
 const ArticlesListTable = ({
   articlesData,
@@ -9,6 +10,39 @@ const ArticlesListTable = ({
   openSubArticleModal,
   openArticleVideoModal,
 }) => {
+  const [articleGroupsData, setArticleGroupsData] = useState([]);
+  const [articleGroupsOptionsList, setArticleGroupsOptionsList] = useState([]);
+
+  // Get All Article Groups
+  const getAllArticleGroups = () => {
+    let url = "ArticleGroup/getAll";
+
+    axiosClient
+      .get(url)
+      .then((response) => {
+        console.log(response.data);
+        setArticleGroupsData(response.data);
+
+        let selectGroupsData = [];
+        for (let i = 0; i < response.data.length; i++) {
+          const item = response.data[i];
+          let obj = {
+            value: item._id,
+            label: item.Title,
+          };
+          selectGroupsData.push(obj);
+        }
+        setArticleGroupsOptionsList(selectGroupsData);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  console.log(articleGroupsOptionsList);
+
+  useEffect(() => {
+    getAllArticleGroups();
+  }, []);
+
   return (
     <>
       <div className="row p-4">
@@ -35,10 +69,10 @@ const ArticlesListTable = ({
                     {articleData.EngTitle}
                   </p>
                   <div className="pb-2 font-12 text-secondary">
-                    عنوان فارسی : {articleData.Title}
+                    عنوان فارسی : {articleData.Title.substr(0, 10) + " ..."}
                   </div>
                   <div className="pb-2 font-12 text-secondary">
-                    نویسنده : {articleData.Creator}
+                    نویسنده : {articleData.Creator.substr(0, 10) + " ..."}
                   </div>
                   <div className="pb-4 font-12 text-secondary">
                     مدت زمان مطالعه : {articleData.POT} دقیقه
@@ -70,10 +104,40 @@ const ArticlesListTable = ({
                     type="button"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
+                    title="گروه مقاله ها"
+                    className="btn btn-sm btn-outline-primary font-12"
+                    // onClick={() =>
+                    //   openSubArticleModal(articleData, articleData._id)
+                    // }
+                  >
+                    <FeatherIcon
+                      style={{ width: "15px", height: "15px" }}
+                      icon="layers"
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="تگ مقاله ها"
+                    className="btn btn-sm btn-outline-primary font-12"
+                    // onClick={() =>
+                    //   openSubArticleModal(articleData, articleData._id)
+                    // }
+                  >
+                    <FeatherIcon
+                      style={{ width: "15px", height: "15px" }}
+                      icon="tag"
+                    />
+                  </button>
+                  <button
+                    type="button"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
                     title="ویدیوها"
                     className="btn btn-sm btn-outline-primary font-12"
                     onClick={() =>
-                      openArticleVideoModal(articleData)
+                      openArticleVideoModal(articleData, articleData._id)
                     }
                   >
                     <FeatherIcon

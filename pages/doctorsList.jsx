@@ -57,6 +57,8 @@ const DoctorsList = () => {
       Spe: formProps.addPhysicianSpe,
     };
 
+    console.log("data", data);
+
     if (CenterID) {
       axiosClient
         .post(url, data)

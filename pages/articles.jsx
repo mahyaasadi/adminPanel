@@ -12,11 +12,14 @@ import EditArticleModal from "components/dashboard/articles/editArticleModal/edi
 import SubArticlesModal from "components/dashboard/articles/subArticles/subArticleModal/subArticleModal";
 import AddSubArticleModal from "components/dashboard/articles/subArticles/addSubArticleModal/addSubArticleModal";
 import EditSubArticleModal from "components/dashboard/articles/subArticles/editSubArticleModal/editSubArticleModal";
-import ArticleVideosModal from "components/dashboard/articles/articleVideosModal/articleVideosModal";
+import ArticleVideosModal from "components/dashboard/articles/articleVideos/articleVideosModal/articleVideosModal";
+import AddArticleVideoModal from "components/dashboard/articles/articleVideos/addArticleVideoModal/addArticleVideoModal";
+import EditArticleVideoModal from "components/dashboard/articles/articleVideos/editArticleVideoModal/editArticleVideoModal";
 
 let ActiveArticleID,
   ActiveSubArticleID,
-  selectedArticleLanguage = null;
+  selectedArticleLanguage,
+  ActiveVideoID = null;
 
 const Articles = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +27,7 @@ const Articles = () => {
   const [newArticleDate, setNewArticleDate] = useState("");
   const [editArticleData, setEditArticleData] = useState({ empty: 1 });
   const [editSubArticleData, setEditSubArticleData] = useState({ empty: 1 });
+  const [editArticleVideoData, setEditArticleVideoData] = useState([]);
   const [subArticlesData, setSubArticlesData] = useState();
   const [articleVideosData, setArticleVideosData] = useState();
 
@@ -81,10 +85,10 @@ const Articles = () => {
     console.log(`${value} is ${checked}`);
 
     checked
-      // Case 1 : The user checks the box
-      ? setSliderCheckboxStatus({ sliderCheckbox: true })
+      ? // Case 1 : The user checks the box
+        setSliderCheckboxStatus({ sliderCheckbox: true })
       : // Case 2  : The user unchecks the box
-      setSliderCheckboxStatus({ sliderCheckbox: false });
+        setSliderCheckboxStatus({ sliderCheckbox: false });
   };
 
   function handleShowInSliderCheckbox(data) {
@@ -225,13 +229,13 @@ const Articles = () => {
     let g = articlesData[index];
     g = newArr;
 
-    index === -1 ? console.log("no match") : (
-      setArticlesData([
-        ...articlesData.slice(0, index),
-        g,
-        ...articlesData.slice(index + 1),
-      ])
-    )
+    index === -1
+      ? console.log("no match")
+      : setArticlesData([
+          ...articlesData.slice(0, index),
+          g,
+          ...articlesData.slice(index + 1),
+        ]);
   };
 
   // Delete Article
@@ -310,6 +314,8 @@ const Articles = () => {
         getAllArticles();
         setIsLoading(false);
         e.target.reset();
+        $("#addSubArticleImg").val("");
+        subArticleImg = null;
         $("#subArticleImgPreview").attr("src", "");
       })
       .catch((error) => {
@@ -363,9 +369,14 @@ const Articles = () => {
         console.log(response.data);
         updateSubArticleItem(formProps.editSubArticleID, response.data);
 
+        // reset
         getAllArticles();
-        setIsLoading(false);
+        subArticleImg = null;
+        newSubArticleImg = null;
+        formProps.editSubArticleImg = null;
+        $("#editSubArticleImg").val("");
         $("#editSubArticleModal").modal("hide");
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -416,9 +427,138 @@ const Articles = () => {
 
   // --------- videos ----------
 
-  const openArticleVideoModal = (data) => {
+  const openArticleVideoModal = (data, id) => {
     setArticleVideosData(data.Videos);
     $("#articleVideosModal").modal("show");
+    ActiveArticleID = id;
+  };
+
+  const openAddArticleVideoModal = () => {
+    $("#addArticleVideoModal").modal("show");
+    console.log("ActiveArticleID", ActiveArticleID);
+  };
+
+  // Add Article Video
+  let articleVideo = null;
+  const addVideoToArticle = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let url = `/Article/addVideo/${ActiveArticleID}`;
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+
+    if (formProps.addVideoToArticle && formProps.addVideoToArticle.size != 0) {
+      articleVideo = await convertBase64(formProps.addVideoToArticle);
+    }
+
+    let data = {
+      Title: formProps.addVideoTitle,
+      Video: articleVideo,
+    };
+
+    console.log("data", data);
+
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data);
+        setArticleVideosData([...articleVideosData, response.data]);
+
+        $("#addArticleVideoModal").modal("hide");
+        setIsLoading(false);
+
+        // reseting articles
+        getAllArticles();
+        e.target.reset();
+        articleVideo = null;
+        $("#ArticleVideoPreview").attr("src", "");
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        ErrorAlert("خطا", "افزودن ویدیو با خطا مواجه گردید!");
+      });
+  };
+
+  // Delete Article Video
+  const deleteArticleVideo = async (id) => {
+    let result = await QuestionAlert(
+      "حذف ویدیو  !",
+      "آیا از حذف ویدیو اطمینان دارید؟"
+    );
+    setIsLoading(true);
+
+    if (result) {
+      let url = `Article/deleteVideo/${ActiveArticleID}/${id}`;
+
+      await axiosClient
+        .delete(url)
+        .then((response) => {
+          setArticleVideosData(articleVideosData.filter((a) => a._id !== id));
+          getAllArticles();
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
+  // Edit Article Video
+  const updateArticleVideo = (data, id) => {
+    $("#editArticleVideoModal").modal("show");
+    setEditArticleVideoData(data);
+    ActiveVideoID = id;
+  };
+
+  const editArticleVideo = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let url = `Article/updateVideo/${ActiveArticleID}/${ActiveVideoID}`;
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+
+    let data = {
+      Title: formProps.editVideoTitle,
+      Name: formProps.editVideoName,
+    };
+
+    console.log("data", data);
+
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data);
+        updateArticleVideoItem(formProps.editVideoID, response.data);
+
+        // reset
+        getAllArticles();
+        $("#editArticleVideoModal").modal("hide");
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
+      });
+  };
+
+  const updateArticleVideoItem = (id, newArr) => {
+    let index = articleVideosData.findIndex((x) => x._id === id);
+    let g = articleVideosData[index];
+    g = newArr;
+
+    if (index === -1) {
+      console.log("no match");
+    } else
+      setArticleVideosData([
+        ...articleVideosData.slice(0, index),
+        g,
+        ...articleVideosData.slice(index + 1),
+      ]);
   };
 
   useEffect(() => {
@@ -519,7 +659,19 @@ const Articles = () => {
           handleCheckedCallToActionOptions={handleCheckedCallToActionOptions}
         />
 
-        <ArticleVideosModal data={articleVideosData} />
+        <ArticleVideosModal
+          data={articleVideosData}
+          openAddArticleVideoModal={openAddArticleVideoModal}
+          deleteArticleVideo={deleteArticleVideo}
+          updateArticleVideo={updateArticleVideo}
+        />
+
+        <AddArticleVideoModal addVideoToArticle={addVideoToArticle} />
+
+        <EditArticleVideoModal
+          data={editArticleVideoData}
+          editArticleVideo={editArticleVideo}
+        />
       </div>
     </>
   );

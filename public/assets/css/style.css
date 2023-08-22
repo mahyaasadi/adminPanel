@@ -2213,6 +2213,12 @@ button.bg-danger:hover {
   direction: ltr;
 }
 
+.videoModalBody {
+  height: 70vh;
+  overflow-y: auto;
+  direction: ltr;
+}
+
 /*-----------------
 	6. Select2
 -----------------------*/

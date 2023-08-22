@@ -10,13 +10,13 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
   const columns = [
     {
       name: "نام مرکز",
-      selector: (row) => row.Name.substr(0, 60) + " ...",
+      selector: (row) => row.Name,
       sortable: true,
       width: "400px",
     },
     {
       name: "لوگو",
-      selector: (row) => row.Log,
+      selector: (row) => row.Logo,
       sortable: true,
       cell: (row) => (
         <img
@@ -25,7 +25,7 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
           alt=""
         />
       ),
-      width: "400px",
+      width: "370px",
     },
     {
       name: "عملیات ها",

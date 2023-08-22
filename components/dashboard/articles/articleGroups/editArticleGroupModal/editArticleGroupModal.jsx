@@ -52,7 +52,7 @@ const EditArticleGroupModal = ({ data, editArticleGroup }) => {
 
               <div className="form-group">
                 <label className="lblAbs font-12">
-                  مشخصات <span className="text-danger">*</span>
+                  توضیحات <span className="text-danger">*</span>
                 </label>
                 <div className="col p-0">
                   <input

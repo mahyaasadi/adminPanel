@@ -14,6 +14,62 @@ const Departments = () => {
   const [departmentsData, setDepartmentsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [departmentsCheckboxStatus, setDepartmentsCheckboxStatus] = useState({
+    departmentsOptionsList: [],
+  });
+
+  // departments checkbox
+  const handleCheckedDepartments = (e) => {
+    const { value, checked } = e.target;
+    const { departmentsOptionsList } = departmentsCheckboxStatus;
+
+    console.log(`${value} is ${checked}`);
+
+    checked
+      ? setDepartmentsCheckboxStatus({
+          departmentsOptionsList: [...departmentsOptionsList, value],
+        })
+      : setDepartmentsCheckboxStatus({
+          departmentsOptionsList: departmentsOptionsList.filter(
+            (e) => e !== value
+          ),
+        });
+  };
+
+  //get departments
+  const getDepartments = () => {
+    CenterID = Router.query.id;
+    setIsLoading(true);
+
+    let UrlGetDep = `Center/GetDepartments/${CenterID}`;
+    axiosClient
+      .get(UrlGetDep)
+      .then((response) => {
+        if (response.data.length > 0) {
+          setIsLoading(false);
+          console.log(response.data);
+          setDepartmentsData(response.data);
+        } else {
+          getModality();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  };
+
+  function getModality() {
+    let url = "Modality/getAll";
+    setIsLoading(true);
+    axiosClient.get(url).then(function (response) {
+      setIsLoading(false);
+      setDepartmentsData(response.data);
+    });
+  }
+
+  console.log("departmentsData", departmentsData);
+
   const SubmitFrmSetDepartment = (e) => {
     e.preventDefault();
     CenterID = Router.query.id;
@@ -57,38 +113,6 @@ const Departments = () => {
       });
   };
 
-  //get departments
-  const getDepartments = () => {
-    CenterID = Router.query.id;
-    setIsLoading(true);
-
-    let UrlGetDep = `Center/GetDepartments/${CenterID}`;
-    axiosClient
-      .get(UrlGetDep)
-      .then((response) => {
-        if (response.data.length > 0) {
-          setIsLoading(false);
-          console.log(response.data);
-          setDepartmentsData(response.data);
-        } else {
-          getModality();
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-      });
-  };
-
-  function getModality() {
-    let url = "Modality/getAll";
-    setIsLoading(true);
-    axiosClient.get(url).then(function (response) {
-      setIsLoading(false);
-      setDepartmentsData(response.data);
-    });
-  }
-
   useEffect(() => {
     if (Router.isReady) {
       CenterID = Router.query.id;
@@ -117,7 +141,10 @@ const Departments = () => {
                 onSubmit={SubmitFrmSetDepartment}
               >
                 <div className="box-container">
-                  <DepartmentsList departmentsData={departmentsData} />
+                  <DepartmentsList
+                    departmentsData={departmentsData}
+                    handleCheckedDepartments={handleCheckedDepartments}
+                  />
                 </div>
                 <div className="submitDepartments-btn d-flex justify-center w-100">
                   <button className="btn btn-sm btn-secondary rounded col-lg-4 col-7">

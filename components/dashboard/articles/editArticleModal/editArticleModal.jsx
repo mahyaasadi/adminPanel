@@ -228,9 +228,7 @@ const EditArticleModal = ({
               </div>
 
               <div className="form-group">
-                <label className="lblAbs font-12">
-                  اسکیما <span className="text-danger">*</span>
-                </label>
+                <label className="lblAbs font-12">اسکیما</label>
                 <div className="col p-0">
                   <textarea
                     type="text"
@@ -239,7 +237,7 @@ const EditArticleModal = ({
                     className="form-control floating inputPadding rounded"
                     defaultValue={data.Schema}
                     key={data.Schema}
-                    required
+                    // required
                   ></textarea>
                 </div>
               </div>

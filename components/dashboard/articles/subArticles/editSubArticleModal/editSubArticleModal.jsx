@@ -67,32 +67,32 @@ const EditSubArticleModal = ({
                     />
                   </div>
                 </div>
+              </div>
 
-                <div className="form-group">
-                  <label className="lblAbs font-12">متن</label>
-                  <div className="col p-0">
-                    <textarea
-                      type="text"
-                      name="editSubArticleText"
-                      defaultValue={data.Text}
-                      key={data.Text}
-                      className="form-control floating inputPadding rounded"
-                    ></textarea>
-                  </div>
+              <div className="form-group col">
+                <label className="lblAbs font-12">توضیحات</label>
+                <div className="col p-0">
+                  <textarea
+                    dir="ltr"
+                    className="form-control floating inputPadding rounded"
+                    type="text"
+                    name="editSubArticleDes"
+                    defaultValue={data.Des}
+                    key={data.Des}
+                  ></textarea>
                 </div>
+              </div>
 
-                <div className="form-group col">
-                  <label className="lblAbs font-12">توضیحات</label>
-                  <div className="col p-0">
-                    <textarea
-                      dir="ltr"
-                      className="form-control floating inputPadding rounded"
-                      type="text"
-                      name="editSubArticleDes"
-                      defaultValue={data.Des}
-                      key={data.Des}
-                    ></textarea>
-                  </div>
+              <div className="form-group">
+                <label className="lblAbs font-12">متن</label>
+                <div className="col p-0">
+                  <textarea
+                    type="text"
+                    name="editSubArticleText"
+                    defaultValue={data.Text}
+                    key={data.Text}
+                    className="form-control floating inputPadding rounded"
+                  ></textarea>
                 </div>
               </div>
 
@@ -109,39 +109,48 @@ const EditSubArticleModal = ({
                   className="upload"
                   name="editSubArticleImg"
                   onChange={displayPreview}
-                // required
-                // id="SubArticleImg"
+                  defaultValue={data.Image}
+                  key={data.Image}
+                  id="editSubArticleImg"
+                  // required
+                  // id="SubArticleImg"
                 />
 
                 {/* Img variations */}
                 <input
                   type="hidden"
                   defaultValue={data.Img}
+                  key={data.Img}
                   name="defaultSubArticleImg"
                 />
                 <input
                   type="hidden"
                   defaultValue={data.ImgMed}
+                  key={data.ImgMed}
                   name="defaultSubArticleImgMed"
                 />
                 <input
                   type="hidden"
                   defaultValue={data.ImgThumb}
+                  key={data.ImgThumb}
                   name="defaultSubArticleImgThumb"
                 />
                 <input
                   type="hidden"
                   defaultValue={data.WImg}
+                  key={data.WImg}
                   name="defaultSubArticleWImg"
                 />
                 <input
                   type="hidden"
                   defaultValue={data.WImgMed}
+                  key={data.WImgMed}
                   name="defaultSubArticleWImgMed"
                 />
                 <input
                   type="hidden"
                   defaultValue={data.WImgThumb}
+                  key={data.WImgThumb}
                   name="defaultSubArticleWImgThumb"
                 />
               </div>

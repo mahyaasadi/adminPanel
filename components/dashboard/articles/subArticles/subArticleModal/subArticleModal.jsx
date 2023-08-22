@@ -9,7 +9,7 @@ const SubArticlesModal = ({
   deleteSubArticle,
   updateSubArticle,
 }) => {
-  console.log("subData", data);
+  // console.log("subData", data);
   return (
     <div
       className="modal fade contentmodal"
