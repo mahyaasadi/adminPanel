@@ -8988,6 +8988,10 @@ ul li .active {
   width: 90%;
 }
 
+.w-fit {
+  width: fit-content !important;
+}
+
 .disNone {
   display: none;
 }
@@ -9037,6 +9041,10 @@ ul li .active {
 
 .padding-1 {
   padding: 1em;
+}
+
+.padding-sm {
+  padding: 3px 6px !important;
 }
 
 .padding-r-10 {

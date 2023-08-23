@@ -16,6 +16,12 @@ const ArticleTagsListTable = ({ data, updateArticleTag, deleteArticleTag }) => {
       width: "auto",
     },
     {
+      name: "عنوان انگلیسی",
+      selector: (row) => row.EngTitle,
+      sortable: true,
+      width: "auto",
+    },
+    {
       name: "عملیات ها",
       selector: (row) => row._id,
       sortable: true,

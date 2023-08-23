@@ -54,7 +54,6 @@ const EditArticleModal = ({
   // console.log(data);
   useEffect(() => {
     handleShowInSliderCheckbox(data);
-    console.log(data);
   }, [data]);
 
   return (

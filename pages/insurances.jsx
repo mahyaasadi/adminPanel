@@ -248,10 +248,8 @@ const Insurance = () => {
       <AddInsuranceModal
         data={insuranceList}
         addInsurance={addInsurance}
-        // name={name}
         insuranceType={insuranceType}
         insuranceStatus={insuranceStatus}
-        // handleNameInput={handleNameInput}
         FUSelectInsuranceType={FUSelectInsuranceType}
         FUSelectInsuranceStatus={FUSelectInsuranceStatus}
       />
@@ -259,10 +257,8 @@ const Insurance = () => {
       <EditInsuranceModal
         editInsurance={editInsurance}
         data={editedInsurance}
-        // name={name}
         insuranceType={insuranceType}
         insuranceStatus={insuranceStatus}
-        // handleNameInput={handleNameInput}
         FUSelectInsuranceType={FUSelectInsuranceType}
         FUSelectInsuranceStatus={FUSelectInsuranceStatus}
       />

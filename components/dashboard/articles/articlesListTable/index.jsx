@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
-import { axiosClient } from "class/axiosConfig.js";
 
 const ArticlesListTable = ({
   articlesData,
@@ -9,45 +7,15 @@ const ArticlesListTable = ({
   deleteArticle,
   openSubArticleModal,
   openArticleVideoModal,
+  openGrpAttachmentModal,
+  // groupsData,
 }) => {
-  const [articleGroupsData, setArticleGroupsData] = useState([]);
-  const [articleGroupsOptionsList, setArticleGroupsOptionsList] = useState([]);
-
-  // Get All Article Groups
-  const getAllArticleGroups = () => {
-    let url = "ArticleGroup/getAll";
-
-    axiosClient
-      .get(url)
-      .then((response) => {
-        console.log(response.data);
-        setArticleGroupsData(response.data);
-
-        let selectGroupsData = [];
-        for (let i = 0; i < response.data.length; i++) {
-          const item = response.data[i];
-          let obj = {
-            value: item._id,
-            label: item.Title,
-          };
-          selectGroupsData.push(obj);
-        }
-        setArticleGroupsOptionsList(selectGroupsData);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  console.log(articleGroupsOptionsList);
-
-  useEffect(() => {
-    getAllArticleGroups();
-  }, []);
-
+  // console.log("groupsData", groupsData);
   return (
     <>
       <div className="row p-4">
         {articlesData.map((articleData, index) => (
-          <div className="col-sm-6 col-md-4 col-xl-3 articleCard" key={index}>
+          <div className="col-sm-6 col-md-4 col-xxl-3 articleCard" key={index}>
             {/* cardImage */}
             <div className="card">
               <div className="card-body">
@@ -82,33 +50,22 @@ const ArticlesListTable = ({
                 <hr />
 
                 <div
-                  className="d-flex justify-flex-end gap-1"
+                  className="d-flex justify-flex-end gap-1 flex-wrap"
                   id="infoContainer"
                 >
                   <button
                     type="button"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
-                    title="زیر مقاله ها"
-                    className="btn btn-sm btn-outline-primary font-12"
-                    onClick={() =>
-                      openSubArticleModal(articleData, articleData._id)
-                    }
-                  >
-                    <FeatherIcon
-                      style={{ width: "15px", height: "15px" }}
-                      icon="file-text"
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
                     title="گروه مقاله ها"
-                    className="btn btn-sm btn-outline-primary font-12"
-                    // onClick={() =>
-                    //   openSubArticleModal(articleData, articleData._id)
-                    // }
+                    className="padding-sm btn btn-sm btn-outline-primary font-12"
+                    onClick={() =>
+                      openGrpAttachmentModal(
+                        articleData.EngTitle,
+                        articleData._id,
+                        articleData.Groups
+                      )
+                    }
                   >
                     <FeatherIcon
                       style={{ width: "15px", height: "15px" }}
@@ -120,7 +77,7 @@ const ArticlesListTable = ({
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="تگ مقاله ها"
-                    className="btn btn-sm btn-outline-primary font-12"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12"
                     // onClick={() =>
                     //   openSubArticleModal(articleData, articleData._id)
                     // }
@@ -134,8 +91,24 @@ const ArticlesListTable = ({
                     type="button"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
+                    title="زیر مقاله ها"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12"
+                    onClick={() =>
+                      openSubArticleModal(articleData, articleData._id)
+                    }
+                  >
+                    <FeatherIcon
+                      style={{ width: "15px", height: "15px" }}
+                      icon="file-text"
+                    />
+                  </button>
+
+                  <button
+                    type="button"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
                     title="ویدیوها"
-                    className="btn btn-sm btn-outline-primary font-12"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12"
                     onClick={() =>
                       openArticleVideoModal(articleData, articleData._id)
                     }
@@ -147,7 +120,7 @@ const ArticlesListTable = ({
                   </button>
                   <button
                     button="button"
-                    className="btn btn-sm btn-outline-secondary btn-border-left"
+                    className="padding-sm btn btn-sm btn-outline-secondary btn-border-left"
                     onClick={() => updateArticle(articleData, articleData._id)}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -160,7 +133,7 @@ const ArticlesListTable = ({
                   </button>
                   <button
                     type="button"
-                    className="btn btn-sm btn-outline-danger"
+                    className="padding-sm btn btn-sm btn-outline-danger"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="حذف"

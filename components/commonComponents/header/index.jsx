@@ -34,16 +34,18 @@ const Header = () => {
   };
 
   useEffect(() => {
+    let url = "InoAdmin/getUserByToken";
     let data = { Token: sessionStorage.getItem("SEID") };
 
     if (data) {
       axiosClient
-        .post("AdminUser/getUserByToken", data)
+        .post(url, data)
         .then(function (response) {
+          console.log(response.data);
           user = response.data;
           let centerId = user.CenterID;
           Cookies.set("CenterID", centerId);
-          console.log(response.data);
+
           document.getElementById("userName").innerHTML = user.FullName;
           document.getElementById("avatar").setAttribute("src", user.Avatar);
           document.getElementById("avatar").setAttribute("srcSet", user.Avatar);
@@ -51,7 +53,6 @@ const Header = () => {
           document
             .getElementById("dropdownAvatar")
             .setAttribute("src", user.Avatar);
-
           document
             .getElementById("dropdownAvatar")
             .setAttribute("srcSet", user.Avatar);
@@ -62,10 +63,10 @@ const Header = () => {
         })
         .catch(function (error) {
           console.log(error);
-          // ErrorAlert("خطا", "ارتباط با سرور در حال حاضر امکان پذیر نمی باشد!");
-          // setTimeout(() => {
-          //   router.push("/");
-          // }, 2000);
+          ErrorAlert("خطا", "ارتباط با سرور در حال حاضر امکان پذیر نمی باشد!");
+          setTimeout(() => {
+            router.push("/");
+          }, 2000);
         });
     }
   }, []);

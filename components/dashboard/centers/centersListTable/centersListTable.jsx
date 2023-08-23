@@ -9,6 +9,12 @@ import { tableCustomStyles } from "components/commonComponents/customTableStyle/
 const CentersListTable = ({ data, updateCenterInfo }) => {
   const columns = [
     {
+      name: "ردیف",
+      // selector: (row) => row.indexOf(row.Name),
+      sortable: true,
+      width: "100px",
+    },
+    {
       name: "نام مرکز",
       selector: (row) => row.Name,
       sortable: true,
@@ -25,7 +31,7 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
           alt=""
         />
       ),
-      width: "370px",
+      width: "300px",
     },
     {
       name: "عملیات ها",
@@ -146,7 +152,7 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
           </Link>
         </div>
       ),
-      width: "50px",
+      width: "500px",
     },
   ];
 

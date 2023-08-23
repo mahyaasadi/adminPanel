@@ -81,16 +81,21 @@ const SpecializedWorks = () => {
       EngName: formProps.AddSpeEngName,
     };
 
+    console.log("data", data);
+
     if (CenterID) {
       axiosClient
         .post(url, data)
         .then((response) => {
+          console.log(response.data);
           setSpeWorks([...speWorks, response.data]);
           $("#addSpeWorkModal").modal("hide");
+          setIsLoading(false);
           e.target.reset();
         })
         .catch((error) => {
           console.log(error);
+          setIsLoading(false);
         });
     }
   };

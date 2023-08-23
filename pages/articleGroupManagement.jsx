@@ -45,12 +45,16 @@ const ArticleGroupsManagement = () => {
 
     let data = {
       Title: formProps.articleGroupTitle,
+      EngTitle: formProps.articleGroupEngTitle,
       Des: formProps.articleGroupDescription,
     };
+
+    console.log(data);
 
     axiosClient
       .post(url, data)
       .then((response) => {
+        console.log(response.data);
         setArticleGroupsData([...articleGroupsData, response.data]);
         setIsLoading(false);
 
@@ -80,6 +84,7 @@ const ArticleGroupsManagement = () => {
 
     let data = {
       Title: formProps.editArticleGrpTitle,
+      EngTitle: formProps.editArticleGrpEngTitle,
       Des: formProps.editArticleGrpDes,
     };
 
@@ -234,9 +239,7 @@ const ArticleGroupsManagement = () => {
                   <div className="card-header border-bottom-0">
                     <div className="row align-items-center">
                       <div className="col">
-                        <h5 className="card-title font-16">
-                          لیست گروه مقالات
-                        </h5>
+                        <h5 className="card-title font-16">لیست گروه مقالات</h5>
                       </div>
                       <div className="col-auto d-flex flex-wrap">
                         <div className="form-custom me-2">

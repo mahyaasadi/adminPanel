@@ -34,7 +34,7 @@ const AddSpeWorkModal = ({ addSpeWork }) => {
                 <input
                   className="form-control floating inputPadding rounded"
                   type="text"
-                  id="AddSpeName"
+                  name="AddSpeName"
                   required
                 />
               </div>
@@ -46,7 +46,7 @@ const AddSpeWorkModal = ({ addSpeWork }) => {
                 <input
                   className="form-control floating inputPadding rounded"
                   type="text"
-                  id="AddSpeTitle"
+                  name="AddSpeTitle"
                   required
                 />
               </div>
@@ -58,7 +58,7 @@ const AddSpeWorkModal = ({ addSpeWork }) => {
                 <input
                   className="form-control floating inputPadding rounded"
                   type="text"
-                  id="AddSpeEngName"
+                  name="AddSpeEngName"
                   required
                 />
               </div>

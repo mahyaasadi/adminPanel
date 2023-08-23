@@ -15,11 +15,15 @@ import EditSubArticleModal from "components/dashboard/articles/subArticles/editS
 import ArticleVideosModal from "components/dashboard/articles/articleVideos/articleVideosModal/articleVideosModal";
 import AddArticleVideoModal from "components/dashboard/articles/articleVideos/addArticleVideoModal/addArticleVideoModal";
 import EditArticleVideoModal from "components/dashboard/articles/articleVideos/editArticleVideoModal/editArticleVideoModal";
+import GrpAttachmentList from "components/dashboard/articles/articleGrpAttachment/grpAttachmentsList";
+import AddGroupToArticleModal from "components/dashboard/articles/articleGrpAttachment/addGrpToArticleModal";
 
 let ActiveArticleID,
   ActiveSubArticleID,
   selectedArticleLanguage,
-  ActiveVideoID = null;
+  ActiveVideoID,
+  ActiveArticleTitle,
+  ActiveGroupID = null;
 
 const Articles = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,16 +34,10 @@ const Articles = () => {
   const [editArticleVideoData, setEditArticleVideoData] = useState([]);
   const [subArticlesData, setSubArticlesData] = useState();
   const [articleVideosData, setArticleVideosData] = useState();
-
-  let sliderCheckbox = false;
-  const [sliderCheckboxStatus, setSliderCheckboxStatus] = useState({
-    sliderCheckbox,
-  });
-
-  let callToActionCheckbox = false;
-  const [actionCheckboxStatus, setActionCheckboxStatus] = useState({
-    callToActionCheckbox,
-  });
+  // --------------
+  const [selectedArticleGroups, setSelectedArticleGrp] = useState([]);
+  const [articleGroupsData, setArticleGroupsData] = useState([]);
+  const [articleGroupsOptionsList, setArticleGroupsOptionsList] = useState([]);
 
   // Get all articles
   const getAllArticles = () => {
@@ -76,6 +74,16 @@ const Articles = () => {
   const FUSelectArticleLanguage = (lang) => {
     selectedArticleLanguage = lang;
   };
+
+  let sliderCheckbox = false;
+  const [sliderCheckboxStatus, setSliderCheckboxStatus] = useState({
+    sliderCheckbox,
+  });
+
+  let callToActionCheckbox = false;
+  const [actionCheckboxStatus, setActionCheckboxStatus] = useState({
+    callToActionCheckbox,
+  });
 
   // Article showInSlider checkbox
   const handleCheckedSliderOptions = (e) => {
@@ -561,8 +569,111 @@ const Articles = () => {
       ]);
   };
 
+  // ------- articleGrps --------
+
+  // Get All Article Groups
+  const getAllArticleGroups = () => {
+    let url = "ArticleGroup/getAll";
+
+    axiosClient
+      .get(url)
+      .then((response) => {
+        setArticleGroupsData(response.data);
+
+        let selectGroupsData = [];
+        for (let i = 0; i < response.data.length; i++) {
+          const item = response.data[i];
+          let obj = {
+            value: item._id,
+            label: item.Title,
+          };
+          selectGroupsData.push(obj);
+        }
+        setArticleGroupsOptionsList(selectGroupsData);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const openGrpAttachmentModal = (articleTitle, id, GroupsData) => {
+    $("#grpAttachmentModal").modal("show");
+    ActiveArticleID = id;
+    ActiveArticleTitle = articleTitle;
+    setSelectedArticleGrp(GroupsData);
+    console.log(GroupsData);
+  };
+
+  const openAttachGrpModal = () => {
+    $("#attachGrpModal").modal("show");
+  };
+
+  let selectedGroup = "";
+  const FUSelectArticleGroup = (value) => {
+    selectedGroup = value;
+  };
+
+  // add group
+  const addGrpToArticle = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let url = `/Article/addGroup/${ActiveArticleID}`;
+
+    let data = {
+      GroupID: selectedGroup,
+    };
+
+    console.log("data", data);
+
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data);
+        // setSelectedArticleGrp([...selectedGroup, response.data]);
+        $("#attachGrpModal").modal("hide");
+        $("#grpAttachmentModal").modal("hide");
+        getAllArticles();
+
+        setIsLoading(false);
+        e.target.reset();
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        ErrorAlert("خطا", "افزودن گروه با خطا مواجه گردید!");
+      });
+  };
+
+  // delete group
+  const removeGrpFromArticle = async (id) => {
+    let result = await QuestionAlert(
+      "حذف  گروه از مقاله!",
+      "آیا از حذف گروه اطمینان دارید؟"
+    );
+    setIsLoading(true);
+
+    if (result) {
+      let url = `Article/deleteGroup/${ActiveArticleID}/${id}`;
+
+      await axiosClient
+        .delete(url)
+        .then((response) => {
+          setSelectedArticleGrp(
+            selectedArticleGroups.filter((a) => a._id !== id)
+          );
+
+          getAllArticles();
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
   useEffect(() => {
     getAllArticles();
+    getAllArticleGroups();
   }, []);
 
   return (
@@ -618,6 +729,7 @@ const Articles = () => {
                     deleteArticle={deleteArticle}
                     openArticleVideoModal={openArticleVideoModal}
                     openSubArticleModal={openSubArticleModal}
+                    openGrpAttachmentModal={openGrpAttachmentModal}
                   />
                 </div>
 
@@ -632,7 +744,6 @@ const Articles = () => {
           setArticleDateInDB={setArticleDateInDB}
           FUSelectArticleLanguage={FUSelectArticleLanguage}
         />
-
         <EditArticleModal
           data={editArticleData}
           editArticle={editArticle}
@@ -641,36 +752,44 @@ const Articles = () => {
           handleShowInSliderCheckbox={handleShowInSliderCheckbox}
           handleCheckedSliderOptions={handleCheckedSliderOptions}
         />
-
+        {/* subArticles */}
         <SubArticlesModal
           data={subArticlesData}
-          ActiveArticleID={ActiveArticleID}
           openAddSubArticleModal={openAddSubArticleModal}
           updateSubArticle={updateSubArticle}
           deleteSubArticle={deleteSubArticle}
         />
-
         <AddSubArticleModal addSubArticle={addSubArticle} />
-
         <EditSubArticleModal
           data={editSubArticleData}
           editSubArticle={editSubArticle}
           handleCallToActionSwitch={handleCallToActionSwitch}
           handleCheckedCallToActionOptions={handleCheckedCallToActionOptions}
         />
-
+        {/* videos */}
         <ArticleVideosModal
           data={articleVideosData}
           openAddArticleVideoModal={openAddArticleVideoModal}
           deleteArticleVideo={deleteArticleVideo}
           updateArticleVideo={updateArticleVideo}
         />
-
         <AddArticleVideoModal addVideoToArticle={addVideoToArticle} />
-
         <EditArticleVideoModal
           data={editArticleVideoData}
           editArticleVideo={editArticleVideo}
+        />
+        {/* group attachments */}
+        <GrpAttachmentList
+          data={selectedArticleGroups}
+          articleTitle={ActiveArticleTitle}
+          openAttachGrpModal={openAttachGrpModal}
+          removeGrpFromArticle={removeGrpFromArticle}
+        />
+
+        <AddGroupToArticleModal
+          grpOptions={articleGroupsOptionsList}
+          FUSelectArticleGroup={FUSelectArticleGroup}
+          addGrpToArticle={addGrpToArticle}
         />
       </div>
     </>

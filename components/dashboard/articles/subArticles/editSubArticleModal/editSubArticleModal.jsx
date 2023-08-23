@@ -19,7 +19,6 @@ const EditSubArticleModal = ({
 
   useEffect(() => {
     handleCallToActionSwitch(data);
-    console.log(data);
   }, [data]);
 
   return (

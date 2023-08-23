@@ -45,6 +45,7 @@ const ArticleTagsManagement = () => {
 
     let data = {
       Title: formProps.articleTagTitle,
+      EngTitle: formProps.articleTagEngTitle,
     };
 
     axiosClient
@@ -80,6 +81,7 @@ const ArticleTagsManagement = () => {
 
     let data = {
       Title: formProps.editArticleTagTitle,
+      EngTitle: formProps.editArticleTagEngTitle,
     };
 
     axiosClient
@@ -199,7 +201,10 @@ const ArticleTagsManagement = () => {
         )}
         <AddArticleTagModal addArticleTag={addArticleTag} />
 
-        <EditArticleTagModal data={editArticleTagData} editArticleGroup={editArticleGroup}/>
+        <EditArticleTagModal
+          data={editArticleTagData}
+          editArticleGroup={editArticleGroup}
+        />
       </div>
     </>
   );

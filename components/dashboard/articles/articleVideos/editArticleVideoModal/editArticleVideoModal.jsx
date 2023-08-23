@@ -9,7 +9,7 @@ const EditArticleModal = ({ data, editArticleVideo }) => {
       tabIndex="-1"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered modal-lg">
+      <div className="modal-dialog modal-dialog-centered modal-md">
         <div className="modal-content">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">

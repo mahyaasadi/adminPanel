@@ -22,8 +22,15 @@ const ArticleGroupsListTable = ({
       width: "auto",
     },
     {
+      name: "عنوان انگلیسی",
+      selector: (row) => row.EngTitle,
+      sortable: true,
+      width: "auto",
+    },
+    {
       name: "توضیحات",
-      selector: (row) => row.Des,
+      selector: (row) =>
+        row.Des.length > 35 ? row.Des.substr(0, 35) + " ..." : row.Des,
       sortable: true,
       width: "auto",
     },

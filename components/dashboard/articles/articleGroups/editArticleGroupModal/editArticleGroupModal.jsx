@@ -52,6 +52,22 @@ const EditArticleGroupModal = ({ data, editArticleGroup }) => {
 
               <div className="form-group">
                 <label className="lblAbs font-12">
+                  عنوان انگلیسی <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    className="form-control floating inputPadding rounded"
+                    type="text"
+                    name="editArticleGrpEngTitle"
+                    defaultValue={data.EngTitle}
+                    key={data.EngTitle}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="lblAbs font-12">
                   توضیحات <span className="text-danger">*</span>
                 </label>
                 <div className="col p-0">

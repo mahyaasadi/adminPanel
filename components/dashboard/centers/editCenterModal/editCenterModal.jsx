@@ -39,7 +39,7 @@ const EditCenterModal = ({
     // console.log(selectedProvinceList);
 
     let findCities = provinceOptionsList.find(
-      (x) => x.value === data.Province.Finglish
+      (x) => x.value === data?.Province?.Finglish
     );
     // console.log(findCities);
 
@@ -192,7 +192,7 @@ const EditCenterModal = ({
               </div>
 
               <div className="form-group">
-                <label className="lblAbs font-12">توضیحات</label>
+                <label className="lblAbs font-12">درباره ما</label>
                 <div className="col p-0">
                   <textarea
                     className="form-control floating inputPadding rounded"

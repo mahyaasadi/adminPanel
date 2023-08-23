@@ -1,6 +1,6 @@
 import FeatherIcon from "feather-icons-react";
 
-const EditArticleTagModal = ({data, editArticleGroup}) => {
+const EditArticleTagModal = ({ data, editArticleGroup }) => {
   return (
     <div
       className="modal fade contentmodal"
@@ -32,7 +32,7 @@ const EditArticleTagModal = ({data, editArticleGroup}) => {
                   type="hidden"
                   className="form-control floating"
                   name="editArticleTagID"
-                value={data._id}
+                  value={data._id}
                 />
 
                 <label className="lblAbs font-12">
@@ -45,6 +45,22 @@ const EditArticleTagModal = ({data, editArticleGroup}) => {
                     name="editArticleTagTitle"
                     defaultValue={data.Title}
                     key={data.Title}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  عنوان انگلیسی <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    className="form-control floating inputPadding rounded"
+                    type="text"
+                    name="editArticleTagEngTitle"
+                    defaultValue={data.EngTitle}
+                    key={data.EngTitle}
                     required
                   />
                 </div>
