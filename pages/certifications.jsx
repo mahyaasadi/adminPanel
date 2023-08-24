@@ -9,7 +9,7 @@ import Loading from "components/commonComponents/loading/loading";
 import CertificationsListTable from "/components/dashboard/certifications/certificationsListTable/certificationsListTable";
 import AddCertificateModal from "components/dashboard/certifications/addCertificateModal/addCertificateModal";
 import EditCertificateModal from "components/dashboard/certifications/editCertificateModal/editCertificateModal";
-import { QuestionAlert } from "class/AlertManage.js";
+import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 
 // let CenterID = Cookies.get("CenterID");
 let CenterID = null;
@@ -110,6 +110,8 @@ const Certifications = () => {
         .catch((error) => {
           console.log(error);
           setIsLoading(false);
+        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
+
         });
     }
   };

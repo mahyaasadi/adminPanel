@@ -12,6 +12,7 @@ const currentDay = jdate.getDate();
 const DatePicker = ({ setArticleDate, defDate }) => {
   let artDate = null;
   if (defDate) {
+    defDate = defDate.replaceAll(/\//g, "");
     artDate = {
       year: parseInt(defDate.substr(0, 4)),
       month: parseInt(defDate.substr(4, 2)),

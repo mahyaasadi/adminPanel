@@ -152,7 +152,7 @@ const AddCenterModal = ({
               </div>
 
               <div className="form-group">
-                <label className="lblAbs font-12">درباره ما</label>
+                <label className="lblAbs font-12">توضیحات</label>
                 <div className="col p-0">
                   <textarea
                     className="form-control floating inputPadding rounded"

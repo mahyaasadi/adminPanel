@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import DataTable from "react-data-table-component";
@@ -6,59 +5,46 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const CertificationsListTable = ({
+const CenterPhoneNumbersList = ({
   data,
-  deleteCertificate,
-  updateCertificate,
+  updatePhoneNumber,
+  deletePhoneNumber,
 }) => {
   const columns = [
     {
-      name: "نام شرکت",
-      selector: (row) => row.Company,
+      name: "شماره مرکز",
+      selector: (row) => row.Text,
       sortable: true,
       width: "auto",
     },
     {
-      name: "لینک مجوز",
-      selector: (row) => row.Link,
-      sortable: true,
-      width: "auto",
-    },
-    {
-      name: "عنوان مجوز",
-      selector: (row) => row.Name,
-      sortable: true,
-      width: "auto",
-    },
-    {
-      name: "سال صدور",
-      selector: (row) => row.Year,
+      name: "نوع شماره",
+      selector: (row) => row.Type,
       sortable: true,
       width: "auto",
     },
     {
       name: "عملیات ها",
-      selector: (row) => row.action,
+      selector: (row) => row._id,
       sortable: true,
+
       cell: (row) => (
         <div className="actions d-flex gap-1">
-          <Link
-            href="#"
-            className="btn btn-sm btn-outline-danger"
-            onClick={() => deleteCertificate(row._id)}
+          <button
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="حذف"
+            className="btn btn-sm btn-outline-danger"
+            onClick={() => deletePhoneNumber(row._id)}
           >
             <FeatherIcon
               icon="trash-2"
               style={{ width: "16px", height: "16px" }}
             />
-          </Link>
-          <Link
-            href="#"
+          </button>
+          <button
             className="btn btn-sm btn-outline-secondary btn-border-left"
-            onClick={() => updateCertificate(row)}
+            onClick={() => updatePhoneNumber(row)}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="ویرایش"
@@ -67,7 +53,7 @@ const CertificationsListTable = ({
               icon="edit-3"
               style={{ width: "16px", height: "16px" }}
             />
-          </Link>
+          </button>
         </div>
       ),
       width: "200px",
@@ -78,6 +64,7 @@ const CertificationsListTable = ({
     columns,
     data,
   };
+
   return (
     <div className="card-body p-4">
       <div className="table-responsive">
@@ -101,4 +88,4 @@ const CertificationsListTable = ({
   );
 };
 
-export default CertificationsListTable;
+export default CenterPhoneNumbersList;

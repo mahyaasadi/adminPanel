@@ -12,7 +12,7 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
       name: "ردیف",
       // selector: (row) => row.indexOf(row.Name),
       sortable: true,
-      width: "100px",
+      width: "80px",
     },
     {
       name: "نام مرکز",
@@ -31,7 +31,7 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
           alt=""
         />
       ),
-      width: "300px",
+      width: "240px",
     },
     {
       name: "عملیات ها",
@@ -73,7 +73,7 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
             </button>
           )}
 
-          <Link
+          <button
             className="btn btn-sm btn-outline-secondary btn-border-left"
             href="#"
             data-bs-toggle="tooltip"
@@ -83,6 +83,22 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
           >
             <FeatherIcon
               icon="edit-3"
+              style={{ width: "16px", height: "16px" }}
+            />
+          </button>
+
+          <Link
+            className="btn btn-sm btn-outline-secondary btn-border-left"
+            href={{
+              pathname: "/centerPhoneNumbers",
+              query: { id: row._id },
+            }}
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="تلفن های مرکز"
+          >
+            <FeatherIcon
+              icon="phone"
               style={{ width: "16px", height: "16px" }}
             />
           </Link>

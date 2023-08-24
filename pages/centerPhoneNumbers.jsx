@@ -2,53 +2,39 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
-import { axiosClient } from "class/axiosConfig.js";
-// import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import Loading from "components/commonComponents/loading/loading";
-import InsuranceListTable from "components/dashboard/insurances/insuranceListTable/insuranceListTable";
-import AddInsuranceModal from "components/dashboard/insurances/addInsuranceModal/addInsuranceModal";
-import EditInsuranceModal from "components/dashboard/insurances/editInsuranceModal/editInsuranceModal";
-import insuranceTypeDataClass from "class/insuranceTypeDataClass";
-import insuranceStatusDataClass from "class/insuranceStatusDataClass";
+import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
+import Loading from "components/commonComponents/loading/loading";
+import centerPhoneTypeDataClass from "class/centerPhoneTypeDataClass.js";
+import CenterPhoneNumbersList from "components/dashboard/centers/centerPhoneNumbers/centerPhoneNumbersList";
+import AddPhoneNumberModal from "components/dashboard/centers/centerPhoneNumbers/addPhoneNumberModal/addPhoneNumberModal";
+import EditPhoneNumberModal from "components/dashboard/centers/centerPhoneNumbers/editPhoneNumberModal/editPhoneNumberModal";
 
-// let CenterID = Cookies.get("CenterID");
 let CenterID = null;
 
 const Insurance = () => {
   const Router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [insuranceList, setInsuranceList] = useState([]);
-  const [editedInsurance, setEditedInsurance] = useState([]);
-  const [insuranceType, setInsuranceType] = useState(insuranceTypeDataClass);
-  const [insuranceStatus, setInsuranceStatus] = useState(
-    insuranceStatusDataClass
+  const [phoneNumbersList, setPhoneNumbersList] = useState([]);
+  const [phoneTypeOptions, setPhoneTypeOptions] = useState(
+    centerPhoneTypeDataClass
   );
+  const [editPhoneNumberData, setEditPhoneNumberData] = useState([]);
 
-  let SelectInsuranceType,
-    SelectInsuranceStatus = "";
-
-  const FUSelectInsuranceType = (Type) => {
-    SelectInsuranceType = Type;
-  };
-
-  const FUSelectInsuranceStatus = (Status) => {
-    SelectInsuranceStatus = Status;
-  };
-
-  //Get insurance list
-  const getInsuranceData = () => {
+  // Get all of centers phoneNumbers
+  const getAllPhoneNumbers = () => {
     CenterID = Router.query.id;
-    let url = `CenterProfile/getCenterInsurance/${CenterID}`;
+    let url = `CenterProfile/getCenterPhones/${CenterID}`;
     setIsLoading(true);
 
     if (CenterID) {
       axiosClient
         .get(url)
         .then(function (response) {
-          setInsuranceList(response.data);
+          console.log(response.data);
+          setPhoneNumbersList(response.data);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -58,8 +44,13 @@ const Insurance = () => {
     }
   };
 
-  // Add Insurance
-  const addInsurance = (e) => {
+  let selectedPhoneType = "";
+  const FUSelectPhoneType = (phoneType) => {
+    selectedPhoneType = phoneType;
+  };
+
+  // Add PhoneNumber
+  const addPhoneNumber = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -67,104 +58,111 @@ const Insurance = () => {
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
-    let url = "CenterProfile/AddInsurance";
+    let url = "CenterProfile/AddPhones";
     let data = {
       CenterID: CenterID,
-      Name: formProps.addInsuranceName,
-      Type: SelectInsuranceType,
-      Status: SelectInsuranceStatus,
+      Text: formProps.addCenterTel,
+      Type: selectedPhoneType,
     };
+
+    console.log("data", data);
 
     if (CenterID) {
       axiosClient
         .post(url, data)
         .then((response) => {
-          setInsuranceList([...insuranceList, response.data]);
+          console.log(response.data);
+          setPhoneNumbersList([...phoneNumbersList, response.data]);
 
           setIsLoading(false);
-          $("#addInsuranceModal").modal("hide");
+          $("#addCenterPhoneModal").modal("hide");
           e.target.reset();
         })
         .catch((error) => {
           console.log(error);
           setIsLoading(false);
+          ErrorAlert("خطا", "افزودن شماره تلفن با خطا مواجه گردید!");
         });
     }
   };
 
-  // Edit Insurance
-  const editInsurance = (e) => {
+  // edit phone number
+  const updatePhoneNumber = (data) => {
+    setEditPhoneNumberData(data);
+    $("#editCenterPhoneModal").modal("show");
+  };
+
+  const editPhoneNumber = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    let url = "CenterProfile/UpdateInsurance";
+    let url = "CenterProfile/UpdatePhones";
     CenterID = Router.query.id;
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
-    let Data = {
+    let data = {
       CenterID: CenterID,
-      InsuranceID: formProps.EditInsuranceID,
-      Name: formProps.EditInsuranceName,
-      Type: formProps.EditInsuranceType,
-      Status: formProps.EditInsuranceStatus,
+      PhonesID: formProps.editCenterPhoneeID,
+      Text: formProps.editCenterPhoneNumber,
+      Type: formProps.editPhoneType,
     };
+
+    console.log("data", data);
 
     if (CenterID) {
       axiosClient
-        .put(url, Data)
+        .put(url, data)
         .then((response) => {
-          updateItem(formProps.EditInsuranceID, response.data);
-          $("#editInsuranceModal").modal("hide");
+          console.log(response.data);
+          updateItem(formProps.editCenterPhoneeID, response.data);
+          $("#editCenterPhoneModal").modal("hide");
           setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
           setIsLoading(false);
-          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
         });
     }
   };
 
   const updateItem = (id, newArr) => {
-    let index = insuranceList.findIndex((x) => x._id === id);
-    let g = insuranceList[index];
+    let index = phoneNumbersList.findIndex((x) => x._id === id);
+    let g = phoneNumbersList[index];
     g = newArr;
 
     if (index === -1) {
       // handle error
       console.log("no match");
     } else
-      setInsuranceList([
-        ...insuranceList.slice(0, index),
+      setPhoneNumbersList([
+        ...phoneNumbersList.slice(0, index),
         g,
-        ...insuranceList.slice(index + 1),
+        ...phoneNumbersList.slice(index + 1),
       ]);
   };
 
-  const updateInsurance = (data) => {
-    setEditedInsurance(data);
-    $("#editInsuranceModal").modal("show");
-  };
-
-  // Delete Insurance
-  const deleteInsurance = async (id) => {
-    let result = await QuestionAlert("حذف بیمه!", "آیا از حذف مطمئن هستید");
+  // delete phone number
+  const deletePhoneNumber = async (id) => {
+    let result = await QuestionAlert(
+      "حذف شماره!",
+      "آیا از حذف شماره مرکز مطمئن هستید"
+    );
     setIsLoading(true);
 
     if (result) {
-      let url = "CenterProfile/DeleteInsurance";
+      let url = "CenterProfile/DeletePhones";
       CenterID = Router.query.id;
       let data = {
         CenterID: CenterID,
-        InsuranceID: id,
+        PhonesID: id,
       };
 
       if (CenterID) {
         await axiosClient
           .delete(url, { data })
           .then(function () {
-            setInsuranceList(insuranceList.filter((a) => a._id !== id));
+            setPhoneNumbersList(phoneNumbersList.filter((a) => a._id !== id));
             setIsLoading(false);
           })
           .catch(function (error) {
@@ -178,7 +176,7 @@ const Insurance = () => {
   useEffect(() => {
     if (Router.isReady) {
       CenterID = Router.query.id;
-      getInsuranceData();
+      getAllPhoneNumbers();
       if (!CenterID) return null;
     }
   }, [Router.isReady]);
@@ -186,7 +184,7 @@ const Insurance = () => {
   return (
     <>
       <Head>
-        <title>بیمه های تحت پوشش</title>
+        <title>شماره تلفن های مرکز</title>
       </Head>
       <div className="page-wrapper">
         <div className="content container-fluid">
@@ -196,7 +194,7 @@ const Insurance = () => {
                 <Link
                   href="#"
                   data-bs-toggle="modal"
-                  data-bs-target="#addInsuranceModal"
+                  data-bs-target="#addCenterPhoneModal"
                   className="btn btn-primary btn-add font-14"
                 >
                   <i className="me-1">
@@ -208,7 +206,6 @@ const Insurance = () => {
             </div>
           </div>
 
-          {/* <!-- Insurance List --> */}
           <div className="row">
             <div className="col-sm-12">
               <div className="card">
@@ -216,7 +213,7 @@ const Insurance = () => {
                   <div className="row align-items-center">
                     <div className="col">
                       <h5 className="card-title font-16">
-                        لیست بیمه های تحت پوشش مرکز
+                        لیست شماره تلفن های مرکز
                       </h5>
                     </div>
                     <div className="col-auto d-flex flex-wrap">
@@ -233,10 +230,10 @@ const Insurance = () => {
                 {isLoading ? (
                   <Loading />
                 ) : (
-                  <InsuranceListTable
-                    data={insuranceList}
-                    deleteInsurance={deleteInsurance}
-                    updateInsurance={updateInsurance}
+                  <CenterPhoneNumbersList
+                    data={phoneNumbersList}
+                    deletePhoneNumber={deletePhoneNumber}
+                    updatePhoneNumber={updatePhoneNumber}
                   />
                 )}
               </div>
@@ -246,22 +243,17 @@ const Insurance = () => {
         </div>
       </div>
 
-      <AddInsuranceModal
-        data={insuranceList}
-        addInsurance={addInsurance}
-        insuranceType={insuranceType}
-        insuranceStatus={insuranceStatus}
-        FUSelectInsuranceType={FUSelectInsuranceType}
-        FUSelectInsuranceStatus={FUSelectInsuranceStatus}
+      <AddPhoneNumberModal
+        addPhoneNumber={addPhoneNumber}
+        FUSelectPhoneType={FUSelectPhoneType}
+        phoneTypeOptions={phoneTypeOptions}
       />
 
-      <EditInsuranceModal
-        editInsurance={editInsurance}
-        data={editedInsurance}
-        insuranceType={insuranceType}
-        insuranceStatus={insuranceStatus}
-        FUSelectInsuranceType={FUSelectInsuranceType}
-        FUSelectInsuranceStatus={FUSelectInsuranceStatus}
+      <EditPhoneNumberModal
+        data={editPhoneNumberData}
+        editPhoneNumber={editPhoneNumber}
+        phoneTypeOptions={phoneTypeOptions}
+        FUSelectPhoneType={FUSelectPhoneType}
       />
     </>
   );

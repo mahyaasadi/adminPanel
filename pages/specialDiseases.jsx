@@ -103,6 +103,7 @@ const SpecialDiseases = () => {
         .catch((error) => {
           console.log(error);
           setIsLoading(false);
+          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
         });
     }
   };

@@ -117,7 +117,6 @@ const EditCenterModal = ({
                   </div>
                 </div>
               </div>
-
               <div className="row">
                 <div className="col media-w-100">
                   <label className="lblDrugIns font-12">
@@ -144,7 +143,6 @@ const EditCenterModal = ({
                   data={data}
                 />
               </div>
-
               <div className="form-group mt-2">
                 <label className="lblAbs font-12">
                   آدرس <span className="text-danger">*</span>
@@ -160,7 +158,6 @@ const EditCenterModal = ({
                   ></textarea>
                 </div>
               </div>
-
               <div className="form-group">
                 <label className="lblAbs font-12">
                   Domain <span className="text-danger">*</span>
@@ -177,7 +174,6 @@ const EditCenterModal = ({
                   />
                 </div>
               </div>
-
               <div className="form-group">
                 <label className="lblAbs font-12">لوکیشن</label>
                 <div className="col p-0">
@@ -190,9 +186,8 @@ const EditCenterModal = ({
                   />
                 </div>
               </div>
-
               <div className="form-group">
-                <label className="lblAbs font-12">درباره ما</label>
+                <label className="lblAbs font-12">توضیحات</label>
                 <div className="col p-0">
                   <textarea
                     className="form-control floating inputPadding rounded"
@@ -219,7 +214,6 @@ const EditCenterModal = ({
                   key={data.Logo}
                 />
               </div>
-
               <div
                 className="d-flex justify-center mt-4"
                 id="currentLogoContainer"
@@ -232,7 +226,6 @@ const EditCenterModal = ({
                   id="currentLogo"
                 ></img>
               </div>
-
               <div className="submit-section">
                 <button
                   type="submit"

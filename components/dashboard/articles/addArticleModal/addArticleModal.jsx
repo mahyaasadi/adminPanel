@@ -12,7 +12,11 @@ const AddArticleModal = ({
   // article date
   const setArticleDate = (value) => {
     let articleDate =
-      value?.year.toString() + value?.month.toString() + value?.day.toString();
+      value?.year.toString() +
+      "/" +
+      value?.month.toString() +
+      "/" +
+      value?.day.toString();
 
     setArticleDateInDB(articleDate);
   };

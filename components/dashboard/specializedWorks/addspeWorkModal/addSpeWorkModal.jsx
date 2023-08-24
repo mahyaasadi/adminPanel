@@ -29,7 +29,7 @@ const AddSpeWorkModal = ({ addSpeWork }) => {
             <form onSubmit={addSpeWork} id="frmAddSpeWork">
               <div className="form-group ">
                 <label className="lblAbs font-12">
-                  نام پزشک <span className="text-danger">*</span>
+                  نام <span className="text-danger">*</span>
                 </label>
                 <input
                   className="form-control floating inputPadding rounded"
@@ -53,7 +53,7 @@ const AddSpeWorkModal = ({ addSpeWork }) => {
 
               <div className="form-group ">
                 <label className="lblAbs font-12">
-                  تخصص <span className="text-danger">*</span>
+                  نام انگلیسی <span className="text-danger">*</span>
                 </label>
                 <input
                   className="form-control floating inputPadding rounded"

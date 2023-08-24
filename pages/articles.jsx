@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
-import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
+import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import ArticlesListTable from "components/dashboard/articles/articlesListTable";
 import ArticleSearch from "components/dashboard/articles/articleSearch/articleSearch";
@@ -17,6 +17,8 @@ import AddArticleVideoModal from "components/dashboard/articles/articleVideos/ad
 import EditArticleVideoModal from "components/dashboard/articles/articleVideos/editArticleVideoModal/editArticleVideoModal";
 import GrpAttachmentList from "components/dashboard/articles/articleGrpAttachment/grpAttachmentsList";
 import AddGroupToArticleModal from "components/dashboard/articles/articleGrpAttachment/addGrpToArticleModal";
+import TagAttachmentList from "components/dashboard/articles/articleTagAttachment/tagAttachmentsList";
+import AddTagToArticleModal from "components/dashboard/articles/articleTagAttachment/addTagToArticleModal";
 
 let ActiveArticleID,
   ActiveSubArticleID,
@@ -38,6 +40,11 @@ const Articles = () => {
   const [selectedArticleGroups, setSelectedArticleGrp] = useState([]);
   const [articleGroupsData, setArticleGroupsData] = useState([]);
   const [articleGroupsOptionsList, setArticleGroupsOptionsList] = useState([]);
+
+  // --------------
+  const [selectedArticleTags, setSelectedArticleTags] = useState([]);
+  const [articleTagsData, setArticleTagsData] = useState([]);
+  const [articleTagsOptionsList, setArticleTagsOptionsList] = useState([]);
 
   // Get all articles
   const getAllArticles = () => {
@@ -629,10 +636,14 @@ const Articles = () => {
       .then((response) => {
         console.log(response.data);
         // setSelectedArticleGrp([...selectedGroup, response.data]);
-        $("#attachGrpModal").modal("hide");
-        $("#grpAttachmentModal").modal("hide");
         getAllArticles();
 
+        response.data.msg === "گروه تکراری"
+          ? ErrorAlert("خطا", "گروه اضافه شده تکراری می باشد!")
+          : SuccessAlert("موفق", "افزودن گروه به مقاله با موفقیت انجام گردید!");
+
+        $("#attachGrpModal").modal("hide");
+        $("#grpAttachmentModal").modal("hide");
         setIsLoading(false);
         e.target.reset();
       })
@@ -671,9 +682,115 @@ const Articles = () => {
     }
   };
 
+  // ------ tags attachment -------
+
+  const openTagsAttachmentModal = (id, TagsData) => {
+    $("#tagsAttachmentModal").modal("show");
+    ActiveArticleID = id;
+    setSelectedArticleTags(TagsData);
+  };
+  console.log("selectedArticleTags", selectedArticleTags);
+
+  // Get All Article Tags
+  const getAllArticleTags = () => {
+    let url = "/ArticleTags/getAll";
+
+    axiosClient
+      .get(url)
+      .then((response) => {
+        setArticleTagsData(response.data);
+        let selectTagsData = [];
+        for (let i = 0; i < response.data.length; i++) {
+          const item = response.data[i];
+          let obj = {
+            value: item._id,
+            label: item.Title,
+          };
+          selectTagsData.push(obj);
+        }
+        setArticleTagsOptionsList(selectTagsData);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  };
+
+  let selectedTag = "";
+  const FUSelectArticleTag = (value) => {
+    selectedTag = value;
+  };
+
+  const openAttachTagModal = () => {
+    $("#attachTagModal").modal("show");
+  };
+
+  const addTagToArticle = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let url = `Article/addTag/${ActiveArticleID}`;
+
+    let data = {
+      TagID: selectedTag,
+    };
+
+    console.log("data", data);
+
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data);
+        // setSelectedArticleTags([...selectedTag, response.data]);
+        getAllArticles();
+
+        response.data.msg === "گروه تکراری"
+          ? ErrorAlert("خطا", "گروه اضافه شده تکراری می باشد!")
+          : SuccessAlert("موفق", "افزودن گروه به مقاله با موفقیت انجام گردید!");
+
+        $("#attachTagModal").modal("hide");
+        $("#tagsAttachmentModal").modal("hide");
+        setIsLoading(false);
+        e.target.reset();
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        ErrorAlert("خطا", "افزودن تگ با خطا مواجه گردید!");
+      });
+  };
+
+  const removeTagFromArticle = async (id) => {
+    let result = await QuestionAlert(
+      "حذف  تگ از مقاله!",
+      "آیا از حذف تگ اطمینان دارید؟"
+    );
+    setIsLoading(true);
+
+    if (result) {
+      let url = `Article/deleteTag/${ActiveArticleID}/${id}`;
+
+      await axiosClient
+        .delete(url)
+        .then((response) => {
+          setSelectedArticleTags(
+            selectedArticleTags.filter((a) => a._id !== id)
+          );
+
+          getAllArticles();
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
   useEffect(() => {
     getAllArticles();
     getAllArticleGroups();
+    getAllArticleTags();
   }, []);
 
   return (
@@ -730,6 +847,7 @@ const Articles = () => {
                     openArticleVideoModal={openArticleVideoModal}
                     openSubArticleModal={openSubArticleModal}
                     openGrpAttachmentModal={openGrpAttachmentModal}
+                    openTagsAttachmentModal={openTagsAttachmentModal}
                   />
                 </div>
 
@@ -738,7 +856,6 @@ const Articles = () => {
             </div>
           </div>
         )}
-
         <AddArticleModal
           addArticle={addArticle}
           setArticleDateInDB={setArticleDateInDB}
@@ -785,11 +902,21 @@ const Articles = () => {
           openAttachGrpModal={openAttachGrpModal}
           removeGrpFromArticle={removeGrpFromArticle}
         />
-
         <AddGroupToArticleModal
           grpOptions={articleGroupsOptionsList}
           FUSelectArticleGroup={FUSelectArticleGroup}
           addGrpToArticle={addGrpToArticle}
+        />
+        {/* tag attachments */}
+        <TagAttachmentList
+          data={selectedArticleTags}
+          openAttachTagModal={openAttachTagModal}
+          removeTagFromArticle={removeTagFromArticle}
+        />
+        <AddTagToArticleModal
+          tagOptions={articleTagsOptionsList}
+          FUSelectArticleTag={FUSelectArticleTag}
+          addTagToArticle={addTagToArticle}
         />
       </div>
     </>

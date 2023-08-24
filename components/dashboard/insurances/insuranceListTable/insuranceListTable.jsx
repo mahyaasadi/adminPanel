@@ -34,7 +34,7 @@ const InsuranceListTable = ({ data, deleteInsurance, updateInsurance }) => {
 
       cell: (row) => (
         <div className="actions d-flex gap-1">
-          <Link
+          <button
             href="#"
             data-bs-toggle="tooltip"
             data-bs-placement="top"
@@ -46,8 +46,8 @@ const InsuranceListTable = ({ data, deleteInsurance, updateInsurance }) => {
               icon="trash-2"
               style={{ width: "16px", height: "16px" }}
             />
-          </Link>
-          <Link
+          </button>
+          <button
             href="#"
             className="btn btn-sm btn-outline-secondary btn-border-left"
             onClick={() => updateInsurance(row)}
@@ -59,7 +59,7 @@ const InsuranceListTable = ({ data, deleteInsurance, updateInsurance }) => {
               icon="edit-3"
               style={{ width: "16px", height: "16px" }}
             />
-          </Link>
+          </button>
         </div>
       ),
       width: "200px",
@@ -72,7 +72,7 @@ const InsuranceListTable = ({ data, deleteInsurance, updateInsurance }) => {
   };
 
   return (
-    <div className="card-body p-0">
+    <div className="card-body p-4">
       <div className="table-responsive">
         <DataTableExtensions {...tableData}>
           <DataTable

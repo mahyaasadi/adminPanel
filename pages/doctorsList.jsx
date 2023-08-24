@@ -5,7 +5,7 @@ import Head from "next/head";
 import { axiosClient } from "class/axiosConfig.js";
 // import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { QuestionAlert } from "class/AlertManage.js";
+import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import DoctorsListTable from "components/dashboard/doctors/doctorsListTable/doctorsListTable";
 import AddDoctorModal from "components/dashboard/doctors/addDoctorModal/addDoctorModal";
@@ -99,6 +99,7 @@ const DoctorsList = () => {
       })
       .catch((error) => {
         console.log(error);
+        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
       });
     // }
   };

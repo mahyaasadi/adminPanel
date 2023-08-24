@@ -127,6 +127,7 @@ const SpecializedWorks = () => {
         })
         .catch((error) => {
           console.log(error);
+          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
         });
     }
   };
