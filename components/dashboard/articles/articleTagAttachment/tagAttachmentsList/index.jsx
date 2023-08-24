@@ -1,23 +1,20 @@
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { axiosClient } from "class/axiosConfig.js";
 import FeatherIcon from "feather-icons-react";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const GrpAttachmentList = ({
+const TagAttachmentList = ({
   data,
-  articleTitle,
-  openAttachGrpModal,
-  removeGrpFromArticle,
+  openAttachTagModal,
+  removeTagFromArticle,
 }) => {
-  console.log("groupsData", data);
+  console.log("TagsData", data);
   const columns = [
     {
       name: "عنوان",
-      selector: (row) => row.Group?.Title,
+      selector: (row) => row.Tag?.Title,
       sortable: true,
       width: "auto",
     },
@@ -32,7 +29,7 @@ const GrpAttachmentList = ({
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="حذف"
-            onClick={() => removeGrpFromArticle(row._id)}
+            onClick={() => removeTagFromArticle(row._id)}
           >
             <FeatherIcon
               icon="trash-2"
@@ -54,7 +51,7 @@ const GrpAttachmentList = ({
     <>
       <div
         className="modal fade contentmodal"
-        id="grpAttachmentModal"
+        id="tagsAttachmentModal"
         tabIndex="-1"
         aria-hidden="true"
       >
@@ -62,9 +59,7 @@ const GrpAttachmentList = ({
           <div className="modal-content">
             <div className="modal-header">
               <div className="loeing-header">
-                <span className="ServiceName font-13">
-                  گروه های مقاله {articleTitle}
-                </span>
+                <span className="ServiceName font-13">تگ های مقاله</span>
               </div>
               <button
                 type="button"
@@ -82,12 +77,12 @@ const GrpAttachmentList = ({
               <div className="addLoeing-btn">
                 <button
                   className="btn btn-primary font-14"
-                  onClick={openAttachGrpModal}
+                  onClick={openAttachTagModal}
                 >
                   <i className="me-1">
                     <FeatherIcon icon="plus-square" />
                   </i>{" "}
-                  افزودن گروه
+                  افزودن تگ
                 </button>
               </div>
 
@@ -112,4 +107,4 @@ const GrpAttachmentList = ({
     </>
   );
 };
-export default GrpAttachmentList;
+export default TagAttachmentList;

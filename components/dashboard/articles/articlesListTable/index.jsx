@@ -8,9 +8,8 @@ const ArticlesListTable = ({
   openSubArticleModal,
   openArticleVideoModal,
   openGrpAttachmentModal,
-  // groupsData,
+  openTagsAttachmentModal
 }) => {
-  // console.log("groupsData", groupsData);
   return (
     <>
       <div className="row p-4">
@@ -78,9 +77,9 @@ const ArticlesListTable = ({
                     data-bs-placement="top"
                     title="تگ مقاله ها"
                     className="padding-sm btn btn-sm btn-outline-primary font-12"
-                    // onClick={() =>
-                    //   openSubArticleModal(articleData, articleData._id)
-                    // }
+                    onClick={() =>
+                      openTagsAttachmentModal(articleData._id, articleData.Tags)
+                    }
                   >
                     <FeatherIcon
                       style={{ width: "15px", height: "15px" }}
