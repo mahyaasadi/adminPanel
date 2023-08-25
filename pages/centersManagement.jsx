@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
@@ -8,6 +8,10 @@ import Loading from "components/commonComponents/loading/loading";
 import CentersListTable from "components/dashboard/centers/centersListTable/centersListTable";
 import AddCenterModal from "components/dashboard/centers/addCenterModal/addCenterModal";
 import EditCenterModal from "components/dashboard/centers/editCenterModal/editCenterModal";
+import BusinessHoursModal from "components/dashboard/centers/centerBusinessHours/businessHoursModal"
+import EditBusinessHourModal from "components/dashboard/centers/centerBusinessHours/editBusinessHoursModal";
+
+let ActiveCenterID = null;
 
 const CentersManagement = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,6 +21,9 @@ const CentersManagement = () => {
 
   const [editCenterData, setEditCenterData] = useState([]);
   const [selectedProvinceList, setSelectedProvinceList] = useState("");
+
+  const [businessHourData, setBusinessHourData] = useState([]);
+  const [editBusinessHourData, setEditBusinessHourData] = useState([]);
 
   //get all centers
   const getCentersData = () => {
@@ -202,9 +209,36 @@ const CentersManagement = () => {
     $("#editCenterModal").modal("show");
   };
 
+  // ----- business hours -----
+  const getBusinessHours = (centerId) => {
+    let url = `CenterProfile/getBusinessHours/${centerId}`
+
+    if (ActiveCenterID) {
+      axiosClient.get(url)
+        .then((response) => {
+          console.log(response.data);
+          setBusinessHourData(response.data)
+        })
+        .catch((err) => console.log(err));
+    }
+  }
+
+  const openBusinessHoursModal = (id) => {
+    $("#businessHoursModal").modal("show")
+    ActiveCenterID = id
+    getBusinessHours(id)
+  }
+
+  // edit businessHour
+  const updateBusinessHour = (data) => {
+    $("#editCenterBusinessHourModal").modal("show");
+    setEditBusinessHourData(data)
+  }
+
   useEffect(() => {
     getCentersData();
     getAllProvinces();
+    // getBusinessHours();
   }, []);
 
   return (
@@ -255,6 +289,7 @@ const CentersManagement = () => {
                   <CentersListTable
                     data={centersData}
                     updateCenterInfo={updateCenterInfo}
+                    openBusinessHoursModal={openBusinessHoursModal}
                   />
                 </div>
 
@@ -285,6 +320,14 @@ const CentersManagement = () => {
           setSelectedProvinceList={setSelectedProvinceList}
           selectedProvinceList={selectedProvinceList}
         />
+
+        <BusinessHoursModal
+          data={businessHourData}
+          updateBusinessHour={updateBusinessHour}
+        />
+
+        <EditBusinessHourModal data={editBusinessHourData} />
+
       </div>
     </>
   );

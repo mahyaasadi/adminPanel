@@ -6,7 +6,7 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const CentersListTable = ({ data, updateCenterInfo }) => {
+const CentersListTable = ({ data, updateCenterInfo, openBusinessHoursModal }) => {
   const columns = [
     {
       name: "ردیف",
@@ -31,7 +31,7 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
           alt=""
         />
       ),
-      width: "240px",
+      width: "160px",
     },
     {
       name: "عملیات ها",
@@ -102,6 +102,19 @@ const CentersListTable = ({ data, updateCenterInfo }) => {
               style={{ width: "16px", height: "16px" }}
             />
           </Link>
+
+          <button
+            className="btn btn-sm btn-outline-secondary btn-border-left"
+            onClick={() => openBusinessHoursModal(row._id)}
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="ساعات کاری"
+          >
+            <FeatherIcon
+              icon="clock"
+              style={{ width: "16px", height: "16px" }}
+            />
+          </button>
 
           <Link
             className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
