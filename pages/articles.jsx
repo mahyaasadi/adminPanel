@@ -19,6 +19,8 @@ import GrpAttachmentList from "components/dashboard/articles/articleGrpAttachmen
 import AddGroupToArticleModal from "components/dashboard/articles/articleGrpAttachment/addGrpToArticleModal";
 import TagAttachmentList from "components/dashboard/articles/articleTagAttachment/tagAttachmentsList";
 import AddTagToArticleModal from "components/dashboard/articles/articleTagAttachment/addTagToArticleModal";
+import FAQListTableModal from "components/dashboard/articles/FAQ/faqListTableModal";
+import AddFAQModal from "components/dashboard/articles/FAQ/addFaqModal/addFaqModal";
 
 let ActiveArticleID,
   ActiveSubArticleID,
@@ -45,6 +47,9 @@ const Articles = () => {
   const [selectedArticleTags, setSelectedArticleTags] = useState([]);
   const [articleTagsData, setArticleTagsData] = useState([]);
   const [articleTagsOptionsList, setArticleTagsOptionsList] = useState([]);
+
+  //  -------------
+  const [articleFAQData, setArticleFAQData] = useState([]);
 
   // Get all articles
   const getAllArticles = () => {
@@ -101,9 +106,9 @@ const Articles = () => {
 
     checked
       ? // Case 1 : The user checks the box
-        setSliderCheckboxStatus({ sliderCheckbox: true })
+      setSliderCheckboxStatus({ sliderCheckbox: true })
       : // Case 2  : The user unchecks the box
-        setSliderCheckboxStatus({ sliderCheckbox: false });
+      setSliderCheckboxStatus({ sliderCheckbox: false });
   };
 
   function handleShowInSliderCheckbox(data) {
@@ -247,10 +252,10 @@ const Articles = () => {
     index === -1
       ? console.log("no match")
       : setArticlesData([
-          ...articlesData.slice(0, index),
-          g,
-          ...articlesData.slice(index + 1),
-        ]);
+        ...articlesData.slice(0, index),
+        g,
+        ...articlesData.slice(index + 1),
+      ]);
   };
 
   // Delete Article
@@ -789,10 +794,50 @@ const Articles = () => {
   };
 
   // ------ FAQ ---------
-  const openFAQModal = (data, articleId) => {
-    $("#").modal("show");
-    // ActiveArticleID =
+  const openFAQModal = (articleTitle, data, articleId) => {
+    $("#FAQListModal").modal("show");
+    setArticleFAQData(data.FAQ);
+    ActiveArticleID = articleId;
+    ActiveArticleTitle = articleTitle;
   };
+
+  const openAddFAQModal = () => {
+    $("#addFAQModal").modal("show");
+  }
+
+  // Add FAQ
+  const addFAQ = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+
+    let url = `Article/addFAQ/${ActiveArticleID}`;
+    let data = {
+      Qu: formProps.addFAQuestion,
+      Ans: formProps.addFAQAnswer,
+    };
+
+    console.log("data", data);
+
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data);
+        // setArticleFAQData([...articleFAQData, response.data]);
+        // getAllArticles();
+
+        $("#addFAQModal").modal("hide");
+        setIsLoading(false);
+        e.target.reset();
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        ErrorAlert("خطا", "افزودن سوال متداول با خطا مواجه گردید!");
+      });
+  }
 
   useEffect(() => {
     getAllArticles();
@@ -855,6 +900,7 @@ const Articles = () => {
                     openSubArticleModal={openSubArticleModal}
                     openGrpAttachmentModal={openGrpAttachmentModal}
                     openTagsAttachmentModal={openTagsAttachmentModal}
+                    openFAQModal={openFAQModal}
                   />
                 </div>
 
@@ -927,6 +973,14 @@ const Articles = () => {
           FUSelectArticleTag={FUSelectArticleTag}
           addTagToArticle={addTagToArticle}
         />
+        {/*  */}
+        <FAQListTableModal
+          data={articleFAQData}
+          articleTitle={ActiveArticleTitle}
+          openAddFAQModal={openAddFAQModal}
+        />
+
+        <AddFAQModal addFAQ={addFAQ}/>
       </div>
     </>
   );

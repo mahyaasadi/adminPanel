@@ -129,14 +129,16 @@ const ArticlesListTable = ({
                     data-bs-placement="top"
                     title="سوالات متداول"
                     className="padding-sm btn btn-sm btn-outline-primary font-12"
-                    onClick={() => openFAQModal(articleData, articleData._id)}
+                    onClick={() => openFAQModal(articleData.EngTitle, articleData, articleData._id)}
                   >
                     <FeatherIcon
                       style={{ width: "16px", height: "16px" }}
                       icon="help-circle"
                     />
                   </button>
-
+                </div>
+                  <hr />
+                <div className="d-flex gap-1 justify-flex-end">
                   <button
                     button="button"
                     className="padding-sm btn btn-sm btn-outline-secondary btn-border-left"

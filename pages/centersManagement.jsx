@@ -28,15 +28,6 @@ const CentersManagement = () => {
     empty: 1,
   });
 
-  const handleWeekDayInput = (e) => setWeekDay(e.target.value);
-  const handleStartingHourInput = (e) => setStartingHour(e.target.value);
-  const handleEndingHourInput = (e) => setEndingHour(e.target.value);
-
-  let closedCheckbox = false;
-  const [closedCheckboxStatus, setClosedCheckboxStatus] = useState({
-    closedCheckbox,
-  });
-
   //get all centers
   const getCentersData = () => {
     setIsLoading(true);
@@ -115,7 +106,6 @@ const CentersManagement = () => {
     axiosClient
       .get(url)
       .then((response) => {
-        // console.log(response.data);
 
         let selectProvinceData = [];
         for (let i = 0; i < response.data.length; i++) {
@@ -134,12 +124,11 @@ const CentersManagement = () => {
       });
   };
 
-  let SelectedCity = "";
-
   const FUSelectProvince = (province) => {
     setSelectedProvinceList(province);
   };
 
+  let SelectedCity = "";
   const FUSelectCity = (city) => {
     SelectedCity = city;
   };
@@ -181,7 +170,6 @@ const CentersManagement = () => {
       .put(url, data)
       .then((response) => {
         console.log(response.data);
-
         updateItem(CenterID, response.data);
         $("#editCenterModal").modal("hide");
       })
@@ -244,7 +232,6 @@ const CentersManagement = () => {
     setIsLoading(true);
 
     let url = "CenterProfile/UpdateBusinessHours";
-
     let data = {
       CenterID: ActiveCenterID,
       BusinessHours: editBusinessHourData,
