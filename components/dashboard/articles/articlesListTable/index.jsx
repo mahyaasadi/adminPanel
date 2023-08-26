@@ -8,14 +8,14 @@ const ArticlesListTable = ({
   openSubArticleModal,
   openArticleVideoModal,
   openGrpAttachmentModal,
-  openTagsAttachmentModal
+  openTagsAttachmentModal,
+  openFAQModal,
 }) => {
   return (
     <>
       <div className="row p-4">
         {articlesData.map((articleData, index) => (
           <div className="col-sm-6 col-md-4 col-xxl-3 articleCard" key={index}>
-            {/* cardImage */}
             <div className="card">
               <div className="card-body">
                 <div className="articleImgContainer">
@@ -56,6 +56,22 @@ const ArticlesListTable = ({
                     type="button"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
+                    title="زیر مقاله ها"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12"
+                    onClick={() =>
+                      openSubArticleModal(articleData, articleData._id)
+                    }
+                  >
+                    <FeatherIcon
+                      style={{ width: "15px", height: "15px" }}
+                      icon="layers"
+                    />
+                  </button>
+
+                  <button
+                    type="button"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
                     title="گروه مقاله ها"
                     className="padding-sm btn btn-sm btn-outline-primary font-12"
                     onClick={() =>
@@ -68,7 +84,7 @@ const ArticlesListTable = ({
                   >
                     <FeatherIcon
                       style={{ width: "15px", height: "15px" }}
-                      icon="layers"
+                      icon="file-text"
                     />
                   </button>
                   <button
@@ -78,27 +94,16 @@ const ArticlesListTable = ({
                     title="تگ مقاله ها"
                     className="padding-sm btn btn-sm btn-outline-primary font-12"
                     onClick={() =>
-                      openTagsAttachmentModal(articleData._id, articleData.Tags)
+                      openTagsAttachmentModal(
+                        articleData.EngTitle,
+                        articleData._id,
+                        articleData.Tags
+                      )
                     }
                   >
                     <FeatherIcon
                       style={{ width: "15px", height: "15px" }}
                       icon="tag"
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="زیر مقاله ها"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12"
-                    onClick={() =>
-                      openSubArticleModal(articleData, articleData._id)
-                    }
-                  >
-                    <FeatherIcon
-                      style={{ width: "15px", height: "15px" }}
-                      icon="file-text"
                     />
                   </button>
 
@@ -117,6 +122,21 @@ const ArticlesListTable = ({
                       icon="video"
                     />
                   </button>
+
+                  <button
+                    type="button"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="سوالات متداول"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12"
+                    onClick={() => openFAQModal(articleData, articleData._id)}
+                  >
+                    <FeatherIcon
+                      style={{ width: "16px", height: "16px" }}
+                      icon="help-circle"
+                    />
+                  </button>
+
                   <button
                     button="button"
                     className="padding-sm btn btn-sm btn-outline-secondary btn-border-left"

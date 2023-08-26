@@ -7,10 +7,10 @@ import { tableCustomStyles } from "components/commonComponents/customTableStyle/
 
 const TagAttachmentList = ({
   data,
+  articleTitle,
   openAttachTagModal,
   removeTagFromArticle,
 }) => {
-  console.log("TagsData", data);
   const columns = [
     {
       name: "عنوان",
@@ -59,7 +59,9 @@ const TagAttachmentList = ({
           <div className="modal-content">
             <div className="modal-header">
               <div className="loeing-header">
-                <span className="ServiceName font-13">تگ های مقاله</span>
+                <span className="ServiceName font-13 px-2">
+                  تگ های مقاله {articleTitle}
+                </span>
               </div>
               <button
                 type="button"

@@ -285,12 +285,14 @@ const Articles = () => {
     setSubArticlesData(data.Sub);
     $("#subArticlesModal").modal("show");
     ActiveArticleID = id;
+    console.log("ActiveArticleID", ActiveArticleID);
   };
 
-  let articleId = null;
+  // let articleId = null;
   const openAddSubArticleModal = (id) => {
     $("#addSubArticleModal").modal("show");
-    articleId = id;
+    ActiveArticleID = id;
+    // console.log("ActiveArticleID", ActiveArticleID);
   };
 
   // add SubArticle
@@ -299,7 +301,7 @@ const Articles = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    let url = `Article/addSubArticle/${articleId}`;
+    let url = `Article/addSubArticle/${ActiveArticleID}`;
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
@@ -684,12 +686,12 @@ const Articles = () => {
 
   // ------ tags attachment -------
 
-  const openTagsAttachmentModal = (id, TagsData) => {
+  const openTagsAttachmentModal = (articleTitle, id, TagsData) => {
     $("#tagsAttachmentModal").modal("show");
     ActiveArticleID = id;
+    ActiveArticleTitle = articleTitle;
     setSelectedArticleTags(TagsData);
   };
-  console.log("selectedArticleTags", selectedArticleTags);
 
   // Get All Article Tags
   const getAllArticleTags = () => {
@@ -741,7 +743,6 @@ const Articles = () => {
       .post(url, data)
       .then((response) => {
         console.log(response.data);
-        // setSelectedArticleTags([...selectedTag, response.data]);
         getAllArticles();
 
         response.data.msg === "گروه تکراری"
@@ -785,6 +786,12 @@ const Articles = () => {
           setIsLoading(false);
         });
     }
+  };
+
+  // ------ FAQ ---------
+  const openFAQModal = (data, articleId) => {
+    $("#").modal("show");
+    // ActiveArticleID =
   };
 
   useEffect(() => {
@@ -872,6 +879,7 @@ const Articles = () => {
         {/* subArticles */}
         <SubArticlesModal
           data={subArticlesData}
+          ActiveArticleID={ActiveArticleID}
           openAddSubArticleModal={openAddSubArticleModal}
           updateSubArticle={updateSubArticle}
           deleteSubArticle={deleteSubArticle}
@@ -910,6 +918,7 @@ const Articles = () => {
         {/* tag attachments */}
         <TagAttachmentList
           data={selectedArticleTags}
+          articleTitle={ActiveArticleTitle}
           openAttachTagModal={openAttachTagModal}
           removeTagFromArticle={removeTagFromArticle}
         />

@@ -8,7 +8,7 @@ import Loading from "components/commonComponents/loading/loading";
 import CentersListTable from "components/dashboard/centers/centersListTable/centersListTable";
 import AddCenterModal from "components/dashboard/centers/addCenterModal/addCenterModal";
 import EditCenterModal from "components/dashboard/centers/editCenterModal/editCenterModal";
-import BusinessHoursModal from "components/dashboard/centers/centerBusinessHours/businessHoursModal"
+import BusinessHoursModal from "components/dashboard/centers/centerBusinessHours/businessHoursModal";
 import EditBusinessHourModal from "components/dashboard/centers/centerBusinessHours/editBusinessHoursModal";
 
 let ActiveCenterID = null;
@@ -22,8 +22,20 @@ const CentersManagement = () => {
   const [editCenterData, setEditCenterData] = useState([]);
   const [selectedProvinceList, setSelectedProvinceList] = useState("");
 
+  // -------------------
   const [businessHourData, setBusinessHourData] = useState([]);
-  const [editBusinessHourData, setEditBusinessHourData] = useState([]);
+  const [editBusinessHourData, setEditBusinessHourData] = useState({
+    empty: 1,
+  });
+
+  const handleWeekDayInput = (e) => setWeekDay(e.target.value);
+  const handleStartingHourInput = (e) => setStartingHour(e.target.value);
+  const handleEndingHourInput = (e) => setEndingHour(e.target.value);
+
+  let closedCheckbox = false;
+  const [closedCheckboxStatus, setClosedCheckboxStatus] = useState({
+    closedCheckbox,
+  });
 
   //get all centers
   const getCentersData = () => {
@@ -33,7 +45,7 @@ const CentersManagement = () => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setCentersData(response.data);
         setIsLoading(false);
       })
@@ -48,17 +60,8 @@ const CentersManagement = () => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
-      // console.log(file);
-
-      fileReader.onload = () => {
-        // console.log(fileReader.result);
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        // console.log(error);
-        reject(error);
-      };
+      fileReader.onload = () => resolve(fileReader.result);
+      fileReader.onerror = (error) => reject(error);
     });
   };
 
@@ -211,34 +214,63 @@ const CentersManagement = () => {
 
   // ----- business hours -----
   const getBusinessHours = (centerId) => {
-    let url = `CenterProfile/getBusinessHours/${centerId}`
+    let url = `CenterProfile/getBusinessHours/${centerId}`;
 
     if (ActiveCenterID) {
-      axiosClient.get(url)
+      axiosClient
+        .get(url)
         .then((response) => {
           console.log(response.data);
-          setBusinessHourData(response.data)
+          setBusinessHourData(response.data);
         })
         .catch((err) => console.log(err));
     }
-  }
+  };
 
   const openBusinessHoursModal = (id) => {
-    $("#businessHoursModal").modal("show")
-    ActiveCenterID = id
-    getBusinessHours(id)
-  }
+    $("#businessHoursModal").modal("show");
+    ActiveCenterID = id;
+    getBusinessHours(id);
+  };
 
   // edit businessHour
   const updateBusinessHour = (data) => {
     $("#editCenterBusinessHourModal").modal("show");
-    setEditBusinessHourData(data)
-  }
+    setEditBusinessHourData(data);
+  };
+
+  const editBusinessHours = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let url = "CenterProfile/UpdateBusinessHours";
+
+    let data = {
+      CenterID: ActiveCenterID,
+      BusinessHours: editBusinessHourData,
+    };
+
+    console.log(data);
+
+    axiosClient
+      .put(url, data)
+      .then((response) => {
+        console.log(response.data);
+        setBusinessHourData(response.data);
+
+        $("#editCenterBusinessHourModal").modal("hide");
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
+      });
+  };
 
   useEffect(() => {
     getCentersData();
     getAllProvinces();
-    // getBusinessHours();
   }, []);
 
   return (
@@ -266,7 +298,6 @@ const CentersManagement = () => {
               </div>
             </div>
 
-            {/* <!-- Menu List --> */}
             <div className="row">
               <div className="col-sm-12">
                 <div className="card">
@@ -326,8 +357,10 @@ const CentersManagement = () => {
           updateBusinessHour={updateBusinessHour}
         />
 
-        <EditBusinessHourModal data={editBusinessHourData} />
-
+        <EditBusinessHourModal
+          data={editBusinessHourData}
+          editBusinessHours={editBusinessHours}
+        />
       </div>
     </>
   );

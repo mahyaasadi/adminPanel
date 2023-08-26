@@ -1,25 +1,18 @@
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { axiosClient } from "class/axiosConfig.js";
 import FeatherIcon from "feather-icons-react";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const GrpAttachmentList = ({
-  data,
-  articleTitle,
-  openAttachGrpModal,
-  removeGrpFromArticle,
-}) => {
+const FAQListTableModal = ({}) => {
   const columns = [
-    {
-      name: "عنوان",
-      selector: (row) => row.Group?.Title,
-      sortable: true,
-      width: "auto",
-    },
+    // {
+    //   name: "عنوان",
+    //   selector: (row) => row.FAQ?.Title,
+    //   sortable: true,
+    //   width: "auto",
+    // },
     {
       name: "عملیات ها",
       selector: (row) => row.action,
@@ -31,7 +24,7 @@ const GrpAttachmentList = ({
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="حذف"
-            onClick={() => removeGrpFromArticle(row._id)}
+            // onClick={() => removeGrpFromArticle(row._id)}
           >
             <FeatherIcon
               icon="trash-2"
@@ -62,7 +55,8 @@ const GrpAttachmentList = ({
             <div className="modal-header">
               <div className="loeing-header">
                 <span className="ServiceName font-13 px-2">
-                  گروه های مقاله {articleTitle}
+                  سوالات متداول مربوط به مقاله
+                  {/* articleTitle */}
                 </span>
               </div>
               <button
@@ -81,12 +75,12 @@ const GrpAttachmentList = ({
               <div className="addLoeing-btn">
                 <button
                   className="btn btn-primary font-14"
-                  onClick={openAttachGrpModal}
+                  //   onClick={openAttachGrpModal}
                 >
                   <i className="me-1">
                     <FeatherIcon icon="plus-square" />
                   </i>{" "}
-                  افزودن گروه
+                  افزودن
                 </button>
               </div>
 
@@ -111,4 +105,5 @@ const GrpAttachmentList = ({
     </>
   );
 };
-export default GrpAttachmentList;
+
+export default FAQListTableModal;
