@@ -1,7 +1,13 @@
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 
-const BusinessHoursModal = ({ data, updateBusinessHour }) => {
+const BusinessHoursModal = ({
+  data,
+  updateBusinessHour,
+  changeToAllDayMode,
+}) => {
+  console.log(data);
+
   return (
     <div
       className="modal fade contentmodal"
@@ -9,7 +15,7 @@ const BusinessHoursModal = ({ data, updateBusinessHour }) => {
       tabIndex="-1"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered modal-lg">
+      <div className="modal-dialog modal-dialog-centered modal-xl">
         <div className="modal-content">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">
@@ -27,15 +33,21 @@ const BusinessHoursModal = ({ data, updateBusinessHour }) => {
             </button>
           </div>
           <div className="modal-body">
-            <div className="d-flex justify-flex-end marginb-1">
+            <div className="d-flex justify-flex-end gap-1 marginb-1">
               <button
                 onClick={() => updateBusinessHour(data)}
-                className="btn btn-primary btn-add font-14"
+                className="btn btn-primary font-13"
               >
                 <i className="me-1">
                   <FeatherIcon icon="edit-3" style={{ width: "16px" }} />
                 </i>{" "}
                 ویرایش
+              </button>
+              <button
+                onClick={() => changeToAllDayMode(data)}
+                className="btn btn-primary font-13"
+              >
+                تبدیل به حالت شبانه روزی
               </button>
             </div>
 
@@ -45,11 +57,13 @@ const BusinessHoursModal = ({ data, updateBusinessHour }) => {
                   <div className="card-body">
                     <div className="wrapper container">
                       <div className="timeline"></div>
-                      {data.map((item, index) => (
+                      {data?.map((item, index) => (
                         <div key={index} className="row marginb-md1">
                           <div
                             className={`col-5 left ${
-                              item.Close === "1" || item.Close === true ? "text-danger" : ""
+                              item.Close === "1" || item.Close === true
+                                ? "text-danger"
+                                : ""
                             }`}
                           >
                             <p>{item.Name}</p>
@@ -59,7 +73,9 @@ const BusinessHoursModal = ({ data, updateBusinessHour }) => {
                           </div>
                           <div
                             className={`col-5 right ${
-                              item.Close === "1" || item.Close === true ? "text-danger" : ""
+                              item.Close === "1" || item.Close === true
+                                ? "text-danger"
+                                : ""
                             }`}
                           >
                             <span dir="ltr" className="">

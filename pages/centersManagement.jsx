@@ -3,7 +3,7 @@ import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
-import { QuestionAlert } from "class/AlertManage.js";
+import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import CentersListTable from "components/dashboard/centers/centersListTable/centersListTable";
 import AddCenterModal from "components/dashboard/centers/addCenterModal/addCenterModal";
@@ -38,11 +38,22 @@ const CentersManagement = () => {
       .then((response) => {
         // console.log(response.data);
         setCentersData(response.data);
+
+        // let centerIndex = [];
+        // for (let i = 0; i < response.data.length; i++) {
+        //   response.data?.map((item, index) => {
+        //     let itemIndex = index;
+        //     // console.log("index", index);
+        //   });
+        //   centerIndex.push(itemIndex);
+        //   console.log("itemIndex", itemIndex);
+        // }
         setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
         setIsLoading(false);
+        ErrorAlert("خطا", "خطا در دریافت اطلاعات مرکز");
       });
   };
 
@@ -106,7 +117,6 @@ const CentersManagement = () => {
     axiosClient
       .get(url)
       .then((response) => {
-
         let selectProvinceData = [];
         for (let i = 0; i < response.data.length; i++) {
           const item = response.data[i];
@@ -138,6 +148,12 @@ const CentersManagement = () => {
   };
 
   // Edit Center Info
+  const updateCenterInfo = (data, centerId) => {
+    setEditCenterData(data);
+    $("#editCenterModal").modal("show");
+    // ActiveCenterID = centerId;
+  };
+
   let newLogo = null;
   const editCenter = async (e) => {
     e.preventDefault();
@@ -170,7 +186,7 @@ const CentersManagement = () => {
       .put(url, data)
       .then((response) => {
         console.log(response.data);
-        updateItem(CenterID, response.data);
+        updateItem(formProps.centerID, response.data);
         $("#editCenterModal").modal("hide");
       })
       .catch((error) => {
@@ -195,24 +211,25 @@ const CentersManagement = () => {
       ]);
   };
 
-  const updateCenterInfo = (data) => {
-    setEditCenterData(data);
-    $("#editCenterModal").modal("show");
-  };
-
   // ----- business hours -----
   const getBusinessHours = (centerId) => {
     let url = `CenterProfile/getBusinessHours/${centerId}`;
+    setIsLoading(true);
 
-    if (ActiveCenterID) {
-      axiosClient
-        .get(url)
-        .then((response) => {
-          console.log(response.data);
-          setBusinessHourData(response.data);
-        })
-        .catch((err) => console.log(err));
-    }
+    // if (centerId) {
+    axiosClient
+      .get(url)
+      .then((response) => {
+        console.log(response.data);
+        setBusinessHourData(response.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+        ErrorAlert("خطا", "خطا در دریافت ساعات کاری مرکز");
+      });
+    // }
   };
 
   const openBusinessHoursModal = (id) => {
@@ -225,6 +242,19 @@ const CentersManagement = () => {
   const updateBusinessHour = (data) => {
     $("#editCenterBusinessHourModal").modal("show");
     setEditBusinessHourData(data);
+    console.log(data);
+  };
+
+  const changeToAllDayMode = async (data) => {
+    data?.map((item, index) => {
+      console.log(data[index]);
+      data[index].Start = "00:00";
+      data[index].End = "24:00";
+      data[index].Close = false;
+      console.log(data);
+    });
+    $("#editCenterBusinessHourModal").modal("show");
+    await setEditBusinessHourData(data);
   };
 
   const editBusinessHours = (e) => {
@@ -237,7 +267,7 @@ const CentersManagement = () => {
       BusinessHours: editBusinessHourData,
     };
 
-    console.log(data);
+    console.log("data", data);
 
     axiosClient
       .put(url, data)
@@ -325,6 +355,7 @@ const CentersManagement = () => {
           cityOptionsList={cityOptionsList}
           setCityOption={setCityOption}
           defaultData={editCenterData}
+          isLoading={isLoading}
         />
 
         <EditCenterModal
@@ -337,16 +368,19 @@ const CentersManagement = () => {
           setCityOption={setCityOption}
           setSelectedProvinceList={setSelectedProvinceList}
           selectedProvinceList={selectedProvinceList}
+          isLoading={isLoading}
         />
 
         <BusinessHoursModal
           data={businessHourData}
           updateBusinessHour={updateBusinessHour}
+          changeToAllDayMode={changeToAllDayMode}
         />
 
         <EditBusinessHourModal
           data={editBusinessHourData}
           editBusinessHours={editBusinessHours}
+          isLoading={isLoading}
         />
       </div>
     </>

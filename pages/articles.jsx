@@ -21,6 +21,7 @@ import TagAttachmentList from "components/dashboard/articles/articleTagAttachmen
 import AddTagToArticleModal from "components/dashboard/articles/articleTagAttachment/addTagToArticleModal";
 import FAQListTableModal from "components/dashboard/articles/FAQ/faqListTableModal";
 import AddFAQModal from "components/dashboard/articles/FAQ/addFaqModal/addFaqModal";
+import EditFAQModal from "components/dashboard/articles/FAQ/editFaqModal/editFaqModal";
 
 let ActiveArticleID,
   ActiveSubArticleID,
@@ -50,6 +51,7 @@ const Articles = () => {
 
   //  -------------
   const [articleFAQData, setArticleFAQData] = useState([]);
+  const [editedFAQData, setEditedFAQData] = useState([]);
 
   // Get all articles
   const getAllArticles = () => {
@@ -59,7 +61,7 @@ const Articles = () => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setIsLoading(false);
         setArticlesData(response.data);
       })
@@ -106,9 +108,9 @@ const Articles = () => {
 
     checked
       ? // Case 1 : The user checks the box
-      setSliderCheckboxStatus({ sliderCheckbox: true })
+        setSliderCheckboxStatus({ sliderCheckbox: true })
       : // Case 2  : The user unchecks the box
-      setSliderCheckboxStatus({ sliderCheckbox: false });
+        setSliderCheckboxStatus({ sliderCheckbox: false });
   };
 
   function handleShowInSliderCheckbox(data) {
@@ -252,10 +254,10 @@ const Articles = () => {
     index === -1
       ? console.log("no match")
       : setArticlesData([
-        ...articlesData.slice(0, index),
-        g,
-        ...articlesData.slice(index + 1),
-      ]);
+          ...articlesData.slice(0, index),
+          g,
+          ...articlesData.slice(index + 1),
+        ]);
   };
 
   // Delete Article
@@ -290,14 +292,11 @@ const Articles = () => {
     setSubArticlesData(data.Sub);
     $("#subArticlesModal").modal("show");
     ActiveArticleID = id;
-    console.log("ActiveArticleID", ActiveArticleID);
   };
 
-  // let articleId = null;
   const openAddSubArticleModal = (id) => {
     $("#addSubArticleModal").modal("show");
     ActiveArticleID = id;
-    // console.log("ActiveArticleID", ActiveArticleID);
   };
 
   // add SubArticle
@@ -352,7 +351,6 @@ const Articles = () => {
     $("#editSubArticleModal").modal("show");
     setEditSubArticleData(data);
     ActiveSubArticleID = id;
-    console.log("ActiveSubArticleID", ActiveSubArticleID);
   };
 
   let newSubArticleImg = null;
@@ -457,7 +455,6 @@ const Articles = () => {
 
   const openAddArticleVideoModal = () => {
     $("#addArticleVideoModal").modal("show");
-    console.log("ActiveArticleID", ActiveArticleID);
   };
 
   // Add Article Video
@@ -613,7 +610,7 @@ const Articles = () => {
     ActiveArticleID = id;
     ActiveArticleTitle = articleTitle;
     setSelectedArticleGrp(GroupsData);
-    console.log(GroupsData);
+    // console.log(GroupsData);
   };
 
   const openAttachGrpModal = () => {
@@ -803,7 +800,7 @@ const Articles = () => {
 
   const openAddFAQModal = () => {
     $("#addFAQModal").modal("show");
-  }
+  };
 
   // Add FAQ
   const addFAQ = (e) => {
@@ -825,8 +822,8 @@ const Articles = () => {
       .post(url, data)
       .then((response) => {
         console.log(response.data);
-        // setArticleFAQData([...articleFAQData, response.data]);
-        // getAllArticles();
+        setArticleFAQData([...articleFAQData, response.data]);
+        getAllArticles();
 
         $("#addFAQModal").modal("hide");
         setIsLoading(false);
@@ -837,7 +834,89 @@ const Articles = () => {
         setIsLoading(false);
         ErrorAlert("خطا", "افزودن سوال متداول با خطا مواجه گردید!");
       });
-  }
+  };
+
+  // remove FAQ from article
+  const removeFAQFromArticle = async (articleID, id) => {
+    let result = await QuestionAlert(
+      "حذف پرسش از مقاله!",
+      "آیا از حذف پرسش اطمینان دارید؟"
+    );
+    setIsLoading(true);
+
+    if (result) {
+      let url = `Article/deleteFAQ/${articleID}/${id}`;
+
+      await axiosClient
+        .delete(url)
+        .then((response) => {
+          setArticleFAQData(articleFAQData.filter((a) => a._id !== id));
+
+          getAllArticles();
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
+  //edit FAQ
+  const updateFAQ = (articleID, data) => {
+    $("#editFAQModal").modal("show");
+    ActiveArticleID = articleID;
+    setEditedFAQData(data);
+  };
+
+  const editFAQ = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+
+    let FAQID = formProps.editFAQId;
+
+    let url = `Article/updateFAQ/${ActiveArticleID}/${FAQID}`;
+    let data = {
+      Qu: formProps.editFAQuestion,
+      Ans: formProps.editFAQAnswer,
+    };
+
+    console.log("data", data);
+
+    axiosClient
+      .put(url, data)
+      .then((response) => {
+        console.log(response.data);
+        updateFAQItem(formProps.editFAQId, response.data);
+
+        getAllArticles();
+        $("#editFAQModal").modal("hide");
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
+      });
+  };
+
+  const updateFAQItem = (id, newArr) => {
+    let index = articleFAQData.findIndex((x) => x._id === id);
+    let g = articleFAQData[index];
+    g = newArr;
+
+    if (index === -1) {
+      console.log("no match");
+    } else
+      setArticleFAQData([
+        ...articleFAQData.slice(0, index),
+        g,
+        ...articleFAQData.slice(index + 1),
+      ]);
+  };
 
   useEffect(() => {
     getAllArticles();
@@ -978,9 +1057,14 @@ const Articles = () => {
           data={articleFAQData}
           articleTitle={ActiveArticleTitle}
           openAddFAQModal={openAddFAQModal}
+          removeFAQFromArticle={removeFAQFromArticle}
+          ActiveArticleID={ActiveArticleID}
+          updateFAQ={updateFAQ}
         />
 
-        <AddFAQModal addFAQ={addFAQ}/>
+        <AddFAQModal addFAQ={addFAQ} />
+
+        <EditFAQModal data={editedFAQData} editFAQ={editFAQ} />
       </div>
     </>
   );

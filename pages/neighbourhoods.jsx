@@ -25,7 +25,7 @@ const Neighbourhoods = () => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setIsLoading(false);
         setNeighbourhoodsData(response.data);
       })

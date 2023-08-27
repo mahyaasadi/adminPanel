@@ -14,6 +14,7 @@ const EditCenterModal = ({
   cityOptionsList,
   setSelectedProvinceList,
   selectedProvinceList,
+  isLoading
 }) => {
   const colourStyles = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
@@ -226,13 +227,24 @@ const EditCenterModal = ({
                   id="currentLogo"
                 ></img>
               </div>
+
               <div className="submit-section">
+              {!isLoading ? (
                 <button
                   type="submit"
                   className="btn btn-primary rounded btn-save mt-4"
                 >
                   ثبت
                 </button>
+              ) : (
+                <button type="submit" className="btn btn-primary rounded" disabled>
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                    ></span>
+                    در حال ثبت
+                  </button>
+              )}
               </div>
             </form>
           </div>

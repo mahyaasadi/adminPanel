@@ -24,7 +24,7 @@ const ArticleTagsManagement = () => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setIsLoading(false);
         setArticleTags(response.data);
       })

@@ -16,7 +16,11 @@ const EditArticleModal = ({
   // article date
   const setArticleDate = (value) => {
     let articleDate =
-      value?.year.toString() + "/" + value?.month.toString() + "/" + value?.day.toString();
+      value?.year.toString() +
+      "/" +
+      value?.month.toString() +
+      "/" +
+      value?.day.toString();
 
     setArticleDateInDB(articleDate);
   };
@@ -172,13 +176,8 @@ const EditArticleModal = ({
                     id={"editArticleSlider" + data._id}
                     name="editArticleShowInSlider"
                     key={data.ShowInSlider}
-                    // defaultValue={data.ShowInSlider}
                     className="showInSliderCheckbox"
-                    // required
-                    onChange={
-                      // (e) => console.log(e.target.checked)
-                      handleCheckedSliderOptions
-                    }
+                    onChange={handleCheckedSliderOptions}
                   />
                   <label
                     className="showInsliderSwitch font-12"
@@ -236,7 +235,6 @@ const EditArticleModal = ({
                     className="form-control floating inputPadding rounded"
                     defaultValue={data.Schema}
                     key={data.Schema}
-                    // required
                   ></textarea>
                 </div>
               </div>
@@ -253,7 +251,6 @@ const EditArticleModal = ({
                   className="upload"
                   name="editArticleImg"
                   onChange={displayPreview}
-                  // required
                 />
               </div>
 
@@ -273,7 +270,7 @@ const EditArticleModal = ({
                 ></img>
               </div>
 
-              <div className="submit-section">
+              <div className="submit-section margint-5">
                 <button
                   type="submit"
                   className="btn btn-primary btn-save rounded"

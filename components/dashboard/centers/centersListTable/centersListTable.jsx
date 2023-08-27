@@ -6,11 +6,18 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const CentersListTable = ({ data, updateCenterInfo, openBusinessHoursModal }) => {
+const CentersListTable = ({
+  data,
+  updateCenterInfo,
+  openBusinessHoursModal,
+}) => {
+  // data?.map((item, index) => {
+  //   console.log(index);
+  // });
   const columns = [
     {
       name: "ردیف",
-      // selector: (row) => row.indexOf(row.Name),
+      // selector: (row) => ,
       sortable: true,
       width: "80px",
     },
@@ -79,7 +86,7 @@ const CentersListTable = ({ data, updateCenterInfo, openBusinessHoursModal }) =>
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="ویرایش"
-            onClick={() => updateCenterInfo(row)}
+            onClick={() => updateCenterInfo(row, row._id)}
           >
             <FeatherIcon
               icon="edit-3"

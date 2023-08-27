@@ -11,6 +11,7 @@ const AddCenterModal = ({
   setCityOption,
   cityOptionsList,
   defaultData,
+  isLoading
 }) => {
   const colourStyles = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
@@ -189,12 +190,22 @@ const AddCenterModal = ({
               </div>
 
               <div className="submit-section">
-                <button
-                  type="submit"
-                  className="btn btn-primary rounded btn-save"
-                >
-                  ثبت
-                </button>
+                {!isLoading ? (
+                  <button
+                    type="submit"
+                    className="btn btn-primary rounded btn-save"
+                  >
+                    ثبت
+                  </button>
+                ) : (
+                  <button type="submit" className="btn btn-primary rounded" disabled>
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                    ></span>
+                    در حال ثبت
+                  </button>
+                )}
               </div>
             </form>
           </div>

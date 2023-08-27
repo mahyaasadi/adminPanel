@@ -1,5 +1,4 @@
 const DepartmentsList = ({ departmentsData, handleCheckedDepartments }) => {
-  console.log(departmentsData);
   return (
     <>
       {departmentsData.length > 0 ? (

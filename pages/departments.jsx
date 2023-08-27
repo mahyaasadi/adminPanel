@@ -47,7 +47,6 @@ const Departments = () => {
       .then((response) => {
         if (response.data.length > 0) {
           setIsLoading(false);
-          console.log(response.data);
           setDepartmentsData(response.data);
         } else {
           getModality();
@@ -68,7 +67,7 @@ const Departments = () => {
     });
   }
 
-  console.log("departmentsData", departmentsData);
+  // console.log("departmentsData", departmentsData);
 
   const SubmitFrmSetDepartment = (e) => {
     e.preventDefault();

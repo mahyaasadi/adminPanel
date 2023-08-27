@@ -41,7 +41,7 @@ const Header = () => {
       axiosClient
         .post(url, data)
         .then(function (response) {
-          console.log(response.data);
+          // console.log(response.data);
           user = response.data;
           let centerId = user.CenterID;
           Cookies.set("CenterID", centerId);

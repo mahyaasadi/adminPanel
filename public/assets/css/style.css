@@ -437,11 +437,11 @@ p:last-child {
 }
 
 .margint-5 {
-  margin-top: 5rem;
+  margin-top: 5rem !important;
 }
 
 .margint-2 {
-  margin-top: 2rem;
+  margin-top: 2rem !important;
 }
 
 /*-----------------
@@ -1116,7 +1116,31 @@ label {
 .darkmode .rdt_TableHeadRow,
 .darkmode .rdt_TableRow,
 .darkmode nav.sc-iIPllB.jxflYm.rdt_Pagination {
-  background-color: #040433 !important;
+  background-color: #103952 !important;
+  color: #97a2d2;
+}
+
+.darkmode .rdt_Pagination {
+  background-color: #103952 !important;
+  color: #97a2d2;
+}
+
+.darkmode .css-13cymwt-control {
+  background-color: #103952 !important;
+  color: #97a2d2;
+}
+
+.darkmode .css-1nmdiq5-menu {
+  background-color: #103952 !important;
+  color: #97a2d2;
+}
+
+.darkmode .css-t3ipsp-control {
+  background-color: #103952 !important;
+  color: #97a2d2;
+}
+
+.darkmode .dash-counts {
   color: #97a2d2;
 }
 
@@ -1159,7 +1183,7 @@ a.user-name {
 
 .darkmode .sc-dkzDqf.gZWIKX.rdt_TableHeadRow {
   font-size: 14px;
-  background-color: #141432 !important;
+  background-color: #0f2e42 !important;
   color: #97a2d2;
   border: none;
 }
@@ -1171,10 +1195,10 @@ a.user-name {
 
 .darkmode .kgEPYv:hover {
   transition-property: background-color;
-  border-bottom-color: #141432;
+  border-bottom-color: #0f2e42;
   outline-style: none;
   outline-width: 1px;
-  outline-color: #141432 !important;
+  outline-color: #0f2e42 !important;
 }
 
 .darkmode .kgEPYv:hover {
@@ -6152,7 +6176,7 @@ span.fa.toggle-password\".fa-eye {
 
 .darkmode .settings-form .css-1yqlho-control {
   border: 1px solid #353570 !important;
-  background: #141432;
+  background: #0f2e42;
 }
 
 .darkmode .css-1wa3eu0-placeholder {
@@ -6160,14 +6184,14 @@ span.fa.toggle-password\".fa-eye {
 }
 
 .darkmode .doctor-profile .css-1yqlho-control {
-  border: 1px solid #353570;
-  background: #141432;
+  border: 1px solid #103952;
+  background: #0f2e42;
 }
 
 .darkmode .login-wrapper .form-focus .form-control {
   min-height: 51px;
   padding: 21px !important;
-  background: #141432;
+  background: #0f2e42;
 }
 
 .css-1yqlho-control {
@@ -6208,8 +6232,8 @@ span.fa.toggle-password\".fa-eye {
 }
 
 .darkmode .css-yk16xz-control {
-  background: #141432 !important;
-  border: 1px solid #353570 !important;
+  background: #0f2e42 !important;
+  border: 1px solid #103952 !important;
 }
 
 .css-1wa3eu0-placeholder {
@@ -6301,7 +6325,7 @@ a.btn.trash svg.feather {
 }
 
 .darkmode .sc-hKMtZM.sc-eCYdqJ.sc-iqcoie.jYPiPR.qVZpv.rdt_TableCol {
-  background-color: #141432 !important;
+  background-color: #0f2e42 !important;
   color: #97a2d2 !important;
   font-size: 15px !important;
 }
@@ -7212,7 +7236,7 @@ a.edit-pro {
 -----------------------*/
 
 body.darkmode {
-  background-color: #141432;
+  background-color: #0f2e42;
   color: #97a2d2;
 }
 
@@ -7226,21 +7250,21 @@ body.darkmode {
 }
 
 .darkmode .content-header {
-  background: #1d1d42;
-  border-bottom: 1px solid #1d1d42;
+  background: #103952;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .sidebar {
-  background-color: #1d1d42;
+  background-color: #103952;
   box-shadow: none;
 }
 
 .darkmode .menu-title span {
-  background: #1d1d42;
+  background: #103952;
 }
 
 .darkmode .menu-title:before {
-  border-top: 1px solid #353570;
+  border-top: 1px solid #103952;
 }
 
 .darkmode .menu-title {
@@ -7252,7 +7276,7 @@ body.darkmode {
 }
 
 .darkmode .content-header .header-left {
-  border-bottom: 1px solid #353570;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .sidebar-menu li.active>a {
@@ -7260,8 +7284,8 @@ body.darkmode {
 }
 
 .darkmode .card {
-  background: #1d1d42;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
   box-shadow: none;
 }
 
@@ -7270,13 +7294,13 @@ body.darkmode {
 }
 
 .darkmode .card .card-header {
-  background: #1d1d42;
-  border-bottom: 1px solid #353570;
+  background: #103952;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .select2-container .select2-selection--single {
-  border: 1px solid #353570;
-  background: #141432;
+  border: 1px solid #103952;
+  background: #0f2e42;
 }
 
 .darkmode .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -7288,8 +7312,8 @@ body.darkmode {
 }
 
 .darkmode .appointment-item {
-  background: #1d1d42;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
   box-shadow: none;
 }
 
@@ -7298,13 +7322,13 @@ body.darkmode {
 }
 
 .darkmode .table .thead-light th {
-  background-color: #141432;
+  background-color: #0f2e42;
   color: #97a2d2;
 }
 
 .darkmode .hover-table>tbody>tr:hover,
 .darkmode .speciality-item:hover {
-  background: #141432;
+  background: #0f2e42;
   box-shadow: none;
 }
 
@@ -7318,18 +7342,18 @@ body.darkmode {
 .darkmode th,
 .darkmode thead,
 .darkmode tr {
-  border-color: #353570;
+  border-color: #103952;
 }
 
 .darkmode .app-head,
 .darkmode .app-user,
 .app-info {
-  border-bottom: 1px solid #353570;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .app-mode .mode-box {
-  background: #353570;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
   box-shadow: none;
 }
 
@@ -7344,13 +7368,13 @@ body.darkmode {
 }
 
 .darkmode .appointment-items {
-  background: #141432;
-  border: 1px solid #353570;
+  background: #0f2e42;
+  border: 1px solid #103952;
 }
 
 .darkmode .mode-app {
-  background: #353570;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
   box-shadow: none;
 }
 
@@ -7363,7 +7387,7 @@ body.darkmode {
 }
 
 .darkmode .app-user .app-img {
-  border-right: 1px solid #353570;
+  border-right: 1px solid #103952;
 }
 
 .darkmode .app-user .app-img:last-child {
@@ -7376,13 +7400,13 @@ body.darkmode {
 }
 
 .darkmode .spl-items {
-  background: #1d1d42;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
   box-shadow: none;
 }
 
 .darkmode .spl-items:hover {
-  background: #141432;
+  background: #0f2e42;
 }
 
 .darkmode .spl-items a:hover i,
@@ -7391,12 +7415,12 @@ body.darkmode {
 }
 
 .darkmode .pres-list {
-  background: #141432;
-  border: 1px solid #353570;
+  background: #0f2e42;
+  border: 1px solid #103952;
 }
 
 .darkmode .pres-head {
-  border-bottom: 1px solid #353570;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .pres-body p {
@@ -7404,22 +7428,22 @@ body.darkmode {
 }
 
 .darkmode .btn-white {
-  background: #141432;
-  border-color: #141432;
+  background: #0f2e42;
+  border-color: #0f2e42;
 }
 
 .darkmode hr {
-  background-color: #353570;
+  background-color: #103952;
 }
 
 .darkmode .bookingrange.btn-white {
   color: #97a2d2;
-  border: 1px solid #353570;
+  border: 1px solid #103952;
 }
 
 .darkmode .ico i:first-child {
-  border-left: 1px solid #353570;
-  border-right: 1px solid #353570;
+  border-left: 1px solid #103952;
+  border-right: 1px solid #103952;
 }
 
 .darkmode .ico i {
@@ -7427,31 +7451,31 @@ body.darkmode {
 }
 
 .darkmode .list-links li.active a {
-  background: #353570;
-  border: 1px solid #1d1d42;
+  background: #103952;
+  border: 1px solid #103952;
   color: #97a2d2;
 }
 
 .darkmode .list-links li a {
-  background: #1d1d42;
-  border: 1px solid #1d1d42;
+  background: #103952;
+  border: 1px solid #103952;
   color: #97a2d2;
 }
 
 .darkmode .list-links li a:hover {
-  background: #353570;
+  background: #103952;
 }
 
 .darkmode .multipleSelection .selectBox,
 .darkmode .SortBy .selectBoxes {
-  background: #1d1d42;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
 }
 
 .darkmode .multipleSelection #checkBoxes,
 .darkmode .SortBy #checkBox {
-  background: #141432;
-  border: 1px solid #353570;
+  background: #0f2e42;
+  border: 1px solid #103952;
   box-shadow: none;
 }
 
@@ -7460,12 +7484,12 @@ body.darkmode {
 }
 
 .darkmode .custom_check .checkmark {
-  border: 1px solid #353570;
-  background: #1d1d42;
+  border: 1px solid #103952;
+  background: #103952;
 }
 
 .darkmode .custom_check .checkmark::after {
-  color: #1d1d42;
+  color: #103952;
 }
 
 .darkmode .lab-title {
@@ -7473,7 +7497,7 @@ body.darkmode {
 }
 
 .darkmode .bg-grey {
-  background: #1d1d42 !important;
+  background: #103952 !important;
 }
 
 .darkmode .custom_check input:checked~.checkmark {
@@ -7482,7 +7506,7 @@ body.darkmode {
 }
 
 .darkmode .form-control {
-  border: 1px solid #353570;
+  border: 1px solid #103952;
   background: transparent;
 }
 
@@ -7497,13 +7521,13 @@ body.darkmode {
 
 .darkmode .multipleSelection #checkBoxes::before,
 .darkmode .SortBy #checkBox::before {
-  border: 5px solid #1d1d42;
-  border-color: transparent transparent #353570 #353570;
+  border: 5px solid #103952;
+  border-color: transparent transparent #103952 #103952;
 }
 
 .darkmode .daterangepicker {
-  background: #1d1d42;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
 }
 
 .darkmode .daterangepicker .ranges li {
@@ -7513,45 +7537,45 @@ body.darkmode {
 }
 
 .darkmode .daterangepicker .ranges li.active {
-  background: #353570;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
   color: #97a2d2;
 }
 
 .darkmode .daterangepicker.show-calendar .ranges {
-  background: #1d1d42;
+  background: #103952;
 }
 
 .darkmode .daterangepicker .drp-buttons {
-  border-top: 1px solid #1d1d42;
+  border-top: 1px solid #103952;
 }
 
 .darkmode .daterangepicker .calendar-table {
-  background: #1d1d42;
-  border-top: 1px solid #1d1d42;
+  background: #103952;
+  border-top: 1px solid #103952;
 }
 
 .darkmode .daterangepicker td.off,
 .daterangepicker td.off.in-range,
 .daterangepicker td.off.start-date,
 .daterangepicker td.off.end-date {
-  background-color: #1d1d42;
+  background-color: #103952;
   color: #97a2d2;
 }
 
 .darkmode .daterangepicker td.active,
 .daterangepicker td.active:hover {
-  background-color: #353570;
+  background-color: #103952;
   color: #97a2d2;
 }
 
 .darkmode .daterangepicker td.in-range {
-  background-color: #353570;
+  background-color: #103952;
   color: #97a2d2;
 }
 
 .darkmode .daterangepicker .calendar-table {
-  border: 1px solid #1d1d42;
+  border: 1px solid #103952;
 }
 
 .darkmode .daterangepicker .calendar-table .next span,
@@ -7566,14 +7590,14 @@ body.darkmode {
 }
 
 .darkmode .dataTables_wrapper .page-item.active .page-link {
-  background: #1d1d42;
-  border: 1px solid #1d1d42;
+  background: #103952;
+  border: 1px solid #103952;
   color: #97a2d2;
 }
 
 .darkmode .page-item.disabled .page-link {
-  background: #353570;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
   color: #97a2d2;
 }
 
@@ -7602,7 +7626,7 @@ body.darkmode {
 
 .darkmode .upcoming-content::-webkit-scrollbar-thumb,
 .darkmode .upcoming-content::-webkit-scrollbar-thumb:hover {
-  background: #141432;
+  background: #0f2e42;
 }
 
 .darkmode .app-time p {
@@ -7624,7 +7648,7 @@ body.darkmode {
 }
 
 .darkmode .user-menu.nav>li>a.dark-mode-toggle {
-  border: 1px solid #353570;
+  border: 1px solid #103952;
   background: transparent;
 }
 
@@ -7643,8 +7667,8 @@ body.darkmode {
 }
 
 .darkmode .dropdown-menu {
-  background-color: #141432;
-  border: 1px solid #353570;
+  background-color: #0f2e42;
+  border: 1px solid #103952;
   box-shadow: none;
 }
 
@@ -7653,15 +7677,15 @@ body.darkmode {
 }
 
 .darkmode .user-header {
-  background-color: #1d1d42;
+  background-color: #103952;
 }
 
 .darkmode .notifications:before {
-  border-color: transparent transparent #141432 #141432;
+  border-color: transparent transparent #0f2e42 #0f2e42;
 }
 
 .darkmode .user-header:before {
-  border-color: transparent transparent #353570 #353570;
+  border-color: transparent transparent #103952 #103952;
 }
 
 .darkmode .text-black {
@@ -7669,7 +7693,7 @@ body.darkmode {
 }
 
 .darkmode .custom_radio .checkmark {
-  border: 1px solid #353570;
+  border: 1px solid #103952;
 }
 
 .darkmode .custom_radio .checkmark::after {
@@ -7677,12 +7701,12 @@ body.darkmode {
 }
 
 .darkmode .modal-content {
-  background: #1d1d42;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
 }
 
 .darkmode .modal-header {
-  border-bottom: 1px solid #353570;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .form-focus .focus-label {
@@ -7690,7 +7714,7 @@ body.darkmode {
 }
 
 .darkmode .form-focus.focused .form-control {
-  background: #141432;
+  background: #0f2e42;
 }
 
 .darkmode .form-control:focus {
@@ -7699,8 +7723,8 @@ body.darkmode {
 
 .darkmode .change-photo-btn {
   background: #171735;
-  border: 1px dashed #353570;
-  color: #353570;
+  border: 1px dashed #103952;
+  color: #103952;
 }
 
 .darkmode .modal-backdrop.show {
@@ -7720,12 +7744,12 @@ body.darkmode {
 }
 
 .darkmode .modal.contentmodal .media {
-  background-color: #141432;
-  border: 1px solid #141432;
+  background-color: #0f2e42;
+  border: 1px solid #0f2e42;
 }
 
 .darkmode .modal.contentmodal .member-wrapper h5 {
-  border-bottom: 1px solid #353570;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .modal.contentmodal .mem-info p {
@@ -7737,7 +7761,7 @@ body.darkmode {
 }
 
 .darkmode .sidebar-menu ul ul a {
-  border-bottom: 1px solid #353570;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .form-control {
@@ -7746,16 +7770,16 @@ body.darkmode {
 
 .darkmode .modal-content .form-control {
   background: #171735;
-  border: 1px solid #353570;
+  border: 1px solid #103952;
 }
 
 .darkmode .custom-file-upload {
-  border: 1px solid #353570;
+  border: 1px solid #103952;
   background: #171735;
 }
 
 .darkmode .change-user {
-  background: #1d1d42;
+  background: #103952;
   color: #97a2d2;
 }
 
@@ -7764,7 +7788,7 @@ body.darkmode {
 }
 
 .darkmode .setting-wrap {
-  background: #1d1d42;
+  background: #103952;
 }
 
 .darkmode .login-option p {
@@ -7776,14 +7800,14 @@ body.darkmode {
 }
 
 .darkmode .accordion-button:not(.collapsed) {
-  background: #1d1d42;
-  border-bottom: 1px solid #353570 !important;
+  background: #103952;
+  border-bottom: 1px solid #103952 !important;
   border: 1px solid transparent;
 }
 
 .darkmode .setting-accordion .accordion-item {
-  background: #1d1d42;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
 }
 
 .darkmode .setting-accordion .accordion-header .accord-title {
@@ -7791,30 +7815,30 @@ body.darkmode {
 }
 
 .darkmode .accordion-header .accordion-button {
-  background: #1d1d42;
+  background: #103952;
 }
 
 .darkmode .payment-item {
-  border-bottom: 1px solid #353570;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .profile-list {
-  background: #141432;
+  background: #0f2e42;
   box-shadow: none;
 }
 
 .darkmode .pro-title {
-  border-bottom: 1px solid #353570;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .social-icon li a {
-  background: #141432;
+  background: #0f2e42;
   border: 1px solid #97a2d2;
   color: #97a2d2;
 }
 
 .darkmode .social-icon li a:hover {
-  background: #353570;
+  background: #103952;
   border: 1px solid #0ce0ff;
 }
 
@@ -7823,7 +7847,7 @@ body.darkmode {
 }
 
 .darkmode .acc-wrap {
-  border-bottom: 1px solid #353570;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .import-list {
@@ -7850,7 +7874,7 @@ body.darkmode {
 }
 
 .darkmode .blog {
-  background: #1d1d42;
+  background: #103952;
 }
 
 .darkmode .grid-blog .blog-title a,
@@ -7868,15 +7892,15 @@ body.darkmode {
 }
 
 .darkmode .pagination-tab .page-link {
-  background: #353570;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
   color: #97a2d2;
   box-shadow: none;
 }
 
 .darkmode .pagination-tab .page-item.active .page-link {
-  background: #1d1d42;
-  border: 1px solid #1d1d42;
+  background: #103952;
+  border: 1px solid #103952;
   color: #97a2d2;
 }
 
@@ -7905,7 +7929,7 @@ body.darkmode {
 }
 
 .darkmode .social-share>li>a:hover {
-  background: #353570;
+  background: #103952;
   border: 1px solid #0ce0ff;
   color: #0ce0ff;
 }
@@ -7920,30 +7944,30 @@ body.darkmode {
 }
 
 .darkmode .login-wrapper {
-  background-color: #141432;
+  background-color: #0f2e42;
 }
 
 .darkmode .social-login>a {
   border: 1px solid #97a2d2;
-  background-color: #141432;
+  background-color: #0f2e42;
 }
 
 .darkmode .or-line {
-  background-color: #353570;
+  background-color: #103952;
 }
 
 .darkmode .span-or {
   color: #97a2d2;
-  background-color: #141432;
+  background-color: #0f2e42;
 }
 
 .darkmode .select2-results__option {
-  background-color: #141432;
+  background-color: #0f2e42;
   color: #97a2d2;
 }
 
 .darkmode .select2-container--default .select2-results__option--highlighted[aria-selected] {
-  background-color: #141432;
+  background-color: #0f2e42;
   color: #97a2d2;
 }
 
@@ -7953,11 +7977,11 @@ body.darkmode {
 }
 
 .darkmode .select2-container--default .select2-results__option[aria-selected="true"] {
-  background-color: #141432;
+  background-color: #0f2e42;
 }
 
 .darkmode .table-striped>tbody>tr:nth-of-type(2n + 1) {
-  background-color: #141432;
+  background-color: #0f2e42;
 }
 
 .darkmode .table-striped>tbody>tr:nth-of-type(odd)>* {
@@ -7965,12 +7989,12 @@ body.darkmode {
 }
 
 .darkmode .card-header .select2-container .select2-selection--single {
-  border: 1px solid #141432;
-  background: #141432;
+  border: 1px solid #0f2e42;
+  background: #0f2e42;
 }
 
 .darkmode .table-hover tbody tr:hover {
-  background-color: #141432;
+  background-color: #0f2e42;
 }
 
 .darkmode .table-hover>tbody>tr:hover>* {
@@ -7979,24 +8003,24 @@ body.darkmode {
 
 .darkmode .form-select {
   background-color: transparent;
-  border: 1px solid #353570;
+  border: 1px solid #103952;
   color: #97a2d2;
 }
 
 .darkmode .input-group-text {
-  background: #1d1d42;
+  background: #103952;
   border: 1px solid #2f2f64;
   color: #97a2d2;
 }
 
 .darkmode .input-group .btn-white {
-  background: #1d1d42;
+  background: #103952;
   border: 1px solid #2f2f64;
   color: #97a2d2;
 }
 
 .darkmode .card-body {
-  background: #1d1d42;
+  background: #103952;
 }
 
 .darkmode .section-header .section-title {
@@ -8030,24 +8054,24 @@ body.darkmode {
 }
 
 .darkmode .card-footer {
-  background-color: #1d1d42;
+  background-color: #103952;
   border-top: 1px solid #2f2f64;
 }
 
 .darkmode .list-group-item {
-  background-color: #1d1d42;
+  background-color: #103952;
   color: #97a2d2;
 }
 
 .darkmode .search .results {
-  background: #1d1d42;
-  border: 1px solid #353570;
+  background: #103952;
+  border: 1px solid #103952;
   box-shadow: none;
 }
 
 .darkmode .search .results:before {
-  border: 7px solid #353570;
-  border-color: transparent transparent #353570 #353570;
+  border: 7px solid #103952;
+  border-color: transparent transparent #103952 #103952;
 }
 
 .darkmode .nav-tabs.user-menu .nav-link:focus,
@@ -8057,13 +8081,13 @@ body.darkmode {
 }
 
 .darkmode .page-link {
-  background-color: #353570;
+  background-color: #103952;
   border: 1px solid #2f2f64;
   color: #97a2d2;
 }
 
 .darkmode .topnav-dropdown-header {
-  border-bottom: 1px solid #353570;
+  border-bottom: 1px solid #103952;
 }
 
 .darkmode .topnav-dropdown-header .notification-title {
@@ -8075,7 +8099,7 @@ body.darkmode {
 }
 
 .darkmode .notifications ul.notification-list>li a:hover {
-  background-color: #1d1d42;
+  background-color: #103952;
 }
 
 .darkmode .noti-details {
@@ -8083,8 +8107,8 @@ body.darkmode {
 }
 
 .darkmode .css-1yqlho-control {
-  background-color: #141432 !important;
-  border: 1px solid #353570;
+  background-color: #0f2e42 !important;
+  border: 1px solid #103952;
 }
 
 /*-----------------
@@ -9480,6 +9504,7 @@ input:checked+.showInsliderSwitch:active::before {
   max-width: 1000px;
   margin: 2rem auto;
 }
+
 .accordion-item {
   background-color: #fff;
   color: #111;
@@ -9487,6 +9512,7 @@ input:checked+.showInsliderSwitch:active::before {
   border-radius: 0.5rem;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25);
 }
+
 .accordion-item-header {
   padding: 0.5rem 3rem 0.5rem 1rem;
   min-height: 3.5rem;
@@ -9497,26 +9523,115 @@ input:checked+.showInsliderSwitch:active::before {
   position: relative;
   cursor: pointer;
 }
+
 .accordion-item-header::after {
   content: "\002B";
   font-size: 2rem;
   position: absolute;
   right: 1rem;
 }
+
 .accordion-item-header.active::after {
   content: "\2212";
 }
+
 .accordion-item-body {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
+
 .accordion-item-body-content {
   padding: 1rem;
   line-height: 1.5rem;
   border-top: 1px solid;
   border-image: linear-gradient(to right, transparent, #34495e, transparent) 1;
 }
+
+/* .accordion a {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem 3rem 1rem 1rem;
+  color: #7288a2;
+  font-size: 1.15rem;
+  font-weight: 400;
+  border: 1px solid #e5e5e5;
+}
+
+.accordion a:hover,
+.accordion a:hover::after {
+  cursor: pointer;
+  color: #ff5353;
+}
+
+.accordion a:hover::after {
+  border: 1px solid #ff5353;
+}
+
+.accordion a.active {
+  color: #ff5353;
+  border-bottom: 1px solid #ff5353;
+}
+
+.accordion a::after {
+  font-family: 'Ionicons';
+  content: '\f218';
+  position: absolute;
+  float: right;
+  right: 1rem;
+  font-size: 1rem;
+  color: #7288a2;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 1px solid #7288a2;
+  text-align: center;
+}
+
+.accordion a.active::after {
+  font-family: 'Ionicons';
+  content: '\f209';
+  color: #ff5353;
+  border: 1px solid #ff5353;
+}
+
+.accordion .content {
+  opacity: 0;
+  padding: 0 1rem;
+  max-height: 0;
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+  clear: both;
+  -webkit-transition: all 0.2s ease 0.15s;
+  -o-transition: all 0.2s ease 0.15s;
+  transition: all 0.2s ease 0.15s;
+}
+
+.accordion .content p {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.accordion .content.active {
+  opacity: 1;
+  padding: 1rem;
+  max-height: 100%;
+  -webkit-transition: all 0.35s ease 0.15s;
+  -o-transition: all 0.35s ease 0.15s;
+  transition: all 0.35s ease 0.15s;
+} */
 
 /* ////////////// */
 
