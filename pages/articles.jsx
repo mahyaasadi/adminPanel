@@ -445,6 +445,40 @@ const Articles = () => {
     }
   };
 
+  // ----- change subArticle Order -----
+  const updateSubDataOrder = async () => {
+    let result = await QuestionAlert(
+      "تغییر ترتیب زیر مقالات!",
+      "آیا از تغییر ترتیب زیر مقالات اطمینان دارید؟"
+    );
+
+    setIsLoading(true);
+
+    if (result) {
+      let url = `/Article/updateSubArticleOrdre/${ActiveArticleID}`;
+      let data = {
+        SubData: subArticlesData,
+      };
+
+      console.log("data", data);
+
+      axiosClient
+        .put(url, data)
+        .then((response) => {
+          console.log(response.data);
+          setIsLoading(false);
+          SuccessAlert("موفق", "تغییرات با موفقیت ثبت گردید!");
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+          ErrorAlert("خطا", "خطا در ویرایش اطلاعات");
+        });
+    } else {
+      setIsLoading(false);
+    }
+  };
+
   // --------- videos ----------
 
   const openArticleVideoModal = (data, id) => {
@@ -1008,6 +1042,8 @@ const Articles = () => {
           openAddSubArticleModal={openAddSubArticleModal}
           updateSubArticle={updateSubArticle}
           deleteSubArticle={deleteSubArticle}
+          updateSubDataOrder={updateSubDataOrder}
+          isLoading={isLoading}
         />
         <AddSubArticleModal addSubArticle={addSubArticle} />
         <EditSubArticleModal

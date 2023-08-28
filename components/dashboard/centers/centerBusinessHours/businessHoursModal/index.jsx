@@ -6,7 +6,7 @@ const BusinessHoursModal = ({
   updateBusinessHour,
   changeToAllDayMode,
 }) => {
-  console.log(data);
+  // console.log(data);
 
   return (
     <div

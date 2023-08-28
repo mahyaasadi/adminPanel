@@ -6,13 +6,25 @@ import "public/assets/plugins/fontawesome/css/all.min.css";
 import "public/assets/css/font-awesome.min.css";
 import "public/assets/css/style.css";
 import DashboardLayout from "src/app/dashboard/layout";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
+
+const queryClient = new QueryClient();
 
 export default function MyApp({ Component, pageProps }) {
   return (
     <>
-      <DashboardLayout>
-        <Component {...pageProps} />
-      </DashboardLayout>
+      {/* Provide the client to your App */}
+      <QueryClientProvider client={queryClient}>
+        <DashboardLayout>
+          <Component {...pageProps} />
+        </DashboardLayout>
+      </QueryClientProvider>
     </>
   );
 }

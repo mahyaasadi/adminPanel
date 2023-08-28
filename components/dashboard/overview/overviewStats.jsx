@@ -3,7 +3,7 @@ import Image from "next/image";
 import ExtraSmallLoader from "components/commonComponents/loading/extraSmallLoader";
 import { eventsAccepted, payment, talking } from "components/imagePath";
 
-const OverviewStats = ({ stats }) => {
+const OverviewStats = ({}) => {
   return (
     // total requests
     <div className="row">
@@ -18,11 +18,11 @@ const OverviewStats = ({ stats }) => {
                 <h5 className="dash-title">تعداد درخواست ها</h5>
                 <div className="dash-counts">
                   <p>
-                    {stats.Total === undefined ? (
+                    {/* {stats.Total === undefined ? (
                       <ExtraSmallLoader />
                     ) : (
                       stats.Total.toLocaleString()
-                    )}
+                    )} */}
                   </p>
                 </div>
               </div>
@@ -43,11 +43,11 @@ const OverviewStats = ({ stats }) => {
                 <h5 className="dash-title">در حال مکالمه</h5>
                 <div className="dash-counts mt-1">
                   <p>
-                    {stats.Talking === undefined ? (
+                    {/* {stats.Talking === undefined ? (
                       <ExtraSmallLoader />
                     ) : (
                       stats.Talking.toLocaleString()
-                    )}
+                    )} */}
                   </p>
                 </div>
               </div>
@@ -68,11 +68,11 @@ const OverviewStats = ({ stats }) => {
                 <h5 className="dash-title">در انتظار پرداخت</h5>
                 <div className="dash-counts mt-1">
                   <p>
-                    {stats.WaitingForPayment === undefined ? (
+                    {/* {stats.WaitingForPayment === undefined ? (
                       <ExtraSmallLoader />
                     ) : (
                       stats.WaitingForPayment.toLocaleString()
-                    )}
+                    )} */}
                   </p>
                 </div>
               </div>
@@ -93,11 +93,11 @@ const OverviewStats = ({ stats }) => {
                 <h5 className="dash-title">نوبت های داده شده</h5>
                 <div className="dash-counts mt-1">
                   <p>
-                    {stats.TurnGiven === undefined ? (
+                    {/* {stats.TurnGiven === undefined ? (
                       <ExtraSmallLoader />
                     ) : (
                       stats.TurnGiven.toLocaleString()
-                    )}
+                    )} */}
                   </p>
                 </div>
               </div>
