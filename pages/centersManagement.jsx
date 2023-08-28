@@ -5,13 +5,17 @@ import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
+import CenterSearch from "components/dashboard/centers/centerSearch/centerSearch";
 import CentersListTable from "components/dashboard/centers/centersListTable/centersListTable";
 import AddCenterModal from "components/dashboard/centers/addCenterModal/addCenterModal";
 import EditCenterModal from "components/dashboard/centers/editCenterModal/editCenterModal";
 import BusinessHoursModal from "components/dashboard/centers/centerBusinessHours/businessHoursModal";
 import EditBusinessHourModal from "components/dashboard/centers/centerBusinessHours/editBusinessHoursModal";
+import CenterAboutUsModal from "components/dashboard/centers/aboutUs/centerAboutUsModal";
+import EditAboutUsModal from "components/dashboard/centers/aboutUs/editCenterAboutUs/editAboutUsModal";
 
-let ActiveCenterID = null;
+let ActiveCenterID,
+  ActiveCenterName = null;
 
 const CentersManagement = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,6 +32,9 @@ const CentersManagement = () => {
     empty: 1,
   });
 
+  // -------------------
+  const [centerAboutUsData, setCenterAboutUsData] = useState([]);
+
   //get all centers
   const getCentersData = () => {
     setIsLoading(true);
@@ -36,17 +43,15 @@ const CentersManagement = () => {
     axiosClient
       .get(url)
       .then((response) => {
-        // console.log(response.data);
         setCentersData(response.data);
 
         // let centerIndex = [];
         // for (let i = 0; i < response.data.length; i++) {
+        //   let itemIndex = null;
         //   response.data?.map((item, index) => {
-        //     let itemIndex = index;
-        //     // console.log("index", index);
+        //     itemIndex = index;
+        //     console.log("index", itemIndex);
         //   });
-        //   centerIndex.push(itemIndex);
-        //   console.log("itemIndex", itemIndex);
         // }
         setIsLoading(false);
       })
@@ -56,6 +61,12 @@ const CentersManagement = () => {
         ErrorAlert("خطا", "خطا در دریافت اطلاعات مرکز");
       });
   };
+
+  // Search In Centers
+  const [centerSearchInput, setCenterSearchInput] = useState("");
+  const searchedCenters = centersData.filter((center) =>
+    center.Name.toLowerCase().includes(centerSearchInput.toLowerCase())
+  );
 
   // Convert logoUrl to Base64
   const convertBase64 = (file) => {
@@ -151,7 +162,8 @@ const CentersManagement = () => {
   const updateCenterInfo = (data, centerId) => {
     setEditCenterData(data);
     $("#editCenterModal").modal("show");
-    // ActiveCenterID = centerId;
+    // console.log("centerId", centerId);
+    ActiveCenterID = centerId;
   };
 
   let newLogo = null;
@@ -159,40 +171,43 @@ const CentersManagement = () => {
     e.preventDefault();
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
-    const CenterID = formProps.centerID;
+    const CenterID = formProps.editCenterID;
 
-    let url = `center/edit/${CenterID}`;
-    if (formProps.editLogo && formProps.editLogo.size != 0) {
-      newLogo = await convertBase64(formProps.editLogo);
+    if (ActiveCenterID === undefined) {
+      ErrorAlert("خطا", "ویرایش");
+    } else {
+      let url = `center/edit/${ActiveCenterID}`;
+      if (formProps.editLogo && formProps.editLogo.size != 0) {
+        newLogo = await convertBase64(formProps.editLogo);
+      }
+
+      let data = {
+        Name: formProps.editCenterName,
+        EngName: formProps.editCenterEngName,
+        City: $("#editCitySelectOptions").text(),
+        CityFinglish: formProps.addCenterCity,
+        Province: $("#editProvinceSelectOptions").text(),
+        ProvinceFinglish: formProps.editCenterProvince,
+        Address: formProps.editCenterAddress,
+        Loc: formProps.editCenterLocation,
+        Domain: formProps.editCenterDomain,
+        ViewDes: formProps.editCenterDescription,
+        Logo: newLogo,
+      };
+      console.log("data", data);
+
+      axiosClient
+        .put(url, data)
+        .then((response) => {
+          console.log(response.data);
+          updateItem(formProps.editCenterID, response.data);
+          $("#editCenterModal").modal("hide");
+        })
+        .catch((error) => {
+          console.log(error);
+          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید");
+        });
     }
-
-    let data = {
-      Name: formProps.editCenterName,
-      EngName: formProps.editCenterEngName,
-      City: $("#editCitySelectOptions").text(),
-      CityFinglish: formProps.addCenterCity,
-      Province: $("#editProvinceSelectOptions").text(),
-      ProvinceFinglish: formProps.editCenterProvince,
-      Address: formProps.editCenterAddress,
-      Loc: formProps.editCenterLocation,
-      Domain: formProps.editCenterDomain,
-      ViewDes: formProps.editCenterDescription,
-      Logo: newLogo,
-    };
-
-    console.log("data", data);
-
-    axiosClient
-      .put(url, data)
-      .then((response) => {
-        console.log(response.data);
-        updateItem(formProps.centerID, response.data);
-        $("#editCenterModal").modal("hide");
-      })
-      .catch((error) => {
-        console.log(error);
-        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید");
-      });
   };
 
   const updateItem = (id, newArr) => {
@@ -212,11 +227,11 @@ const CentersManagement = () => {
   };
 
   // ----- business hours -----
+
   const getBusinessHours = (centerId) => {
     let url = `CenterProfile/getBusinessHours/${centerId}`;
     setIsLoading(true);
 
-    // if (centerId) {
     axiosClient
       .get(url)
       .then((response) => {
@@ -229,7 +244,6 @@ const CentersManagement = () => {
         setIsLoading(false);
         ErrorAlert("خطا", "خطا در دریافت ساعات کاری مرکز");
       });
-    // }
   };
 
   const openBusinessHoursModal = (id) => {
@@ -285,6 +299,68 @@ const CentersManagement = () => {
       });
   };
 
+  // ------ about us -------
+
+  const getCenterAboutUs = (centerId) => {
+    let url = `/CenterProfile/getAboutUs/${centerId}`;
+    setIsLoading(true);
+
+    axiosClient
+      .get(url)
+      .then((response) => {
+        console.log(response.data);
+        setCenterAboutUsData(response.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  };
+
+  const openAboutUsModal = (data, centerId, centerName) => {
+    $("#centerAboutUsModal").modal("show");
+    ActiveCenterID = centerId;
+    ActiveCenterName = centerName;
+    getCenterAboutUs(centerId);
+  };
+
+  // edit about us
+  const updateAboutUs = (data) => {
+    $("#editCenterAboutUsModal").modal("show");
+    setCenterAboutUsData(data);
+  };
+
+  const editCenterAboutUs = (e) => {
+    e.preventDefault();
+
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+
+    let url = "CenterProfile/UpdateAboutUs";
+    let data = {
+      CenterID: ActiveCenterID,
+      AboutUs: formProps.editAboutUsText,
+    };
+
+    console.log("data", data);
+
+    setIsLoading(true);
+
+    axiosClient
+      .put(url, data)
+      .then((response) => {
+        console.log(response.data);
+        setCenterAboutUsData(response.data);
+        setIsLoading(false);
+        $("#editCenterAboutUsModal").modal("hide");
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  };
+
   useEffect(() => {
     getCentersData();
     getAllProvinces();
@@ -299,7 +375,11 @@ const CentersManagement = () => {
           <div className="content container-fluid">
             <div className="page-header">
               <div className="row align-items-center">
-                <div className="col-md-12 d-flex justify-content-end">
+                <div className="col-md-12 d-flex gap-2 justify-content-end media-srvHeader">
+                  <CenterSearch
+                    centerSearchInput={centerSearchInput}
+                    setCenterSearchInput={setCenterSearchInput}
+                  />
                   <Link
                     href="#"
                     data-bs-toggle="modal"
@@ -335,9 +415,10 @@ const CentersManagement = () => {
                   </div>
 
                   <CentersListTable
-                    data={centersData}
+                    data={searchedCenters}
                     updateCenterInfo={updateCenterInfo}
                     openBusinessHoursModal={openBusinessHoursModal}
+                    openAboutUsModal={openAboutUsModal}
                   />
                 </div>
 
@@ -381,6 +462,18 @@ const CentersManagement = () => {
           data={editBusinessHourData}
           editBusinessHours={editBusinessHours}
           isLoading={isLoading}
+        />
+
+        <CenterAboutUsModal
+          data={centerAboutUsData}
+          CenterName={ActiveCenterName}
+          updateAboutUs={updateAboutUs}
+        />
+
+        <EditAboutUsModal
+          data={centerAboutUsData}
+          isLoading={isLoading}
+          editCenterAboutUs={editCenterAboutUs}
         />
       </div>
     </>

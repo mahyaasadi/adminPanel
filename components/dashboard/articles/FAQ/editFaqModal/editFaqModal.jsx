@@ -27,43 +27,36 @@ const EditFAQModal = ({ data, editFAQ }) => {
           </div>
           <div className="modal-body">
             <form onSubmit={editFAQ}>
-              <div className="row">
-                <div className="col">
-                  <div className="form-group">
-                    <input type="hidden" value={data._id} name="editFAQId" />
+              <div className="form-group">
+                <input type="hidden" value={data._id} name="editFAQId" />
 
-                    <label className="lblAbs font-12">
-                      پرسش <span className="text-danger">*</span>
-                    </label>
-                    <div className="col p-0">
-                      <input
-                        type="text"
-                        className="form-control floating inputPadding rounded"
-                        name="editFAQuestion"
-                        defaultValue={data.Qu}
-                        key={data.Qu}
-                        required
-                      />
-                    </div>
-                  </div>
+                <label className="lblAbs font-12">
+                  پرسش <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    type="text"
+                    className="form-control floating inputPadding rounded"
+                    name="editFAQuestion"
+                    defaultValue={data.Qu}
+                    key={data.Qu}
+                    required
+                  />
                 </div>
+              </div>
 
-                <div className="col">
-                  <div className="form-group">
-                    <label className="lblAbs font-12">
-                      پاسخ <span className="text-danger">*</span>
-                    </label>
-                    <div className="col p-0">
-                      <input
-                        dir="ltr"
-                        type="text"
-                        className="form-control floating inputPadding rounded"
-                        name="editFAQAnswer"
-                        defaultValue={data.Ans}
-                        key={data.Ans}
-                      />
-                    </div>
-                  </div>
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  پاسخ <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <textarea
+                    type="text"
+                    className="form-control floating inputPadding rounded"
+                    name="editFAQAnswer"
+                    defaultValue={data.Ans}
+                    key={data.Ans}
+                  ></textarea>
                 </div>
               </div>
 
