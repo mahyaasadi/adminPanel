@@ -10,16 +10,20 @@ const CentersListTable = ({
   data,
   updateCenterInfo,
   openBusinessHoursModal,
+  openAboutUsModal,
 }) => {
   // data?.map((item, index) => {
   //   console.log(index);
   // });
+
+  console.log("data", data);
   const columns = [
     {
       name: "ردیف",
-      // selector: (row) => ,
+      // selector: (row) => row.
       sortable: true,
       width: "80px",
+      // cell: (data) => data?.map((item, index) => index),
     },
     {
       name: "نام مرکز",
@@ -30,7 +34,6 @@ const CentersListTable = ({
     {
       name: "لوگو",
       selector: (row) => row.Logo,
-      sortable: true,
       cell: (row) => (
         <img
           style={{ width: "35px" }}
@@ -43,7 +46,6 @@ const CentersListTable = ({
     {
       name: "عملیات ها",
       selector: (row) => row.action,
-      sortable: true,
       cell: (row) => (
         <div className="actions d-flex gap-1">
           {!row.Deactive ? (
@@ -120,6 +122,19 @@ const CentersListTable = ({
             <FeatherIcon
               icon="clock"
               style={{ width: "16px", height: "16px" }}
+            />
+          </button>
+
+          <button
+            className="btn btn-sm btn-outline-secondary btn-border-left"
+            onClick={() => openAboutUsModal(row ,row._id, row.Name)}
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="درباره مرکز"
+          >
+            <FeatherIcon
+              icon="info"
+              style={{ width: "15px", height: "15px" }}
             />
           </button>
 
