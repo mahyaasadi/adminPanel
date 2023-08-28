@@ -9432,10 +9432,11 @@ input:checked+.showInsliderSwitch:active::before {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .subArticleImgContainer {
-  width: 60%;
+  width: 50%;
 }
 
 .subArticleImg {
@@ -9444,7 +9445,7 @@ input:checked+.showInsliderSwitch:active::before {
 }
 
 .subArticleDetails {
-  width: 33%;
+  width: 50%;
   direction: rtl;
 }
 

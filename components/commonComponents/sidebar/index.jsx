@@ -149,6 +149,16 @@ const Sidebar = () => {
                   </li>
                 </ul>
               </li>
+
+              <li className={router.pathname == "/modalities" ? "active" : ""}>
+                <Link href="/modalities">
+                  <FeatherIcon
+                    icon="grid"
+                    style={{ width: "15px", height: "15px" }}
+                  />
+                  <span>مدیریت بخش ها</span>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
