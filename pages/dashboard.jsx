@@ -64,7 +64,7 @@ const Dashboard = () => {
           <div className="overview-container">
             <div className="dashboard-header">
               <div className="col overview-title">
-                <p className="card-title">بررسی اجمالی</p>
+                {/* <p className="card-title">بررسی اجمالی</p> */}
               </div>
 
               <div className="dashboard-selector font-13">

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
@@ -960,6 +961,9 @@ const Articles = () => {
 
   return (
     <>
+      <Head>
+        <title>مقالات</title>
+      </Head>
       <div className="page-wrapper">
         {isLoading ? (
           <Loading />
@@ -1034,6 +1038,7 @@ const Articles = () => {
           FUSelectArticleLanguage={FUSelectArticleLanguage}
           handleShowInSliderCheckbox={handleShowInSliderCheckbox}
           handleCheckedSliderOptions={handleCheckedSliderOptions}
+          isLoading={isLoading}
         />
         {/* subArticles */}
         <SubArticlesModal

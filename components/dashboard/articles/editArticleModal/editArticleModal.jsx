@@ -12,6 +12,7 @@ const EditArticleModal = ({
   FUSelectArticleLanguage,
   handleShowInSliderCheckbox,
   handleCheckedSliderOptions,
+  isLoading,
 }) => {
   // article date
   const setArticleDate = (value) => {
@@ -271,12 +272,26 @@ const EditArticleModal = ({
               </div>
 
               <div className="submit-section margint-5">
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-save rounded"
-                >
-                  ثبت تغییرات
-                </button>
+                {!isLoading ? (
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-save rounded"
+                  >
+                    ثبت تغییرات
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="btn btn-primary rounded"
+                    disabled
+                  >
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                    ></span>
+                    در حال ثبت
+                  </button>
+                )}
               </div>
             </form>
           </div>

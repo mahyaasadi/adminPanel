@@ -132,6 +132,8 @@ const SubArticlesModal = ({
                               src={
                                 "https://irannobat.ir/blog/images/" +
                                 subArticle.Img
+                                  ? subArticle.Img
+                                  : subArticle.Image
                               }
                               alt="subArticleImg"
                             ></img>
@@ -142,20 +144,26 @@ const SubArticlesModal = ({
                         )}
 
                         <div className="subArticleDetails">
-                          <p className="py-1 font-16 mt-2 fw-bold">
-                            عنوان : {subArticle?.Title ? subArticle.Title : "-"}
-                          </p>
-                          <div className="pb-2 font-12 text-secondary">
-                            <p>
-                              توضیحات :{" "}
-                              {subArticle?.Des
-                                ? subArticle?.Des.substr(0, 50) + " ..."
-                                : "-"}
+                          {subArticle.Title ? (
+                            <p className="py-1 font-16 mt-2 fw-bold">
+                              عنوان : {subArticle.Title}
                             </p>
+                          ) : (
+                            ""
+                          )}
+                          <div className="pb-2 font-12 text-secondary">
+                            {subArticle.Des ? (
+                              <p>
+                                توضیحات :{" "}
+                                {subArticle.Des.substr(0, 50) + " ..."}
+                              </p>
+                            ) : (
+                              ""
+                            )}
                             <p>
                               متن :{" "}
                               {subArticle?.Text
-                                ? subArticle?.Text.substr(0, 50) + " ..."
+                                ? subArticle.Text.substr(0, 50) + " ..."
                                 : "-"}
                             </p>
                           </div>

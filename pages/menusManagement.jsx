@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
@@ -387,6 +388,9 @@ const MenusManagement = () => {
 
   return (
     <>
+      <Head>
+        <title>مدیریت منوها</title>
+      </Head>
       <div className="page-wrapper">
         {isLoading ? (
           <Loading />

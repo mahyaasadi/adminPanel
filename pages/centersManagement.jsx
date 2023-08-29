@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
+import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
@@ -13,11 +14,13 @@ import BusinessHoursModal from "components/dashboard/centers/centerBusinessHours
 import EditBusinessHourModal from "components/dashboard/centers/centerBusinessHours/editBusinessHoursModal";
 import CenterAboutUsModal from "components/dashboard/centers/aboutUs/centerAboutUsModal";
 import EditAboutUsModal from "components/dashboard/centers/aboutUs/editCenterAboutUs/editAboutUsModal";
+import { useRouter } from "next/router";
 
 let ActiveCenterID,
   ActiveCenterName = null;
 
 const CentersManagement = () => {
+  const Router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [centersData, setCentersData] = useState([]);
   const [provinceOptionsList, setProvinceOptionsList] = useState([]);
@@ -35,6 +38,14 @@ const CentersManagement = () => {
   // -------------------
   const [centerAboutUsData, setCenterAboutUsData] = useState([]);
 
+  // -------------------
+  let selectedPage = Router.query.page;
+  const ChangeDtPage = (e) => {
+    const url = new URL(location);
+    url.searchParams.set("page", e);
+    history.pushState({}, "", url);
+  };
+
   //get all centers
   const getCentersData = () => {
     setIsLoading(true);
@@ -44,15 +55,6 @@ const CentersManagement = () => {
       .get(url)
       .then((response) => {
         setCentersData(response.data);
-
-        // let centerIndex = [];
-        // for (let i = 0; i < response.data.length; i++) {
-        //   let itemIndex = null;
-        //   response.data?.map((item, index) => {
-        //     itemIndex = index;
-        //     console.log("index", itemIndex);
-        //   });
-        // }
         setIsLoading(false);
       })
       .catch((error) => {
@@ -162,8 +164,8 @@ const CentersManagement = () => {
   const updateCenterInfo = (data, centerId) => {
     setEditCenterData(data);
     $("#editCenterModal").modal("show");
-    // console.log("centerId", centerId);
     ActiveCenterID = centerId;
+    console.log("centerId", ActiveCenterID);
   };
 
   let newLogo = null;
@@ -173,9 +175,7 @@ const CentersManagement = () => {
     const formProps = Object.fromEntries(formData);
     const CenterID = formProps.editCenterID;
 
-    if (ActiveCenterID === undefined) {
-      ErrorAlert("خطا", "ویرایش");
-    } else {
+    if (ActiveCenterID) {
       let url = `center/edit/${ActiveCenterID}`;
       if (formProps.editLogo && formProps.editLogo.size != 0) {
         newLogo = await convertBase64(formProps.editLogo);
@@ -194,12 +194,14 @@ const CentersManagement = () => {
         ViewDes: formProps.editCenterDescription,
         Logo: newLogo,
       };
+
       console.log("data", data);
 
       axiosClient
         .put(url, data)
         .then((response) => {
           console.log(response.data);
+          response.data._id = ActiveCenterID;
           updateItem(formProps.editCenterID, response.data);
           $("#editCenterModal").modal("hide");
         })
@@ -207,6 +209,8 @@ const CentersManagement = () => {
           console.log(error);
           ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید");
         });
+    } else {
+      ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید");
     }
   };
 
@@ -315,6 +319,7 @@ const CentersManagement = () => {
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
+        ErrorAlert("خطا", "دریافت اطلاعات با خطا مواجه گردید!");
       });
   };
 
@@ -358,6 +363,7 @@ const CentersManagement = () => {
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
+        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
       });
   };
 
@@ -368,6 +374,9 @@ const CentersManagement = () => {
 
   return (
     <>
+      <Head>
+        <title>مدیریت مراکز</title>
+      </Head>
       <div className="page-wrapper">
         {isLoading ? (
           <Loading />
@@ -419,6 +428,8 @@ const CentersManagement = () => {
                     updateCenterInfo={updateCenterInfo}
                     openBusinessHoursModal={openBusinessHoursModal}
                     openAboutUsModal={openAboutUsModal}
+                    selectedPage={selectedPage}
+                    ChangeDtPage={ChangeDtPage}
                   />
                 </div>
 

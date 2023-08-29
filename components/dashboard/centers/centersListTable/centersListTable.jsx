@@ -11,19 +11,20 @@ const CentersListTable = ({
   updateCenterInfo,
   openBusinessHoursModal,
   openAboutUsModal,
+  selectedPage,
+  ChangeDtPage,
 }) => {
-  // data?.map((item, index) => {
-  //   console.log(index);
-  // });
+  data?.map((center, index) => {
+    data[index].Number = index + 1;
+  });
 
-  console.log("data", data);
+  // console.log("data", data);
   const columns = [
     {
       name: "ردیف",
-      // selector: (row) => row.
+      selector: (row) => row.Number,
       sortable: true,
       width: "80px",
-      // cell: (data) => data?.map((item, index) => index),
     },
     {
       name: "نام مرکز",
@@ -96,6 +97,19 @@ const CentersListTable = ({
             />
           </button>
 
+          <button
+            className="btn btn-sm btn-outline-secondary btn-border-left"
+            onClick={() => openBusinessHoursModal(row._id)}
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="ساعات کاری"
+          >
+            <FeatherIcon
+              icon="clock"
+              style={{ width: "16px", height: "16px" }}
+            />
+          </button>
+
           <Link
             className="btn btn-sm btn-outline-secondary btn-border-left"
             href={{
@@ -114,20 +128,7 @@ const CentersListTable = ({
 
           <button
             className="btn btn-sm btn-outline-secondary btn-border-left"
-            onClick={() => openBusinessHoursModal(row._id)}
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="ساعات کاری"
-          >
-            <FeatherIcon
-              icon="clock"
-              style={{ width: "16px", height: "16px" }}
-            />
-          </button>
-
-          <button
-            className="btn btn-sm btn-outline-secondary btn-border-left"
-            onClick={() => openAboutUsModal(row ,row._id, row.Name)}
+            onClick={() => openAboutUsModal(row, row._id, row.Name)}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="درباره مرکز"
@@ -222,6 +223,8 @@ const CentersListTable = ({
             defaultSortAsc={false}
             pagination
             highlightOnHover
+            paginationDefaultPage={selectedPage}
+            onChangePage={ChangeDtPage}
             paginationPerPage="20"
             noDataComponent={
               <div style={{ padding: "24px", fontSize: "13px" }}>

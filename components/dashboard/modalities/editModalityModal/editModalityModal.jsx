@@ -1,25 +1,29 @@
-import Image from "next/image";
+import { useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 
-const AddModalityModal = ({ addModality, isLoading }) => {
-  // const displayPreview = (e) => {
-  //   var urlCreator = window.URL || window.webkitURL;
-  //   var imageUrl = urlCreator.createObjectURL(e.target.files[0]);
-  //   $("#modalityIconPreview").attr("src", imageUrl);
-  // };
+const EditModalityModal = ({
+  data,
+  editModality,
+  isLoading,
+  handleDisabledSwitch,
+  handleCheckedDisabledModality,
+}) => {
+  useEffect(() => {
+    handleDisabledSwitch(data);
+  }, [data]);
 
   return (
     <div
       className="modal fade contentmodal"
-      id="addModalityModal"
+      id="editModalityModal"
       tabIndex="-1"
       aria-hidden="true"
     >
       <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
+        <div className="modal-content doctor-profile">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">
-              اضافه کردن بخش
+              ویرایش اطلاعات
             </p>
             <button
               type="button"
@@ -33,18 +37,32 @@ const AddModalityModal = ({ addModality, isLoading }) => {
             </button>
           </div>
           <div className="modal-body">
-            <form onSubmit={addModality} id="frmAddModality">
+            <form onSubmit={editModality}>
               <div className="form-group">
                 <label className="lblAbs font-12">
                   ID <span className="text-danger">*</span>
                 </label>
+                <input
+                  type="number"
+                  className="form-control floating inputPadding rounded"
+                  name="editModalityID"
+                  defaultValue={data._id}
+                  key={data._id}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  عنوان <span className="text-danger">*</span>
+                </label>
                 <div className="col p-0">
                   <input
-                    min="1"
-                    type="number"
-                    name="addModalityID"
-                    className="form-control floating inputPadding rounded font-12"
-                    // placeholder="9"
+                    className="form-control floating inputPadding rounded font-13"
+                    type="text"
+                    name="editModalityName"
+                    defaultValue={data.Modality}
+                    key={data.Modality}
                     required
                   />
                 </div>
@@ -52,14 +70,15 @@ const AddModalityModal = ({ addModality, isLoading }) => {
 
               <div className="form-group">
                 <label className="lblAbs font-12">
-                  نام بخش <span className="text-danger">*</span>
+                  عنوان کامل <span className="text-danger">*</span>
                 </label>
                 <div className="col p-0">
                   <input
+                    className="form-control floating inputPadding rounded font-13"
                     type="text"
-                    name="addModalityName"
-                    className="form-control floating inputPadding rounded font-12"
-                    placeholder="مثال: CT"
+                    name="editModalityFullName"
+                    defaultValue={data.FullName}
+                    key={data.FullName}
                     required
                   />
                 </div>
@@ -67,29 +86,15 @@ const AddModalityModal = ({ addModality, isLoading }) => {
 
               <div className="form-group">
                 <label className="lblAbs font-12">
-                  نام کامل بخش <span className="text-danger">*</span>
+                  عنوان فارسی <span className="text-danger">*</span>
                 </label>
                 <div className="col p-0">
                   <input
+                    className="form-control floating inputPadding rounded font-13"
                     type="text"
-                    name="addModalityFullName"
-                    className="form-control floating inputPadding rounded font-12"
-                    placeholder="مثال: CT Scan"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label className="lblAbs font-12">
-                  نام فارسی بخش <span className="text-danger">*</span>
-                </label>
-                <div className="col p-0">
-                  <input
-                    type="text"
-                    name="addModalityPerFullName"
-                    className="form-control floating inputPadding rounded font-12"
-                    placeholder="مثال: سی تی اسکن"
+                    name="editModalityPerFullName"
+                    defaultValue={data.PerFullName}
+                    key={data.PerFullName}
                     required
                   />
                 </div>
@@ -102,10 +107,10 @@ const AddModalityModal = ({ addModality, isLoading }) => {
                 <div className="col p-0">
                   <input
                     type="text"
-                    name="addModalityIcon"
                     className="form-control floating inputPadding rounded font-12"
-                    placeholder="مثال : CTScan.png"
-                    required
+                    name="editModalityIcon"
+                    defaultValue={data.Icon}
+                    key={data.Icon}
                   />
                 </div>
               </div>
@@ -118,51 +123,25 @@ const AddModalityModal = ({ addModality, isLoading }) => {
                 <input
                   type="checkbox"
                   hidden="hidden"
-                  id="disabledModalityCheckbox"
-                  name="modalityDisabledSwitch"
-                  // defaultChecked="checked"
-                  required
+                  id={"editDisabledModalityCheckbox" + data._id}
+                  name="editModalityDisabledSwitch"
+                  key={data.Disabled}
+                  className="editModalityDisabledCheckbox"
+                  onChange={handleCheckedDisabledModality}
                 />
                 <label
                   className="showInsliderSwitch font-12"
-                  htmlFor="disabledModalityCheckbox"
+                  htmlFor={"editDisabledModalityCheckbox" + data._id}
                 ></label>
               </div>
-
-              {/* <div className="change-photo-btn">
-                <div>
-                  <i>
-                    <FeatherIcon icon="upload" />
-                  </i>
-                  <p className="font-12">آپلود آیکون</p>
-                </div>
-                <input
-                  type="file"
-                  className="upload"
-                  name="addModalityIcon"
-                  onChange={displayPreview}
-                  id="addModalityIcon"
-                  required
-                />
-              </div>
-
-              <div className="previewImgContainer">
-                <Image
-                  src=""
-                  alt=""
-                  width="200"
-                  id="modalityIconPreview"
-                  className="d-block m-auto previewImg"
-                />
-              </div> */}
 
               <div className="submit-section">
                 {!isLoading ? (
                   <button
                     type="submit"
-                    className="btn btn-primary rounded btn-save"
+                    className="btn btn-primary btn-save rounded"
                   >
-                    ثبت
+                    ثبت تغییرات
                   </button>
                 ) : (
                   <button
@@ -185,4 +164,5 @@ const AddModalityModal = ({ addModality, isLoading }) => {
     </div>
   );
 };
-export default AddModalityModal;
+
+export default EditModalityModal;

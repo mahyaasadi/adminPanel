@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
@@ -199,62 +200,63 @@ const Neighbourhoods = () => {
 
   return (
     <>
+      <Head>
+        <title>مدیریت محله ها</title>
+      </Head>
       <div className="page-wrapper">
         {isLoading ? (
-                  <Loading />
-                ) : (
-        <div className="content container-fluid">
-          <div className="page-header">
-            <div className="row align-items-center">
-              <div className="col-md-12 d-flex justify-content-end">
-                <Link
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#addStateModal"
-                  className="btn btn-primary btn-add"
-                >
-                  <i className="me-1">
-                    <FeatherIcon icon="plus-square" />
-                  </i>{" "}
-                  افزودن
-                </Link>
+          <Loading />
+        ) : (
+          <div className="content container-fluid">
+            <div className="page-header">
+              <div className="row align-items-center">
+                <div className="col-md-12 d-flex justify-content-end">
+                  <Link
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addStateModal"
+                    className="btn btn-primary btn-add"
+                  >
+                    <i className="me-1">
+                      <FeatherIcon icon="plus-square" />
+                    </i>{" "}
+                    افزودن
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* <!-- Menu List --> */}
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="card">
-                <div className="card-header border-bottom-0">
-                  <div className="row align-items-center">
-                    <div className="col">
-                      <h5 className="card-title font-16">لیست محله ها</h5>
-                    </div>
-                    <div className="col-auto d-flex flex-wrap">
-                      <div className="form-custom me-2">
-                        <div
-                          id="tableSearch"
-                          className="dataTables_wrapper"
-                        ></div>
+            {/* <!-- Menu List --> */}
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="card">
+                  <div className="card-header border-bottom-0">
+                    <div className="row align-items-center">
+                      <div className="col">
+                        <h5 className="card-title font-16">لیست محله ها</h5>
+                      </div>
+                      <div className="col-auto d-flex flex-wrap">
+                        <div className="form-custom me-2">
+                          <div
+                            id="tableSearch"
+                            className="dataTables_wrapper"
+                          ></div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                
                   <NeighbourhoodsListTable
                     data={neighbourhoodsData}
                     updateState={updateState}
                     deleteState={deleteState}
                   />
-                
-              </div>
+                </div>
 
-              <div id="tablepagination" className="dataTables_wrapper"></div>
+                <div id="tablepagination" className="dataTables_wrapper"></div>
+              </div>
             </div>
           </div>
-        </div>
         )}
 
         <AddStateModal

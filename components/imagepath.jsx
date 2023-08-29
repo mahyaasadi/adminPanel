@@ -26,7 +26,7 @@ export { default as ortho } from "public/assets/img/icon/ortho.png";
 export { default as cardio } from "public/assets/img/icon/cardio.png";
 export { default as dental } from "public/assets/img/icon/dental.png";
 export { default as doctor09 } from "public/assets/img/doctors/doctor-09.jpg";
-export { default as favicon } from "public/assets/img/favicon.png";
+export { default as favicon } from "public/assets/img/icon/mngIcon.png";
 export { default as blog01 } from "public/assets/img/blog/blog-01.jpg";
 export { default as blog02 } from "public/assets/img/blog/blog-02.jpg";
 export { default as blog03 } from "public/assets/img/blog/blog-03.jpg";

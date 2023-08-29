@@ -7,19 +7,25 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const ModalityListTable = ({ data }) => {
+const ModalityListTable = ({ data, updateModality }) => {
   const columns = [
     {
       name: "عنوان",
+      selector: (row) => row.Modality,
+      sortable: true,
+      width: "280px",
+    },
+    {
+      name: "عنوان کامل",
       selector: (row) => row.FullName,
       sortable: true,
-      width: "350px",
+      width: "280px",
     },
     {
       name: "عنوان فارسی",
       selector: (row) => row.PerFullName,
       sortable: true,
-      width: "550px",
+      width: "400px",
     },
     {
       name: "آیکون",
@@ -30,11 +36,11 @@ const ModalityListTable = ({ data }) => {
           <img
             src={"https://irannobat.ir/admin/assets/img/" + row.Icon}
             alt=""
-            style={{width: "30px", height: "30px"}}
+            style={{ width: "30px", height: "30px" }}
           />
         </div>
       ),
-      width: "300px",
+      width: "310px",
     },
     {
       name: "عملیات ها",
@@ -43,10 +49,9 @@ const ModalityListTable = ({ data }) => {
 
       cell: (row) => (
         <div className="actions d-flex gap-2">
-          <Link
-            href="#"
+          <button
             className="btn btn-sm btn-outline-secondary btn-border-left"
-            // onClick={() => updatePhysician(row)}
+            onClick={() => updateModality(row, row._id)}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="ویرایش"
@@ -55,7 +60,7 @@ const ModalityListTable = ({ data }) => {
               style={{ width: "15px", height: "15px" }}
               icon="edit-3"
             />
-          </Link>
+          </button>
         </div>
       ),
       width: "150px",
@@ -77,6 +82,7 @@ const ModalityListTable = ({ data }) => {
             defaultSortAsc={false}
             pagination
             highlightOnHover
+            paginationPerPage="20"
             noDataComponent={
               <div style={{ padding: "24px", fontSize: "13px" }}>
                 موردی برای نمایش وجود ندارد.
