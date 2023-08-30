@@ -381,7 +381,6 @@ const Articles = () => {
       WImgThumb: formProps.defaultSubArticleWImgThumb,
     };
 
-    console.log(formProps);
     console.log("data", Data);
 
     axiosClient
@@ -395,7 +394,7 @@ const Articles = () => {
         subArticleImg = null;
         newSubArticleImg = null;
         formProps.editSubArticleImg = null;
-        $("#editSubArticleImg").val("");
+        // $("#editSubArticleImg").val("");
         $("#editSubArticleModal").modal("hide");
         setIsLoading(false);
       })
@@ -1030,6 +1029,7 @@ const Articles = () => {
           addArticle={addArticle}
           setArticleDateInDB={setArticleDateInDB}
           FUSelectArticleLanguage={FUSelectArticleLanguage}
+          isLoading={isLoading}
         />
         <EditArticleModal
           data={editArticleData}
@@ -1050,12 +1050,16 @@ const Articles = () => {
           updateSubDataOrder={updateSubDataOrder}
           isLoading={isLoading}
         />
-        <AddSubArticleModal addSubArticle={addSubArticle} />
+        <AddSubArticleModal
+          addSubArticle={addSubArticle}
+          isLoading={isLoading}
+        />
         <EditSubArticleModal
           data={editSubArticleData}
           editSubArticle={editSubArticle}
           handleCallToActionSwitch={handleCallToActionSwitch}
           handleCheckedCallToActionOptions={handleCheckedCallToActionOptions}
+          isLoading={isLoading}
         />
         {/* videos */}
         <ArticleVideosModal
@@ -1064,7 +1068,10 @@ const Articles = () => {
           deleteArticleVideo={deleteArticleVideo}
           updateArticleVideo={updateArticleVideo}
         />
-        <AddArticleVideoModal addVideoToArticle={addVideoToArticle} />
+        <AddArticleVideoModal
+          addVideoToArticle={addVideoToArticle}
+          isLoading={isLoading}
+        />
         <EditArticleVideoModal
           data={editArticleVideoData}
           editArticleVideo={editArticleVideo}

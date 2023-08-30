@@ -7,6 +7,7 @@ const EditSubArticleModal = ({
   editSubArticle,
   handleCallToActionSwitch,
   handleCheckedCallToActionOptions,
+  isLoading,
 }) => {
   //   subArticle img preview
   const displayPreview = (e) => {
@@ -188,12 +189,26 @@ const EditSubArticleModal = ({
               </div>
 
               <div className="submit-section">
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-save rounded"
-                >
-                  ثبت تغییرات
-                </button>
+                {!isLoading ? (
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-save rounded"
+                  >
+                    ثبت تغییرات
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="btn btn-secondary font-13"
+                    disabled
+                  >
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                    ></span>
+                    در حال ثبت
+                  </button>
+                )}
               </div>
             </form>
           </div>

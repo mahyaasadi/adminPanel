@@ -11,7 +11,7 @@ const AddCenterModal = ({
   setCityOption,
   cityOptionsList,
   defaultData,
-  isLoading
+  isLoading,
 }) => {
   const colourStyles = {
     menu: (provided) => ({ ...provided, zIndex: 9999 }),
@@ -54,7 +54,11 @@ const AddCenterModal = ({
           </div>
           <div className="modal-body centerModalBody">
             <form onSubmit={addCenter} id="frmAddCenter" dir="rtl">
-              <input type="hidden" value={defaultData?._id} name="CenterID" />
+              {/* <input
+                type="hidden"
+                value={defaultData?._id}
+                name="addCenterID"
+              /> */}
               <div className="row">
                 <div className="col">
                   <div className="form-group">
@@ -174,6 +178,7 @@ const AddCenterModal = ({
                   type="file"
                   className="upload"
                   name="logo"
+                  id="addCenterLogo"
                   onChange={displayPreview}
                   required
                 />
@@ -198,7 +203,11 @@ const AddCenterModal = ({
                     ثبت
                   </button>
                 ) : (
-                  <button type="submit" className="btn btn-primary rounded" disabled>
+                  <button
+                    type="submit"
+                    className="btn btn-primary rounded"
+                    disabled
+                  >
                     <span
                       className="spinner-border spinner-border-sm me-2"
                       role="status"

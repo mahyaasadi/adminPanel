@@ -1,20 +1,15 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import { axiosClient } from "class/axiosConfig.js";
-// import Cookies from "js-cookie";
 import Select from "react-select";
 import JDate from "jalali-date";
 import Loading from "components/commonComponents/loading/loading";
 import OverviewStats from "components/dashboard/overview/overviewStats";
 
-// let CenterID = Cookies.get("CenterID");
 const jdate = new JDate();
 
 const Dashboard = () => {
   const [selectedDuration, setSelectedDuration] = useState("today");
-  // const [stats, setStats] = useState(null);
-  // const [statsIsLoading, setStatsIsLoading] = useState(true);
-
   const overviewOptions = [
     { value: "today", label: "امروز : " + jdate.format("dddd DD MMMM YYYY") },
     { value: "lastWeek", label: "هفته گذشته" },
@@ -23,33 +18,6 @@ const Dashboard = () => {
       label: "ماه جاری : " + jdate.format("MMMM YYY"),
     },
   ];
-
-  // const getStats = (duration) => {
-  //   setStatsIsLoading(true);
-  //   let url = "Dashboard";
-
-  //   if (duration === "today") {
-  //     url += "/TodayStatistics";
-  //   } else if (duration === "lastWeek") {
-  //     url += "/LastWeekStatistics";
-  //   } else if (duration === "lastMonth") {
-  //     url += "/MonthStatistics";
-  //   }
-
-  //   axiosClient.post(url, { CenterID }).then((response) => {
-  //     setStats(response.data);
-  //     setStatsIsLoading(false);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   try {
-  //     getStats(selectedDuration);
-  //   } catch (error) {
-  //     setStatsIsLoading(true);
-  //     console.log(error);
-  //   }
-  // }, [selectedDuration]);
 
   return (
     <>

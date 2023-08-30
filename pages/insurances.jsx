@@ -3,7 +3,6 @@ import Link from "next/link";
 import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
-// import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Loading from "components/commonComponents/loading/loading";
 import InsuranceListTable from "components/dashboard/insurances/insuranceListTable/insuranceListTable";
@@ -13,7 +12,6 @@ import insuranceTypeDataClass from "class/insuranceTypeDataClass";
 import insuranceStatusDataClass from "class/insuranceStatusDataClass";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 
-// let CenterID = Cookies.get("CenterID");
 let CenterID = null;
 
 const Insurance = () => {

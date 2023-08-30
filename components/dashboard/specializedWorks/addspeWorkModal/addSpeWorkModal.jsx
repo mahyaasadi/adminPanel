@@ -53,13 +53,13 @@ const AddSpeWorkModal = ({ addSpeWork }) => {
 
               <div className="form-group ">
                 <label className="lblAbs font-12">
-                  نام انگلیسی <span className="text-danger">*</span>
+                  نام انگلیسی
                 </label>
                 <input
                   className="form-control floating inputPadding rounded"
                   type="text"
                   name="AddSpeEngName"
-                  required
+                  // required
                 />
               </div>
 

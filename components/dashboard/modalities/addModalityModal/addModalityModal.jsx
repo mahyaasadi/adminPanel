@@ -15,7 +15,7 @@ const AddModalityModal = ({ addModality, isLoading }) => {
       tabIndex="-1"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">
@@ -44,7 +44,6 @@ const AddModalityModal = ({ addModality, isLoading }) => {
                     type="number"
                     name="addModalityID"
                     className="form-control floating inputPadding rounded font-12"
-                    // placeholder="9"
                     required
                   />
                 </div>
@@ -121,7 +120,7 @@ const AddModalityModal = ({ addModality, isLoading }) => {
                   id="disabledModalityCheckbox"
                   name="modalityDisabledSwitch"
                   // defaultChecked="checked"
-                  required
+                  // required
                 />
                 <label
                   className="showInsliderSwitch font-12"

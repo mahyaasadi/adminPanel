@@ -4,7 +4,7 @@ import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import Loading from "components/commonComponents/loading/loading";
 
-const AddArticleVideoModal = ({ addVideoToArticle }) => {
+const AddArticleVideoModal = ({ addVideoToArticle, isLoading }) => {
   // Article Video preview
   const displayVideoPreview = (e) => {
     var urlCreator = window.URL || window.webkitURL;
@@ -88,12 +88,26 @@ const AddArticleVideoModal = ({ addVideoToArticle }) => {
               </div>
 
               <div className="submit-section">
-                <button
-                  type="submit"
-                  className="btn btn-primary rounded btn-save"
-                >
-                  ثبت
-                </button>
+                {!isLoading ? (
+                  <button
+                    type="submit"
+                    className="btn btn-primary rounded btn-save"
+                  >
+                    ثبت
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="btn btn-secondary font-13"
+                    disabled
+                  >
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                    ></span>
+                    در حال ثبت
+                  </button>
+                )}
               </div>
             </form>
           </div>

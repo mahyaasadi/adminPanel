@@ -7,41 +7,26 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const ModalityListTable = ({ data, updateModality }) => {
+const ServicesListTable = ({ data }) => {
   const columns = [
     {
-      name: "عنوان",
-      selector: (row) => row.Modality,
+      name: "نام خدمت",
+      selector: (row) => row.Service,
       sortable: true,
-      width: "280px",
+      width: "auto",
     },
-    {
-      name: "عنوان کامل",
-      selector: (row) => row.FullName,
-      sortable: true,
-      width: "280px",
-    },
-    {
-      name: "عنوان فارسی",
-      selector: (row) => row.PerFullName,
-      sortable: true,
-      width: "400px",
-    },
-    {
-      name: "آیکون",
-      selector: (row) => row.Icon,
-      sortable: true,
-      cell: (row) => (
-        <div>
-          <img
-            src={"https://irannobat.ir/admin/assets/img/" + row.Icon}
-            alt=""
-            style={{ width: "35px", height: "35px" }}
-          />
-        </div>
-      ),
-      width: "310px",
-    },
+    // {
+    //   name: "عنوان",
+    //   selector: (row) => row.Title,
+    //   sortable: true,
+    //   width: "auto",
+    // },
+    // {
+    //   name: "تخصص",
+    //   selector: (row) => row.Spe,
+    //   sortable: true,
+    //   width: "auto",
+    // },
     {
       name: "عملیات ها",
       selector: (row) => row._id,
@@ -49,21 +34,36 @@ const ModalityListTable = ({ data, updateModality }) => {
 
       cell: (row) => (
         <div className="actions d-flex gap-2">
-          <button
+          <Link
+            href="#"
+            className="btn btn-sm btn-outline-danger"
+            // onClick={() => deletePhysician(row._id)}
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="حذف"
+          >
+            <FeatherIcon
+              style={{ width: "16px", height: "16px" }}
+              icon="trash-2"
+            />
+          </Link>
+
+          <Link
+            href="#"
             className="btn btn-sm btn-outline-secondary btn-border-left"
-            onClick={() => updateModality(row, row._id)}
+            // onClick={() => updatePhysician(row)}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="ویرایش"
           >
             <FeatherIcon
-              style={{ width: "15px", height: "15px" }}
+              style={{ width: "16px", height: "16px" }}
               icon="edit-3"
             />
-          </button>
+          </Link>
         </div>
       ),
-      width: "150px",
+      width: "200px",
     },
   ];
 
@@ -80,9 +80,7 @@ const ModalityListTable = ({ data, updateModality }) => {
             noHeader
             defaultSortField="id"
             defaultSortAsc={false}
-            pagination
             highlightOnHover
-            paginationPerPage="20"
             noDataComponent={
               <div style={{ padding: "24px", fontSize: "13px" }}>
                 موردی برای نمایش وجود ندارد.
@@ -96,4 +94,4 @@ const ModalityListTable = ({ data, updateModality }) => {
   );
 };
 
-export default ModalityListTable;
+export default ServicesListTable;

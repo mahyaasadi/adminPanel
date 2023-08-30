@@ -8,6 +8,7 @@ const AddArticleModal = ({
   addArticle,
   setArticleDateInDB,
   FUSelectArticleLanguage,
+  isLoading,
 }) => {
   // article date
   const setArticleDate = (value) => {
@@ -218,12 +219,26 @@ const AddArticleModal = ({
               </div>
 
               <div className="submit-section">
-                <button
-                  type="submit"
-                  className="btn btn-primary rounded btn-save"
-                >
-                  ثبت
-                </button>
+                {!isLoading ? (
+                  <button
+                    type="submit"
+                    className="btn btn-primary rounded btn-save"
+                  >
+                    ثبت
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="btn btn-secondary font-13"
+                    disabled
+                  >
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                    ></span>
+                    در حال ثبت
+                  </button>
+                )}
               </div>
             </form>
           </div>

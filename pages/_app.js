@@ -6,8 +6,8 @@ import "public/assets/plugins/fontawesome/css/fontawesome.min.css";
 import "public/assets/plugins/fontawesome/css/all.min.css";
 import "public/assets/css/font-awesome.min.css";
 import "public/assets/css/style.css";
-import DashboardLayout from "src/app/dashboard/layout";
 import { favicon } from "components/imagePath";
+import DashboardLayout from "src/app/dashboard/layout";
 import {
   useQuery,
   useMutation,
@@ -41,6 +41,7 @@ export default function MyApp({ Component, pageProps }) {
           href="assets/img/icon/mngIcon.png"
         />
       </Head>
+
       {/* Provide the client to your App */}
       <QueryClientProvider client={queryClient}>
         <DashboardLayout>

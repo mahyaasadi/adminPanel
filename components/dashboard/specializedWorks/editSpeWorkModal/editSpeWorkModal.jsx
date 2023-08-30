@@ -64,7 +64,7 @@ const EditSpeWorkModal = ({ data, editSpeWorks }) => {
 
               <div className="form-group ">
                 <label className="lblAbs font-12">
-                  نام انگلیسی <span className="text-danger">*</span>
+                  نام انگلیسی
                 </label>
                 <input
                   className="form-control floating inputPadding rounded"
@@ -72,7 +72,7 @@ const EditSpeWorkModal = ({ data, editSpeWorks }) => {
                   name="EditSpeWorkEngName"
                   defaultValue={data.EngName}
                   key={data.EngName}
-                  required
+                  // required
                 />
               </div>
 

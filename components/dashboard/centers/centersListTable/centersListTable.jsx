@@ -12,6 +12,7 @@ const CentersListTable = ({
   openBusinessHoursModal,
   openAboutUsModal,
   selectedPage,
+  state,
   ChangeDtPage,
 }) => {
   data?.map((center, index) => {
@@ -223,7 +224,7 @@ const CentersListTable = ({
             defaultSortAsc={false}
             pagination
             highlightOnHover
-            paginationDefaultPage={selectedPage}
+            paginationDefaultPage={state.selectedPage}
             onChangePage={ChangeDtPage}
             paginationPerPage="20"
             noDataComponent={

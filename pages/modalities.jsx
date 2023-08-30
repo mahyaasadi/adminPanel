@@ -35,30 +35,16 @@ const Modalities = ({}) => {
       });
   };
 
-  // Convert imageUrl to Base64
-  // const convertBase64 = (file) => {
-  //   return new Promise((resolve, reject) => {
-  //     const fileReader = new FileReader();
-  //     fileReader.readAsDataURL(file);
-  //     fileReader.onload = () => resolve(fileReader.result);
-  //     fileReader.onerror = (error) => reject(error);
-  //   });
-  // };
-
   const openAddModalityModal = () => {
     $("#addModalityModal").modal("show");
   };
 
-  // let modalityIcon = null;
   const addModality = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
-    // if (formProps.addModalityIcon && formProps.addModalityIcon.size != 0) {
-    //   modalityIcon = await convertBase64(formProps.addModalityIcon);
-    // }
 
     let url = "Modality/add";
     let data = {
@@ -81,9 +67,6 @@ const Modalities = ({}) => {
         setModalityData([...modalityData, response.data]);
         $("#addModalityModal").modal("hide");
         e.target.reset();
-        // $("#addModalityIcon").val("");
-        // subArticleImg = null;
-        // $("#modalityIconPreview").attr("src", "");
       })
       .catch((err) => {
         console.log(err);
@@ -112,9 +95,9 @@ const Modalities = ({}) => {
       $("#editDisabledModalityCheckbox" + data?._id).prop("checked", false);
       data?.Disabled === false
         ? ($(".editModalityDisabledCheckbox").prop("checked", true),
-          setDisabledheckboxStatus({ modalityDisabledCheckbox: true }))
+          setDisabledheckboxStatus({ modalityDisabledCheckbox: false }))
         : ($(".callToActionCheckbox").prop("checked", false),
-          setDisabledheckboxStatus({ modalityDisabledCheckbox: false }));
+          setDisabledheckboxStatus({ modalityDisabledCheckbox: true }));
     }
   }
 
@@ -122,10 +105,10 @@ const Modalities = ({}) => {
     $("#editModalityModal").modal("show");
     setEditModalityData(data);
     ActiveModalityID = id;
-    console.log(ActiveModalityID);
+    console.log("ActiveModalityID", ActiveModalityID);
   };
 
-  const editModality = (e) => {
+  const editModality = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -149,7 +132,6 @@ const Modalities = ({}) => {
       .then((response) => {
         console.log(response.data);
         updateModalityItem(formProps.editModalityID, response.data);
-
         $("#editModalityModal").modal("hide");
         setIsLoading(false);
       })

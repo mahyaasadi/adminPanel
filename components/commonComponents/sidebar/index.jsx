@@ -25,12 +25,8 @@ const Sidebar = () => {
                 </Link>
               </li>
 
-              <li
-                className={
-                  router.pathname == "/menusManagement" ? "active" : ""
-                }
-              >
-                <Link href="/menusManagement">
+              <li className={router.pathname == "/menus" ? "active" : ""}>
+                <Link href="/menus">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -128,22 +124,20 @@ const Sidebar = () => {
                   </li>
                   <li
                     className={
-                      router.pathname == "/articleGroupManagement"
-                        ? "active"
-                        : ""
+                      router.pathname == "/articleGroups" ? "active" : ""
                     }
                   >
-                    <Link href="/articleGroupManagement" className="font-12">
+                    <Link href="/articleGroups" className="font-12">
                       گروه مقالات
                     </Link>
                   </li>
 
                   <li
                     className={
-                      router.pathname == "/articleTagManagement" ? "active" : ""
+                      router.pathname == "/articleTags" ? "active" : ""
                     }
                   >
-                    <Link href="/articleTagManagement" className="font-12">
+                    <Link href="/articleTags" className="font-12">
                       تگ مقالات
                     </Link>
                   </li>
@@ -157,6 +151,27 @@ const Sidebar = () => {
                     style={{ width: "15px", height: "15px" }}
                   />
                   <span>مدیریت بخش ها</span>
+                </Link>
+              </li>
+
+              <li className={router.pathname == "/services" ? "active" : ""}>
+                <Link href="/services">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"
+                    />
+                  </svg>
+
+                  <span>مدیریت سرویس ها</span>
                 </Link>
               </li>
             </ul>

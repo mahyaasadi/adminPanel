@@ -3,7 +3,7 @@ import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import Loading from "components/commonComponents/loading/loading";
 
-const AddSubArticleModal = ({ addSubArticle }) => {
+const AddSubArticleModal = ({ addSubArticle, isLoading }) => {
   // subArticle img preview
   const displayPreview = (e) => {
     var urlCreator = window.URL || window.webkitURL;
@@ -46,7 +46,7 @@ const AddSubArticleModal = ({ addSubArticle }) => {
                     type="text"
                     name="addSubArticleTitle"
                     className="form-control floating inputPadding rounded"
-                  // required
+                    // required
                   />
                 </div>
               </div>
@@ -107,8 +107,8 @@ const AddSubArticleModal = ({ addSubArticle }) => {
                   hidden="hidden"
                   id="articleCallToAction"
                   name="articleCallToAction"
-                // defaultChecked="checked"
-                // required
+                  // defaultChecked="checked"
+                  // required
                 />
                 <label
                   className="showInsliderSwitch font-12"
@@ -117,12 +117,26 @@ const AddSubArticleModal = ({ addSubArticle }) => {
               </div>
 
               <div className="submit-section">
-                <button
-                  type="submit"
-                  className="btn btn-primary rounded btn-save"
-                >
-                  ثبت
-                </button>
+                {!isLoading ? (
+                  <button
+                    type="submit"
+                    className="btn btn-primary rounded btn-save"
+                  >
+                    ثبت
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="btn btn-secondary font-13"
+                    disabled
+                  >
+                    <span
+                      className="spinner-border spinner-border-sm me-2"
+                      role="status"
+                    ></span>
+                    در حال ثبت
+                  </button>
+                )}
               </div>
             </form>
           </div>

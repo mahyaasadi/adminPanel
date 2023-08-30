@@ -8,6 +8,14 @@ const EditModalityModal = ({
   handleDisabledSwitch,
   handleCheckedDisabledModality,
 }) => {
+  // const displayPreview = (e) => {
+  //   var urlCreator = window.URL || window.webkitURL;
+  //   if (e.target.files.length !== 0) {
+  //     var imageUrl = urlCreator.createObjectURL(e.target.files[0]);
+  //     $("#currentModalityIcon").attr("src", imageUrl);
+  //   }
+  // };
+
   useEffect(() => {
     handleDisabledSwitch(data);
   }, [data]);
@@ -19,7 +27,7 @@ const EditModalityModal = ({
       tabIndex="-1"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content doctor-profile">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">
@@ -115,7 +123,35 @@ const EditModalityModal = ({
                 </div>
               </div>
 
-              <div className="form-group col d-flex flex-col align-items-center justify-center">
+              {/* <div className="change-photo-btn">
+                <div>
+                  <i className="">
+                    <FeatherIcon icon="upload" />
+                  </i>
+                  <p>آپلود آیکون جدید</p>
+                </div>
+                <input
+                  type="file"
+                  className="upload"
+                  name="editModalityIcon"
+                  onChange={displayPreview}
+                  key={data.Icon}
+                />
+              </div>
+              <div
+                className="d-flex justify-center mt-4"
+                id="currentLogoContainer"
+              >
+                <img
+                  src={"https://irannobat.ir/admin/assets/img/" + data.Icon}
+                  alt="logo"
+                  style={{ width: "130px" }}
+                  className="previewImg m-auto d-block"
+                  id="currentModalityIcon"
+                ></img>
+              </div> */}
+
+              <div className="form-group col d-flex flex-col align-items-center justify-center mt-4">
                 <p className="font-12 mt-2 text-secondary">
                   {" "}
                   فعال / غیر فعال <span className="text-danger">*</span>
@@ -128,6 +164,7 @@ const EditModalityModal = ({
                   key={data.Disabled}
                   className="editModalityDisabledCheckbox"
                   onChange={handleCheckedDisabledModality}
+                  required
                 />
                 <label
                   className="showInsliderSwitch font-12"

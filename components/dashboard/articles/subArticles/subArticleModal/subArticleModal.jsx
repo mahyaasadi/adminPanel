@@ -132,8 +132,6 @@ const SubArticlesModal = ({
                               src={
                                 "https://irannobat.ir/blog/images/" +
                                 subArticle.Img
-                                  ? subArticle.Img
-                                  : subArticle.Image
                               }
                               alt="subArticleImg"
                             ></img>

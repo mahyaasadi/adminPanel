@@ -39,11 +39,14 @@ const CentersManagement = () => {
   const [centerAboutUsData, setCenterAboutUsData] = useState([]);
 
   // -------------------
-  let selectedPage = Router.query.page;
+  // let selectedPage = Router.query.page;
+  const state = { selectedPage: Router.query.page };
   const ChangeDtPage = (e) => {
     const url = new URL(location);
     url.searchParams.set("page", e);
-    history.pushState({}, "", url);
+    console.log(url);
+    history.pushState(state, "", url);
+    console.log(e);
   };
 
   //get all centers
@@ -113,11 +116,14 @@ const CentersManagement = () => {
       .then((response) => {
         console.log(response.data);
         setCentersData([...centersData, response.data]);
-        $("#logoUploadPreview").attr("src", " ");
-
         $("#addCenterModal").modal("hide");
         setIsLoading(false);
+
+        // reset
         e.target.reset();
+        $("#addCenterLogo").val("");
+        logo = null;
+        $("#logoUploadPreview").attr("src", "");
       })
       .catch((error) => {
         console.log(error);
@@ -173,7 +179,7 @@ const CentersManagement = () => {
     e.preventDefault();
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
-    const CenterID = formProps.editCenterID;
+    // const CenterID = formProps.editCenterID;
 
     if (ActiveCenterID) {
       let url = `center/edit/${ActiveCenterID}`;
@@ -203,7 +209,9 @@ const CentersManagement = () => {
           console.log(response.data);
           response.data._id = ActiveCenterID;
           updateItem(formProps.editCenterID, response.data);
+
           $("#editCenterModal").modal("hide");
+          // $("#editCenterLogo").val("");
         })
         .catch((error) => {
           console.log(error);
@@ -236,18 +244,20 @@ const CentersManagement = () => {
     let url = `CenterProfile/getBusinessHours/${centerId}`;
     setIsLoading(true);
 
-    axiosClient
-      .get(url)
-      .then((response) => {
-        console.log(response.data);
-        setBusinessHourData(response.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-        ErrorAlert("خطا", "خطا در دریافت ساعات کاری مرکز");
-      });
+    if (centerId) {
+      axiosClient
+        .get(url)
+        .then((response) => {
+          console.log(response.data);
+          setBusinessHourData(response.data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+          ErrorAlert("خطا", "خطا در دریافت ساعات کاری مرکز");
+        });
+    }
   };
 
   const openBusinessHoursModal = (id) => {
@@ -309,18 +319,20 @@ const CentersManagement = () => {
     let url = `/CenterProfile/getAboutUs/${centerId}`;
     setIsLoading(true);
 
-    axiosClient
-      .get(url)
-      .then((response) => {
-        console.log(response.data);
-        setCenterAboutUsData(response.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-        ErrorAlert("خطا", "دریافت اطلاعات با خطا مواجه گردید!");
-      });
+    if (centerId) {
+      axiosClient
+        .get(url)
+        .then((response) => {
+          console.log(response.data);
+          setCenterAboutUsData(response.data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+          ErrorAlert("خطا", "دریافت اطلاعات با خطا مواجه گردید!");
+        });
+    }
   };
 
   const openAboutUsModal = (data, centerId, centerName) => {
@@ -428,7 +440,7 @@ const CentersManagement = () => {
                     updateCenterInfo={updateCenterInfo}
                     openBusinessHoursModal={openBusinessHoursModal}
                     openAboutUsModal={openAboutUsModal}
-                    selectedPage={selectedPage}
+                    state={state}
                     ChangeDtPage={ChangeDtPage}
                   />
                 </div>
