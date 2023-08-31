@@ -95,6 +95,7 @@ const CentersManagement = () => {
     if (formProps.logo && formProps.logo.size != 0) {
       logo = await convertBase64(formProps.logo);
     }
+
     let data = {
       Name: formProps.addCenterName,
       EngName: formProps.addCenterEngName,
@@ -121,8 +122,8 @@ const CentersManagement = () => {
 
         // reset
         e.target.reset();
-        $("#addCenterLogo").val("");
         logo = null;
+        $("#addCenterLogo").val("");
         $("#logoUploadPreview").attr("src", "");
       })
       .catch((error) => {

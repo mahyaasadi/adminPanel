@@ -1,14 +1,13 @@
-import FeatherIcon from "feather-icons-react";
+import { useEffect, useMemo } from "react";
 import Image from "next/image";
-import { useEffect } from "react";
+import FeatherIcon from "feather-icons-react";
 
 const ModalitiesNavLink = ({ data, getDepServices, activeClass }) => {
-  useEffect(() => {
-    if (activeClass == "active") {
-      // getDepServices(data._id);
-      console.log("activeClass", activeClass);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (activeClass == "active") {
+  //     getDepServices(data._id, data.PerFullName);
+  //   }
+  // }, []);
 
   return (
     <>
@@ -17,7 +16,7 @@ const ModalitiesNavLink = ({ data, getDepServices, activeClass }) => {
           className={"nav-link ServiceNav " + activeClass}
           href={"#Tab" + data._id}
           data-bs-toggle="tab"
-          onClick={() => getDepServices(data._id)}
+          onClick={() => getDepServices(data._id, data.PerFullName)}
         >
           {data.PerFullName}
         </a>

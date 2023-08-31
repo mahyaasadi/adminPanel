@@ -23,27 +23,27 @@ const ModalitiesHeader = ({ data, getDepServices }) => {
               })} */}
 
               {data.map((nav, index) => {
-                // if (nav.Disabled === false) {
-                if (counter++ == 1) {
-                  return (
-                    <ModalitiesNavLink
-                      activeClass="active"
-                      key={index}
-                      data={nav}
-                      getDepServices={getDepServices}
-                    />
-                  );
-                } else {
-                  return (
-                    <ModalitiesNavLink
-                      activeClass=""
-                      key={index}
-                      data={nav}
-                      getDepServices={getDepServices}
-                    />
-                  );
+                if (nav.Disabled === false) {
+                  if ((counter++ === 1)) {
+                    return (
+                      <ModalitiesNavLink
+                        activeClass="active"
+                        key={index}
+                        data={nav}
+                        getDepServices={getDepServices}
+                      />
+                    );
+                  } else {
+                    return (
+                      <ModalitiesNavLink
+                        activeClass=""
+                        key={index}
+                        data={nav}
+                        getDepServices={getDepServices}
+                      />
+                    );
+                  }
                 }
-                // }
               })}
             </ul>
           </div>

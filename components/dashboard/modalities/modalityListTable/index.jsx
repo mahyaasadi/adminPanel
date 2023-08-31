@@ -36,7 +36,7 @@ const ModalityListTable = ({ data, updateModality }) => {
           <img
             src={"https://irannobat.ir/admin/assets/img/" + row.Icon}
             alt=""
-            style={{ width: "35px", height: "35px" }}
+            style={{ width: "30px", height: "30px" }}
           />
         </div>
       ),

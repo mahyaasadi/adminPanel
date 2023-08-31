@@ -6,27 +6,57 @@ import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
+import numberWithCommas from "class/numberWithComma";
 
-const ServicesListTable = ({ data }) => {
+const ServicesListTable = ({ data, deleteService, updateService }) => {
   const columns = [
     {
-      name: "نام خدمت",
-      selector: (row) => row.Service,
+      name: "کد خدمت",
+      selector: (row) => row._id,
       sortable: true,
-      width: "auto",
+      width: "120px",
     },
-    // {
-    //   name: "عنوان",
-    //   selector: (row) => row.Title,
-    //   sortable: true,
-    //   width: "auto",
-    // },
-    // {
-    //   name: "تخصص",
-    //   selector: (row) => row.Spe,
-    //   sortable: true,
-    //   width: "auto",
-    // },
+    {
+      name: "نام خدمت",
+      selector: (row) => row.Service.substr(0, 35) + " ...",
+      sortable: true,
+      width: "350px",
+    },
+    {
+      name: "تعرفه دولتی",
+      selector: (row) =>
+        row.GovernmentalTariff ? numberWithCommas(row.GovernmentalTariff) : "",
+      sortable: true,
+      width: "150px",
+    },
+    {
+      name: "تعرفه خصوصی",
+      selector: (row) =>
+        row.PrivateTariff ? numberWithCommas(row.PrivateTariff) : "",
+      sortable: true,
+      width: "150px",
+    },
+    {
+      name: "تعرفه آزاد مرکز",
+      selector: (row) =>
+        row.FreeTariff ? numberWithCommas(row.FreeTariff) : "",
+      sortable: true,
+      width: "150px",
+    },
+    {
+      name: "سهم بیمار تامین و خدمات",
+      selector: (row) =>
+        row.PatientCost ? numberWithCommas(row.PatientCost) : "",
+      sortable: true,
+      width: "200px",
+    },
+    {
+      name: "سهم بیمار ارتش",
+      selector: (row) =>
+        row.ArteshPatientCost ? numberWithCommas(row.ArteshPatientCost) : "",
+      sortable: true,
+      width: "250px",
+    },
     {
       name: "عملیات ها",
       selector: (row) => row._id,
@@ -37,7 +67,7 @@ const ServicesListTable = ({ data }) => {
           <Link
             href="#"
             className="btn btn-sm btn-outline-danger"
-            // onClick={() => deletePhysician(row._id)}
+            onClick={() => deleteService(row._id)}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="حذف"
@@ -51,7 +81,7 @@ const ServicesListTable = ({ data }) => {
           <Link
             href="#"
             className="btn btn-sm btn-outline-secondary btn-border-left"
-            // onClick={() => updatePhysician(row)}
+            onClick={() => updateService(row, row._id)}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="ویرایش"
@@ -80,6 +110,8 @@ const ServicesListTable = ({ data }) => {
             noHeader
             defaultSortField="id"
             defaultSortAsc={false}
+            pagination
+            paginationPerPage="20"
             highlightOnHover
             noDataComponent={
               <div style={{ padding: "24px", fontSize: "13px" }}>

@@ -1,18 +1,20 @@
 import FeatherIcon from "feather-icons-react";
 
-const AddServiceModal = ({ addService, isLoading }) => {
+const EditServiceModal = ({ data, editService, isLoading }) => {
   return (
     <>
       <div
         className="modal fade contentmodal"
-        id="addServiceModal"
+        id="editServiceModal"
         tabIndex="-1"
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered modal-xl">
           <div className="modal-content media-modal-content">
             <div className="modal-header media-modal-header">
-              <p className="mb-0 text-secondary font-14 fw-bold">سرویس جدید</p>
+              <p className="mb-0 text-secondary font-14 fw-bold">
+                ویرایش اطلاعات
+              </p>
               <button
                 type="button"
                 className="close-btn"
@@ -26,9 +28,9 @@ const AddServiceModal = ({ addService, isLoading }) => {
             </div>
 
             <div className="modal-body media-modal-body">
-              <form onSubmit={addService}>
-                <div className="row media-flex-col align-end">
-                  <div className="col">
+              <form onSubmit={editService}>
+                <div className="row media-flex-col">
+                  <div className="col col-lg-2">
                     <div className="form-group">
                       <label className="lblAbs font-12">
                         کد خدمت <span className="text-danger">*</span>
@@ -37,12 +39,14 @@ const AddServiceModal = ({ addService, isLoading }) => {
                         type="text"
                         className="form-control floating inputPadding rounded"
                         required
-                        name="addSrvId"
+                        name="editSrvID"
+                        key={data._id}
+                        defaultValue={data._id}
                       />
                     </div>
                   </div>
 
-                  <div className="col">
+                  <div className="col col-lg-6">
                     <div className="form-group">
                       <label className="lblAbs font-12">
                         نام خدمت <span className="text-danger">*</span>
@@ -51,23 +55,25 @@ const AddServiceModal = ({ addService, isLoading }) => {
                         type="text"
                         className="form-control floating inputPadding rounded"
                         required
-                        name="addServiceName"
+                        name="serviceName"
+                        defaultValue={data.Service}
+                        key={data.Service}
                       />
                     </div>
                   </div>
 
-                  <div className="col">
-                    <div className="form-group">
-                      <label className="lblAbs font-12">
-                        نام گروه <span className="text-danger">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control floating inputPadding rounded"
-                        required
-                        name="srvGroupName"
-                      />
-                    </div>
+                  <div className="col-lg-4 col">
+                    <label className="lblAbs font-12">
+                      نام گروه<span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control floating inputPadding rounded"
+                      required
+                      name="srvGroupName"
+                      defaultValue={data.CenterGroup}
+                      key={data.CenterGroup}
+                    />
                   </div>
                 </div>
 
@@ -79,28 +85,37 @@ const AddServiceModal = ({ addService, isLoading }) => {
                         type="text"
                         className="form-control floating inputPadding rounded"
                         name="total_K"
+                        defaultValue={data.Total_K}
+                        key={data.Total_K}
+                        readOnly
                       />
                     </div>
                   </div>
 
                   <div className="col">
                     <div className="form-group">
-                      <label className="lblAbs font-12">ضریب فنی K</label>
+                      <label className="lblAbs font-12">ضریب K فنی</label>
                       <input
                         type="text"
                         className="form-control floating inputPadding rounded"
                         name="tech_K"
+                        key={data.Technical_K}
+                        defaultValue={data.Technical_K}
+                        readOnly
                       />
                     </div>
                   </div>
 
                   <div className="col">
                     <div className="form-group">
-                      <label className="lblAbs font-12">ضریب حرفه ای K</label>
+                      <label className="lblAbs font-12">ضریب K حرفه ای</label>
                       <input
                         type="text"
                         className="form-control floating inputPadding rounded"
                         name="pro_K"
+                        key={data.Professional_K}
+                        defaultValue={data.Professional_K}
+                        readOnly
                       />
                     </div>
                   </div>
@@ -108,18 +123,20 @@ const AddServiceModal = ({ addService, isLoading }) => {
 
                 <div className="row media-flex-col">
                   <div className="col">
-                    <div className="form-group">
+                    <div className="form-group ">
                       <label className="lblAbs font-12">مبلغ K فنی-خصوصی</label>
                       <input
                         type="number"
                         className="form-control floating inputPadding rounded"
                         name="ptk_price"
-                        min="0"
+                        key={data.PrivateTechnicalK_Price}
+                        defaultValue={data.PrivateTechnicalK_Price}
                       />
                     </div>
                   </div>
+
                   <div className="col">
-                    <div className="form-group">
+                    <div className="form-group ">
                       <label className="lblAbs font-12">
                         مبلغ K حرفه ای-خصوصی
                       </label>
@@ -127,23 +144,27 @@ const AddServiceModal = ({ addService, isLoading }) => {
                         type="number"
                         className="form-control floating inputPadding rounded"
                         name="ppk_price"
-                        min="0"
+                        key={data.PrivateProfessionalK_Price}
+                        defaultValue={data.PrivateProfessionalK_Price}
                       />
                     </div>
                   </div>
+
                   <div className="col">
-                    <div className="form-group">
+                    <div className="form-group ">
                       <label className="lblAbs font-12">مبلغ K فنی-دولتی</label>
                       <input
                         type="number"
                         className="form-control floating inputPadding rounded"
                         name="gtk_price"
-                        min="0"
+                        key={data.GovernmentalTechnicalK_Price}
+                        defaultValue={data.GovernmentalTechnicalK_Price}
                       />
                     </div>
                   </div>
+
                   <div className="col">
-                    <div className="form-group">
+                    <div className="form-group ">
                       <label className="lblAbs font-12">
                         مبلغ K حرفه ای-دولتی{" "}
                       </label>
@@ -151,7 +172,8 @@ const AddServiceModal = ({ addService, isLoading }) => {
                         type="number"
                         className="form-control floating inputPadding rounded"
                         name="gpk_price"
-                        min="0"
+                        key={data.GovernmentalProfessionalK_Price}
+                        defaultValue={data.GovernmentalProfessionalK_Price}
                       />
                     </div>
                   </div>
@@ -168,7 +190,8 @@ const AddServiceModal = ({ addService, isLoading }) => {
                         className="form-control floating inputPadding rounded"
                         required
                         name="govTariff"
-                        min="0"
+                        key={data.GovernmentalTariff}
+                        defaultValue={data.GovernmentalTariff}
                       />
                     </div>
                   </div>
@@ -183,7 +206,8 @@ const AddServiceModal = ({ addService, isLoading }) => {
                         className="form-control floating inputPadding rounded"
                         required
                         name="privateTariff"
-                        min="0"
+                        key={data.PrivateTariff}
+                        defaultValue={data.PrivateTariff}
                       />
                     </div>
                   </div>
@@ -195,25 +219,26 @@ const AddServiceModal = ({ addService, isLoading }) => {
                         type="number"
                         className="form-control floating inputPadding rounded"
                         name="freeTariff"
-                        min="0"
+                        key={data.FreeTariff}
+                        defaultValue={data.FreeTariff}
                       />
                     </div>
                   </div>
                 </div>
 
+                {/*  */}
                 <div className="row media-flex-col">
                   <div className="col">
                     <div className="form-group">
                       <label className="lblAbs font-12">
                         سهم بیمار خدمات و تامین{" "}
-                        <span className="text-danger">*</span>
                       </label>
                       <input
                         type="number"
                         className="form-control floating inputPadding rounded"
                         name="patientCost"
-                        min="0"
-                        required
+                        key={data.PatientCost}
+                        defaultValue={data.PatientCost}
                       />
                     </div>
                   </div>
@@ -225,46 +250,50 @@ const AddServiceModal = ({ addService, isLoading }) => {
                         type="number"
                         className="form-control floating inputPadding rounded"
                         name="arteshPatientCost"
-                        min="0"
-                        // required
+                        key={data.ArteshPatientCost}
+                        defaultValue={data.ArteshPatientCost}
                       />
                     </div>
                   </div>
                 </div>
 
+                {/*  */}
                 <div className="row media-flex-col">
                   <div className="col">
-                    <div className="form-group">
+                    <div className="form-group ">
                       <label className="lblAbs font-12">سهم تامین</label>
                       <input
                         type="number"
                         className="form-control floating inputPadding rounded"
                         name="taminShare"
-                        min="0"
+                        key={data.ST}
+                        defaultValue={data.ST}
                       />
                     </div>
                   </div>
 
                   <div className="col">
-                    <div className="form-group">
+                    <div className="form-group ">
                       <label className="lblAbs font-12">سهم سلامت</label>
                       <input
                         type="number"
                         className="form-control floating inputPadding rounded"
                         name="salamatShare"
-                        min="0"
+                        key={data.SS}
+                        defaultValue={data.SS}
                       />
                     </div>
                   </div>
 
                   <div className="col">
-                    <div className="form-group">
+                    <div className="form-group ">
                       <label className="lblAbs font-12">سهم ارتش</label>
                       <input
                         type="number"
                         className="form-control floating inputPadding rounded"
                         name="arteshShare"
-                        min="0"
+                        key={data.SA}
+                        defaultValue={data.SA}
                       />
                     </div>
                   </div>
@@ -276,7 +305,7 @@ const AddServiceModal = ({ addService, isLoading }) => {
                       type="submit"
                       className="btn btn-primary btn-save rounded"
                     >
-                      ثبت
+                      ثبت تغییرات
                     </button>
                   ) : (
                     <button
@@ -300,4 +329,4 @@ const AddServiceModal = ({ addService, isLoading }) => {
     </>
   );
 };
-export default AddServiceModal;
+export default EditServiceModal;
