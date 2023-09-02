@@ -19,13 +19,13 @@ const CentersListTable = ({
     data[index].Number = index + 1;
   });
 
-  // console.log("data", data);
+  console.log({ state });
   const columns = [
     {
       name: "ردیف",
       selector: (row) => row.Number,
       sortable: true,
-      width: "80px",
+      width: "100px",
     },
     {
       name: "نام مرکز",
@@ -43,7 +43,7 @@ const CentersListTable = ({
           alt=""
         />
       ),
-      width: "160px",
+      width: "250px",
     },
     {
       name: "عملیات ها",
@@ -205,7 +205,7 @@ const CentersListTable = ({
           </Link>
         </div>
       ),
-      width: "500px",
+      width: "150px",
     },
   ];
 
@@ -224,7 +224,7 @@ const CentersListTable = ({
             defaultSortAsc={false}
             pagination
             highlightOnHover
-            paginationDefaultPage={state.selectedPage}
+            paginationDefaultPage={state}
             onChangePage={ChangeDtPage}
             paginationPerPage="20"
             noDataComponent={

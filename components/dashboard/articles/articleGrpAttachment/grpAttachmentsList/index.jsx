@@ -100,6 +100,11 @@ const GrpAttachmentList = ({
                       highlightOnHover
                       defaultSortAsc={false}
                       customStyles={tableCustomStyles}
+                      noDataComponent={
+                        <div style={{ padding: "24px", fontSize: "13px" }}>
+                          موردی برای نمایش وجود ندارد.
+                        </div>
+                      }
                     />
                   </DataTableExtensions>
                 </div>

@@ -40,13 +40,14 @@ const CentersManagement = () => {
 
   // -------------------
   // let selectedPage = Router.query.page;
-  const state = { selectedPage: Router.query.page };
+  const selectedPage = Router.query.page;
+  console.log({ selectedPage })
   const ChangeDtPage = (e) => {
     const url = new URL(location);
     url.searchParams.set("page", e);
-    console.log(url);
-    history.pushState(state, "", url);
-    console.log(e);
+    // console.log(url);
+    history.pushState(selectedPage, "", url);
+    // console.log(e);
   };
 
   //get all centers
@@ -441,7 +442,7 @@ const CentersManagement = () => {
                     updateCenterInfo={updateCenterInfo}
                     openBusinessHoursModal={openBusinessHoursModal}
                     openAboutUsModal={openAboutUsModal}
-                    state={state}
+                    state={selectedPage}
                     ChangeDtPage={ChangeDtPage}
                   />
                 </div>

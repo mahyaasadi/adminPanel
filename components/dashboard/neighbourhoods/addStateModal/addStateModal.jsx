@@ -46,7 +46,7 @@ const AddStateModal = ({
           </div>
           <div className="modal-body">
             <form onSubmit={addNewState} id="frmAddPhysician">
-              <div className="row">
+              <div className="row md-flex-col">
                 <div className="form-group col">
                   <label className="lblAbs font-12">
                     نام محله <span className="text-danger">*</span>
@@ -77,7 +77,7 @@ const AddStateModal = ({
                 </div>
               </div>
 
-              <div className="row">
+              <div className="row md-flex-col">
                 <div className="col media-w-100">
                   <label className="lblDrugIns font-12">
                     استان <span className="text-danger">*</span>

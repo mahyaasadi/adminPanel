@@ -86,7 +86,7 @@ const ArticlesListTable = ({
                   >
                     <FeatherIcon
                       style={{ width: "15px", height: "15px" }}
-                      icon="file-text"
+                      icon="folder-plus"
                     />
                   </button>
                   <button
