@@ -700,6 +700,10 @@ label {
   margin-bottom: 10px;
 }
 
+.flex-nowrap {
+  flex-wrap: nowrap !important;
+}
+
 .settings-form {
   margin-top: 20px;
 }

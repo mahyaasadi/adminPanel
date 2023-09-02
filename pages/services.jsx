@@ -130,15 +130,15 @@ const Services = () => {
     );
   };
 
-  const editService = (e) => {
+  const editService = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
-    // let serviceID = formProps.editSrvID;
+    let serviceID = formProps.editSrvID;
 
-    let url = `ServicesInfo/edit/${ActiveServiceID}`;
+    let url = `ServicesInfo/edit/${serviceID}`;
     let data = {
       Modality: ActiveSrvModalityID,
       ServiceGroup: ActiveSrvModalityName,
@@ -162,11 +162,9 @@ const Services = () => {
       SA: formProps.arteshShare,
     };
 
-    console.log(formProps);
-
     console.log("data", data);
 
-    axiosClient
+    await axiosClient
       .put(url, data)
       .then((response) => {
         console.log(response.data);
@@ -182,8 +180,6 @@ const Services = () => {
   };
 
   const updateItem = (id, newArr) => {
-    console.log("id", id);
-    console.log(servicesData);
     let index = servicesData.findIndex((x) => x._id === id);
     let g = servicesData[index];
     g = newArr;

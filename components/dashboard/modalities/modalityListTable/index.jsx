@@ -40,7 +40,7 @@ const ModalityListTable = ({ data, updateModality }) => {
           />
         </div>
       ),
-      width: "310px",
+      width: "400px",
     },
     {
       name: "عملیات ها",

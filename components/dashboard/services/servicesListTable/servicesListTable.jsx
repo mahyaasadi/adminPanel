@@ -55,7 +55,7 @@ const ServicesListTable = ({ data, deleteService, updateService }) => {
       selector: (row) =>
         row.ArteshPatientCost ? numberWithCommas(row.ArteshPatientCost) : "",
       sortable: true,
-      width: "250px",
+      width: "220px",
     },
     {
       name: "عملیات ها",
@@ -64,8 +64,7 @@ const ServicesListTable = ({ data, deleteService, updateService }) => {
 
       cell: (row) => (
         <div className="actions d-flex gap-2">
-          <Link
-            href="#"
+          <button
             className="btn btn-sm btn-outline-danger"
             onClick={() => deleteService(row._id)}
             data-bs-toggle="tooltip"
@@ -76,10 +75,9 @@ const ServicesListTable = ({ data, deleteService, updateService }) => {
               style={{ width: "16px", height: "16px" }}
               icon="trash-2"
             />
-          </Link>
+          </button>
 
-          <Link
-            href="#"
+          <button
             className="btn btn-sm btn-outline-secondary btn-border-left"
             onClick={() => updateService(row, row._id)}
             data-bs-toggle="tooltip"
@@ -90,7 +88,7 @@ const ServicesListTable = ({ data, deleteService, updateService }) => {
               style={{ width: "16px", height: "16px" }}
               icon="edit-3"
             />
-          </Link>
+          </button>
         </div>
       ),
       width: "200px",

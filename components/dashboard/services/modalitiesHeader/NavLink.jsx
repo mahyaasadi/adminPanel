@@ -1,18 +1,28 @@
-import { useEffect, useMemo } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
+// import { useRouter } from "next/router";
+// import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
-const ModalitiesNavLink = ({ data, getDepServices, activeClass }) => {
+const NavLink = ({ data, getDepServices, activeClass }) => {
+  // const router = useRouter();
+  
   // useEffect(() => {
   //   if (activeClass == "active") {
   //     getDepServices(data._id, data.PerFullName);
   //   }
   // }, []);
 
+
   return (
     <>
       <li className="nav-item">
+        {/* <Link href={data?.modality}> */}
         <a
+          // className={`nav-link ServiceNav ${
+          //   router.usePathname === data.modality ? "active" : " "
+          // }`}
           className={"nav-link ServiceNav " + activeClass}
           href={"#Tab" + data._id}
           data-bs-toggle="tab"
@@ -20,9 +30,10 @@ const ModalitiesNavLink = ({ data, getDepServices, activeClass }) => {
         >
           {data.PerFullName}
         </a>
+        {/* </Link> */}
       </li>
     </>
   );
 };
 
-export default ModalitiesNavLink;
+export default NavLink;

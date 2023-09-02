@@ -42,8 +42,11 @@ const EditServiceModal = ({ data, editService, isLoading }) => {
                         name="editSrvID"
                         key={data._id}
                         defaultValue={data._id}
+                        readOnly
                       />
                     </div>
+
+                    <input type="hidden" value={data._id} name="currentSrvID" />
                   </div>
 
                   <div className="col col-lg-6">
@@ -87,7 +90,7 @@ const EditServiceModal = ({ data, editService, isLoading }) => {
                         name="total_K"
                         defaultValue={data.Total_K}
                         key={data.Total_K}
-                        readOnly
+                        // readOnly
                       />
                     </div>
                   </div>
@@ -101,7 +104,7 @@ const EditServiceModal = ({ data, editService, isLoading }) => {
                         name="tech_K"
                         key={data.Technical_K}
                         defaultValue={data.Technical_K}
-                        readOnly
+                        // readOnly
                       />
                     </div>
                   </div>
@@ -115,7 +118,7 @@ const EditServiceModal = ({ data, editService, isLoading }) => {
                         name="pro_K"
                         key={data.Professional_K}
                         defaultValue={data.Professional_K}
-                        readOnly
+                        // readOnly
                       />
                     </div>
                   </div>

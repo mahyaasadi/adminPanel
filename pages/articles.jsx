@@ -23,6 +23,8 @@ import AddTagToArticleModal from "components/dashboard/articles/articleTagAttach
 import FAQListTableModal from "components/dashboard/articles/FAQ/faqListTableModal";
 import AddFAQModal from "components/dashboard/articles/FAQ/addFaqModal/addFaqModal";
 import EditFAQModal from "components/dashboard/articles/FAQ/editFaqModal/editFaqModal";
+import RelatedArticlesList from "components/dashboard/articles/relatedArticles/relatedArticlesList";
+import AddRelatedArticleModal from "components/dashboard/articles/relatedArticles/addRelatedArticleModal";
 
 let ActiveArticleID,
   ActiveSubArticleID,
@@ -54,6 +56,10 @@ const Articles = () => {
   const [articleFAQData, setArticleFAQData] = useState([]);
   const [editedFAQData, setEditedFAQData] = useState([]);
 
+  // -------------
+  const [relatedArticlesData, setRelatedArticlesData] = useState([]);
+  const [relatedArticlesOptions, setRelatedArticlesOptions] = useState([]);
+
   // Get all articles
   const getAllArticles = () => {
     let url = "/Article/getAll";
@@ -62,9 +68,20 @@ const Articles = () => {
     axiosClient
       .get(url)
       .then((response) => {
-        // console.log(response.data);
+        console.log("articles", response.data);
         setIsLoading(false);
         setArticlesData(response.data);
+
+        let selectRelatedArticles = [];
+        for (let i = 0; i < response.data.length; i++) {
+          const item = response.data[i];
+          let obj = {
+            value: item._id,
+            label: item.Title,
+          };
+          selectRelatedArticles.push(obj);
+        }
+        setRelatedArticlesOptions(selectRelatedArticles);
       })
       .catch((error) => {
         console.log(error);
@@ -721,7 +738,6 @@ const Articles = () => {
   };
 
   // ------ tags attachment -------
-
   const openTagsAttachmentModal = (articleTitle, id, TagsData) => {
     $("#tagsAttachmentModal").modal("show");
     ActiveArticleID = id;
@@ -783,7 +799,7 @@ const Articles = () => {
 
         response.data.msg === "گروه تکراری"
           ? ErrorAlert("خطا", "گروه اضافه شده تکراری می باشد!")
-          : SuccessAlert("موفق", "افزودن گروه به مقاله با موفقیت انجام گردید!");
+          : SuccessAlert("موفق", "افزودن تگ به مقاله با موفقیت انجام گردید!");
 
         $("#attachTagModal").modal("hide");
         $("#tagsAttachmentModal").modal("hide");
@@ -952,6 +968,84 @@ const Articles = () => {
       ]);
   };
 
+  // ------ related articles -------
+  const openRelatedArticlesModal = (
+    articleTitle,
+    articleId,
+    relatedArticles
+  ) => {
+    $("#relatedArticlesModal").modal("show");
+    ActiveArticleTitle = articleTitle;
+    ActiveArticleID = articleId;
+    setRelatedArticlesData(relatedArticles);
+  };
+
+  let selectedRelatedArticle = "";
+  const FUSelectRelatedArticle = (value) => {
+    selectedRelatedArticle = value;
+  };
+
+  // add related article
+  const addRelatedArticle = (e) => {
+    e.preventDefault();
+
+    let url = `Article/addRelated/${ActiveArticleID}`;
+    let data = {
+      RelatedID: selectedRelatedArticle,
+    };
+
+    setIsLoading(true);
+
+    console.log("data", data);
+
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data);
+        getAllArticles();
+
+        $("#attachRelatedArticle").modal("hide");
+        $("#relatedArticlesModal").modal("hide");
+        SuccessAlert("موفق", "افزودن مقاله مرتبط با موفقیت انجام گردید!");
+        e.target.reset();
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+        ErrorAlert("خطا", "افزودن مقاله مرتبط با خطا مواجه گردید!");
+      });
+  };
+
+  // remove related article
+  const removeRelatedArticle = async (id) => {
+    let result = await QuestionAlert(
+      "حذف مقاله مرتبط !",
+      "آیا از حذف مقاله مرتبط اطمینان دارید؟"
+    );
+
+    setIsLoading(true);
+
+    if (result) {
+      let url = `/Article/deleteRelated/${ActiveArticleID}/${id}`;
+
+      await axiosClient
+        .delete(url)
+        .then((response) => {
+          setRelatedArticlesData(
+            relatedArticlesData.filter((a) => a._id !== id)
+          );
+
+          getAllArticles();
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
   useEffect(() => {
     getAllArticles();
     getAllArticleGroups();
@@ -1017,6 +1111,7 @@ const Articles = () => {
                     openGrpAttachmentModal={openGrpAttachmentModal}
                     openTagsAttachmentModal={openTagsAttachmentModal}
                     openFAQModal={openFAQModal}
+                    openRelatedArticlesModal={openRelatedArticlesModal}
                   />
                 </div>
 
@@ -1100,7 +1195,7 @@ const Articles = () => {
           FUSelectArticleTag={FUSelectArticleTag}
           addTagToArticle={addTagToArticle}
         />
-        {/*  */}
+        {/* FAQ */}
         <FAQListTableModal
           data={articleFAQData}
           articleTitle={ActiveArticleTitle}
@@ -1109,10 +1204,21 @@ const Articles = () => {
           ActiveArticleID={ActiveArticleID}
           updateFAQ={updateFAQ}
         />
-
         <AddFAQModal addFAQ={addFAQ} />
-
         <EditFAQModal data={editedFAQData} editFAQ={editFAQ} />
+        {/* related articles */}
+        <RelatedArticlesList
+          data={relatedArticlesData}
+          articleTitle={ActiveArticleTitle}
+          ActiveArticleID={ActiveArticleID}
+          removeRelatedArticle={removeRelatedArticle}
+        />
+
+        <AddRelatedArticleModal
+          relatedArticleOptions={relatedArticlesOptions}
+          FUSelectRelatedArticle={FUSelectRelatedArticle}
+          addRelatedArticle={addRelatedArticle}
+        />
       </div>
     </>
   );

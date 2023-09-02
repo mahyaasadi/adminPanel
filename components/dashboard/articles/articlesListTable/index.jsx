@@ -10,12 +10,13 @@ const ArticlesListTable = ({
   openGrpAttachmentModal,
   openTagsAttachmentModal,
   openFAQModal,
+  openRelatedArticlesModal,
 }) => {
   return (
     <>
       <div className="row p-4">
         {articlesData.map((articleData, index) => (
-          <div className="col-sm-6 col-md-4 col-xxl-3 articleCard" key={index}>
+          <div className="col-sm-6 col-lg-4 col-xxl-3 articleCard" key={index}>
             <div className="card">
               <div className="card-body">
                 <div className="articleImgContainer">
@@ -32,11 +33,12 @@ const ArticlesListTable = ({
 
                 {/* cardDetails */}
                 <div className="px-4">
-                  <p className="py-1 font-16 mt-2 fw-bold">
-                    {articleData.EngTitle}
+                  <p className="py-1 font-15 mt-2 fw-bold">
+                    {articleData.Title.substr(0, 40) + " ..."}
                   </p>
                   <div className="pb-2 font-12 text-secondary">
-                    عنوان فارسی : {articleData.Title.substr(0, 10) + " ..."}
+                    عنوان انگلیسی :{" "}
+                    {articleData.EngTitle.substr(0, 20) + " ..."}
                   </div>
                   <div className="pb-2 font-12 text-secondary">
                     نویسنده : {articleData.Creator.substr(0, 10) + " ..."}
@@ -124,6 +126,27 @@ const ArticlesListTable = ({
                   </button>
 
                   <button
+                    href="#"
+                    type="button"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="مقاله های مرتبط"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12"
+                    onClick={() =>
+                      openRelatedArticlesModal(
+                        articleData.EngTitle,
+                        articleData._id,
+                        articleData.RelatedArticles
+                      )
+                    }
+                  >
+                    <FeatherIcon
+                      style={{ width: "16px", height: "16px" }}
+                      icon="file-plus"
+                    />
+                  </button>
+
+                  <button
                     type="button"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
@@ -170,12 +193,9 @@ const ArticlesListTable = ({
                     />
                   </button>
                 </div>
-                {/* <hr />
-                <div className="d-flex gap-1 justify-flex-end"> */}
               </div>
             </div>
           </div>
-          // </div>
         ))}
       </div>
     </>
