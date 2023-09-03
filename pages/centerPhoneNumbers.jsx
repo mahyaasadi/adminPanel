@@ -8,8 +8,8 @@ import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import centerPhoneTypeDataClass from "class/centerPhoneTypeDataClass.js";
 import CenterPhoneNumbersList from "components/dashboard/centers/centerPhoneNumbers/centerPhoneNumbersList";
-import AddPhoneNumberModal from "components/dashboard/centers/centerPhoneNumbers/addPhoneNumberModal/addPhoneNumberModal";
-import EditPhoneNumberModal from "components/dashboard/centers/centerPhoneNumbers/editPhoneNumberModal/editPhoneNumberModal";
+import AddPhoneNumberModal from "components/dashboard/centers/centerPhoneNumbers/addPhoneNumberModal";
+import EditPhoneNumberModal from "components/dashboard/centers/centerPhoneNumbers/editPhoneNumberModal";
 
 let CenterID = null;
 
@@ -46,16 +46,17 @@ const Insurance = () => {
 
   const getCenterAboutUs = () => {
     CenterID = Router.query.id;
-    let url = `CenterProfile/getAboutUs/${CenterID}`
+    let url = `CenterProfile/getAboutUs/${CenterID}`;
 
     if (CenterID) {
-      axiosClient.get(url)
+      axiosClient
+        .get(url)
         .then((response) => {
           console.log(response.data);
         })
         .catch((err) => console.log(err));
     }
-  }
+  };
 
   let selectedPhoneType = "";
   const FUSelectPhoneType = (phoneType) => {

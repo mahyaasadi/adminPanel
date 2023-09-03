@@ -12,14 +12,12 @@ const CentersListTable = ({
   openBusinessHoursModal,
   openAboutUsModal,
   selectedPage,
-  state,
-  ChangeDtPage,
+  ChangeTablePage,
 }) => {
   data?.map((center, index) => {
     data[index].Number = index + 1;
   });
 
-  console.log({ state });
   const columns = [
     {
       name: "ردیف",
@@ -188,7 +186,7 @@ const CentersListTable = ({
           <Link
             className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
             href={{
-              pathname: "/doctorsList",
+              pathname: "/doctors",
               query: { id: row._id },
             }}
           >
@@ -224,9 +222,10 @@ const CentersListTable = ({
             defaultSortAsc={false}
             pagination
             highlightOnHover
-            paginationDefaultPage={state}
-            onChangePage={ChangeDtPage}
+            paginationDefaultPage={selectedPage}
+            onChangePage={(e) => ChangeTablePage(e)}
             paginationPerPage="20"
+            paginationRowsPerPageOptions={[20, 30, 40, 50]}
             noDataComponent={
               <div style={{ padding: "24px", fontSize: "13px" }}>
                 موردی برای نمایش وجود ندارد.

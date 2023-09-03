@@ -4,6 +4,7 @@
     "downlevelIteration": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
+    "checkJs": true,
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
@@ -31,3 +32,4 @@
     ".eslintrc"
   ]
 }
+

@@ -6,12 +6,12 @@ import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
-import MenuListTable from "components/dashboard/menus/menuListTable/menuListTable";
-import AddToMenuModal from "components/dashboard/menus/addToMenuModal/addToMenuModal";
-import SubMenuModal from "components/dashboard/menus/subMenu/subMenuModal/subMenuModal";
-import AddSubMenuModal from "components/dashboard/menus/subMenu/addSubMenuModal/addSubMenuModal";
-import EditMenuModal from "components/dashboard/menus/editMenuModal/editMenuModal";
-import EditSubMenuModal from "components/dashboard/menus/subMenu/editSubMenuModal/editSubMenuModal";
+import MenuListTable from "components/dashboard/menus/menuListTable";
+import AddToMenuModal from "components/dashboard/menus/addToMenuModal";
+import SubMenuModal from "components/dashboard/menus/subMenu/subMenuModal";
+import AddSubMenuModal from "components/dashboard/menus/subMenu/addSubMenuModal";
+import EditMenuModal from "components/dashboard/menus/editMenuModal";
+import EditSubMenuModal from "components/dashboard/menus/subMenu/editSubMenuModal";
 
 let ActiveMenuID = null;
 let ActiveMenuName = null;

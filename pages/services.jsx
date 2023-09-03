@@ -5,10 +5,10 @@ import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
-import ServicesListTable from "components/dashboard/services/servicesListTable/servicesListTable";
 import ModalitiesHeader from "components/dashboard/services/modalitiesHeader/modalitiesHeader";
-import AddServiceModal from "components/dashboard/services/addServiceModal/addServiceModal";
-import EditServiceModal from "components/dashboard/services/editServiceModal/editServiceModal";
+import ServicesListTable from "components/dashboard/services/servicesListTable";
+import AddServiceModal from "components/dashboard/services/addServiceModal";
+import EditServiceModal from "components/dashboard/services/editServiceModal";
 
 let ActiveSrvModalityID,
   ActiveSrvModalityName,

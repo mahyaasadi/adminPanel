@@ -7,24 +7,25 @@ import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import ArticlesListTable from "components/dashboard/articles/articlesListTable";
-import ArticleSearch from "components/dashboard/articles/articleSearch/articleSearch";
-import AddArticleModal from "components/dashboard/articles/addArticleModal/addArticleModal";
-import EditArticleModal from "components/dashboard/articles/editArticleModal/editArticleModal";
-import SubArticlesModal from "components/dashboard/articles/subArticles/subArticleModal/subArticleModal";
-import AddSubArticleModal from "components/dashboard/articles/subArticles/addSubArticleModal/addSubArticleModal";
-import EditSubArticleModal from "components/dashboard/articles/subArticles/editSubArticleModal/editSubArticleModal";
-import ArticleVideosModal from "components/dashboard/articles/articleVideos/articleVideosModal/articleVideosModal";
-import AddArticleVideoModal from "components/dashboard/articles/articleVideos/addArticleVideoModal/addArticleVideoModal";
-import EditArticleVideoModal from "components/dashboard/articles/articleVideos/editArticleVideoModal/editArticleVideoModal";
+import ArticleSearch from "components/dashboard/articles/articleSearch";
+import AddArticleModal from "components/dashboard/articles/addArticleModal";
+import EditArticleModal from "components/dashboard/articles/editArticleModal";
+import SubArticlesModal from "components/dashboard/articles/subArticles/subArticleModal";
+import AddSubArticleModal from "components/dashboard/articles/subArticles/addSubArticleModal";
+import EditSubArticleModal from "components/dashboard/articles/subArticles/editSubArticleModal";
+import ArticleVideosModal from "components/dashboard/articles/articleVideos/articleVideosModal";
+import AddArticleVideoModal from "components/dashboard/articles/articleVideos/addArticleVideoModal";
+import EditArticleVideoModal from "components/dashboard/articles/articleVideos/editArticleVideoModal";
 import GrpAttachmentList from "components/dashboard/articles/articleGrpAttachment/grpAttachmentsList";
 import AddGroupToArticleModal from "components/dashboard/articles/articleGrpAttachment/addGrpToArticleModal";
 import TagAttachmentList from "components/dashboard/articles/articleTagAttachment/tagAttachmentsList";
 import AddTagToArticleModal from "components/dashboard/articles/articleTagAttachment/addTagToArticleModal";
 import FAQListTableModal from "components/dashboard/articles/FAQ/faqListTableModal";
-import AddFAQModal from "components/dashboard/articles/FAQ/addFaqModal/addFaqModal";
-import EditFAQModal from "components/dashboard/articles/FAQ/editFaqModal/editFaqModal";
-import RelatedArticlesList from "components/dashboard/articles/relatedArticles/relatedArticlesList";
+import AddFAQModal from "components/dashboard/articles/FAQ/addFaqModal";
+import EditFAQModal from "components/dashboard/articles/FAQ/editFaqModal";
+import RelatedArticlesList from "components/dashboard/articles/relatedArticles/relatedArticleList";
 import AddRelatedArticleModal from "components/dashboard/articles/relatedArticles/addRelatedArticleModal";
+import SubArticleTextEditor from "components/dashboard/articles/subArticles/subArticleTextEditor";
 
 let ActiveArticleID,
   ActiveSubArticleID,
@@ -59,6 +60,9 @@ const Articles = () => {
   // -------------
   const [relatedArticlesData, setRelatedArticlesData] = useState([]);
   const [relatedArticlesOptions, setRelatedArticlesOptions] = useState([]);
+
+  // -------------
+  // const []
 
   // Get all articles
   const getAllArticles = () => {
@@ -1046,6 +1050,12 @@ const Articles = () => {
     }
   };
 
+  // subArticle Text Editor
+  const openSubTextEditor = (data) => {
+    $("#subTextEditorModal").modal("show");
+    setEditSubArticleData(data);
+  };
+
   useEffect(() => {
     getAllArticles();
     getAllArticleGroups();
@@ -1120,6 +1130,7 @@ const Articles = () => {
             </div>
           </div>
         )}
+
         <AddArticleModal
           addArticle={addArticle}
           setArticleDateInDB={setArticleDateInDB}
@@ -1144,6 +1155,7 @@ const Articles = () => {
           deleteSubArticle={deleteSubArticle}
           updateSubDataOrder={updateSubDataOrder}
           isLoading={isLoading}
+          openSubTextEditor={openSubTextEditor}
         />
         <AddSubArticleModal
           addSubArticle={addSubArticle}
@@ -1219,6 +1231,8 @@ const Articles = () => {
           FUSelectRelatedArticle={FUSelectRelatedArticle}
           addRelatedArticle={addRelatedArticle}
         />
+        {/* sub text editor */}
+        <SubArticleTextEditor data={editSubArticleData} />
       </div>
     </>
   );

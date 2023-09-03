@@ -7,11 +7,10 @@ import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
 import { WarningAlert, QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
-import ImagesListTable from "components/dashboard/imagesGallery/imagesListTable/imagesListTable";
-import UploadImageModal from "components/dashboard/imagesGallery/uploadImageModal/uploadImageModal";
+import ImagesListTable from "components/dashboard/imagesGallery/imagesListTable";
+import UploadImageModal from "components/dashboard/imagesGallery/uploadImageModal";
 import { ErrorAlert } from "class/AlertManage.js";
 
-// let CenterID = Cookies.get("CenterID");
 let CenterID = null;
 
 const ImagesGallery = () => {

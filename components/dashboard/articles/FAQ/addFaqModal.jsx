@@ -29,7 +29,7 @@ const AddFAQModal = ({ addFAQ }) => {
             <form onSubmit={addFAQ}>
               <div className="form-group">
                 <label className="lblAbs font-12">
-                  سوال <span className="text-danger">*</span>
+                  پرسش <span className="text-danger">*</span>
                 </label>
                 <div className="col p-0">
                   <input

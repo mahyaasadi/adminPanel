@@ -7,11 +7,10 @@ import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
-import SpecialDiseasesListTable from "components/dashboard/specialDiseases/specialDiseasesListTable/specialDiseasesListTable";
-import AddSpecialDiseaseModal from "components/dashboard/specialDiseases/addSpecialDiseaseModal/addSpecialDiseaseModal";
-import EditSpecialDiseaseModal from "components/dashboard/specialDiseases/editSpecialDiseaseModal/editSpecialDiseaseModal";
+import SpecialDiseasesListTable from "components/dashboard/specialDiseases/specialDiseasesListTable";
+import AddSpecialDiseaseModal from "components/dashboard/specialDiseases/addSpecialDiseaseModal";
+import EditSpecialDiseaseModal from "components/dashboard/specialDiseases/editSpecialDiseaseModal";
 
-// let CenterID = Cookies.get("CenterID");
 let CenterID = null;
 
 const SpecialDiseases = () => {

@@ -11,6 +11,7 @@ const SubArticlesModal = ({
   updateSubArticle,
   updateSubDataOrder,
   isLoading,
+  openSubTextEditor,
 }) => {
   console.log("subData", data);
 
@@ -178,9 +179,7 @@ const SubArticlesModal = ({
                           <button
                             button="button"
                             className="btn btn-sm btn-outline-secondary btn-border-left"
-                            // onClick={() =>
-                            //   updateSubArticle(subArticle, subArticle._id)
-                            // }
+                            onClick={() => openSubTextEditor(subArticle)}
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
                             title="ویرایشگر متن"

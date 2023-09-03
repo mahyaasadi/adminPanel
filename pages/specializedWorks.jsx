@@ -4,14 +4,12 @@ import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { useRouter } from "next/router";
-// import Cookies from "js-cookie";
 import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import SpecializedWorksListTable from "components/dashboard/specializedWorks/specializedWorksListTable";
-import AddSpeWorkModal from "components/dashboard/specializedWorks/addspeWorkModal/addSpeWorkModal";
-import EditSpeWorkModal from "components/dashboard/specializedWorks/editSpeWorkModal/editSpeWorkModal";
+import AddSpeWorkModal from "components/dashboard/specializedWorks/addspeWorkModal";
+import EditSpeWorkModal from "components/dashboard/specializedWorks/editSpeWorkModal";
 
-// let CenterID = Cookies.get("CenterID");
 let CenterID = null;
 
 const SpecializedWorks = () => {
@@ -20,20 +18,6 @@ const SpecializedWorks = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [speWorks, setSpeWorks] = useState([]);
   const [editSpeWork, setEditSpeWork] = useState({});
-  // const [name, setName] = useState("");
-  // const [title, setTitle] = useState("");
-  // const [engName, setEngName] = useState("");
-
-  // const handleNameInput = (e) => setName(e.target.value);
-  // const handleTitleInput = (e) => setTitle(e.target.value);
-  // const handleEngNameInput = (e) => setEngName(e.target.value);
-
-  //reset form inputs
-  // const reset = () => {
-  //   setName("");
-  //   setTitle("");
-  //   setEngName("");
-  // };
 
   //get specializedWorks list
   const getSpecializedWorks = () => {
@@ -54,15 +38,6 @@ const SpecializedWorks = () => {
         });
     }
   };
-
-  useEffect(() => {
-    try {
-      getSpecializedWorks();
-    } catch (error) {
-      setIsLoading(true);
-      console.log(error);
-    }
-  }, []);
 
   // Add SpeWork
   const addSpeWork = (e) => {

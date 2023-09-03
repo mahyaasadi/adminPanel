@@ -8,21 +8,21 @@
   //   }
   // },
   // "parser": "@typescript-eslint/parser",
-  // "parserOptions": {
-  //   "project": "jsconfig.json",
-  //   "jsconfigRootDir": "./",
-  //   "ecmaFeatures": {
-  //     "jsx": true
-  //   },
-  //   "ecmaVersion": 12
-  // },
+  "parserOptions": {
+    "project": "jsconfig.json",
+    "jsconfigRootDir": "./",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+    //   "ecmaVersion": 12
+  },
   // "plugins": ["react", "@typescript-eslint", "import"],
-  // "env": {
-  //   "browser": true,
-  //   "commonjs": true,
-  //   "es2021": true,
-  //   "jest": true
-  // },
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true,
+    "jest": true
+  },
   "extends": ["plugin:@next/next/recommended", "next/core-web-vitals"]
   // "rules": {
   //   "import/extensions": [
@@ -41,7 +41,7 @@
   //       "extensions": [".js", ".jsx", ".ts", ".tsx"]
   //     }
   //   ],
-  //   "no-use-before-define": "off",
+  // "no-use-before-define": "off",
   //   "@typescript-eslint/no-use-before-define": ["error"],
   //   "camelcase": "off",
   //   "array-callback-return": "off",
@@ -65,3 +65,4 @@
   //   "@typescript-eslint/unbound-method": "off"
   // }
 }
+

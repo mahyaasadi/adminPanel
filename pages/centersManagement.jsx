@@ -2,25 +2,25 @@
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import FeatherIcon from "feather-icons-react";
+import { useRouter } from "next/router";
 import { axiosClient } from "class/axiosConfig.js";
+import FeatherIcon from "feather-icons-react";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
-import CenterSearch from "components/dashboard/centers/centerSearch/centerSearch";
-import CentersListTable from "components/dashboard/centers/centersListTable/centersListTable";
+import CenterSearch from "components/dashboard/centers/centerSearch";
+import CentersListTable from "components/dashboard/centers/centersListTable";
 import AddCenterModal from "components/dashboard/centers/addCenterModal/addCenterModal";
 import EditCenterModal from "components/dashboard/centers/editCenterModal/editCenterModal";
 import BusinessHoursModal from "components/dashboard/centers/centerBusinessHours/businessHoursModal";
 import EditBusinessHourModal from "components/dashboard/centers/centerBusinessHours/editBusinessHoursModal";
 import CenterAboutUsModal from "components/dashboard/centers/aboutUs/centerAboutUsModal";
-import EditAboutUsModal from "components/dashboard/centers/aboutUs/editCenterAboutUs/editAboutUsModal";
-import { useRouter } from "next/router";
+import EditAboutUsModal from "components/dashboard/centers/aboutUs/editAboutUsModal";
 
 let ActiveCenterID,
   ActiveCenterName = null;
 
 const CentersManagement = () => {
-  const Router = useRouter();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [centersData, setCentersData] = useState([]);
   const [provinceOptionsList, setProvinceOptionsList] = useState([]);
@@ -39,15 +39,18 @@ const CentersManagement = () => {
   const [centerAboutUsData, setCenterAboutUsData] = useState([]);
 
   // -------------------
-  // let selectedPage = Router.query.page;
-  const selectedPage = Router.query.page;
-  console.log({ selectedPage })
-  const ChangeDtPage = (e) => {
+
+  // let selectedPage = router.query.page;
+  const [selectedPage, setSelectedPage] = useState(null);
+
+  const ChangeTablePage = (e) => {
     const url = new URL(location);
     url.searchParams.set("page", e);
-    // console.log(url);
+    // console.log({ url });
     history.pushState(selectedPage, "", url);
-    // console.log(e);
+    // // setSelectedPage(e);
+    // console.log({ selectedPage });
+    // console.log({ e });
   };
 
   //get all centers
@@ -386,6 +389,13 @@ const CentersManagement = () => {
     getAllProvinces();
   }, []);
 
+  useEffect(() => {
+    if (router.isReady) {
+      setSelectedPage(router.query.page);
+      console.log({ selectedPage });
+    }
+  }, [router.isReady]);
+
   return (
     <>
       <Head>
@@ -442,8 +452,8 @@ const CentersManagement = () => {
                     updateCenterInfo={updateCenterInfo}
                     openBusinessHoursModal={openBusinessHoursModal}
                     openAboutUsModal={openAboutUsModal}
-                    state={selectedPage}
-                    ChangeDtPage={ChangeDtPage}
+                    selectedPage={selectedPage}
+                    ChangeTablePage={ChangeTablePage}
                   />
                 </div>
 

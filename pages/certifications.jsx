@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 import { axiosClient } from "class/axiosConfig.js";
 import FeatherIcon from "feather-icons-react";
 import Loading from "components/commonComponents/loading/loading";
-import CertificationsListTable from "/components/dashboard/certifications/certificationsListTable/certificationsListTable";
-import AddCertificateModal from "components/dashboard/certifications/addCertificateModal/addCertificateModal";
-import EditCertificateModal from "components/dashboard/certifications/editCertificateModal/editCertificateModal";
+import CertificationsListTable from "/components/dashboard/certifications/certificationsListTable";
+import AddCertificateModal from "components/dashboard/certifications/addCertificateModal";
+import EditCertificateModal from "components/dashboard/certifications/editCertificateModal";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 
 // let CenterID = Cookies.get("CenterID");
@@ -110,8 +110,7 @@ const Certifications = () => {
         .catch((error) => {
           console.log(error);
           setIsLoading(false);
-        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
-
+          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
         });
     }
   };

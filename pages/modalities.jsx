@@ -7,8 +7,8 @@ import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import ModalityListTable from "components/dashboard/modalities/modalityListTable";
-import AddModalityModal from "components/dashboard/modalities/addModalityModal/addModalityModal";
-import EditModalityModal from "components/dashboard/modalities/editModalityModal/editModalityModal";
+import AddModalityModal from "components/dashboard/modalities/addModalityModal";
+import EditModalityModal from "components/dashboard/modalities/editModalityModal";
 
 let ActiveModalityID = null;
 
