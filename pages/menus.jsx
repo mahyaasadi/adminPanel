@@ -119,9 +119,11 @@ const MenusManagement = () => {
       Icon: formProps.addMenuIcon,
       Url: formProps.addMenuUrl,
       Permissions: menuPermissionStatus.menuAccessList,
+      Priority: parseInt(formProps.addMenuPriority),
     };
 
     console.log("addData", addData);
+    
     axiosClient
       .post(url, addData)
       .then((response) => {
@@ -160,6 +162,7 @@ const MenusManagement = () => {
       MenuID: ActiveMenuID,
       Permissions: subMenuPermissionStatus.subMenuAccessList,
       Url: formProps.addSubMenuUrl,
+      Priority: parseInt(formProps.addSubMenuPriority),
     };
 
     console.log("addedData", data);
@@ -224,6 +227,7 @@ const MenusManagement = () => {
       Icon: formProps.editMenuIcon,
       Permissions: SelectedVal,
       Url: formProps.editMenuUrl,
+      Priority: parseInt(formProps.editMenuPriority),
     };
 
     console.log("data", data);
@@ -269,7 +273,7 @@ const MenusManagement = () => {
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
     let subMenuId = formProps.editSubMenuID;
-    let url = `/InoMenu/update/${subMenuId}`;
+    let url = `/InoMenu/update/${ActiveMenuID}`;
 
     let selectedPer = $(".EditSubMenuPerCheckBox:checkbox:checked");
     let SelectedPerVal = [];
@@ -285,6 +289,8 @@ const MenusManagement = () => {
       Name: formProps.editSubMenuName,
       Url: formProps.editSubMenuUrl,
       Permissions: SelectedPerVal,
+      SubMenuID: subMenuId,
+      Priority: parseInt(formProps.editSubMenuPriority),
     };
 
     console.log("data", data);

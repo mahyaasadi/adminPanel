@@ -75,6 +75,21 @@ const AddToMenuModal = ({
                 </div>
               </div>
 
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  اولویت <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    type="number"
+                    name="addMenuPriority"
+                    className="form-control floating inputPadding rounded"
+                    required
+                    min="0"
+                  />
+                </div>
+              </div>
+
               <hr />
 
               <p

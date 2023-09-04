@@ -1,22 +1,8 @@
 import { useEffect } from "react";
-import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
-import { axiosClient } from "class/axiosConfig.js";
-import Loading from "components/commonComponents/loading/loading";
-// import EditorJS from "@editorjs/editorjs";
-// import dynamic from "next/dynamic";
-import EditorNoSSR from "components/commonComponents/textEditor";
+// import EditorNoSSR from "components/commonComponents/textEditor";
 
-// const EditorNoSSr = dynamic(
-//   () => import("components/commonComponents/textEditor"),
-//   { ssr: false }
-// );
-
-const SubArticleTextEditor = ({ data }) => {
-  // useEffect(() => {
-  //   EditorNoSSR();
-  // }, []);
-
+const SubTextEditor = ({ data }) => {
   return (
     <>
       <div
@@ -44,7 +30,8 @@ const SubArticleTextEditor = ({ data }) => {
               <form>
                 <div className="card">
                   <div className="card-body">
-                    <EditorNoSSR data={data?.Text} />
+                    <div id="subText"></div>
+                    {/* <EditorNoSSR data={data?.Text} /> */}
                   </div>
                 </div>
 
@@ -64,5 +51,4 @@ const SubArticleTextEditor = ({ data }) => {
     </>
   );
 };
-
-export default SubArticleTextEditor;
+export default SubTextEditor;

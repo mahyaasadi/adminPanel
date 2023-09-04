@@ -64,7 +64,6 @@ const EditMenuModal = ({
                   />
                 </div>
               </div>
-
               <div className="form-group">
                 <label className="lblAbs font-12">
                   عنوان آیکون<span className="text-danger">*</span>
@@ -80,7 +79,6 @@ const EditMenuModal = ({
                   />
                 </div>
               </div>
-
               <div className="form-group">
                 <label className="lblAbs font-12">
                   url <span className="text-danger">*</span>
@@ -97,9 +95,24 @@ const EditMenuModal = ({
                   />
                 </div>
               </div>
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  اولویت <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    className="form-control floating inputPadding rounded"
+                    type="number"
+                    name="editMenuPriority"
+                    defaultValue={data.Priority}
+                    key={data.Priority}
+                    min="0"
+                    required
+                  />
+                </div>
+              </div>
 
               <hr />
-
               <p
                 className="mb-4 text-secondary font-14 marginR-1 padding-r-10 "
                 dir="rtl"
@@ -128,7 +141,6 @@ const EditMenuModal = ({
                   </div>
                 ))}
               </div>
-
               <div className="submit-section">
                 <button
                   type="submit"

@@ -16,7 +16,7 @@ const AddSubMenuModal = ({
       tabIndex="-1"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered modal-lg">
+      <div className="modal-dialog modal-dialog-centered modal-md">
         <div className="modal-content doctor-profile">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">
@@ -60,6 +60,21 @@ const AddSubMenuModal = ({
                     name="addSubMenuUrl"
                     className="form-control floating inputPadding rounded"
                     required
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  اولویت <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    type="number"
+                    name="addSubMenuPriority"
+                    className="form-control floating inputPadding rounded"
+                    required
+                    min="0"
                   />
                 </div>
               </div>

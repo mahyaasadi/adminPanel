@@ -4,10 +4,75 @@ import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
 import Image from "next/image";
 import { organ, neighbourhoods, article } from "components/imagepath";
+import { useEffect } from "react";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
 
 const Sidebar = () => {
   const router = useRouter();
 
+  const queryClient = useQueryClient();
+
+  // const { data: usersInfo, isError } = useQuery(
+  //   ['userToken'],
+  //   () => axiosClient.get(`CenterProfile/getCenterPhysician/${CenterID}`).then((response) => response.data)
+  // );
+
+  // const getUserToken = () => {
+  //   let data = { Token: sessionStorage.getItem("SEID") };
+  //   return useMutation(userToken, {
+  //     onSuccess: async (data) => {
+  //       console.log(data);
+  //     },
+  //   });
+  // };
+
+  // const mutation = useMutation({
+  //   mutationFn: (data) => {
+  //     return axios.post("InoAdmin/getUserByToken", data);
+  //   },
+  // });
+
+  // const getUserToken = () => {
+  //   let data = { Token: sessionStorage.getItem("SEID") };
+  //   let url = "InoAdmin/getUserByToken";
+
+  //   axiosClient.post(url, data);
+  // };
+
+  // const mutation = useMutation({
+  //   getUserToken,
+  //   onSuccess: (newArticle) => {
+  //     // update article view directly via setQueryData
+  //     queryClient.setQueryData(["articles", id], newArticle);
+  //   },
+  //   onError: (error, variables, context) => {
+  //     console.log(error);
+  //   },
+  // });
+
+  // useEffect(() => {}, []);
+
+  //  let url = "InoAdmin/getUserByToken";
+  //   let data = { Token: sessionStorage.getItem("SEID") };
+
+  //   if (data) {
+  //     axiosClient
+  //       .post(url, data)
+  //       .then(function (response) {
+  //         console.log(response.data);
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //         ErrorAlert("خطا", "ارتباط با سرور در حال حاضر امکان پذیر نمی باشد!");
+  //       });
+
+  // console.log(doctors);
   return (
     <>
       <div className="sidebar" id="sidebar">

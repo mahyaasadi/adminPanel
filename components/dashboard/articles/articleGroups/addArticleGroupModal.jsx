@@ -58,11 +58,11 @@ const AddArticleGroupModal = ({ addArticleGroup }) => {
               <div className="form-group">
                 <label className="lblAbs font-12">توضیحات</label>
                 <div className="col p-0">
-                  <input
+                  <textarea
                     type="text"
                     name="articleGroupDescription"
-                    className="form-control floating inputPadding rounded"
-                  />
+                    className="form-control floating inputPadding rounded font-13"
+                  ></textarea>
                 </div>
               </div>
 

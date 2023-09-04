@@ -1,78 +1,53 @@
-// import Table from "@editorjs/table";
+import EditorJS from "@editorjs/embed";
+import Embed from "@editorjs/embed";
+import Table from "@editorjs/table";
+import Paragraph from "@editorjs/paragraph";
 import List from "@editorjs/list";
 import LinkTool from "@editorjs/link";
-import ImageTool from "@editorjs/image";
-import RawTool from "@editorjs/raw";
-import Quote from "@editorjs/quote";
-// import Marker from "@editorjs/marker";
-// import CheckList from "@editorjs/checklist";
-import Delimiter from "@editorjs/delimiter";
-// import InlineCode from "@editorjs/inline-code";
-// import Warning from "@editorjs/warning";
-// import Code from "@editorjs/code";
-import SimpleImage from "@editorjs/simple-image";
-import EditorJS from "@editorjs/editorjs";
+import Image from "@editorjs/image";
+import Raw from "@editorjs/raw";
 import Header from "@editorjs/header";
-import Embed from "@editorjs/embed";
-import Paragraph from "@editorjs/paragraph";
-import Table from "@editorjs/table";
+import Quote from "@editorjs/quote";
+import Marker from "@editorjs/marker";
+import CheckList from "@editorjs/checklist";
+import Delimiter from "@editorjs/delimiter";
+import SimpleImage from "@editorjs/simple-image";
 
 const EditorNoSSR = ({ data }) => {
-  const TOOLS = {
-    header: Header,
-    quote: Quote,
-    simpleImage: SimpleImage,
+  const Tools = {
+    paragraph: Paragraph,
     embed: Embed,
+    table: Table,
     list: List,
     linkTool: LinkTool,
-    image: ImageTool,
-    raw: RawTool,
-    table: Table,
-    paragraph: Paragraph,
+    image: Image,
+    raw: Raw,
+    header: Header,
+    quote: Quote,
+    marker: Marker,
+    checklist: CheckList,
     delimiter: Delimiter,
-    // marker: Marker,
-    //   checklist: CheckList,
-    // warning: Warning,
-    //   inlineCode: InlineCode,
-    // code: Code,
+    simpleImage: SimpleImage,
   };
 
   const editor = new EditorJS({
     holder: "editorjs",
     autofocus: true,
-    tools: TOOLS,
-    // data: {
-    //   time: 1552744582955,
-    //   blocks: [
-    //     {
-    //       type: "heading",
-    //       data: {
-    //         text: "helllllllllllo",
-    //       },
-    //     },
-    //   ],
-    //   version: "2.11.10",
-    // },
-
+    tools: Tools,
     // defaultBlock: data,
     data: data,
-    // data: {
-    //   time: 1550476186479,
-    //   blocks: data,
-    //   version: "2.8.1",
-    // },
   });
 
-  const handleSaveEditedText = () => {
-    editor
-      .save()
-      .then((outputData) => {
-        console.log("Article data: ", outputData);
-      })
-      .catch((error) => {
-        console.log("Saving failed: ", error);
-      });
-  };
+  // const handleSaveEditedText = () => {
+  //   editor
+  //     .save()
+  //     .then((outputData) => {
+  //       console.log("Article data: ", outputData);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Saving failed: ", error);
+  //     });
+  // };
 
   return (
     <>

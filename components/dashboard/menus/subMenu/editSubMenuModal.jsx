@@ -78,6 +78,23 @@ const EditSubMenuModal = ({
                 </div>
               </div>
 
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  اولویت <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    className="form-control floating inputPadding rounded"
+                    type="number"
+                    name="editSubMenuPriority"
+                    defaultValue={data.Priority}
+                    key={data.Priority}
+                    min="0"
+                    required
+                  />
+                </div>
+              </div>
+
               <hr />
 
               <p className="mb-4 text-secondary font-14 marginR-1" dir="rtl">

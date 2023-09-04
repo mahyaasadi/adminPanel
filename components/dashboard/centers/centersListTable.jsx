@@ -41,7 +41,7 @@ const CentersListTable = ({
           alt=""
         />
       ),
-      width: "250px",
+      width: "170px",
     },
     {
       name: "عملیات ها",
@@ -222,7 +222,7 @@ const CentersListTable = ({
             defaultSortAsc={false}
             pagination
             highlightOnHover
-            paginationDefaultPage={selectedPage}
+            // paginationDefaultPage={selectedPage}
             onChangePage={(e) => ChangeTablePage(e)}
             paginationPerPage="20"
             paginationRowsPerPageOptions={[20, 30, 40, 50]}

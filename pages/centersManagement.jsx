@@ -46,10 +46,10 @@ const CentersManagement = () => {
   const ChangeTablePage = (e) => {
     const url = new URL(location);
     url.searchParams.set("page", e);
-    // console.log({ url });
+    console.log({ url });
     history.pushState(selectedPage, "", url);
-    // // setSelectedPage(e);
-    // console.log({ selectedPage });
+    // setSelectedPage(e);
+    console.log({ selectedPage });
     // console.log({ e });
   };
 

@@ -7,8 +7,8 @@ import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import ArticleGroupsListTable from "components/dashboard/articles/articleGroups/articleGroupsListTable";
-import AddArticleGroupModal from "components/dashboard/articles/articleGroups/addArticleGroupModal/addArticleGroupModal";
-import EditArticleGroupModal from "components/dashboard/articles/articleGroups/editArticleGroupModal/editArticleGroupModal";
+import AddArticleGroupModal from "components/dashboard/articles/articleGroups/addArticleGroupModal";
+import EditArticleGroupModal from "components/dashboard/articles/articleGroups/editArticleGroupModal";
 
 let ActiveArticleGrpID = null;
 
@@ -213,6 +213,7 @@ const ArticleGroupsManagement = () => {
       <Head>
         <title>گروه مقالات</title>
       </Head>
+
       <div className="page-wrapper">
         {isLoading ? (
           <Loading />

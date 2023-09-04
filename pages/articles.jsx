@@ -25,7 +25,7 @@ import AddFAQModal from "components/dashboard/articles/FAQ/addFaqModal";
 import EditFAQModal from "components/dashboard/articles/FAQ/editFaqModal";
 import RelatedArticlesList from "components/dashboard/articles/relatedArticles/relatedArticleList";
 import AddRelatedArticleModal from "components/dashboard/articles/relatedArticles/addRelatedArticleModal";
-import SubArticleTextEditor from "components/dashboard/articles/subArticles/subArticleTextEditor";
+import SubTextEditor from "components/dashboard/articles/subArticles/subTextEditor";
 
 let ActiveArticleID,
   ActiveSubArticleID,
@@ -1232,7 +1232,7 @@ const Articles = () => {
           addRelatedArticle={addRelatedArticle}
         />
         {/* sub text editor */}
-        <SubArticleTextEditor data={editSubArticleData} />
+        <SubTextEditor data={editSubArticleData} />
       </div>
     </>
   );

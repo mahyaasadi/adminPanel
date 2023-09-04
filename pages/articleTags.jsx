@@ -7,8 +7,8 @@ import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import ArticleTagsListTable from "components/dashboard/articles/articleTags/articleTagsListTable";
-import AddArticleTagModal from "components/dashboard/articles/articleTags/addArticleTagModal/addArticleTagModal";
-import EditArticleTagModal from "components/dashboard/articles/articleTags/editArticleTagModal/editArticleTagModal";
+import AddArticleTagModal from "components/dashboard/articles/articleTags/addArticleTagModal";
+import EditArticleTagModal from "components/dashboard/articles/articleTags/editArticleTagModal";
 
 let ActiveArticleTagID = null;
 

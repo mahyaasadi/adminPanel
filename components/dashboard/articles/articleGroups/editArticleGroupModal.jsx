@@ -71,14 +71,14 @@ const EditArticleGroupModal = ({ data, editArticleGroup }) => {
                   توضیحات <span className="text-danger">*</span>
                 </label>
                 <div className="col p-0">
-                  <input
-                    className="form-control floating inputPadding rounded"
+                  <textarea
+                    className="form-control floating inputPadding rounded font-13"
                     type="text"
                     name="editArticleGrpDes"
                     defaultValue={data.Des}
                     key={data.Des}
                     required
-                  />
+                  ></textarea>
                 </div>
               </div>
 
