@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
 import Image from "next/image";
 import { organ, neighbourhoods, article } from "components/imagepath";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { axiosClient } from "class/axiosConfig";
 import {
   useQuery,
   useMutation,
@@ -15,64 +16,54 @@ import {
 
 const Sidebar = () => {
   const router = useRouter();
+  // const queryClient = useQueryClient();
 
-  const queryClient = useQueryClient();
+  const [userAccessStatus, setUserAccessStatus] = useState();
 
-  // const { data: usersInfo, isError } = useQuery(
-  //   ['userToken'],
-  //   () => axiosClient.get(`CenterProfile/getCenterPhysician/${CenterID}`).then((response) => response.data)
-  // );
+  const getUserToken = async () => {
+    let data = { Token: sessionStorage.getItem("SEID") };
+    let url = "InoAdmin/getUserByToken";
 
-  // const getUserToken = () => {
-  //   let data = { Token: sessionStorage.getItem("SEID") };
-  //   return useMutation(userToken, {
-  //     onSuccess: async (data) => {
-  //       console.log(data);
-  //     },
+    await axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log("header res in sidebar", response.data);
+        let accessStatus = [];
+        const item = response.data;
+        let obj = {
+          admin: item.Admin,
+          basic: item.Basic,
+        };
+        accessStatus.push(obj);
+        setUserAccessStatus(accessStatus);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  console.log({ userAccessStatus });
+
+  // const useUpdateToken = (id) => {
+  //   const queryClient = useQueryClient();
+
+  //   return useMutation({
+  //     mutationFn: (newToken) =>
+  //       axios
+  //         .post("InoAdmin/getUserByToken", {
+  //           Token: sessionStorage.getItem("SEID"),
+  //         })
+  //         .then((response) => response.data),
+  //     // 💡 response of the mutation is passed to onSuccess
+  //     // onSuccess: (newPost) => {
+  //     //   // ✅ update detail view directly
+  //     //   queryClient.setQueryData(["posts", id], newPost);
+  //     // },
   //   });
   // };
 
-  // const mutation = useMutation({
-  //   mutationFn: (data) => {
-  //     return axios.post("InoAdmin/getUserByToken", data);
-  //   },
-  // });
+  useEffect(() => {
+    getUserToken();
+  }, []);
 
-  // const getUserToken = () => {
-  //   let data = { Token: sessionStorage.getItem("SEID") };
-  //   let url = "InoAdmin/getUserByToken";
-
-  //   axiosClient.post(url, data);
-  // };
-
-  // const mutation = useMutation({
-  //   getUserToken,
-  //   onSuccess: (newArticle) => {
-  //     // update article view directly via setQueryData
-  //     queryClient.setQueryData(["articles", id], newArticle);
-  //   },
-  //   onError: (error, variables, context) => {
-  //     console.log(error);
-  //   },
-  // });
-
-  // useEffect(() => {}, []);
-
-  //  let url = "InoAdmin/getUserByToken";
-  //   let data = { Token: sessionStorage.getItem("SEID") };
-
-  //   if (data) {
-  //     axiosClient
-  //       .post(url, data)
-  //       .then(function (response) {
-  //         console.log(response.data);
-  //       })
-  //       .catch(function (error) {
-  //         console.log(error);
-  //         ErrorAlert("خطا", "ارتباط با سرور در حال حاضر امکان پذیر نمی باشد!");
-  //       });
-
-  // console.log(doctors);
   return (
     <>
       <div className="sidebar" id="sidebar">
@@ -90,26 +81,35 @@ const Sidebar = () => {
                 </Link>
               </li>
 
-              <li className={router.pathname == "/menus" ? "active" : ""}>
-                <Link href="/menus">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6"
+              {userAccessStatus?.map((userAccess, index) =>
+                userAccess.admin === true && userAccess.basic === false ? (
+                  <li
+                    key={index}
+                    className={router.pathname == "/menus" ? "active" : ""}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                    />
-                  </svg>
+                    <Link href="/menus">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                        />
+                      </svg>
 
-                  <span>مدیریت منوها</span>
-                </Link>
-              </li>
+                      <span>مدیریت منوها</span>
+                    </Link>
+                  </li>
+                ) : (
+                  ""
+                )
+              )}
 
               <li
                 className={
