@@ -23,9 +23,9 @@
   },
   "exclude": ["node_modules", ".next", "out", "build"],
   "include": [
-    // "next-env.d.ts",
-    // "**/*.ts",
-    // "**/*.tsx",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
     "**/*.jsx",
     "**/*.js",
     ".eslintrc"
