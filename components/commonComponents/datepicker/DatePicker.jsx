@@ -26,6 +26,7 @@ const DatePicker = ({ setArticleDate, defDate }) => {
     };
   }
   // console.log(artDate);
+
   const [todaysDate, setTodaysDate] = useState(artDate);
   const test = (e) => {
     if (e?.month.toString().length == 1) {
@@ -65,5 +66,5 @@ const DatePicker = ({ setArticleDate, defDate }) => {
     </>
   );
 };
-export default DatePicker;
 
+export default DatePicker;

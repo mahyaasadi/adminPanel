@@ -10,7 +10,6 @@ import { avatar01, headerLogo, logoSmall } from "components/imagepath";
 import { ErrorAlert } from "class/AlertManage.js";
 
 let user = null;
-// let centerId = null;
 
 const Header = () => {
   let router = useRouter();
@@ -41,11 +40,8 @@ const Header = () => {
       axiosClient
         .post(url, data)
         .then(function (response) {
-          console.log(response.data);
+          // console.log(response.data);
           user = response.data;
-          // let centerId = user.CenterID;
-          // Cookies.set("CenterID", centerId);
-
           document.getElementById("userName").innerHTML = user.FullName;
           document.getElementById("avatar").setAttribute("src", user.Avatar);
           document.getElementById("avatar").setAttribute("srcSet", user.Avatar);

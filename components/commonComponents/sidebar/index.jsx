@@ -1,61 +1,11 @@
-"use client"; //This is a client component
+"use client";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
-import Image from "next/image";
 import { organ, neighbourhoods, article } from "components/imagepath";
-import { useState, useEffect } from "react";
-import { axiosClient } from "class/axiosConfig";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "react-query";
 
 const Sidebar = () => {
-  const router = useRouter()
-
-  // const queryClient = useQueryClient();
-  // const [userAccessStatus, setUserAccessStatus] = useState();
-
-  // const getUserToken = async () => {
-  //   let data = { Token: sessionStorage.getItem("SEID") };
-  //   let url = "InoAdmin/getUserByToken";
-
-  //   await axiosClient
-  //     .post(url, data)
-  //     .then((response) => {
-  //       console.log("header res in sidebar", response.data);
-  //       let accessStatus = [];
-  //       const item = response.data;
-  //       let obj = {
-  //         admin: item.Admin,
-  //         basic: item.Basic,
-  //       };
-  //       accessStatus.push(obj);
-  //       setUserAccessStatus(accessStatus);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
-  // console.log({ userAccessStatus });
-
-  const { mutate: getUserInfoByToken, isSuccess } = useMutation({
-    mutationFn: (body) =>
-      axiosClient
-        .post("InoAdmin/getUserByToken", body)
-  });
-
-  useEffect(() => {
-    if (isSuccess) {
-
-      getUserInfoByToken({ Token: sessionStorage.getItem("SEID") }).then(res => {
-        console.log(res)
-      })
-    }
-  }, [isSuccess, getUserInfoByToken]);
+  const router = useRouter();
 
   return (
     <>
@@ -71,8 +21,6 @@ const Sidebar = () => {
                   <FeatherIcon icon="home" />
 
                   <span>داشبورد</span>
-
-
                 </Link>
               </li>
 

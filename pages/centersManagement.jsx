@@ -38,8 +38,6 @@ const CentersManagement = () => {
   // -------------------
   const [centerAboutUsData, setCenterAboutUsData] = useState([]);
 
-  // -------------------
-
   // let selectedPage = router.query.page;
   const [selectedPage, setSelectedPage] = useState(null);
 
@@ -340,11 +338,12 @@ const CentersManagement = () => {
     }
   };
 
-  const openAboutUsModal = (data, centerId, centerName) => {
+  const openAboutUsModal = async (data, centerId, centerName) => {
+    await getCenterAboutUs(centerId);
+
     $("#centerAboutUsModal").modal("show");
     ActiveCenterID = centerId;
     ActiveCenterName = centerName;
-    getCenterAboutUs(centerId);
   };
 
   // edit about us

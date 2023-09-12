@@ -127,10 +127,10 @@ const CentersListTable = ({
 
           <button
             className="btn btn-sm btn-outline-secondary btn-border-left"
-            onClick={() => openAboutUsModal(row, row._id, row.Name)}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title="درباره مرکز"
+            onClick={() => openAboutUsModal(row, row._id, row.Name)}
           >
             <FeatherIcon
               icon="info"

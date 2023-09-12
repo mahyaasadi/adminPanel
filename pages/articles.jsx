@@ -209,7 +209,7 @@ const Articles = () => {
       .post(url, data)
       .then((response) => {
         console.log(response.data);
-        setArticlesData([...articlesData, response.data]);
+        setArticlesData([response.data, ...articlesData]);
         setIsLoading(false);
 
         $("#addArticleModal").modal("hide");
