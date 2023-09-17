@@ -80,7 +80,7 @@ const EditSubMenuModal = ({
 
               <div className="form-group">
                 <label className="lblAbs font-12">
-                  اولویت <span className="text-danger">*</span>
+                  اولویت
                 </label>
                 <div className="col p-0">
                   <input
@@ -90,13 +90,11 @@ const EditSubMenuModal = ({
                     defaultValue={data.Priority}
                     key={data.Priority}
                     min="0"
-                    required
                   />
                 </div>
               </div>
 
               <hr />
-
               <p className="mb-4 text-secondary font-14 marginR-1" dir="rtl">
                 بخش های قابل دسترس زیر منو
               </p>

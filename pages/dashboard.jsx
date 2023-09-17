@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import { axiosClient } from "class/axiosConfig.js";
 import Select from "react-select";
 import JDate from "jalali-date";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/Loading";
 import OverviewStats from "components/dashboard/overview/overviewStats";
 
 const jdate = new JDate();
@@ -25,9 +24,6 @@ const Dashboard = () => {
         <title>داشبورد من</title>
       </Head>
       <div className="page-wrapper">
-        {/* {statsIsLoading ? (
-          <Loading />
-        ) : ( */}
         <div className="content container-fluid pb-0">
           <div className="overview-container">
             <div className="dashboard-header">
@@ -50,7 +46,6 @@ const Dashboard = () => {
 
           <OverviewStats />
         </div>
-        {/* )} */}
       </div>
     </>
   );

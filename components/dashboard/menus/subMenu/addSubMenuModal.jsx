@@ -66,14 +66,13 @@ const AddSubMenuModal = ({
 
               <div className="form-group">
                 <label className="lblAbs font-12">
-                  اولویت <span className="text-danger">*</span>
+                  اولویت
                 </label>
                 <div className="col p-0">
                   <input
                     type="number"
                     name="addSubMenuPriority"
                     className="form-control floating inputPadding rounded"
-                    required
                     min="0"
                   />
                 </div>

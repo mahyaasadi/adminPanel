@@ -79,6 +79,7 @@ const EditMenuModal = ({
                   />
                 </div>
               </div>
+
               <div className="form-group">
                 <label className="lblAbs font-12">
                   url <span className="text-danger">*</span>
@@ -95,9 +96,10 @@ const EditMenuModal = ({
                   />
                 </div>
               </div>
+
               <div className="form-group">
                 <label className="lblAbs font-12">
-                  اولویت <span className="text-danger">*</span>
+                  اولویت
                 </label>
                 <div className="col p-0">
                   <input
@@ -107,7 +109,6 @@ const EditMenuModal = ({
                     defaultValue={data.Priority}
                     key={data.Priority}
                     min="0"
-                    required
                   />
                 </div>
               </div>

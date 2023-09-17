@@ -1,7 +1,7 @@
 import { axiosClient } from "class/axiosConfig.js";
 import { useState, useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/Loading";
 
 const AddToMenuModal = ({
   permissionsList,
@@ -77,14 +77,13 @@ const AddToMenuModal = ({
 
               <div className="form-group">
                 <label className="lblAbs font-12">
-                  اولویت <span className="text-danger">*</span>
+                  اولویت
                 </label>
                 <div className="col p-0">
                   <input
                     type="number"
                     name="addMenuPriority"
                     className="form-control floating inputPadding rounded"
-                    required
                     min="0"
                   />
                 </div>

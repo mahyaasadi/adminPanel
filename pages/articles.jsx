@@ -5,7 +5,7 @@ import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/Loading";
 import ArticlesListTable from "components/dashboard/articles/articlesListTable";
 import ArticleSearch from "components/dashboard/articles/articleSearch";
 import AddArticleModal from "components/dashboard/articles/addArticleModal";
@@ -26,6 +26,7 @@ import EditFAQModal from "components/dashboard/articles/FAQ/editFaqModal";
 import RelatedArticlesList from "components/dashboard/articles/relatedArticles/relatedArticleList";
 import AddRelatedArticleModal from "components/dashboard/articles/relatedArticles/addRelatedArticleModal";
 import SubTextEditor from "components/dashboard/articles/subArticles/subTextEditor";
+import ArticlesPagination from "components/dashboard/articles/articlesPagination";
 
 let ActiveArticleID,
   ActiveSubArticleID,
@@ -62,7 +63,6 @@ const Articles = () => {
   const [relatedArticlesOptions, setRelatedArticlesOptions] = useState([]);
 
   // -------------
-  // const []
 
   // Get all articles
   const getAllArticles = () => {
@@ -101,6 +101,19 @@ const Articles = () => {
       article.EngTitle.toLowerCase().includes(articleSearchInput.toLowerCase())
   );
 
+  // Pagination => User is currently on this page
+  const [currentPage, setCurrentPage] = useState(1)
+  // const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+  // Number of items to be displayed on each page   
+  const [itemsPerPage, setItemsPerPage] = useState(8)
+  // The first and last record on the current page
+  const indexOfLastRecord = currentPage * itemsPerPage
+  const indexOfFirstRecord = indexOfLastRecord - itemsPerPage
+  // Records to be displayed on the current page
+  const currentItems = searchedArticles.slice(indexOfFirstRecord, indexOfLastRecord)
+  const nPages = Math.ceil(searchedArticles.length / itemsPerPage)
+
+
   // Article Date
   const setArticleDateInDB = (newDate) => {
     setNewArticleDate(newDate);
@@ -130,9 +143,9 @@ const Articles = () => {
 
     checked
       ? // Case 1 : The user checks the box
-        setSliderCheckboxStatus({ sliderCheckbox: true })
+      setSliderCheckboxStatus({ sliderCheckbox: true })
       : // Case 2  : The user unchecks the box
-        setSliderCheckboxStatus({ sliderCheckbox: false });
+      setSliderCheckboxStatus({ sliderCheckbox: false });
   };
 
   function handleShowInSliderCheckbox(data) {
@@ -276,10 +289,10 @@ const Articles = () => {
     index === -1
       ? console.log("no match")
       : setArticlesData([
-          ...articlesData.slice(0, index),
-          g,
-          ...articlesData.slice(index + 1),
-        ]);
+        ...articlesData.slice(0, index),
+        g,
+        ...articlesData.slice(index + 1),
+      ]);
   };
 
   // Delete Article
@@ -1062,6 +1075,19 @@ const Articles = () => {
     getAllArticleTags();
   }, []);
 
+  // changing the itemsPerPage state based on screenWidth
+  // useEffect(() => {
+  //   setItemsPerPage(
+  //     screenWidth >= 1024 ? 8
+  //       : screenWidth >= 768 && screenWidth < 1024 ? 6
+  //         : screenWidth > 460 && screenWidth < 768 ? 4
+  //           : 2
+  //   )
+  //   const updateScreen = () => setScreenWidth(window.innerWidth)
+  //   window.addEventListener("resize", updateScreen)
+  //   return () => window.removeEventListener("resize", updateScreen)
+  // }, [screenWidth])
+
   return (
     <>
       <Head>
@@ -1113,7 +1139,7 @@ const Articles = () => {
                   </div>
 
                   <ArticlesListTable
-                    articlesData={searchedArticles}
+                    articlesData={currentItems}
                     updateArticle={updateArticle}
                     deleteArticle={deleteArticle}
                     openArticleVideoModal={openArticleVideoModal}
@@ -1123,9 +1149,14 @@ const Articles = () => {
                     openFAQModal={openFAQModal}
                     openRelatedArticlesModal={openRelatedArticlesModal}
                   />
+
+                  <ArticlesPagination
+                    nPages={nPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                  />
                 </div>
 
-                <div id="tablepagination" className="dataTables_wrapper"></div>
               </div>
             </div>
           </div>
@@ -1233,6 +1264,8 @@ const Articles = () => {
         />
         {/* sub text editor */}
         <SubTextEditor data={editSubArticleData} />
+
+
       </div>
     </>
   );
