@@ -13,6 +13,8 @@ const CentersListTable = ({
   openAboutUsModal,
   selectedPage,
   ChangeTablePage,
+  activeOR,
+  deActiveOR,
 }) => {
   data?.map((center, index) => {
     data[index].Number = index + 1;
@@ -29,7 +31,7 @@ const CentersListTable = ({
       name: "نام مرکز",
       selector: (row) => row.Name,
       sortable: true,
-      width: "400px",
+      width: "360px",
     },
     {
       name: "لوگو",
@@ -41,7 +43,7 @@ const CentersListTable = ({
           alt=""
         />
       ),
-      width: "170px",
+      width: "160px",
     },
     {
       name: "عملیات ها",
@@ -77,6 +79,40 @@ const CentersListTable = ({
                 <FeatherIcon
                   style={{ width: "16px", height: "16px" }}
                   icon="x-circle"
+                />
+              </i>
+            </button>
+          )}
+
+          {row.OR ? (
+            <button
+              className="btn btn-sm btn-outline-success font-13"
+              type="button"
+              onClick={() => deActiveOR(row._id)}
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="غیر فعال سازی دریافت نوبت"
+            >
+              <i className="d-flex align-items-center gap-3">
+                <FeatherIcon
+                  style={{ width: "16px", height: "16px" }}
+                  icon="calendar"
+                />
+              </i>
+            </button>
+          ) : (
+            <button
+              className="btn btn-sm btn-outline-danger"
+              type="button"
+              onClick={() => activeOR(row._id)}
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="فعال سازی دریافت نوبت"
+            >
+              <i className="d-flex align-items-center gap-3">
+                <FeatherIcon
+                  style={{ width: "16px", height: "16px" }}
+                  icon="calendar"
                 />
               </i>
             </button>

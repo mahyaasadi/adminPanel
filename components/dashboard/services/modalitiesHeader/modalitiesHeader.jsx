@@ -4,11 +4,10 @@ import NavLink from "./NavLink";
 
 const ModalitiesHeader = ({ data, getDepServices }) => {
   let counter = 1;
-  // console.log("data", data);
 
   return (
     <>
-      <div className="departmentsCategory w-100">
+      <div className="w-100 marginb-3">
         <div className="categoryCard">
           <div className="card-body w-100">
             <ul className="nav nav-tabs nav-tabs-bottom nav-tabs-scroll font-14 padding-bottom-md flex-nowrap">

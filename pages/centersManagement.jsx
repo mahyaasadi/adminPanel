@@ -41,6 +41,55 @@ const CentersManagement = () => {
   // let selectedPage = router.query.page;
   const [selectedPage, setSelectedPage] = useState(null);
 
+  // OR State
+  const ChangeOR = async (id, type) => {
+    let findIndex = centersData.findIndex((x) => x._id === id);
+    centersData[findIndex].OR = type;
+    let data = centersData;
+    await setCentersData([]);
+    console.log(centersData);
+    setTimeout(() => {
+      setCentersData(data);
+    }, 100);
+  };
+
+  const activeOR = async (id) => {
+    let result = await QuestionAlert(
+      "تغییر وضعیت نوبت دهی!",
+      "آیا از ثبت وضعیت نوبت دهی به فعال اطمینان دارید؟"
+    );
+    if (result) {
+      let url = "Center/setOR/" + id;
+      axiosClient
+        .put(url)
+        .then((response) => {
+          ChangeOR(id, true);
+        })
+        .catch((error) => {
+          console.log(error);
+          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید");
+        });
+    }
+  };
+  const deActiveOR = async (id) => {
+    let result = await QuestionAlert(
+      "تغییر وضعیت نوبت دهی!",
+      "آیا از ثبت وضعیت نوبت دهی به غیر فعال اطمینان دارید؟"
+    );
+    if (result) {
+      let url = "Center/removeOR/" + id;
+      axiosClient
+        .put(url)
+        .then((response) => {
+          ChangeOR(id, false);
+        })
+        .catch((error) => {
+          console.log(error);
+          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید");
+        });
+    }
+  };
+
   const ChangeTablePage = (e) => {
     const url = new URL(location);
     url.searchParams.set("page", e);
@@ -453,6 +502,8 @@ const CentersManagement = () => {
                     openAboutUsModal={openAboutUsModal}
                     selectedPage={selectedPage}
                     ChangeTablePage={ChangeTablePage}
+                    activeOR={activeOR}
+                    deActiveOR={deActiveOR}
                   />
                 </div>
 

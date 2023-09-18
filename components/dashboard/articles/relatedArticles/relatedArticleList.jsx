@@ -15,7 +15,7 @@ const RelatedArticlesList = ({
     $("#attachRelatedArticle").modal("show");
   };
 
-  console.log("relatedData", data);
+  // console.log("relatedData", data);
 
   const columns = [
     {
