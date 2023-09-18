@@ -14,6 +14,7 @@ const EditArticleModal = ({
   handleCheckedSliderOptions,
   isLoading,
 }) => {
+  const removeImg = () => console.log("hi");
   // article date
   const setArticleDate = (value) => {
     let articleDate =
@@ -259,16 +260,20 @@ const EditArticleModal = ({
                 className="d-flex justify-center mt-4"
                 id="currentArticleImgContainer"
               >
-                <img
-                  src={"https://irannobat.ir/blog/images/" + data.Img}
-                  alt="articleImg"
-                  style={{
-                    width: "20rem !important",
-                    height: "auto !important",
-                  }}
-                  className="articlePreviewImg m-auto d-block"
-                  id="currentArticleImg"
-                ></img>
+                <div className="articleCurrentImg">
+                  <img
+                    src={"https://irannobat.ir/blog/images/" + data.Img}
+                    alt="articleImg"
+                    style={{
+                      width: "20rem !important",
+                      height: "auto !important",
+                    }}
+                    className="articlePreviewImg m-auto d-block "
+                    id="currentArticleImg"
+                  ></img>
+                  <FeatherIcon className="removeImgBtn" icon="x-circle" onClick={removeImg} />
+
+                </div>
               </div>
 
               <div className="submit-section margint-5">

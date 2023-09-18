@@ -145,9 +145,9 @@ const Articles = () => {
 
     checked
       ? // Case 1 : The user checks the box
-        setSliderCheckboxStatus({ sliderCheckbox: true })
+      setSliderCheckboxStatus({ sliderCheckbox: true })
       : // Case 2  : The user unchecks the box
-        setSliderCheckboxStatus({ sliderCheckbox: false });
+      setSliderCheckboxStatus({ sliderCheckbox: false });
   };
 
   function handleShowInSliderCheckbox(data) {
@@ -291,10 +291,10 @@ const Articles = () => {
     index === -1
       ? console.log("no match")
       : setArticlesData([
-          ...articlesData.slice(0, index),
-          g,
-          ...articlesData.slice(index + 1),
-        ]);
+        ...articlesData.slice(0, index),
+        g,
+        ...articlesData.slice(index + 1),
+      ]);
   };
 
   // Delete Article
@@ -505,7 +505,9 @@ const Articles = () => {
       axiosClient
         .put(url, data)
         .then((response) => {
-          console.log(response.data);
+          console.log("res", response.data);
+          setSubArticlesData(response.data)
+
           setIsLoading(false);
           SuccessAlert("موفق", "تغییرات با موفقیت ثبت گردید!");
         })
