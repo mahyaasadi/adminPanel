@@ -112,8 +112,8 @@ const EditSubArticleModal = ({
                   defaultValue={data.Image}
                   key={data.Image}
                   id="editSubArticleImg"
-                // required
-                // id="SubArticleImg"
+                  // required
+                  // id="SubArticleImg"
                 />
 
                 {/* Img variations */}
@@ -159,22 +159,22 @@ const EditSubArticleModal = ({
                 className="d-flex justify-center mt-4"
                 id="currentArticleImgContainer"
               >
-                <div className="articleCurrentImg">
-                  <img
-                    src={"https://irannobat.ir/blog/images/" + data.Img}
-                    alt="articleImg"
-                    style={{
-                      width: "20rem !important",
-                      height: "auto !important",
-                    }}
-                    className="articlePreviewImg m-auto d-block"
-                    id="currentSubArticleImg"
-                  ></img>
-
-                  <FeatherIcon className="removeImgBtn" icon="x-circle" />
-                </div>
-
-
+                {data.Img ? (
+                  <div className="articleCurrentImg">
+                    <img
+                      src={"https://irannobat.ir/blog/images/" + data.Img}
+                      alt="articleImg"
+                      style={{
+                        width: "20rem !important",
+                        height: "auto !important",
+                      }}
+                      className="articlePreviewImg m-auto d-block"
+                      id="currentSubArticleImg"
+                    ></img>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="form-group col d-flex align-items-center justify-center gap-3 margint-2">

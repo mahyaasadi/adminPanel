@@ -381,6 +381,7 @@ const CentersManagement = () => {
         })
         .catch((err) => {
           console.log(err);
+          setCenterAboutUsData([]);
           setIsLoading(false);
           ErrorAlert("خطا", "دریافت اطلاعات با خطا مواجه گردید!");
         });
@@ -403,6 +404,7 @@ const CentersManagement = () => {
 
   const editCenterAboutUs = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
@@ -415,20 +417,20 @@ const CentersManagement = () => {
 
     console.log("data", data);
 
-    setIsLoading(true);
-
     axiosClient
       .put(url, data)
       .then((response) => {
         console.log(response.data);
         setCenterAboutUsData(response.data);
-        setIsLoading(false);
+
+        e.target.reset();
         $("#editCenterAboutUsModal").modal("hide");
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        setIsLoading(false);
         ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
+        setIsLoading(false);
       });
   };
 

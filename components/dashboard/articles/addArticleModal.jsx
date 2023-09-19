@@ -137,7 +137,6 @@ const AddArticleModal = ({
                     hidden="hidden"
                     id="showInSlider"
                     name="articleShowInSlider"
-                    // defaultChecked="checked"
                     // required
                   />
                   <label
@@ -197,11 +196,12 @@ const AddArticleModal = ({
                   <i>
                     <FeatherIcon icon="upload" />
                   </i>
-                  <p>آپلود فایل</p>
+                  <p>آپلود تصویر</p>
                 </div>
                 <input
                   type="file"
                   className="upload"
+                  id="addArticleImg"
                   name="addArticleImg"
                   onChange={displayPreview}
                   required

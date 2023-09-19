@@ -36,13 +36,28 @@ const CentersListTable = ({
     {
       name: "لوگو",
       selector: (row) => row.Logo,
-      cell: (row) => (
-        <img
-          style={{ width: "35px" }}
-          src={"https://irannobat.ir/CenterProfileImage/" + row.Logo}
-          alt=""
-        />
-      ),
+      cell: (row) =>
+        row.Logo ? (
+          <div className="articleCurrentImg">
+            <img
+              style={{ width: "35px" }}
+              src={"https://irannobat.ir/CenterProfileImage/" + row.Logo}
+              alt=""
+            />
+            <button
+              className="btn removeImgBtn"
+              type="button"
+              // onClick={}
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="حذف لوگو"
+            >
+              <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
+            </button>
+          </div>
+        ) : (
+          ""
+        ),
       width: "160px",
     },
     {

@@ -40,7 +40,6 @@ const Header = () => {
       axiosClient
         .post(url, data)
         .then(function (response) {
-          // console.log(response.data);
           user = response.data;
           document.getElementById("userName").innerHTML = user.FullName;
           document.getElementById("avatar").setAttribute("src", user.Avatar);

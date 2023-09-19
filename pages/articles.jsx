@@ -145,9 +145,9 @@ const Articles = () => {
 
     checked
       ? // Case 1 : The user checks the box
-      setSliderCheckboxStatus({ sliderCheckbox: true })
+        setSliderCheckboxStatus({ sliderCheckbox: true })
       : // Case 2  : The user unchecks the box
-      setSliderCheckboxStatus({ sliderCheckbox: false });
+        setSliderCheckboxStatus({ sliderCheckbox: false });
   };
 
   function handleShowInSliderCheckbox(data) {
@@ -197,7 +197,7 @@ const Articles = () => {
   const addArticle = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    let url = "Article/add";
+
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
@@ -205,6 +205,7 @@ const Articles = () => {
       articleImg = await convertBase64(formProps.addArticleImg);
     }
 
+    let url = "Article/add";
     let data = {
       Title: formProps.addArticleTitle,
       EngTitle: formProps.addArticleEngName,
@@ -225,11 +226,15 @@ const Articles = () => {
       .then((response) => {
         console.log(response.data);
         setArticlesData([response.data, ...articlesData]);
-        setIsLoading(false);
+
+        // reseting
+        getAllArticles();
+        e.target.reset();
+        $("#addArticleImg").val("");
+        $("#articleFileUploadPreview").attr("src", "");
 
         $("#addArticleModal").modal("hide");
-        $("#articleFileUploadPreview").attr("src", "");
-        e.target.reset();
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -248,7 +253,6 @@ const Articles = () => {
   const editArticle = async (e) => {
     e.preventDefault();
 
-    let url = `Article/update/${ActiveArticleID}`;
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
@@ -256,6 +260,7 @@ const Articles = () => {
       newArticleImg = await convertBase64(formProps.editArticleImg);
     }
 
+    let url = `Article/update/${ActiveArticleID}`;
     let Data = {
       Title: formProps.editArticleTitle,
       EngTitle: formProps.editArticleEngName,
@@ -291,10 +296,10 @@ const Articles = () => {
     index === -1
       ? console.log("no match")
       : setArticlesData([
-        ...articlesData.slice(0, index),
-        g,
-        ...articlesData.slice(index + 1),
-      ]);
+          ...articlesData.slice(0, index),
+          g,
+          ...articlesData.slice(index + 1),
+        ]);
   };
 
   // Delete Article
@@ -303,7 +308,7 @@ const Articles = () => {
       "حذف مقاله !",
       "آیا از حذف مقاله اطمینان دارید؟"
     );
-    setIsLoading(true);
+    // setIsLoading(true);
 
     if (result) {
       let url = `Article/delete/${id}`;
@@ -312,14 +317,15 @@ const Articles = () => {
         .delete(url)
         .then((response) => {
           setArticlesData(articlesData.filter((a) => a._id !== id));
-          setIsLoading(false);
+          // setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
-          setIsLoading(false);
+          // setIsLoading(false);
+          ErrorAlert("خطا", "حذف مقاله با خطا مواجه گردید!");
         });
     } else {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
@@ -342,7 +348,6 @@ const Articles = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    let url = `Article/addSubArticle/${ActiveArticleID}`;
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
@@ -350,6 +355,7 @@ const Articles = () => {
       subArticleImg = await convertBase64(formProps.addSubArticleImg);
     }
 
+    let url = `Article/addSubArticle/${ActiveArticleID}`;
     let data = {
       Title: formProps.addSubArticleTitle,
       Text: formProps.addSubArticleText,
@@ -366,15 +372,15 @@ const Articles = () => {
         console.log(response.data);
         setSubArticlesData([...subArticlesData, response.data]);
 
-        $("#addSubArticleModal").modal("hide");
-
         // reseting articles
         getAllArticles();
-        setIsLoading(false);
         e.target.reset();
-        $("#addSubArticleImg").val("");
         subArticleImg = null;
+        $("#addSubArticleImg").val("");
         $("#subArticleImgPreview").attr("src", "");
+
+        $("#addSubArticleModal").modal("hide");
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -395,7 +401,6 @@ const Articles = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    let url = `Article/updateSubArticle/${ActiveArticleID}/${ActiveSubArticleID}`;
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
@@ -403,6 +408,7 @@ const Articles = () => {
       newSubArticleImg = await convertBase64(formProps.editSubArticleImg);
     }
 
+    let url = `Article/updateSubArticle/${ActiveArticleID}/${ActiveSubArticleID}`;
     let Data = {
       Title: formProps.editSubArticleTitle,
       Text: formProps.editSubArticleText,
@@ -417,8 +423,6 @@ const Articles = () => {
       WImgThumb: formProps.defaultSubArticleWImgThumb,
     };
 
-    console.log("data", Data);
-
     axiosClient
       .put(url, Data)
       .then((response) => {
@@ -427,16 +431,12 @@ const Articles = () => {
 
         // reset
         getAllArticles();
-        subArticleImg = null;
+        e.target.reset();
         newSubArticleImg = null;
-        formProps.editSubArticleImg = null;
+        $("#editSubArticleImg").val("");
+
         $("#editSubArticleModal").modal("hide");
         setIsLoading(false);
-
-        e.target.reset();
-        $("#editSubArticleImg").val("");
-        subArticleImg = null;
-        $("#currentSubArticleImg").attr("src", "");
       })
       .catch((error) => {
         console.log(error);
@@ -462,11 +462,11 @@ const Articles = () => {
 
   // Delete SubArticle
   const deleteSubArticle = async (id) => {
+    // setIsLoading(true);
     let result = await QuestionAlert(
       "حذف زیر مقاله !",
       "آیا از حذف زیر مقاله اطمینان دارید؟"
     );
-    setIsLoading(true);
 
     if (result) {
       let url = `Article/deleteSubArticle/${ActiveArticleID}/${id}`;
@@ -476,23 +476,22 @@ const Articles = () => {
         .then((response) => {
           setSubArticlesData(subArticlesData.filter((a) => a._id !== id));
           getAllArticles();
-          setIsLoading(false);
+          // setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
-          setIsLoading(false);
+          // setIsLoading(false);
         });
     }
   };
 
   // ----- change subArticle Order -----
   const updateSubDataOrder = async () => {
+    setIsLoading(true);
     let result = await QuestionAlert(
       "تغییر ترتیب زیر مقالات!",
       "آیا از تغییر ترتیب زیر مقالات اطمینان دارید؟"
     );
-
-    setIsLoading(true);
 
     if (result) {
       let url = `/Article/updateSubArticleOrdre/${ActiveArticleID}`;
@@ -506,7 +505,10 @@ const Articles = () => {
         .put(url, data)
         .then((response) => {
           console.log("res", response.data);
-          setSubArticlesData(response.data)
+          setSubArticlesData([]);
+          setTimeout(() => {
+            setSubArticlesData(response.data);
+          }, 100);
 
           setIsLoading(false);
           SuccessAlert("موفق", "تغییرات با موفقیت ثبت گردید!");

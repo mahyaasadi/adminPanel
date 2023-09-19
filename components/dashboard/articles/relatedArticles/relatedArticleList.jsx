@@ -15,8 +15,6 @@ const RelatedArticlesList = ({
     $("#attachRelatedArticle").modal("show");
   };
 
-  // console.log("relatedData", data);
-
   const columns = [
     {
       name: "عنوان مقاله",

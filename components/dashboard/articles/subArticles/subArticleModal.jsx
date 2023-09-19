@@ -1,7 +1,4 @@
-import Link from "next/link";
-import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
-import { useRouter } from "next/router";
 
 const SubArticlesModal = ({
   data,
@@ -15,8 +12,6 @@ const SubArticlesModal = ({
 }) => {
   console.log("subData", data);
 
-  const Router = useRouter();
-
   const MoveToUp = (id) => {
     let index = data.findIndex((x) => x._id === id);
 
@@ -28,11 +23,10 @@ const SubArticlesModal = ({
       data[ParentIndex] = thisIndexData;
 
       let thisElement = $("#CardContent" + id);
-      console.log(thisElement);
+      // console.log(thisElement);
       let parentElement = $("#CardContent" + ParentIndexData._id);
       $("#Card" + index).html(parentElement);
       $("#Card" + ParentIndex).html(thisElement);
-      // console.log(data);
     }
   };
 
@@ -47,11 +41,9 @@ const SubArticlesModal = ({
       data[InferiorIndex] = thisIndexData;
 
       let thisElement = $("#CardContent" + id);
-      console.log(thisElement);
       let inferiorElement = $("#CardContent" + InferiorIndexData?._id);
       $("#Card" + index).html(inferiorElement);
       $("#Card" + InferiorIndex).html(thisElement);
-      // console.log(data);
     }
   };
 
@@ -127,19 +119,31 @@ const SubArticlesModal = ({
                     <div className="card-body">
                       <div className="row px-4 subArticleDetailsBox">
                         {subArticle.Img ? (
-                          <div className="subArticleImgContainer">
+                          <div className="subArticleImgContainer articleCurrentImg">
                             <img
-                              className="w-50 rounded-md subArticleImg"
+                              className="w-50 btn-rounded-md subArticleImg"
                               src={
                                 "https://irannobat.ir/blog/images/" +
                                 subArticle.Img
                               }
                               alt="subArticleImg"
                             ></img>
+                            <button
+                              className="btn removeImgBtn"
+                              type="button"
+                              // onClick={}
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="حذف تصویر"
+                            >
+                              <FeatherIcon
+                                className="removeImgBtnIcon"
+                                icon="x-circle"
+                              />
+                            </button>
                           </div>
                         ) : (
                           <div className="w-25"></div>
-                          // ""
                         )}
 
                         <div className="subArticleDetails">

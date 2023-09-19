@@ -78,7 +78,7 @@ const AddSubArticleModal = ({ addSubArticle, isLoading }) => {
                   <i>
                     <FeatherIcon icon="upload" />
                   </i>
-                  <p>آپلود فایل</p>
+                  <p>آپلود تصویر</p>
                 </div>
                 <input
                   type="file"

@@ -14,7 +14,6 @@ const EditArticleModal = ({
   handleCheckedSliderOptions,
   isLoading,
 }) => {
-  const removeImg = () => console.log("hi");
   // article date
   const setArticleDate = (value) => {
     let articleDate =
@@ -48,6 +47,7 @@ const EditArticleModal = ({
 
   let languageLabel,
     languageValue = null;
+
   data.EngArticle
     ? ((languageLabel = "انگلیسی"), (languageValue = 1))
     : ((languageLabel = "فارسی"), (languageValue = 0));
@@ -57,7 +57,6 @@ const EditArticleModal = ({
     label: languageLabel,
   };
 
-  // console.log(data);
   useEffect(() => {
     handleShowInSliderCheckbox(data);
   }, [data]);
@@ -246,7 +245,7 @@ const EditArticleModal = ({
                   <i>
                     <FeatherIcon icon="upload" />
                   </i>
-                  <p>آپلود فایل</p>
+                  <p>آپلود تصویر جدید</p>
                 </div>
                 <input
                   type="file"
@@ -271,8 +270,6 @@ const EditArticleModal = ({
                     className="articlePreviewImg m-auto d-block "
                     id="currentArticleImg"
                   ></img>
-                  <FeatherIcon className="removeImgBtn" icon="x-circle" onClick={removeImg} />
-
                 </div>
               </div>
 
