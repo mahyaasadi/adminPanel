@@ -13,7 +13,7 @@ const NavLink = ({ data, getDepServices, activeClass }) => {
     <>
       <li className="nav-item">
         <a
-          className={"nav-link " + activeClass}
+          className={"nav-link ServiceNav " + activeClass}
           // href={"#Tab" + data._id}
           data-bs-toggle="tab"
           onClick={() => getDepServices(data._id, data.PerFullName)}

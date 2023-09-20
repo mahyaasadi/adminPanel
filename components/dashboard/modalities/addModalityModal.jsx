@@ -2,12 +2,6 @@ import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 
 const AddModalityModal = ({ addModality, isLoading }) => {
-  // const displayPreview = (e) => {
-  //   var urlCreator = window.URL || window.webkitURL;
-  //   var imageUrl = urlCreator.createObjectURL(e.target.files[0]);
-  //   $("#modalityIconPreview").attr("src", imageUrl);
-  // };
-
   return (
     <div
       className="modal fade contentmodal"
@@ -119,7 +113,6 @@ const AddModalityModal = ({ addModality, isLoading }) => {
                   hidden="hidden"
                   id="disabledModalityCheckbox"
                   name="modalityDisabledSwitch"
-                  // defaultChecked="checked"
                   // required
                 />
                 <label
@@ -127,33 +120,6 @@ const AddModalityModal = ({ addModality, isLoading }) => {
                   htmlFor="disabledModalityCheckbox"
                 ></label>
               </div>
-
-              {/* <div className="change-photo-btn">
-                <div>
-                  <i>
-                    <FeatherIcon icon="upload" />
-                  </i>
-                  <p className="font-12">آپلود آیکون</p>
-                </div>
-                <input
-                  type="file"
-                  className="upload"
-                  name="addModalityIcon"
-                  onChange={displayPreview}
-                  id="addModalityIcon"
-                  required
-                />
-              </div>
-
-              <div className="previewImgContainer">
-                <Image
-                  src=""
-                  alt=""
-                  width="200"
-                  id="modalityIconPreview"
-                  className="d-block m-auto previewImg"
-                />
-              </div> */}
 
               <div className="submit-section">
                 {!isLoading ? (

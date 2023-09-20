@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import SpecializedWorksListTable from "components/dashboard/specializedWorks/specializedWorksListTable";
-import AddSpeWorkModal from "components/dashboard/specializedWorks/addspeWorkModal";
+import AddSpeWorkModal from "components/dashboard/specializedWorks/addSpeWorkModal";
 import EditSpeWorkModal from "components/dashboard/specializedWorks/editSpeWorkModal";
 
 let CenterID = null;

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import Select from "react-select";
 import JDate from "jalali-date";
-import Loading from "components/commonComponents/loading/Loading";
+import Loading from "components/commonComponents/loading/loading";
 import OverviewStats from "components/dashboard/overview/overviewStats";
 
 const jdate = new JDate();

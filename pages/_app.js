@@ -6,7 +6,7 @@ import "public/assets/plugins/fontawesome/css/fontawesome.min.css";
 import "public/assets/plugins/fontawesome/css/all.min.css";
 import "public/assets/css/font-awesome.min.css";
 import "public/assets/css/style.css";
-import { favicon } from "components/imagePath";
+import { favicon } from "components/imagepath";
 import DashboardLayout from "src/app/dashboard/layout";
 import {
   useQuery,

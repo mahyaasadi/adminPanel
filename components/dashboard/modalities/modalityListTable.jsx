@@ -7,7 +7,11 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 
-const ModalityListTable = ({ data, updateModality }) => {
+const ModalityListTable = ({
+  data,
+  updateModality,
+  openSubModalitiesModal,
+}) => {
   const columns = [
     {
       name: "عنوان",
@@ -30,23 +34,20 @@ const ModalityListTable = ({ data, updateModality }) => {
     {
       name: "آیکون",
       selector: (row) => row.Icon,
-      sortable: true,
       cell: (row) => (
         <div>
           <img
             src={"https://irannobat.ir/admin/assets/img/" + row.Icon}
             alt=""
-            style={{ width: "30px", height: "30px" }}
+            style={{ width: "28px", height: "28px" }}
           />
         </div>
       ),
-      width: "400px",
+      width: "370px",
     },
     {
       name: "عملیات ها",
       selector: (row) => row._id,
-      sortable: true,
-
       cell: (row) => (
         <div className="actions d-flex gap-2">
           <button
@@ -59,6 +60,18 @@ const ModalityListTable = ({ data, updateModality }) => {
             <FeatherIcon
               style={{ width: "15px", height: "15px" }}
               icon="edit-3"
+            />
+          </button>
+          <button
+            className="btn btn-sm btn-outline-primary "
+            onClick={() => openSubModalitiesModal(row, row.Modality, row._id)}
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="زیر مجموعه ها"
+          >
+            <FeatherIcon
+              style={{ width: "15px", height: "15px" }}
+              icon="layers"
             />
           </button>
         </div>

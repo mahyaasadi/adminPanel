@@ -9,13 +9,20 @@ import Loading from "components/commonComponents/loading/loading";
 import ModalityListTable from "components/dashboard/modalities/modalityListTable";
 import AddModalityModal from "components/dashboard/modalities/addModalityModal";
 import EditModalityModal from "components/dashboard/modalities/editModalityModal";
+import SubModalitiesModal from "components/dashboard/modalities/subModalities/subModalitiesModal";
+import AddSubModalityModal from "components/dashboard/modalities/subModalities/addSubModalityModal";
+import EditSubModalityModal from "components/dashboard/modalities/subModalities/editSubModalityModal";
 
-let ActiveModalityID = null;
+let ActiveModalityID,
+  ActiveModalityName = null;
 
 const Modalities = ({}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [modalityData, setModalityData] = useState([]);
   const [editModalityData, setEditModalityData] = useState({ empty: 1 });
+
+  const [subModalityData, setSubModalityData] = useState([]);
+  const [editSubModalityData, setEditSubModalityData] = useState([]);
 
   // get all modalities
   const getModalities = () => {
@@ -25,7 +32,7 @@ const Modalities = ({}) => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log(response.data);
+        console.log("modalities", response.data);
         setIsLoading(false);
         setModalityData(response.data);
       })
@@ -35,6 +42,7 @@ const Modalities = ({}) => {
       });
   };
 
+  // Add Modality
   const openAddModalityModal = () => {
     $("#addModalityModal").modal("show");
   };
@@ -56,15 +64,12 @@ const Modalities = ({}) => {
       Disabled: formProps.modalityDisabledSwitch === "on" ? false : true,
     };
 
-    console.log("data", data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
         setIsLoading(false);
-
         setModalityData([...modalityData, response.data]);
+
         $("#addModalityModal").modal("hide");
         e.target.reset();
       })
@@ -157,6 +162,131 @@ const Modalities = ({}) => {
       ]);
   };
 
+  // ----- subModalities ------
+  const openSubModalitiesModal = (data, ModalityName, ModalityId) => {
+    $("#subModalitiesModal").modal("show");
+    ActiveModalityID = ModalityId;
+    ActiveModalityName = ModalityName;
+    setSubModalityData(data.Sub);
+  };
+
+  // add
+  const openAddSubModalityModal = () => $("#addSubModalityModal").modal("show");
+
+  const addSubModality = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+
+    let url = "Modality/addSub";
+    let data = {
+      ModalityID: ActiveModalityID,
+      Title: formProps.addSubModalityTitle,
+      Link: formProps.addSubModalityLink,
+      Des: formProps.addSubModalityDes,
+    };
+
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data);
+        setSubModalityData([...subModalityData, response.data]);
+
+        getModalities();
+        $("#addSubModalityModal").modal("hide");
+        e.target.reset();
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        ErrorAlert("خطا", "افزودن زیر مجموعه با خطا مواجه گردید!");
+        setIsLoading(false);
+      });
+  };
+
+  // delete
+  const deleteSubModality = async (id) => {
+    let result = await QuestionAlert(
+      "حذف زیر مجموعه !",
+      "آیا از حذف زیر مجموعه اطمینان دارید؟"
+    );
+
+    if (result) {
+      let url = "Modality/Sub";
+      let data = {
+        ModalityID: ActiveModalityID,
+        SubID: id,
+      };
+
+      await axiosClient
+        .delete(url, { data })
+        .then((response) => {
+          setSubModalityData(subModalityData.filter((a) => a._id !== id));
+          getModalities();
+        })
+        .catch((error) => {
+          console.log(error);
+          ErrorAlert("خطا", "حذف زیر مجموعه با خطا مواجه گردید!");
+        });
+    }
+  };
+
+  // edit
+  const updateSubModality = (data) => {
+    setEditSubModalityData(data);
+    $("#editSubModalityModal").modal("show");
+  };
+
+  const editSubModality = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    let url = "Modality/editSub";
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
+
+    let data = {
+      SubID: formProps.editSubModalityId,
+      Title: formProps.editSubModalityTitle,
+      Link: formProps.editSubModalityLink,
+      Des: formProps.editSubModalityDes,
+    };
+
+    console.log({ data });
+
+    axiosClient
+      .put(url, data)
+      .then((response) => {
+        console.log(response.data);
+        updateSubItem(formProps.editSubModalityId, response.data);
+        getModalities();
+        $("#editSubModalityModal").modal("hide");
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
+        setIsLoading(false);
+      });
+  };
+
+  const updateSubItem = (id, newArr) => {
+    let index = subModalityData.findIndex((x) => x._id === id);
+    let g = subModalityData[index];
+    g = newArr;
+
+    if (index === -1) {
+      console.log("no match");
+    } else
+      setSubModalityData([
+        ...subModalityData.slice(0, index),
+        g,
+        ...subModalityData.slice(index + 1),
+      ]);
+  };
+
   useEffect(() => {
     getModalities();
   }, []);
@@ -209,6 +339,7 @@ const Modalities = ({}) => {
                   <ModalityListTable
                     data={modalityData}
                     updateModality={updateModality}
+                    openSubModalitiesModal={openSubModalitiesModal}
                   />
                 </div>
 
@@ -226,6 +357,25 @@ const Modalities = ({}) => {
           isLoading={isLoading}
           handleDisabledSwitch={handleDisabledSwitch}
           handleCheckedDisabledModality={handleCheckedDisabledModality}
+        />
+
+        <SubModalitiesModal
+          data={subModalityData}
+          modalityName={ActiveModalityName}
+          openAddSubModalityModal={openAddSubModalityModal}
+          deleteSubModality={deleteSubModality}
+          updateSubModality={updateSubModality}
+        />
+
+        <AddSubModalityModal
+          addSubModality={addSubModality}
+          isLoading={isLoading}
+        />
+
+        <EditSubModalityModal
+          data={editSubModalityData}
+          isLoading={isLoading}
+          editSubModality={editSubModality}
         />
       </div>
     </>

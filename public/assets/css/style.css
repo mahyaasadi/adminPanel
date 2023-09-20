@@ -8879,6 +8879,10 @@ ul li .active {
   text-align: center;
 }
 
+.ServiceNav {
+  cursor: pointer;
+}
+
 .patientInfo {
   padding: 0 12px;
   margin-top: 2em;
