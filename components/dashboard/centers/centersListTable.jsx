@@ -15,15 +15,19 @@ const CentersListTable = ({
   ChangeTablePage,
   activeOR,
   deActiveOR,
+  deActivateCenter,
+  activateCenter,
+  setSerachableCenter,
+  removeSearchableCenter,
 }) => {
   data?.map((center, index) => {
-    data[index].Number = index + 1;
+    data[index].rowNumber = index + 1;
   });
 
   const columns = [
     {
       name: "ردیف",
-      selector: (row) => row.Number,
+      selector: (row) => row.rowNumber,
       sortable: true,
       width: "100px",
     },
@@ -31,7 +35,7 @@ const CentersListTable = ({
       name: "نام مرکز",
       selector: (row) => row.Name,
       sortable: true,
-      width: "360px",
+      width: "330px",
     },
     {
       name: "لوگو",
@@ -58,7 +62,7 @@ const CentersListTable = ({
         ) : (
           ""
         ),
-      width: "160px",
+      width: "130px",
     },
     {
       name: "عملیات ها",
@@ -69,7 +73,7 @@ const CentersListTable = ({
             <button
               className="btn btn-sm btn-outline-success font-13"
               type="button"
-              // onClick={() => deActivateUser(row._id)}
+              onClick={() => deActivateCenter(row._id)}
               data-bs-toggle="tooltip"
               data-bs-placement="top"
               title="غیر فعال سازی"
@@ -85,7 +89,7 @@ const CentersListTable = ({
             <button
               className="btn btn-sm btn-outline-danger"
               type="button"
-              // onClick={() => activateUser(row._id)}
+              onClick={() => activateCenter(row._id)}
               data-bs-toggle="tooltip"
               data-bs-placement="top"
               title="فعال سازی"
@@ -96,6 +100,30 @@ const CentersListTable = ({
                   icon="x-circle"
                 />
               </i>
+            </button>
+          )}
+
+          {row.Searchable ? (
+            <button
+              className="btn btn-sm btn-outline-success font-13"
+              type="button"
+              onClick={() => removeSearchableCenter(row._id)}
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="غیر فعال سازی قابلیت جستجو"
+            >
+              <i className="fe fe-search centerSearchBtn"></i>
+            </button>
+          ) : (
+            <button
+              className="btn btn-sm btn-outline-danger d-flex justify-center align-items-center"
+              type="button"
+              onClick={() => setSerachableCenter(row._id)}
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="فعال سازی قابلیت جستجو"
+            >
+              <i className="fe fe-search centerSearchBtn"></i>
             </button>
           )}
 

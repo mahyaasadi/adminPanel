@@ -41,55 +41,6 @@ const CentersManagement = () => {
   // let selectedPage = router.query.page;
   const [selectedPage, setSelectedPage] = useState(null);
 
-  // OR State
-  const ChangeOR = async (id, type) => {
-    let findIndex = centersData.findIndex((x) => x._id === id);
-    centersData[findIndex].OR = type;
-    let data = centersData;
-    await setCentersData([]);
-    console.log(centersData);
-    setTimeout(() => {
-      setCentersData(data);
-    }, 100);
-  };
-
-  const activeOR = async (id) => {
-    let result = await QuestionAlert(
-      "تغییر وضعیت نوبت دهی!",
-      "آیا از ثبت وضعیت نوبت دهی به فعال اطمینان دارید؟"
-    );
-    if (result) {
-      let url = "Center/setOR/" + id;
-      axiosClient
-        .put(url)
-        .then((response) => {
-          ChangeOR(id, true);
-        })
-        .catch((error) => {
-          console.log(error);
-          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید");
-        });
-    }
-  };
-  const deActiveOR = async (id) => {
-    let result = await QuestionAlert(
-      "تغییر وضعیت نوبت دهی!",
-      "آیا از ثبت وضعیت نوبت دهی به غیر فعال اطمینان دارید؟"
-    );
-    if (result) {
-      let url = "Center/removeOR/" + id;
-      axiosClient
-        .put(url)
-        .then((response) => {
-          ChangeOR(id, false);
-        })
-        .catch((error) => {
-          console.log(error);
-          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید");
-        });
-    }
-  };
-
   const ChangeTablePage = (e) => {
     const url = new URL(location);
     url.searchParams.set("page", e);
@@ -108,6 +59,7 @@ const CentersManagement = () => {
     axiosClient
       .get(url)
       .then((response) => {
+        console.log("all centers", response.data);
         setCentersData(response.data);
         setIsLoading(false);
       })
@@ -434,6 +386,179 @@ const CentersManagement = () => {
       });
   };
 
+  // OR State
+  const ChangeOR = async (id, type) => {
+    let findIndex = centersData.findIndex((x) => x._id === id);
+    centersData[findIndex].OR = type;
+    let data = centersData;
+    await setCentersData([]);
+    console.log(centersData);
+    setTimeout(() => {
+      setCentersData(data);
+    }, 100);
+  };
+
+  const activeOR = async (id) => {
+    let result = await QuestionAlert(
+      "تغییر وضعیت نوبت دهی!",
+      "آیا از ثبت وضعیت نوبت دهی به فعال اطمینان دارید؟"
+    );
+    if (result) {
+      let url = "Center/setOR/" + id;
+      axiosClient
+        .put(url)
+        .then((response) => {
+          ChangeOR(id, true);
+        })
+        .catch((error) => {
+          console.log(error);
+          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید");
+        });
+    }
+  };
+  const deActiveOR = async (id) => {
+    let result = await QuestionAlert(
+      "تغییر وضعیت نوبت دهی!",
+      "آیا از ثبت وضعیت نوبت دهی به غیر فعال اطمینان دارید؟"
+    );
+    if (result) {
+      let url = "Center/removeOR/" + id;
+      axiosClient
+        .put(url)
+        .then((response) => {
+          ChangeOR(id, false);
+        })
+        .catch((error) => {
+          console.log(error);
+          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید");
+        });
+    }
+  };
+
+  // change center activeState
+  const changeCenterActiveState = (id, type) => {
+    let findCenter = centersData.find((x) => x._id === id);
+    findCenter.Deactive = type;
+    let findIndex = centersData.findIndex((x) => x._id === id);
+    centersData[findIndex] = findCenter;
+
+    // console.log({ findCenter });
+    setCentersData(centersData);
+    // console.log({ centersData });
+  };
+
+  // activate center
+  const activateCenter = async (id) => {
+    let result = await QuestionAlert(
+      "فعال سازی مرکز",
+      "آیا از فعال سازی مرکز اطمینان دارید؟"
+    );
+
+    if (result) {
+      setIsLoading(true);
+      let url = `Center/setActive/${id}`;
+
+      await axiosClient
+        .put(url)
+        .then((response) => {
+          console.log(response.data);
+          changeCenterActiveState(id, false);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
+  // deActivate center
+  const deActivateCenter = async (id) => {
+    let result = await QuestionAlert(
+      "غیرفعال سازی مرکز!",
+      "آیا از غیرفعال سازی مرکز اطمینان دارید؟"
+    );
+
+    if (result) {
+      setIsLoading(true);
+      let url = `Center/setDeactive/${id}`;
+
+      await axiosClient
+        .put(url)
+        .then((response) => {
+          console.log(response.data);
+          changeCenterActiveState(id, true);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
+  // change center searchableState
+  const changeCenterSearchableState = (id, type) => {
+    let findCenter = centersData.find((x) => x._id === id);
+    findCenter.Searchable = type;
+    let findIndex = centersData.findIndex((x) => x._id === id);
+    centersData[findIndex] = findCenter;
+
+    console.log({ findCenter });
+    setCentersData(centersData);
+    console.log({ centersData });
+  };
+
+  // activate center
+  const setSerachableCenter = async (id) => {
+    let result = await QuestionAlert(
+      "قابل جستجو سازی مرکز",
+      "آیا از فعال کردن این قابلیت اطمینان دارید؟"
+    );
+
+    if (result) {
+      setIsLoading(true);
+      let url = `Center/setSearchable/${id}`;
+
+      await axiosClient
+        .put(url)
+        .then((response) => {
+          console.log(response.data);
+          changeCenterSearchableState(id, true);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
+  // deActivate center
+  const removeSearchableCenter = async (id) => {
+    let result = await QuestionAlert(
+      "غیر قابل جستجو سازی مرکز!",
+      "آیا از غیر فعال کردن این قابلیت اطمینان دارید؟"
+    );
+
+    if (result) {
+      setIsLoading(true);
+      let url = `Center/removeSearchable/${id}`;
+
+      await axiosClient
+        .put(url)
+        .then((response) => {
+          console.log(response.data);
+          changeCenterSearchableState(id, false);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
   useEffect(() => {
     getCentersData();
     getAllProvinces();
@@ -506,6 +631,10 @@ const CentersManagement = () => {
                     ChangeTablePage={ChangeTablePage}
                     activeOR={activeOR}
                     deActiveOR={deActiveOR}
+                    activateCenter={activateCenter}
+                    deActivateCenter={deActivateCenter}
+                    setSerachableCenter={setSerachableCenter}
+                    removeSearchableCenter={removeSearchableCenter}
                   />
                 </div>
 

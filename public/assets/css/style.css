@@ -8918,6 +8918,14 @@ ul li .active {
   flex: 1 1 auto;
 }
 
+.centerSearchBtn {
+  width: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px !important;
+}
+
 .nav-border {
   border-bottom: 1px solid lightgray !important;
 }

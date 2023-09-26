@@ -254,12 +254,12 @@ const Modalities = ({}) => {
       Des: formProps.editSubModalityDes,
     };
 
-    console.log({ data });
+    // console.log({ data });
 
     axiosClient
       .put(url, data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         updateSubItem(formProps.editSubModalityId, response.data);
         getModalities();
         $("#editSubModalityModal").modal("hide");
