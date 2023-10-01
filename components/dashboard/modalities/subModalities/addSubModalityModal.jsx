@@ -8,7 +8,7 @@ const AddSubModalityModal = ({ addSubModality, isLoading }) => {
       tabIndex="-1"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content doctor-profile">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">
@@ -28,6 +28,20 @@ const AddSubModalityModal = ({ addSubModality, isLoading }) => {
           <div className="modal-body">
             <form onSubmit={addSubModality}>
               <div className="row">
+                <div className="form-group col">
+                  <label className="lblAbs font-12">
+                    نام <span className="text-danger">*</span>
+                  </label>
+                  <div className="col p-0">
+                    <input
+                      type="text"
+                      name="addSubModalityName"
+                      className="form-control floating inputPadding rounded"
+                      required
+                    />
+                  </div>
+                </div>
+
                 <div className="form-group col">
                   <label className="lblAbs font-12">
                     عنوان <span className="text-danger">*</span>

@@ -6,8 +6,6 @@ const BusinessHoursModal = ({
   updateBusinessHour,
   changeToAllDayMode,
 }) => {
-  // console.log(data);
-
   return (
     <div
       className="modal fade contentmodal"

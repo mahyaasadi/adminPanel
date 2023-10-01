@@ -8,15 +8,18 @@ import "public/assets/css/font-awesome.min.css";
 import "public/assets/css/style.css";
 import { favicon } from "components/imagepath";
 import DashboardLayout from "src/app/dashboard/layout";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "react-query";
+// import {
+//   useQuery,
+//   useMutation,
+//   useQueryClient,
+//   QueryClient,
+//   QueryClientProvider,
+// } from "react-query";
+import { PrimeReactProvider } from "primereact/api";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import "primereact/resources/primereact.css";
 
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
 export default function MyApp({ Component, pageProps }) {
   return (
@@ -43,11 +46,14 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
 
       {/* Provide the client to your App */}
-      <QueryClientProvider client={queryClient}>
+      <PrimeReactProvider>
         <DashboardLayout>
           <Component {...pageProps} />
         </DashboardLayout>
-      </QueryClientProvider>
+      </PrimeReactProvider>
+
+      {/* <QueryClientProvider client={queryClient}> */}
+      {/* </QueryClientProvider> */}
     </>
   );
 }

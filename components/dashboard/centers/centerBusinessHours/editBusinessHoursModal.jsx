@@ -123,7 +123,7 @@ const EditBusinessHourModal = ({ data, editBusinessHours, isLoading }) => {
                 </div>
               </div>
 
-              <div className="submit-section">
+              <div className="submit-section mt-0">
                 {!isLoading ? (
                   <button
                     type="submit"
@@ -132,7 +132,11 @@ const EditBusinessHourModal = ({ data, editBusinessHours, isLoading }) => {
                     ثبت تغییرات
                   </button>
                 ) : (
-                  <button type="submit" className="btn btn-primary rounded" disabled>
+                  <button
+                    type="submit"
+                    className="btn btn-primary rounded"
+                    disabled
+                  >
                     <span
                       className="spinner-border spinner-border-sm me-2"
                       role="status"

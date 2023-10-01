@@ -12,25 +12,31 @@ const SubModalitiesModal = ({
   deleteSubModality,
   updateSubModality,
 }) => {
-  // console.log({ data });
+  console.log({ data });
   const columns = [
     {
-      name: "عنوان",
-      selector: (row) => row.Title,
+      name: "نام",
+      selector: (row) => (row.Name ? row.Name.substr(0, 25) : ""),
       sortable: true,
-      width: "150px",
+      width: "200px",
+    },
+    {
+      name: "عنوان",
+      selector: (row) => row.Title.substr(0, 25) + " ...",
+      sortable: true,
+      width: "210px",
     },
     {
       name: "لینک",
       selector: (row) => row.Link,
       sortable: true,
-      width: "auto",
+      width: "160px",
     },
     {
       name: "توضیحات",
-      selector: (row) => row.Des.substr(0, 50) + " ...",
+      selector: (row) => row.Des.substr(0, 40) + " ...",
       sortable: true,
-      width: "auto",
+      width: "350px",
     },
     {
       name: "عملیات ها",
@@ -65,7 +71,7 @@ const SubModalitiesModal = ({
           </button>
         </div>
       ),
-      width: "120px",
+      width: "100px",
     },
   ];
 
@@ -82,7 +88,7 @@ const SubModalitiesModal = ({
         tabIndex="-1"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered modal-lg">
+        <div className="modal-dialog modal-dialog-centered modal-xl">
           <div className="modal-content">
             <div className="modal-header">
               <div className="loeing-header">

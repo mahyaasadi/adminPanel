@@ -183,10 +183,13 @@ const Modalities = ({}) => {
     let url = "Modality/addSub";
     let data = {
       ModalityID: ActiveModalityID,
+      Name: formProps.addSubModalityName,
       Title: formProps.addSubModalityTitle,
       Link: formProps.addSubModalityLink,
       Des: formProps.addSubModalityDes,
     };
+
+    console.log({ data });
 
     axiosClient
       .post(url, data)
@@ -249,6 +252,7 @@ const Modalities = ({}) => {
 
     let data = {
       SubID: formProps.editSubModalityId,
+      Name: formProps.editSubModalityName,
       Title: formProps.editSubModalityTitle,
       Link: formProps.editSubModalityLink,
       Des: formProps.editSubModalityDes,

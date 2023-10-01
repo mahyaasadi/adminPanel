@@ -1,5 +1,3 @@
-import FeatherIcon from "feather-icons-react";
-import Image from "next/image";
 import NavLink from "./NavLink";
 
 const ModalitiesHeader = ({ data, getDepServices }) => {

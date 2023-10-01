@@ -29,13 +29,13 @@ const CentersListTable = ({
       name: "ردیف",
       selector: (row) => row.rowNumber,
       sortable: true,
-      width: "100px",
+      width: "85px",
     },
     {
       name: "نام مرکز",
       selector: (row) => row.Name,
       sortable: true,
-      width: "330px",
+      width: "300px",
     },
     {
       name: "لوگو",
@@ -62,7 +62,7 @@ const CentersListTable = ({
         ) : (
           ""
         ),
-      width: "130px",
+      width: "120px",
     },
     {
       name: "عملیات ها",
@@ -112,7 +112,7 @@ const CentersListTable = ({
               data-bs-placement="top"
               title="غیر فعال سازی قابلیت جستجو"
             >
-              <i className="fe fe-search centerSearchBtn"></i>
+              <i className="fe fe-search centerTableBtn"></i>
             </button>
           ) : (
             <button
@@ -123,7 +123,7 @@ const CentersListTable = ({
               data-bs-placement="top"
               title="فعال سازی قابلیت جستجو"
             >
-              <i className="fe fe-search centerSearchBtn"></i>
+              <i className="fe fe-search centerTableBtn"></i>
             </button>
           )}
 
@@ -172,6 +172,7 @@ const CentersListTable = ({
             <FeatherIcon
               icon="edit-3"
               style={{ width: "16px", height: "16px" }}
+              className="centerTableBtn"
             />
           </button>
 
@@ -182,10 +183,7 @@ const CentersListTable = ({
             data-bs-placement="top"
             title="ساعات کاری"
           >
-            <FeatherIcon
-              icon="clock"
-              style={{ width: "16px", height: "16px" }}
-            />
+            <FeatherIcon icon="clock" className="centerTableBtn" />
           </button>
 
           <Link
@@ -198,10 +196,7 @@ const CentersListTable = ({
             data-bs-placement="top"
             title="تلفن های مرکز"
           >
-            <FeatherIcon
-              icon="phone"
-              style={{ width: "16px", height: "16px" }}
-            />
+            <FeatherIcon icon="phone" style={{ width: "15px" }} />
           </Link>
 
           <button
@@ -211,10 +206,7 @@ const CentersListTable = ({
             title="درباره مرکز"
             onClick={() => openAboutUsModal(row, row._id, row.Name)}
           >
-            <FeatherIcon
-              icon="info"
-              style={{ width: "15px", height: "15px" }}
-            />
+            <FeatherIcon icon="info" className="centerTableBtn" />
           </button>
 
           <Link
@@ -270,6 +262,15 @@ const CentersListTable = ({
             }}
           >
             پزشکان
+          </Link>
+          <Link
+            className="btn btn-sm btn-outline-primary btn-border-left-primary font-13"
+            href={{
+              pathname: "/subDepartments",
+              query: { id: row._id },
+            }}
+          >
+            انتخاب زیر بخش
           </Link>
           <Link
             className="btn btn-sm btn-outline-primary btn-border-left-primary font-13"

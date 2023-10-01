@@ -119,10 +119,12 @@ const Departments = () => {
         console.log(error);
       });
   };
+  console.log({ departmentsData });
 
   useEffect(() => {
     if (Router.isReady) {
       CenterID = Router.query.id;
+
       getDepartments();
       if (!CenterID) return null;
     }

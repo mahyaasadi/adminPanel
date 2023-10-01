@@ -238,62 +238,53 @@ const Services = () => {
             data={modalityData}
             getDepServices={getDepServices}
           />
-
-          {isLoading ? (
-            <Loading />
-          ) : (
-            ((
-              <div className="page-header">
-                <div className="row align-items-center">
-                  <div className="col-md-12 d-flex justify-content-end mt-4">
-                    <button
-                      onClick={openAddSrvModal}
-                      className="btn btn-primary btn-add"
-                    >
-                      <i className="me-1">
-                        <FeatherIcon icon="plus-square" />
-                      </i>{" "}
-                      افزودن
-                    </button>
-                  </div>
-                </div>
+          <div className="page-header">
+            <div className="row align-items-center">
+              <div className="col-md-12 d-flex justify-content-end mt-4">
+                <button
+                  onClick={openAddSrvModal}
+                  className="btn btn-primary btn-add"
+                >
+                  <i className="me-1">
+                    <FeatherIcon icon="plus-square" />
+                  </i>{" "}
+                  افزودن
+                </button>
               </div>
-            ),
-            (
-              <div className="row">
-                <div className="col-sm-12">
-                  <div className="card">
-                    <div className="card-header border-bottom-0">
-                      <div className="row align-items-center">
-                        <div className="col">
-                          <h5 className="card-title font-16">لیست سرویس ها</h5>
-                        </div>
-                        <div className="col-auto d-flex flex-wrap">
-                          <div className="form-custom me-2">
-                            <div
-                              id="tableSearch"
-                              className="dataTables_wrapper"
-                            ></div>
-                          </div>
-                        </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-12">
+              <div className="card">
+                <div className="card-header border-bottom-0">
+                  <div className="row align-items-center">
+                    <div className="col">
+                      <h5 className="card-title font-16">لیست سرویس ها</h5>
+                    </div>
+                    <div className="col-auto d-flex flex-wrap">
+                      <div className="form-custom me-2">
+                        <div
+                          id="tableSearch"
+                          className="dataTables_wrapper"
+                        ></div>
                       </div>
                     </div>
-
-                    <ServicesListTable
-                      data={servicesData}
-                      deleteService={deleteService}
-                      updateService={updateService}
-                    />
                   </div>
-
-                  <div
-                    id="tablepagination"
-                    className="dataTables_wrapper"
-                  ></div>
                 </div>
+
+                {isLoading ? (
+                  <Loading />
+                ) : (
+                  <ServicesListTable
+                    data={servicesData}
+                    deleteService={deleteService}
+                    updateService={updateService}
+                  />
+                )}
               </div>
-            ))
-          )}
+              <div id="tablepagination" className="dataTables_wrapper"></div>
+            </div>
+          </div>
         </div>
 
         <AddServiceModal addService={addService} isLoading={isLoading} />

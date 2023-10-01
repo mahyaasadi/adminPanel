@@ -1,8 +1,16 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
+import { Editor } from "primereact/editor";
 // import EditorNoSSR from "components/commonComponents/textEditor";
 
 const SubTextEditor = ({ data }) => {
+  const [text, setText] = useState(null);
+
+  useEffect(() => {
+    setText(data.Text);
+    console.log({ text });
+  }, [data]);
+
   return (
     <>
       <div
@@ -30,8 +38,11 @@ const SubTextEditor = ({ data }) => {
               <form>
                 <div className="card">
                   <div className="card-body">
-                    <div id="subText"></div>
-                    {/* <EditorNoSSR data={data?.Text} /> */}
+                    <Editor
+                      value={text}
+                      onTextChange={(e) => setText(e.htmlValue)}
+                      style={{ height: "320px" }}
+                    />
                   </div>
                 </div>
 
@@ -51,4 +62,5 @@ const SubTextEditor = ({ data }) => {
     </>
   );
 };
+
 export default SubTextEditor;

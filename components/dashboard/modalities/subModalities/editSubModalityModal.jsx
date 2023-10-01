@@ -8,7 +8,7 @@ const EditSubModalityModal = ({ data, isLoading, editSubModality }) => {
       tabIndex="-1"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered">
+      <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content doctor-profile">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">
@@ -27,6 +27,22 @@ const EditSubModalityModal = ({ data, isLoading, editSubModality }) => {
           </div>
           <div className="modal-body">
             <form onSubmit={editSubModality}>
+              <div className="form-group">
+                <label className="lblAbs font-12">
+                  نام <span className="text-danger">*</span>
+                </label>
+                <div className="col p-0">
+                  <input
+                    className="form-control floating inputPadding rounded"
+                    type="text"
+                    name="editSubModalityName"
+                    defaultValue={data.Name}
+                    key={data.Name}
+                    required
+                  />
+                </div>
+              </div>
+
               <div className="form-group">
                 <input
                   type="hidden"
