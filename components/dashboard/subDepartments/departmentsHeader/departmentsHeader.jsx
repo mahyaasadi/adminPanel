@@ -1,6 +1,6 @@
-import DepNavLink from "./DepNavLink";
+import DepNavLink from "./depNavLink";
 
-const DepartmentsHeader = ({ data, getSubDepartments }) => {
+const DepartmentsHeader = ({ data, handleDepartmentClick }) => {
   let counter = 1;
 
   return (
@@ -16,7 +16,7 @@ const DepartmentsHeader = ({ data, getSubDepartments }) => {
                       activeClass="active"
                       key={index}
                       data={nav}
-                      getSubDepartments={getSubDepartments}
+                      handleDepartmentClick={handleDepartmentClick}
                     />
                   );
                 } else {
@@ -25,7 +25,7 @@ const DepartmentsHeader = ({ data, getSubDepartments }) => {
                       activeClass=""
                       key={index}
                       data={nav}
-                      getSubDepartments={getSubDepartments}
+                      handleDepartmentClick={handleDepartmentClick}
                     />
                   );
                 }

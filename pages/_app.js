@@ -6,7 +6,6 @@ import "public/assets/plugins/fontawesome/css/fontawesome.min.css";
 import "public/assets/plugins/fontawesome/css/all.min.css";
 import "public/assets/css/font-awesome.min.css";
 import "public/assets/css/style.css";
-import { favicon } from "components/imagepath";
 import DashboardLayout from "src/app/dashboard/layout";
 // import {
 //   useQuery,
@@ -15,9 +14,9 @@ import DashboardLayout from "src/app/dashboard/layout";
 //   QueryClient,
 //   QueryClientProvider,
 // } from "react-query";
-import { PrimeReactProvider } from "primereact/api";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.css";
+import { PrimeReactProvider } from 'primereact/api';
 
 // const queryClient = new QueryClient();
 
@@ -45,13 +44,13 @@ export default function MyApp({ Component, pageProps }) {
         />
       </Head>
 
-      {/* Provide the client to your App */}
       <PrimeReactProvider>
         <DashboardLayout>
           <Component {...pageProps} />
         </DashboardLayout>
       </PrimeReactProvider>
 
+      {/* Provide the client to your App */}
       {/* <QueryClientProvider client={queryClient}> */}
       {/* </QueryClientProvider> */}
     </>

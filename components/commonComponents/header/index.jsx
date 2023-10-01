@@ -156,12 +156,12 @@ const Header = () => {
                   <p id="role" className="text-muted mb-0"></p>
                 </div>
               </div>
-              <a className="dropdown-item" href="profile.html">
+              <Link className="dropdown-item" href="/profile">
                 پروفایل من
-              </a>
-              <a className="dropdown-item" href="settings.html">
+              </Link>
+              <Link className="dropdown-item" href="/profileSettings">
                 تنظیمات
-              </a>
+              </Link>
               <a className="dropdown-item" href="login.html">
                 خروج
               </a>
