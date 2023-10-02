@@ -21,7 +21,7 @@ let ActiveCenterID,
 
 const CentersManagement = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [centersData, setCentersData] = useState([]);
   const [provinceOptionsList, setProvinceOptionsList] = useState([]);
   const [cityOptionsList, setCityOptionsList] = useState([]);

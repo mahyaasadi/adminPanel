@@ -3,12 +3,6 @@ import FeatherIcon from "feather-icons-react";
 import { useEffect } from "react";
 
 const DepNavLink = ({ data, activeClass, handleDepartmentClick }) => {
-  useEffect(() => {
-    if (activeClass === "active") {
-      handleDepartmentClick(data._id);
-    }
-  }, []);
-
   return (
     <>
       <li className="nav-item">

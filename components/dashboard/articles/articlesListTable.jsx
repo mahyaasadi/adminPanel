@@ -12,6 +12,8 @@ const ArticlesListTable = ({
   openFAQModal,
   openRelatedArticlesModal,
 }) => {
+  console.log({ articlesData });
+
   return (
     <>
       <div className="row p-4">
@@ -27,7 +29,15 @@ const ArticlesListTable = ({
                   ></img>
 
                   <div className="articleLink">
-                    <div className="">مشاهده مقاله</div>
+                    <Link
+                      href={
+                        "https://irannobat.ir/blog/" +
+                        // articleData.EngTitle.replaceAll(/ /g, "-")
+                        articleData.EngTitle.replace(/ /g, "-")
+                      }
+                    >
+                      مشاهده مقاله
+                    </Link>
                   </div>
                 </div>
 

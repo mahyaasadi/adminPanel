@@ -123,7 +123,7 @@ const MenusManagement = () => {
     };
 
     console.log("addData", addData);
-    
+
     axiosClient
       .post(url, addData)
       .then((response) => {
@@ -190,7 +190,6 @@ const MenusManagement = () => {
       $(".EditPerCheckBox").prop("checked", false);
       data.Permissions.map((per) => {
         $("#EditPer" + per.PermisionID).prop("checked", true);
-        // console.log(data.Permissions);
       });
     }
   }

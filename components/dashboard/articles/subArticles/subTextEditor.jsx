@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
-import { Editor } from 'primereact/editor';
+import { Editor } from "primereact/editor";
 
 const SubTextEditor = ({ data }) => {
-  const [text, setText] = useState(null)
+  const [text, setText] = useState(null);
 
   useEffect(() => {
-    setText(data.Text)
+    setText(data.Text);
   }, [data]);
 
   return (

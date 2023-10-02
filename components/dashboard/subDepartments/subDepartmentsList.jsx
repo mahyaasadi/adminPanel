@@ -1,58 +1,72 @@
-import { useEffect } from "react";
-
-const SubDepartmentsList = ({ data }) => {
-
-  console.log("data in list", data);
-  useEffect(() => {
-
-  }, [data])
+const SubDepartmentsList = ({
+  data,
+  handleCheckedSubDepartments,
+  checkAllSubDeps,
+  unCheckAllSubDeps,
+  selectAllMode,
+}) => {
   return (
     <>
-      <div className="m-auto p-4">
-        {/* <div className="content container-fluid"> */}
-        <form>
-          {data.map((subDepartment, index) => (
-            <div className="checkbox text-secondary permissionCheckbox" key={index}>
-              <div className="checkbox-wrapper checkbox-wrapper-per">
-                <div className="permissionCheckboxTile permissionItem">
-                  {/* <div
-                      // className="checkbox"
-                      // key={index}
-                    > */}
-                  <div className="marginb-sm d-flex align-items-center">
-                    <input
-                      type="checkbox"
-                      id={subDepartment._id}
-                      value={subDepartment.Name}
-                      name="roleAccessList"
-                      className="PerCheckbox-input"
-                    // onChange={() =>
-                    //   dropCheckedPermission(
-                    //     item.id.toString(),
-                    //     item.category
-                    //   )
-                    // }
-                    />
-                    <label
-                      className="permissionLabel font-13"
-                      htmlFor={subDepartment.Name}
-                    >
-                      {subDepartment.Name}
-                    </label>
+      <div className="d-flex justify-center p-25 subDepScroller">
+        <form className="subDepContainer">
+          <div className="subDepFrm">
+            {data.map((subDepartment, index) => (
+              <div className="checkbox" key={index}>
+                <label className="checkbox-wrapper">
+                  <input
+                    type="checkbox"
+                    className="checkbox-input subDepartment"
+                    id={"subDep" + subDepartment._id}
+                    value={subDepartment._id}
+                    onChange={handleCheckedSubDepartments}
+                  />
+                  <div className="checkbox-tile subCheckbox-tile">
+                    <span className="checkbox-icon"></span>
+                    <div className="checkbox-items">
+                      <span className="checkbox-label">
+                        {subDepartment.Name}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                {/* </div>
-                </div> */}
+                </label>
               </div>
+            ))}
+          </div>
+
+          {data.length > 0 ? (
+            <div className="submit-section margint-5 marginb-md1 d-flex media-flex-col gap-1">
+              <button
+                type="submit"
+                className="btn btn-primary font-14 padding-right-2 padding-left-2"
+              >
+                ثبت تغییرات
+              </button>
+
+              {!selectAllMode ? (
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary font-14 padding-right-2 padding-left-2"
+                  onClick={checkAllSubDeps}
+                >
+                  انتخاب همه
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary font-14 padding-right-2 padding-left-2"
+                  onClick={unCheckAllSubDeps}
+                >
+                  انصراف
+                </button>
+              )}
             </div>
-
-
-          ))}
-
+          ) : (
+            " "
+          )}
         </form>
       </div>
-      {/* </div> */}
     </>
   );
 };
+
 export default SubDepartmentsList;
