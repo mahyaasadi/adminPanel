@@ -13,7 +13,7 @@ const BusinessHoursModal = ({
       tabIndex="-1"
       aria-hidden="true"
     >
-      <div className="modal-dialog modal-dialog-centered modal-xl">
+      <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content">
           <div className="modal-header">
             <p className="mb-0 text-secondary font-14 fw-bold">
@@ -58,11 +58,10 @@ const BusinessHoursModal = ({
                       {data?.map((item, index) => (
                         <div key={index} className="row marginb-md1">
                           <div
-                            className={`col-5 left ${
-                              item.Close === "1" || item.Close === true
+                            className={`col-5 left ${item.Close === "1" || item.Close === true
                                 ? "text-danger"
                                 : ""
-                            }`}
+                              }`}
                           >
                             <p>{item.Name}</p>
                           </div>
@@ -70,11 +69,10 @@ const BusinessHoursModal = ({
                             <div className="circle"></div>
                           </div>
                           <div
-                            className={`col-5 right ${
-                              item.Close === "1" || item.Close === true
+                            className={`col-5 right ${item.Close === "1" || item.Close === true
                                 ? "text-danger"
                                 : ""
-                            }`}
+                              }`}
                           >
                             <span dir="ltr" className="">
                               {item.Start ? item.Start : "-- : --"}

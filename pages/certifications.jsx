@@ -20,6 +20,7 @@ const Certifications = () => {
   const [certificationsList, setCertificationsList] = useState([]);
   const [editedCertificate, setEditedCertificate] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [hiddenData, setHiddenData] = useState(null);
 
   //Get certifications list
   const getCertifications = () => {
@@ -169,6 +170,12 @@ const Certifications = () => {
     if (Router.isReady) {
       CenterID = Router.query.id;
       getCertifications();
+      setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+
+      if (hiddenData) {
+        console.log(hiddenData.name);
+        localStorage.removeItem('hiddenData');
+      }
       if (!CenterID) return null;
     }
   }, [Router.isReady]);
@@ -206,7 +213,7 @@ const Certifications = () => {
                 <div className="card-header border-bottom-0">
                   <div className="row align-items-center">
                     <div className="col">
-                      <h5 className="card-title font-16">لیست مجوزها</h5>
+                      <p className="card-title font-14 text-secondary"> لیست مجوزهای {" "}{hiddenData?.name}</p>
                     </div>
                     <div className="col-auto d-flex flex-wrap">
                       <div className="form-custom me-2">

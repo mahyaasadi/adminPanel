@@ -21,6 +21,7 @@ const Insurance = () => {
   const [phoneTypeOptions, setPhoneTypeOptions] = useState(
     centerPhoneTypeDataClass
   );
+  const [hiddenData, setHiddenData] = useState(null);
   const [editPhoneNumberData, setEditPhoneNumberData] = useState([]);
 
   // Get all of centers phoneNumbers
@@ -192,6 +193,12 @@ const Insurance = () => {
       CenterID = Router.query.id;
       getAllPhoneNumbers();
       getCenterAboutUs();
+      setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+
+      if (hiddenData) {
+        console.log(hiddenData.name);
+        localStorage.removeItem('hiddenData');
+      }
       if (!CenterID) return null;
     }
   }, [Router.isReady]);
@@ -227,9 +234,9 @@ const Insurance = () => {
                 <div className="card-header border-bottom-0">
                   <div className="row align-items-center">
                     <div className="col">
-                      <h5 className="card-title font-16">
-                        لیست شماره تلفن های مرکز
-                      </h5>
+                      <p className="card-title font-14 text-secondary">
+                        لیست شماره تلفن های مرکز {""} {hiddenData?.name}
+                      </p>
                     </div>
                     <div className="col-auto d-flex flex-wrap">
                       <div className="form-custom me-2">

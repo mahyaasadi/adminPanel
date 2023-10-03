@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from 'next/router';
 import FeatherIcon from "feather-icons-react";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
+import { Dropdown } from 'primereact/dropdown';
+import { Tooltip } from 'primereact/tooltip';
 
 const CentersListTable = ({
   data,
@@ -20,6 +23,8 @@ const CentersListTable = ({
   setSerachableCenter,
   removeSearchableCenter,
 }) => {
+  const router = useRouter();
+
   data?.map((center, index) => {
     data[index].rowNumber = index + 1;
   });
@@ -35,7 +40,7 @@ const CentersListTable = ({
       name: "نام مرکز",
       selector: (row) => row.Name,
       sortable: true,
-      width: "300px",
+      width: "320px",
     },
     {
       name: "لوگو",
@@ -48,13 +53,14 @@ const CentersListTable = ({
               src={"https://irannobat.ir/CenterProfileImage/" + row.Logo}
               alt=""
             />
+            <Tooltip target=".tooltip-button">حذف لوگو</Tooltip>
             <button
-              className="btn removeImgBtn"
+              className="btn removeImgBtn tooltip-button"
               type="button"
-              // onClick={}
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="حذف لوگو"
+            // onClick={}
+            // data-bs-toggle="tooltip"
+            // data-bs-placement="top"
+            // title="حذف لوگو"
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>
@@ -62,7 +68,81 @@ const CentersListTable = ({
         ) : (
           ""
         ),
-      width: "120px",
+      width: "130px",
+    },
+    {
+      name: "اطلاعات مراکز",
+      cell: (row) => {
+        const [localSelectedLink, setLocalSelectedLink] = useState(null);
+
+        const onLocalLinkChange = (e) => {
+          setLocalSelectedLink(e.value);
+
+          // Set the hidden data in local storage
+          localStorage.setItem('hiddenData', JSON.stringify({
+            name: row.Name,
+            // ... any other hidden data you wish to send
+          }));
+
+          router.push({
+            pathname: e.value.pathname,
+            query: e.value.query,
+          });
+        };
+
+        const localLinks = [
+          {
+            label: 'پزشکان',
+            value: { pathname: "/doctors", query: { id: row._id } },
+          },
+          {
+            label: 'کارهای تخصصی',
+            value: { pathname: "/specializedWorks", query: { id: row._id } }
+          },
+          {
+            label: 'مجوزها',
+            value: { pathname: "/certifications", query: { id: row._id } },
+          },
+          {
+            label: 'بیماری های خاص',
+            value: { pathname: "/specialDiseases", query: { id: row._id } }
+          },
+          {
+            label: 'بیمه های تحت پوشش',
+            value: { pathname: "/insurances", query: { id: row._id } }
+          },
+          {
+            label: 'گالری تصاویر',
+            value: { pathname: "/imagesGallery", query: { id: row._id } }
+          },
+          {
+            label: 'بخش های مرکز',
+            value: { pathname: "/departments", query: { id: row._id } },
+
+          },
+          {
+            label: 'زیربخش های مرکز',
+            value: { pathname: "/subDepartments", query: { id: row._id } }
+          },
+          {
+            label: 'تلفن های مرکز',
+            value: { pathname: "/centerPhoneNumbers", query: { id: row._id } },
+          },
+        ];
+
+        return (
+          <div>
+            <Dropdown
+              value={localSelectedLink}
+              options={localLinks}
+              onChange={onLocalLinkChange}
+              placeholder="انتخاب نمایید"
+              optionLabel="label"
+            />
+          </div>
+        );
+      },
+      width: "250px",
     },
     {
       name: "عملیات ها",
@@ -128,14 +208,16 @@ const CentersListTable = ({
           )}
 
           {row.OR ? (
+
             <button
-              className="btn btn-sm btn-outline-success font-13"
+              className="btn btn-sm btn-outline-success font-13 tooltip-but"
               type="button"
               onClick={() => deActiveOR(row._id)}
               data-bs-toggle="tooltip"
               data-bs-placement="top"
               title="غیر فعال سازی دریافت نوبت"
             >
+              <Tooltip target=".tooltip-but">تتتت</Tooltip>
               <i className="d-flex align-items-center gap-3">
                 <FeatherIcon
                   style={{ width: "16px", height: "16px" }}
@@ -186,7 +268,7 @@ const CentersListTable = ({
             <FeatherIcon icon="clock" className="centerTableBtn" />
           </button>
 
-          <Link
+          {/* <Link
             className="btn btn-sm btn-outline-secondary btn-border-left"
             href={{
               pathname: "/centerPhoneNumbers",
@@ -196,8 +278,7 @@ const CentersListTable = ({
             data-bs-placement="top"
             title="تلفن های مرکز"
           >
-            <FeatherIcon icon="phone" style={{ width: "15px" }} />
-          </Link>
+          </Link> */}
 
           <button
             className="btn btn-sm btn-outline-secondary btn-border-left"
@@ -208,79 +289,6 @@ const CentersListTable = ({
           >
             <FeatherIcon icon="info" className="centerTableBtn" />
           </button>
-
-          <Link
-            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
-            href={{
-              pathname: "/imagesGallery",
-              query: { id: row._id },
-            }}
-          >
-            گالری تصاویر
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
-            href={{
-              pathname: "/insurances",
-              query: { id: row._id },
-            }}
-          >
-            بیمه های تحت پوشش
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
-            href={{
-              pathname: "/specialDiseases",
-              query: { id: row._id },
-            }}
-          >
-            بیماری های خاص
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
-            href={{
-              pathname: "/certifications",
-              query: { id: row._id },
-            }}
-          >
-            مجوزها
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
-            href={{
-              pathname: "/specializedWorks",
-              query: { id: row._id },
-            }}
-          >
-            کارهای تخصصی
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-secondary font-13 btn-border-left"
-            href={{
-              pathname: "/doctors",
-              query: { id: row._id },
-            }}
-          >
-            پزشکان
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-primary btn-border-left-primary font-13"
-            href={{
-              pathname: "/subDepartments",
-              query: { id: row._id },
-            }}
-          >
-            انتخاب زیر بخش
-          </Link>
-          <Link
-            className="btn btn-sm btn-outline-primary btn-border-left-primary font-13"
-            href={{
-              pathname: "/departments",
-              query: { id: row._id },
-            }}
-          >
-            انتخاب بخش
-          </Link>
         </div>
       ),
       width: "150px",

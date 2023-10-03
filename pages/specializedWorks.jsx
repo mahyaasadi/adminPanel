@@ -18,7 +18,7 @@ const SpecializedWorks = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [speWorks, setSpeWorks] = useState([]);
   const [editSpeWork, setEditSpeWork] = useState({});
-
+  const [hiddenData, setHiddenData] = useState(null)
   //get specializedWorks list
   const getSpecializedWorks = () => {
     CenterID = Router.query.id;
@@ -157,7 +157,14 @@ const SpecializedWorks = () => {
   useEffect(() => {
     if (Router.isReady) {
       CenterID = Router.query.id;
+
       getSpecializedWorks();
+      setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+
+      if (hiddenData) {
+        console.log(hiddenData.name);
+        localStorage.removeItem('hiddenData');
+      }
       if (!CenterID) return null;
     }
   }, [Router.isReady]);
@@ -194,8 +201,8 @@ const SpecializedWorks = () => {
                 <div className="card-header border-bottom-0">
                   <div className="row align-items-center">
                     <div className="col">
-                      <p className="card-title font-16">
-                        لیست کارهای تخصصی مرکز
+                      <p className="card-title font-14 text-secondary">
+                        لیست کارهای تخصصی {" "}{hiddenData?.name}
                       </p>
                     </div>
                     <div className="col-auto d-flex flex-wrap">

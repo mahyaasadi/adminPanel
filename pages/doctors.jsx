@@ -20,6 +20,7 @@ const DoctorsList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [doctorsList, setDoctorsList] = useState([]);
   const [editDoctor, setEditDoctor] = useState({});
+  const [hiddenData, setHiddenData] = useState(null)
 
   //get doctors list
   const getDoctorsData = () => {
@@ -162,6 +163,18 @@ const DoctorsList = () => {
     }
   }, [Router.isReady]);
 
+  useEffect(() => {
+    setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+
+    if (hiddenData) {
+      // Use the data
+      console.log(hiddenData.name);
+
+      // Optionally clear the data from local storage if it's only needed once
+      localStorage.removeItem('hiddenData');
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -194,7 +207,9 @@ const DoctorsList = () => {
                 <div className="card-header border-bottom-0">
                   <div className="row align-items-center">
                     <div className="col">
-                      <h5 className="card-title font-16">لیست پزشکان</h5>
+                      <p className="card-title font-14 text-secondary"> لیست پزشکان
+                        {""} {hiddenData?.name}
+                      </p>
                     </div>
                     <div className="col-auto d-flex flex-wrap">
                       <div className="form-custom me-2">

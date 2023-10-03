@@ -20,6 +20,7 @@ const Insurance = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [insuranceList, setInsuranceList] = useState([]);
   const [editedInsurance, setEditedInsurance] = useState([]);
+  const [hiddenData, setHiddenData] = useState(null);
   const [insuranceType, setInsuranceType] = useState(insuranceTypeDataClass);
   const [insuranceStatus, setInsuranceStatus] = useState(
     insuranceStatusDataClass
@@ -177,6 +178,12 @@ const Insurance = () => {
     if (Router.isReady) {
       CenterID = Router.query.id;
       getInsuranceData();
+      setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+
+      if (hiddenData) {
+        console.log(hiddenData.name);
+        localStorage.removeItem('hiddenData');
+      }
       if (!CenterID) return null;
     }
   }, [Router.isReady]);
@@ -213,9 +220,9 @@ const Insurance = () => {
                 <div className="card-header border-bottom-0">
                   <div className="row align-items-center">
                     <div className="col">
-                      <h5 className="card-title font-16">
-                        لیست بیمه های تحت پوشش مرکز
-                      </h5>
+                      <p className="card-title font-14 text-secondary">
+                        لیست بیمه های تحت پوشش {""} {hiddenData?.name}
+                      </p>
                     </div>
                     <div className="col-auto d-flex flex-wrap">
                       <div className="form-custom me-2">

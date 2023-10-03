@@ -38,14 +38,15 @@ const CentersManagement = () => {
   // -------------------
   const [centerAboutUsData, setCenterAboutUsData] = useState([]);
 
-  // let selectedPage = router.query.page;
-  const [selectedPage, setSelectedPage] = useState(null);
+  const initialPage = Number(router.query.page) || 1; // Default to page 1 if no page is provided in the URL.
+  const [selectedPage, setSelectedPage] = useState(initialPage);
 
   const ChangeTablePage = (e) => {
-    const url = new URL(location);
-    url.searchParams.set("page", e);
-    history.pushState(selectedPage, " ", url);
-    // console.log({ e });
+    setSelectedPage(e);
+    router.push({
+      pathname: router.pathname,
+      query: { ...router.query, page: e }
+    }, undefined, { shallow: true });
   };
 
   //get all centers

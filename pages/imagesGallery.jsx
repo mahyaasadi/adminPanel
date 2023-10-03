@@ -17,6 +17,7 @@ const ImagesGallery = () => {
   const Router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [hiddenData, setHiddenData] = useState(null);
   const [imagesData, setImagesData] = useState([]);
 
   //get Images
@@ -146,8 +147,13 @@ const ImagesGallery = () => {
   useEffect(() => {
     if (Router.isReady) {
       CenterID = Router.query.id;
-      console.log(CenterID);
       getImagesGallery();
+      setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+
+      if (hiddenData) {
+        console.log(hiddenData.name);
+        localStorage.removeItem('hiddenData');
+      }
       if (!CenterID) return null;
     }
   }, [Router.isReady]);
@@ -183,7 +189,7 @@ const ImagesGallery = () => {
                 <div className="card-header border-bottom-0">
                   <div className="row align-items-center">
                     <div className="col">
-                      <h5 className="card-title font-16">گالری تصاویر</h5>
+                      <p className="card-title font-14 text-secondary">گالری تصاویر  {""} {hiddenData?.name}</p>
                     </div>
                     <div className="col-auto d-flex flex-wrap">
                       <div className="form-custom me-2">
