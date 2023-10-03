@@ -26,7 +26,7 @@ const RelatedArticlesList = ({
       name: "عنوان انگلیسی",
       selector: (row) => row.Article?.EngTitle.substr(0, 25) + " ...",
       sortable: true,
-      width: "250px",
+      width: "280px",
     },
     {
       name: "عملیات ها",
