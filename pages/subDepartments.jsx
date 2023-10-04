@@ -113,6 +113,27 @@ const SubDepartments = () => {
     $(".subDepartment").prop("checked", false);
   };
 
+  const handleSubmitCheckbox = (e) => {
+    e.preventDefault();
+
+    // checked items:
+    const checkedItems = subDepartmentCheckboxStatus.subDepartmentsOptions;
+
+    // unchecked items:
+    const uncheckedItems = currentSubDepartments
+      .map((item) => item._id)
+      .filter((id) => !checkedItems.includes(id));
+
+    const result = [
+      {
+        checked: checkedItems,
+        unChecked: uncheckedItems,
+      },
+    ];
+
+    console.log({ result });
+  };
+
   useEffect(() => {
     if (router.isReady) {
       CenterID = router.query.id;
@@ -146,6 +167,7 @@ const SubDepartments = () => {
                     checkAllSubDeps={checkAllSubDeps}
                     unCheckAllSubDeps={unCheckAllSubDeps}
                     selectAllMode={selectAllMode}
+                    handleSubmitCheckbox={handleSubmitCheckbox}
                   />
                 </div>
               </div>
