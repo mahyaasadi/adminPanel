@@ -1,5 +1,6 @@
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
+import { Tooltip } from "primereact/tooltip";
 
 const ArticleVideosModal = ({
   data,
@@ -81,14 +82,13 @@ const ArticleVideosModal = ({
                         >
                           <button
                             button="button"
-                            className="btn btn-sm btn-outline-secondary btn-border-left"
+                            className="btn btn-sm btn-outline-secondary btn-border-left editVideo"
                             onClick={() =>
                               updateArticleVideo(videoItem, videoItem._id)
                             }
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="ویرایش"
+                            data-pr-position="top"
                           >
+                            <Tooltip target=".editVideo">ویرایش</Tooltip>
                             <FeatherIcon
                               style={{ width: "14px", height: "14px" }}
                               icon="edit-3"
@@ -96,12 +96,11 @@ const ArticleVideosModal = ({
                           </button>
                           <button
                             type="button"
-                            className="btn btn-sm btn-outline-danger"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="حذف"
+                            className="btn btn-sm btn-outline-danger deleteVideo"
                             onClick={() => deleteArticleVideo(videoItem._id)}
+                            data-pr-position="top"
                           >
+                            <Tooltip target=".deleteVideo">حذف</Tooltip>
                             <FeatherIcon
                               style={{ width: "14px", height: "14px" }}
                               icon="trash-2"

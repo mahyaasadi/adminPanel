@@ -43,10 +43,14 @@ const CentersManagement = () => {
 
   const ChangeTablePage = (e) => {
     setSelectedPage(e);
-    router.push({
-      pathname: router.pathname,
-      query: { ...router.query, page: e }
-    }, undefined, { shallow: true });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, page: e },
+      },
+      undefined,
+      { shallow: true }
+    );
   };
 
   //get all centers
@@ -57,7 +61,7 @@ const CentersManagement = () => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log("all centers", response.data);
+        // console.log("all centers", response.data);
         setCentersData(response.data);
         setIsLoading(false);
       })
@@ -325,7 +329,7 @@ const CentersManagement = () => {
       axiosClient
         .get(url)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setCenterAboutUsData(response.data);
           setIsLoading(false);
         })

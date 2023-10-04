@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
+import { Tooltip } from "primereact/tooltip";
 
 const ArticleTagsListTable = ({ data, updateArticleTag, deleteArticleTag }) => {
   const columns = [
@@ -28,33 +29,29 @@ const ArticleTagsListTable = ({ data, updateArticleTag, deleteArticleTag }) => {
 
       cell: (row) => (
         <div className="actions d-flex gap-2">
-          <Link
-            href="#"
-            className="btn btn-sm btn-outline-danger"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="حذف"
+          <button
+            className="btn btn-sm btn-outline-danger deleteTagAttachment"
             onClick={() => deleteArticleTag(row._id)}
+            data-pr-position="top"
           >
+            <Tooltip target=".deleteTagAttachment">حذف</Tooltip>
             <FeatherIcon
               style={{ width: "16px", height: "16px" }}
               icon="trash-2"
             />
-          </Link>
+          </button>
 
-          <Link
-            href="#"
-            className="btn btn-sm btn-outline-secondary btn-border-left"
+          <button
+            className="btn btn-sm btn-outline-secondary btn-border-left editTagAttachment"
             onClick={() => updateArticleTag(row, row._id)}
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="ویرایش"
+            data-pr-position="top"
           >
+            <Tooltip target=".editTagAttachment">ویرایش</Tooltip>
             <FeatherIcon
               style={{ width: "16px", height: "16px" }}
               icon="edit-3"
             />
-          </Link>
+          </button>
         </div>
       ),
       width: "200px",

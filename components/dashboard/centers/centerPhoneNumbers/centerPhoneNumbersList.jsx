@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
+import { Tooltip } from "primereact/tooltip";
 
 const CenterPhoneNumbersList = ({
   data,
@@ -32,23 +33,23 @@ const CenterPhoneNumbersList = ({
         <div className="actions d-flex gap-1">
           <button
             data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="حذف"
-            className="btn btn-sm btn-outline-danger"
+            className="btn btn-sm btn-outline-danger removeBtn"
             onClick={() => deletePhoneNumber(row._id)}
+            data-pr-position="top"
           >
+            <Tooltip target=".removeBtn">حذف</Tooltip>
             <FeatherIcon
               icon="trash-2"
               style={{ width: "16px", height: "16px" }}
             />
           </button>
+
           <button
-            className="btn btn-sm btn-outline-secondary btn-border-left"
+            className="btn btn-sm btn-outline-secondary btn-border-left editBtn"
             onClick={() => updatePhoneNumber(row)}
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="ویرایش"
+            data-pr-position="top"
           >
+            <Tooltip target=".editBtn">ویرایش</Tooltip>
             <FeatherIcon
               icon="edit-3"
               style={{ width: "16px", height: "16px" }}

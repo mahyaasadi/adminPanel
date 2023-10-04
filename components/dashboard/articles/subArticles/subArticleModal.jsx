@@ -1,4 +1,5 @@
 import FeatherIcon from "feather-icons-react";
+import { Tooltip } from "primereact/tooltip";
 
 const SubArticlesModal = ({
   data,
@@ -131,11 +132,12 @@ const SubArticlesModal = ({
                             <button
                               className="btn removeImgBtn"
                               type="button"
+                              data-pr-position="top"
                               // onClick={}
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="حذف تصویر"
                             >
+                              <Tooltip target=".removeImgBtn">
+                                حذف تصویر
+                              </Tooltip>
                               <FeatherIcon
                                 className="removeImgBtnIcon"
                                 icon="x-circle"
@@ -182,12 +184,11 @@ const SubArticlesModal = ({
                         >
                           <button
                             button="button"
-                            className="btn btn-sm btn-outline-secondary btn-border-left"
+                            className="btn btn-sm btn-outline-secondary btn-border-left textEditor"
                             onClick={() => openSubTextEditor(subArticle)}
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="ویرایشگر متن"
+                            data-pr-position="top"
                           >
+                            <Tooltip target=".textEditor">ویرایشگر متن</Tooltip>
                             <FeatherIcon
                               style={{ width: "14px", height: "14px" }}
                               icon="type"
@@ -195,14 +196,13 @@ const SubArticlesModal = ({
                           </button>
                           <button
                             button="button"
-                            className="btn btn-sm btn-outline-secondary btn-border-left"
+                            className="btn btn-sm btn-outline-secondary btn-border-left editSub"
                             onClick={() =>
                               updateSubArticle(subArticle, subArticle._id)
                             }
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="ویرایش"
+                            data-pr-position="top"
                           >
+                            <Tooltip target=".editSub">ویرایش</Tooltip>
                             <FeatherIcon
                               style={{ width: "14px", height: "14px" }}
                               icon="edit-3"
@@ -210,12 +210,11 @@ const SubArticlesModal = ({
                           </button>
                           <button
                             type="button"
-                            className="btn btn-sm btn-outline-danger"
+                            className="btn btn-sm btn-outline-danger deleteSub"
                             onClick={() => deleteSubArticle(subArticle._id)}
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="حذف"
+                            data-pr-position="top"
                           >
+                            <Tooltip target=".deleteSub">حذف</Tooltip>
                             <FeatherIcon
                               style={{ width: "14px", height: "14px" }}
                               icon="trash-2"
@@ -230,12 +229,11 @@ const SubArticlesModal = ({
                           <button
                             type="button"
                             id={"BtnMoveUp" + index}
-                            className="btn btn-sm btn-outline-primary"
+                            className="btn btn-sm btn-outline-primary moveUp"
                             onClick={() => MoveToUp(subArticle._id)}
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="جا به جایی به بالا"
+                            data-pr-position="top"
                           >
+                            <Tooltip target=".moveUp">انتقال به بالا</Tooltip>
                             <FeatherIcon
                               style={{ width: "14px", height: "14px" }}
                               icon="arrow-up"
@@ -243,12 +241,14 @@ const SubArticlesModal = ({
                           </button>
                           <button
                             type="button"
-                            className="btn btn-sm btn-outline-primary float-start"
+                            className="btn btn-sm btn-outline-primary float-start moveDown"
                             onClick={() => MoveToDown(subArticle._id)}
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="جا به جایی به پایین"
+                            data-pr-position="top"
                           >
+                            <Tooltip target=".moveDown">
+                              انتقال به پایین
+                            </Tooltip>
+
                             <FeatherIcon
                               style={{ width: "14px", height: "14px" }}
                               icon="arrow-down"

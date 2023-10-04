@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
+import { Tooltip } from "primereact/tooltip";
 
 const GrpAttachmentList = ({
   data,
@@ -27,12 +28,11 @@ const GrpAttachmentList = ({
       cell: (row) => (
         <div className="actions d-flex gap-1">
           <button
-            className="btn btn-sm btn-outline-danger"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="حذف"
+            className="btn btn-sm btn-outline-danger deleteGrpAttachment"
             onClick={() => removeGrpFromArticle(row._id)}
+            data-pr-position="top"
           >
+            <Tooltip target=".deleteGrpAttachment">حذف</Tooltip>
             <FeatherIcon
               icon="trash-2"
               style={{ width: "16px", height: "16px" }}

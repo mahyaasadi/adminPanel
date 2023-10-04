@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
@@ -6,6 +7,15 @@ import { organ, neighbourhoods, article } from "components/imagepath";
 
 const Sidebar = () => {
   const router = useRouter();
+
+  const [submenuOpen, setSubmenuOpen] = useState(false);
+
+  useEffect(() => {
+    const articleSubroutes = ["/articles", "/articleGroups", "/articleTags"];
+    if (articleSubroutes.includes(router.pathname)) {
+      setSubmenuOpen(true);
+    }
+  }, []);
 
   return (
     <>
@@ -103,7 +113,7 @@ const Sidebar = () => {
               </li>
 
               <li className="submenu">
-                <a href="#">
+                <a href="#" onClick={() => setSubmenuOpen(!submenuOpen)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -122,7 +132,11 @@ const Sidebar = () => {
                   <span>مدیریت مقالات</span>
                   <span className="menu-arrow"></span>
                 </a>
-                <ul className="hidden hiddenSidebar">
+                <ul
+                  className={`hiddenSidebar ${
+                    submenuOpen ? "d-block" : "hidden"
+                  }`}
+                >
                   <li
                     className={router.pathname == "/articles" ? "active" : ""}
                   >

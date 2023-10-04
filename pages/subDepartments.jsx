@@ -70,13 +70,19 @@ const SubDepartments = () => {
 
   // get subDeps related to each department
   const handleDepartmentClick = (departmentId) => {
+    setIsLoading(true);
+
     const correspondingModality = modalityData.find(
       (mod) => mod._id === departmentId
     );
 
-    correspondingModality
-      ? setCurrentSubDepartments(correspondingModality.Sub)
-      : setCurrentSubDepartments([]);
+    if (correspondingModality) {
+      setCurrentSubDepartments(correspondingModality.Sub);
+      setIsLoading(false);
+    } else {
+      setCurrentSubDepartments([]);
+      setIsLoading(false);
+    }
   };
 
   // subDeps checkbox
@@ -88,13 +94,13 @@ const SubDepartments = () => {
 
     checked
       ? setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: [...subDepartmentsOptions, value],
-      })
+          subDepartmentsOptions: [...subDepartmentsOptions, value],
+        })
       : setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: subDepartmentsOptions.filter(
-          (e) => e !== value
-        ),
-      });
+          subDepartmentsOptions: subDepartmentsOptions.filter(
+            (e) => e !== value
+          ),
+        });
   };
 
   const checkAllSubDeps = () => {

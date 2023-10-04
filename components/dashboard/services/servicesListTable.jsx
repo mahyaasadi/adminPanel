@@ -7,6 +7,7 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 import numberWithCommas from "class/numberWithComma";
+import { Tooltip } from "primereact/tooltip";
 
 const ServicesListTable = ({ data, deleteService, updateService }) => {
   const columns = [
@@ -65,12 +66,11 @@ const ServicesListTable = ({ data, deleteService, updateService }) => {
       cell: (row) => (
         <div className="actions d-flex gap-2">
           <button
-            className="btn btn-sm btn-outline-danger"
+            className="btn btn-sm btn-outline-danger removeBtn"
             onClick={() => deleteService(row._id)}
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="حذف"
+            data-pr-position="top"
           >
+            <Tooltip target=".removeBtn">حذف</Tooltip>
             <FeatherIcon
               style={{ width: "16px", height: "16px" }}
               icon="trash-2"
@@ -78,12 +78,11 @@ const ServicesListTable = ({ data, deleteService, updateService }) => {
           </button>
 
           <button
-            className="btn btn-sm btn-outline-secondary btn-border-left"
+            className="btn btn-sm btn-outline-secondary btn-border-left editBtn"
             onClick={() => updateService(row, row._id)}
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="ویرایش"
+            data-pr-position="top"
           >
+            <Tooltip target=".editBtn">ویرایش</Tooltip>
             <FeatherIcon
               style={{ width: "16px", height: "16px" }}
               icon="edit-3"

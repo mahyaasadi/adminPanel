@@ -1,13 +1,13 @@
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
-import { Dropdown } from 'primereact/dropdown';
-import { Tooltip } from 'primereact/tooltip';
+import { Dropdown } from "primereact/dropdown";
+import { Tooltip } from "primereact/tooltip";
 
 const CentersListTable = ({
   data,
@@ -40,7 +40,7 @@ const CentersListTable = ({
       name: "نام مرکز",
       selector: (row) => row.Name,
       sortable: true,
-      width: "320px",
+      width: "420px",
     },
     {
       name: "لوگو",
@@ -53,14 +53,12 @@ const CentersListTable = ({
               src={"https://irannobat.ir/CenterProfileImage/" + row.Logo}
               alt=""
             />
-            <Tooltip target=".tooltip-button">حذف لوگو</Tooltip>
+            <Tooltip target=".removeImgBtn">حذف لوگو</Tooltip>
             <button
               className="btn removeImgBtn tooltip-button"
               type="button"
-            // onClick={}
-            // data-bs-toggle="tooltip"
-            // data-bs-placement="top"
-            // title="حذف لوگو"
+              data-pr-position="top"
+              // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>
@@ -68,7 +66,7 @@ const CentersListTable = ({
         ) : (
           ""
         ),
-      width: "130px",
+      width: "250px",
     },
     {
       name: "اطلاعات مراکز",
@@ -79,10 +77,12 @@ const CentersListTable = ({
           setLocalSelectedLink(e.value);
 
           // Set the hidden data in local storage
-          localStorage.setItem('hiddenData', JSON.stringify({
-            name: row.Name,
-            // ... any other hidden data you wish to send
-          }));
+          localStorage.setItem(
+            "hiddenData",
+            JSON.stringify({
+              name: row.Name,
+            })
+          );
 
           router.push({
             pathname: e.value.pathname,
@@ -92,40 +92,39 @@ const CentersListTable = ({
 
         const localLinks = [
           {
-            label: 'پزشکان',
+            label: "پزشکان",
             value: { pathname: "/doctors", query: { id: row._id } },
           },
           {
-            label: 'کارهای تخصصی',
-            value: { pathname: "/specializedWorks", query: { id: row._id } }
+            label: "کارهای تخصصی",
+            value: { pathname: "/specializedWorks", query: { id: row._id } },
           },
           {
-            label: 'مجوزها',
+            label: "مجوزها",
             value: { pathname: "/certifications", query: { id: row._id } },
           },
           {
-            label: 'بیماری های خاص',
-            value: { pathname: "/specialDiseases", query: { id: row._id } }
+            label: "بیماری های خاص",
+            value: { pathname: "/specialDiseases", query: { id: row._id } },
           },
           {
-            label: 'بیمه های تحت پوشش',
-            value: { pathname: "/insurances", query: { id: row._id } }
+            label: "بیمه های تحت پوشش",
+            value: { pathname: "/insurances", query: { id: row._id } },
           },
           {
-            label: 'گالری تصاویر',
-            value: { pathname: "/imagesGallery", query: { id: row._id } }
+            label: "گالری تصاویر",
+            value: { pathname: "/imagesGallery", query: { id: row._id } },
           },
           {
-            label: 'بخش های مرکز',
+            label: "بخش های مرکز",
             value: { pathname: "/departments", query: { id: row._id } },
-
           },
           {
-            label: 'زیربخش های مرکز',
-            value: { pathname: "/subDepartments", query: { id: row._id } }
+            label: "زیربخش های مرکز",
+            value: { pathname: "/subDepartments", query: { id: row._id } },
           },
           {
-            label: 'تلفن های مرکز',
+            label: "تلفن های مرکز",
             value: { pathname: "/centerPhoneNumbers", query: { id: row._id } },
           },
         ];
@@ -142,22 +141,21 @@ const CentersListTable = ({
           </div>
         );
       },
-      width: "250px",
+      width: "330px",
     },
     {
       name: "عملیات ها",
       selector: (row) => row.action,
       cell: (row) => (
-        <div className="actions d-flex gap-1">
+        <div className="actions d-flex gap-2">
           {!row.Deactive ? (
             <button
-              className="btn btn-sm btn-outline-success font-13"
+              className="btn btn-sm btn-outline-success font-13 deActivateBtn"
               type="button"
+              data-pr-position="top"
               onClick={() => deActivateCenter(row._id)}
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="غیر فعال سازی"
             >
+              <Tooltip target=".deActivateBtn">غیر فعال سازی</Tooltip>
               <i className="d-flex align-items-center gap-3">
                 <FeatherIcon
                   style={{ width: "16px", height: "16px" }}
@@ -167,13 +165,12 @@ const CentersListTable = ({
             </button>
           ) : (
             <button
-              className="btn btn-sm btn-outline-danger"
+              className="btn btn-sm btn-outline-danger activateBtn"
               type="button"
+              data-pr-position="top"
               onClick={() => activateCenter(row._id)}
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="فعال سازی"
             >
+              <Tooltip target=".activateBtn">فعال سازی</Tooltip>
               <i className="d-flex align-items-center gap-3">
                 <FeatherIcon
                   style={{ width: "16px", height: "16px" }}
@@ -185,39 +182,40 @@ const CentersListTable = ({
 
           {row.Searchable ? (
             <button
-              className="btn btn-sm btn-outline-success font-13"
+              className="btn btn-sm btn-outline-success font-13 deActivateSearchbtn"
               type="button"
+              data-pr-position="top"
               onClick={() => removeSearchableCenter(row._id)}
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="غیر فعال سازی قابلیت جستجو"
             >
+              <Tooltip target=".deActivateSearchbtn">
+                غیر فعال سازی قابلیت جستجو
+              </Tooltip>
               <i className="fe fe-search centerTableBtn"></i>
             </button>
           ) : (
             <button
-              className="btn btn-sm btn-outline-danger d-flex justify-center align-items-center"
+              className="btn btn-sm btn-outline-danger d-flex justify-center align-items-center activateSearchbtn"
               type="button"
+              data-pr-position="top"
               onClick={() => setSerachableCenter(row._id)}
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="فعال سازی قابلیت جستجو"
             >
+              <Tooltip target=".activateSearchbtn">
+                فعال سازی قابلیت جستجو
+              </Tooltip>
               <i className="fe fe-search centerTableBtn"></i>
             </button>
           )}
 
           {row.OR ? (
-
             <button
-              className="btn btn-sm btn-outline-success font-13 tooltip-but"
+              className="btn btn-sm btn-outline-success font-13 deActivateReceptionBtn"
               type="button"
+              data-pr-position="top"
               onClick={() => deActiveOR(row._id)}
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="غیر فعال سازی دریافت نوبت"
             >
-              <Tooltip target=".tooltip-but">تتتت</Tooltip>
+              <Tooltip target=".deActivateReceptionBtn">
+                غیر فعال سازی دریافت نوبت
+              </Tooltip>
               <i className="d-flex align-items-center gap-3">
                 <FeatherIcon
                   style={{ width: "16px", height: "16px" }}
@@ -227,13 +225,14 @@ const CentersListTable = ({
             </button>
           ) : (
             <button
-              className="btn btn-sm btn-outline-danger"
+              className="btn btn-sm btn-outline-danger activateReceptionBtn"
               type="button"
+              data-pr-position="top"
               onClick={() => activeOR(row._id)}
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="فعال سازی دریافت نوبت"
             >
+              <Tooltip target=".activateReceptionBtn">
+                فعال سازی دریافت نوبت
+              </Tooltip>
               <i className="d-flex align-items-center gap-3">
                 <FeatherIcon
                   style={{ width: "16px", height: "16px" }}
@@ -244,13 +243,15 @@ const CentersListTable = ({
           )}
 
           <button
-            className="btn btn-sm btn-outline-secondary btn-border-left"
-            href="#"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="ویرایش"
+            className="btn btn-sm btn-outline-secondary btn-border-left editBtn"
+            // href="#"
+            // data-bs-toggle="tooltip"
+            // data-bs-placement="top"
+            // title="ویرایش"
+            data-pr-position="top"
             onClick={() => updateCenterInfo(row, row._id)}
           >
+            <Tooltip target=".editBtn">ویرایش</Tooltip>
             <FeatherIcon
               icon="edit-3"
               style={{ width: "16px", height: "16px" }}
@@ -259,34 +260,20 @@ const CentersListTable = ({
           </button>
 
           <button
-            className="btn btn-sm btn-outline-secondary btn-border-left"
+            className="btn btn-sm btn-outline-secondary btn-border-left businessHourBtn"
             onClick={() => openBusinessHoursModal(row._id)}
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="ساعات کاری"
+            data-pr-position="top"
           >
+            <Tooltip target=".businessHourBtn">ساعات کاری</Tooltip>
             <FeatherIcon icon="clock" className="centerTableBtn" />
           </button>
 
-          {/* <Link
-            className="btn btn-sm btn-outline-secondary btn-border-left"
-            href={{
-              pathname: "/centerPhoneNumbers",
-              query: { id: row._id },
-            }}
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="تلفن های مرکز"
-          >
-          </Link> */}
-
           <button
-            className="btn btn-sm btn-outline-secondary btn-border-left"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="درباره مرکز"
+            className="btn btn-sm btn-outline-secondary btn-border-left aboutUsBtn"
+            data-pr-position="top"
             onClick={() => openAboutUsModal(row, row._id, row.Name)}
           >
+            <Tooltip target=".aboutUsBtn">درباره مرکز</Tooltip>
             <FeatherIcon icon="info" className="centerTableBtn" />
           </button>
         </div>

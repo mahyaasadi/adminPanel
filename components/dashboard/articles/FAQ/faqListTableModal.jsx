@@ -4,6 +4,7 @@ import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
+import { Tooltip } from "primereact/tooltip";
 
 const FAQListTableModal = ({
   data,
@@ -13,8 +14,6 @@ const FAQListTableModal = ({
   ActiveArticleID,
   updateFAQ,
 }) => {
-  // console.log(data);
-  // console.log("ActiveArticleID", ActiveArticleID);
   const columns = [
     {
       name: "پرسش",
@@ -35,12 +34,11 @@ const FAQListTableModal = ({
       cell: (row) => (
         <div className="actions d-flex gap-1">
           <button
-            className="btn btn-sm btn-outline-danger padding-sm"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="حذف"
+            className="btn btn-sm btn-outline-danger padding-sm deleteFaq"
             onClick={() => removeFAQFromArticle(ActiveArticleID, row._id)}
+            data-pr-position="top"
           >
+            <Tooltip target=".deleteFaq">حذف</Tooltip>
             <FeatherIcon
               icon="trash-2"
               style={{ width: "14px", height: "14px" }}
@@ -48,12 +46,11 @@ const FAQListTableModal = ({
           </button>
 
           <button
-            className="btn btn-sm btn-outline-secondary padding-sm"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="ویرایش"
+            className="btn btn-sm btn-outline-secondary padding-sm editFaq"
             onClick={() => updateFAQ(ActiveArticleID, row)}
+            data-pr-position="top"
           >
+            <Tooltip target=".editFaq">ویرایش</Tooltip>
             <FeatherIcon
               icon="edit-3"
               style={{ width: "14px", height: "14px" }}

@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
+import { Tooltip } from "primereact/tooltip";
 
 const ArticleGroupsListTable = ({
   data,
@@ -41,43 +42,38 @@ const ArticleGroupsListTable = ({
 
       cell: (row) => (
         <div className="actions d-flex gap-2">
-          <Link
-            href="#"
-            className="btn btn-sm btn-outline-danger"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="حذف"
+          <button
+            data-pr-position="top"
+            className="btn btn-sm btn-outline-danger deleteGrp"
             onClick={() => deleteArticleGroup(row._id)}
           >
+            <Tooltip target=".deleteGrp">حذف</Tooltip>
             <FeatherIcon
               style={{ width: "16px", height: "16px" }}
               icon="trash-2"
             />
-          </Link>
+          </button>
 
-          <Link
-            href="#"
-            className="btn btn-sm btn-outline-secondary btn-border-left"
+          <button
+            className="btn btn-sm btn-outline-secondary btn-border-left editGrp"
             onClick={() => updateArticleGroup(row, row._id)}
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="ویرایش"
+            data-pr-position="top"
           >
+            <Tooltip target=".editGrp">ویرایش</Tooltip>
             <FeatherIcon
               style={{ width: "16px", height: "16px" }}
               icon="edit-3"
             />
-          </Link>
+          </button>
 
           {!row.Important ? (
             <button
-              className="btn btn-sm btn-outline-light font-13"
+              className="btn btn-sm btn-outline-light font-13 changeGrpPriority"
               type="button"
               onClick={() => checkImportantArticle(row._id)}
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="تغییر وضعیت اهمیت"
+              data-pr-position="top"
             >
+              <Tooltip target=".changeGrpPriority">تغییر وضعیت اهمیت</Tooltip>
               <i className="d-flex align-items-center gap-3">
                 <FeatherIcon
                   style={{ width: "16px", height: "16px" }}
@@ -87,13 +83,12 @@ const ArticleGroupsListTable = ({
             </button>
           ) : (
             <button
-              className="btn btn-sm btn-outline-warning"
+              className="btn btn-sm btn-outline-warning unChangeGrpPriority"
               type="button"
               onClick={() => checkUnimportantArticle(row._id)}
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="تغییر وضعیت اهمیت"
+              data-pr-position="top"
             >
+              <Tooltip target=".unChangeGrpPriority">تغییر وضعیت اهمیت</Tooltip>
               <i className="d-flex align-items-center gap-3">
                 <FeatherIcon
                   style={{ width: "16px", height: "16px" }}

@@ -45,20 +45,6 @@ const Insurance = () => {
     }
   };
 
-  const getCenterAboutUs = () => {
-    CenterID = Router.query.id;
-    let url = `CenterProfile/getAboutUs/${CenterID}`;
-
-    if (CenterID) {
-      axiosClient
-        .get(url)
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((err) => console.log(err));
-    }
-  };
-
   let selectedPhoneType = "";
   const FUSelectPhoneType = (phoneType) => {
     selectedPhoneType = phoneType;
@@ -192,13 +178,13 @@ const Insurance = () => {
     if (Router.isReady) {
       CenterID = Router.query.id;
       getAllPhoneNumbers();
-      getCenterAboutUs();
-      setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
 
+      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
       if (hiddenData) {
         console.log(hiddenData.name);
-        localStorage.removeItem('hiddenData');
+        localStorage.removeItem("hiddenData");
       }
+
       if (!CenterID) return null;
     }
   }, [Router.isReady]);

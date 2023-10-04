@@ -1,5 +1,6 @@
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
+import { Tooltip } from "primereact/tooltip";
 
 const ArticlesListTable = ({
   articlesData,
@@ -32,7 +33,6 @@ const ArticlesListTable = ({
                     <Link
                       href={
                         "https://irannobat.ir/blog/" +
-                        // articleData.EngTitle.replaceAll(/ /g, "-")
                         articleData.EngTitle.replace(/ /g, "-")
                       }
                     >
@@ -66,14 +66,13 @@ const ArticlesListTable = ({
                 >
                   <button
                     type="button"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="زیر مقاله ها"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12"
+                    data-pr-position="top"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 subArticle"
                     onClick={() =>
                       openSubArticleModal(articleData, articleData._id)
                     }
                   >
+                    <Tooltip target=".subArticle">زیر مقاله ها</Tooltip>
                     <FeatherIcon
                       style={{ width: "15px", height: "15px" }}
                       icon="layers"
@@ -82,10 +81,8 @@ const ArticlesListTable = ({
 
                   <button
                     type="button"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="گروه مقاله ها"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12"
+                    data-pr-position="top"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 articleGrp"
                     onClick={() =>
                       openGrpAttachmentModal(
                         articleData.EngTitle,
@@ -94,6 +91,7 @@ const ArticlesListTable = ({
                       )
                     }
                   >
+                    <Tooltip target=".articleGrp">گروه مقاله ها</Tooltip>
                     <FeatherIcon
                       style={{ width: "15px", height: "15px" }}
                       icon="folder-plus"
@@ -101,10 +99,8 @@ const ArticlesListTable = ({
                   </button>
                   <button
                     type="button"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="تگ مقاله ها"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12"
+                    data-pr-position="top"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 articleTag"
                     onClick={() =>
                       openTagsAttachmentModal(
                         articleData.EngTitle,
@@ -113,6 +109,7 @@ const ArticlesListTable = ({
                       )
                     }
                   >
+                    <Tooltip target=".articleTag">تگ مقاله ها</Tooltip>
                     <FeatherIcon
                       style={{ width: "15px", height: "15px" }}
                       icon="tag"
@@ -121,14 +118,13 @@ const ArticlesListTable = ({
 
                   <button
                     type="button"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="ویدیوها"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12"
+                    data-pr-position="top"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 articleVids"
                     onClick={() =>
                       openArticleVideoModal(articleData, articleData._id)
                     }
                   >
+                    <Tooltip target=".articleVids">ویدیوها</Tooltip>
                     <FeatherIcon
                       style={{ width: "15px", height: "15px" }}
                       icon="video"
@@ -136,12 +132,9 @@ const ArticlesListTable = ({
                   </button>
 
                   <button
-                    href="#"
                     type="button"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="مقاله های مرتبط"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12"
+                    data-pr-position="top"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 relatedArticles"
                     onClick={() =>
                       openRelatedArticlesModal(
                         articleData.EngTitle,
@@ -150,6 +143,7 @@ const ArticlesListTable = ({
                       )
                     }
                   >
+                    <Tooltip target=".relatedArticles">مقاله های مرتبط</Tooltip>
                     <FeatherIcon
                       style={{ width: "16px", height: "16px" }}
                       icon="file-plus"
@@ -158,10 +152,8 @@ const ArticlesListTable = ({
 
                   <button
                     type="button"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="سوالات متداول"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12"
+                    data-pr-position="top"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 faq"
                     onClick={() =>
                       openFAQModal(
                         articleData.EngTitle,
@@ -170,6 +162,7 @@ const ArticlesListTable = ({
                       )
                     }
                   >
+                    <Tooltip target=".faq">سوالات متداول</Tooltip>
                     <FeatherIcon
                       style={{ width: "16px", height: "16px" }}
                       icon="help-circle"
@@ -178,12 +171,11 @@ const ArticlesListTable = ({
 
                   <button
                     button="button"
-                    className="padding-sm btn btn-sm btn-outline-secondary btn-border-left"
+                    className="padding-sm btn btn-sm btn-outline-secondary btn-border-left editArticle"
                     onClick={() => updateArticle(articleData, articleData._id)}
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="ویرایش"
+                    data-pr-position="top"
                   >
+                    <Tooltip target=".editArticle">ویرایش</Tooltip>
                     <FeatherIcon
                       style={{ width: "14px", height: "14px" }}
                       icon="edit-3"
@@ -191,12 +183,11 @@ const ArticlesListTable = ({
                   </button>
                   <button
                     type="button"
-                    className="padding-sm btn btn-sm btn-outline-danger"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="حذف"
+                    className="padding-sm btn btn-sm btn-outline-danger deleteArticle"
+                    data-pr-position="top"
                     onClick={() => deleteArticle(articleData._id)}
                   >
+                    <Tooltip target=".deleteArticle">حذف</Tooltip>
                     <FeatherIcon
                       style={{ width: "14px", height: "14px" }}
                       icon="trash-2"
