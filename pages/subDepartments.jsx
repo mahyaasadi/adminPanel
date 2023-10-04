@@ -12,6 +12,7 @@ import DepartmentsHeader from "components/dashboard/subDepartments/departmentsHe
 let CenterID = null;
 let modalityData = [];
 let modalityFistItem = [];
+let checkedDepItems = []
 
 const SubDepartments = () => {
   const router = useRouter();
@@ -35,7 +36,7 @@ const SubDepartments = () => {
     axiosClient
       .get(url)
       .then((response) => {
-        const checkedDepItems = response.data.filter(
+        checkedDepItems = response.data.filter(
           (depItem) => depItem.Checked
         );
         modalityFistItem = checkedDepItems[0]._id;
@@ -94,23 +95,46 @@ const SubDepartments = () => {
 
     checked
       ? setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: [...subDepartmentsOptions, value],
-        })
+        subDepartmentsOptions: [...subDepartmentsOptions, value],
+      })
       : setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: subDepartmentsOptions.filter(
-            (e) => e !== value
-          ),
-        });
+        subDepartmentsOptions: subDepartmentsOptions.filter(
+          (e) => e !== value
+        ),
+      });
   };
 
   const checkAllSubDeps = () => {
     setSelectAllMode(true);
     $(".subDepartment").prop("checked", true);
+    const allSubDepIds = currentSubDepartments.map(subDep => subDep._id);
+    setSubDepartmentCheckboxStatus({ subDepartmentsOptions: allSubDepIds });
   };
 
   const unCheckAllSubDeps = () => {
     setSelectAllMode(false);
     $(".subDepartment").prop("checked", false);
+    setSubDepartmentCheckboxStatus({ subDepartmentsOptions: [] });
+  };
+
+  const handleSubmitSubCheckbox = (e) => {
+    e.preventDefault();
+
+    // checked items:
+    const checkedItems = subDepartmentCheckboxStatus.subDepartmentsOptions;
+
+    // unchecked items:
+    const uncheckedItems = currentSubDepartments
+      .map(item => item._id)
+      .filter(id => !checkedItems?.includes(id));
+
+    const result = [{
+      checked: checkedItems,
+      unChecked: uncheckedItems
+    }]
+
+    console.log({ result });
+
   };
 
   useEffect(() => {
@@ -146,6 +170,7 @@ const SubDepartments = () => {
                     checkAllSubDeps={checkAllSubDeps}
                     unCheckAllSubDeps={unCheckAllSubDeps}
                     selectAllMode={selectAllMode}
+                    handleSubmitSubCheckbox={handleSubmitSubCheckbox}
                   />
                 </div>
               </div>

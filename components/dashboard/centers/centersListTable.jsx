@@ -40,7 +40,7 @@ const CentersListTable = ({
       name: "نام مرکز",
       selector: (row) => row.Name,
       sortable: true,
-      width: "420px",
+      width: "380px",
     },
     {
       name: "لوگو",
@@ -58,7 +58,7 @@ const CentersListTable = ({
               className="btn removeImgBtn tooltip-button"
               type="button"
               data-pr-position="top"
-              // onClick={}
+            // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>
@@ -66,7 +66,7 @@ const CentersListTable = ({
         ) : (
           ""
         ),
-      width: "250px",
+      width: "200px",
     },
     {
       name: "اطلاعات مراکز",
@@ -141,7 +141,7 @@ const CentersListTable = ({
           </div>
         );
       },
-      width: "330px",
+      width: "300px",
     },
     {
       name: "عملیات ها",

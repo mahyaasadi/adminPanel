@@ -4,11 +4,12 @@ const SubDepartmentsList = ({
   checkAllSubDeps,
   unCheckAllSubDeps,
   selectAllMode,
+  handleSubmitSubCheckbox
 }) => {
   return (
     <>
       <div className="d-flex justify-center p-25 subDepScroller">
-        <form className="subDepContainer">
+        <form className="subDepContainer" onSubmit={handleSubmitSubCheckbox}>
           <div className="subDepFrm">
             {data.map((subDepartment, index) => (
               <div className="checkbox" key={index}>
