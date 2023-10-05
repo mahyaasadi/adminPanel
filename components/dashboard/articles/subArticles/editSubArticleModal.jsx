@@ -69,6 +69,20 @@ const EditSubArticleModal = ({
                 </div>
               </div>
 
+              <div className="form-group">
+                <label className="lblAbs font-12">متن</label>
+                <div className="col p-0">
+                  <textarea
+                    type="text"
+                    name="editSubArticleText"
+                    defaultValue={data.Text}
+                    key={data.Text}
+                    rows="10"
+                    className="form-control floating inputPadding rounded"
+                  ></textarea>
+                </div>
+              </div>
+
               <div className="form-group col">
                 <label className="lblAbs font-12">توضیحات</label>
                 <div className="col p-0">
@@ -79,19 +93,6 @@ const EditSubArticleModal = ({
                     name="editSubArticleDes"
                     defaultValue={data.Des}
                     key={data.Des}
-                  ></textarea>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label className="lblAbs font-12">متن</label>
-                <div className="col p-0">
-                  <textarea
-                    type="text"
-                    name="editSubArticleText"
-                    defaultValue={data.Text}
-                    key={data.Text}
-                    className="form-control floating inputPadding rounded"
                   ></textarea>
                 </div>
               </div>

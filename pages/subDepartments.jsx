@@ -5,13 +5,14 @@ import { useRouter } from "next/router";
 import { axiosClient } from "class/axiosConfig";
 import Loading from "components/commonComponents/loading/loading";
 import FeatherIcon from "feather-icons-react";
-import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
+import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
 import SubDepartmentsList from "components/dashboard/subDepartments/subDepartmentsList";
 import DepartmentsHeader from "components/dashboard/subDepartments/departmentsHeader/departmentsHeader";
 
 let CenterID = null;
 let modalityData = [];
 let modalityFistItem = [];
+let checkedDepItems = [];
 
 const SubDepartments = () => {
   const router = useRouter();
@@ -19,6 +20,7 @@ const SubDepartments = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectAllMode, setSelectAllMode] = useState(false);
   const [selectedDepartments, setSelectedDepartments] = useState([]);
+  const [selectedSubDepartments, setSelectedSubDepartments] = useState([]);
   const [currentSubDepartments, setCurrentSubDepartments] = useState([]);
   const [subDepartmentCheckboxStatus, setSubDepartmentCheckboxStatus] =
     useState({
@@ -35,9 +37,7 @@ const SubDepartments = () => {
     axiosClient
       .get(url)
       .then((response) => {
-        const checkedDepItems = response.data.filter(
-          (depItem) => depItem.Checked
-        );
+        checkedDepItems = response.data.filter((depItem) => depItem.Checked);
         modalityFistItem = checkedDepItems[0]._id;
 
         console.log({ modalityFistItem });
@@ -106,32 +106,70 @@ const SubDepartments = () => {
   const checkAllSubDeps = () => {
     setSelectAllMode(true);
     $(".subDepartment").prop("checked", true);
+    const allSubDepIds = currentSubDepartments.map((subDep) => subDep._id);
+    setSubDepartmentCheckboxStatus({ subDepartmentsOptions: allSubDepIds });
   };
 
   const unCheckAllSubDeps = () => {
     setSelectAllMode(false);
     $(".subDepartment").prop("checked", false);
+    setSubDepartmentCheckboxStatus({ subDepartmentsOptions: [] });
   };
 
-  const handleSubmitCheckbox = (e) => {
+  const handleSubmitSubCheckbox = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    // checked items:
+    // checked items
     const checkedItems = subDepartmentCheckboxStatus.subDepartmentsOptions;
 
-    // unchecked items:
+    // unchecked items
     const uncheckedItems = currentSubDepartments
       .map((item) => item._id)
-      .filter((id) => !checkedItems.includes(id));
+      .filter((id) => !checkedItems?.includes(id));
 
-    const result = [
-      {
-        checked: checkedItems,
-        unChecked: uncheckedItems,
-      },
-    ];
+    const result = {
+      checked: checkedItems,
+      unChecked: uncheckedItems,
+    };
 
-    console.log({ result });
+    let url = "Center/SubDepartment";
+    const data = {
+      CenterID: CenterID,
+      subDepartment: result,
+    };
+
+    console.log({ data });
+
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data);
+        SuccessAlert("موفق", "ثبت زیر بخش های مرکز با موفقیت انجام گردید!");
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        ErrorAlert("خطا", "ثبت زیر بخش های مرکز با خطا مواجه گردید!");
+        setIsLoading(false);
+      });
+  };
+
+  const getSelectedSubDepartments = () => {
+    setIsLoading(true);
+    let url = `Center/SubDepartment/${CenterID}`;
+
+    axiosClient
+      .get(url)
+      .then((response) => {
+        console.log(response.data);
+        setSelectedSubDepartments();
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -139,6 +177,7 @@ const SubDepartments = () => {
       CenterID = router.query.id;
       getDepartments();
       getModalities();
+      getSelectedSubDepartments();
       if (!CenterID) return null;
     }
   }, [router.isReady]);
@@ -167,7 +206,7 @@ const SubDepartments = () => {
                     checkAllSubDeps={checkAllSubDeps}
                     unCheckAllSubDeps={unCheckAllSubDeps}
                     selectAllMode={selectAllMode}
-                    handleSubmitCheckbox={handleSubmitCheckbox}
+                    handleSubmitSubCheckbox={handleSubmitSubCheckbox}
                   />
                 </div>
               </div>

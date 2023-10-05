@@ -58,6 +58,9 @@ const AddSubArticleModal = ({ addSubArticle, isLoading }) => {
                     type="text"
                     name="addSubArticleText"
                     className="form-control floating inputPadding rounded"
+                    rows="10"
+                    // cols="50"
+                    // maxlength="200"
                   ></textarea>
                 </div>
               </div>
@@ -85,7 +88,6 @@ const AddSubArticleModal = ({ addSubArticle, isLoading }) => {
                   className="upload"
                   name="addSubArticleImg"
                   onChange={displayPreview}
-                  // required
                   id="addSubArticleImg"
                 />
               </div>
@@ -107,8 +109,6 @@ const AddSubArticleModal = ({ addSubArticle, isLoading }) => {
                   hidden="hidden"
                   id="articleCallToAction"
                   name="articleCallToAction"
-                  // defaultChecked="checked"
-                  // required
                 />
                 <label
                   className="showInsliderSwitch font-12"

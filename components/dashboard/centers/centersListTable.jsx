@@ -40,7 +40,7 @@ const CentersListTable = ({
       name: "نام مرکز",
       selector: (row) => row.Name,
       sortable: true,
-      width: "420px",
+      width: "380px",
     },
     {
       name: "لوگو",
@@ -66,7 +66,7 @@ const CentersListTable = ({
         ) : (
           ""
         ),
-      width: "250px",
+      width: "200px",
     },
     {
       name: "اطلاعات مراکز",
@@ -141,7 +141,7 @@ const CentersListTable = ({
           </div>
         );
       },
-      width: "330px",
+      width: "300px",
     },
     {
       name: "عملیات ها",
@@ -299,8 +299,8 @@ const CentersListTable = ({
             highlightOnHover
             paginationDefaultPage={selectedPage}
             onChangePage={(e) => ChangeTablePage(e)}
-            paginationPerPage="20"
-            paginationRowsPerPageOptions={[20, 30, 40, 50]}
+            paginationPerPage="30"
+            paginationRowsPerPageOptions={[30, 50, 70, 100]}
             noDataComponent={
               <div style={{ padding: "24px", fontSize: "13px" }}>
                 موردی برای نمایش وجود ندارد.
