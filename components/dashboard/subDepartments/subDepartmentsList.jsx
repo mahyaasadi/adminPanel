@@ -5,7 +5,10 @@ const SubDepartmentsList = ({
   unCheckAllSubDeps,
   selectAllMode,
   handleSubmitSubCheckbox,
+  checkedSubDepartments,
+  submitIsLoading
 }) => {
+
   return (
     <>
       <div className="d-flex justify-center p-25 subDepScroller">
@@ -20,6 +23,7 @@ const SubDepartmentsList = ({
                     id={"subDep" + subDepartment._id}
                     value={subDepartment._id}
                     onChange={handleCheckedSubDepartments}
+                    checked={checkedSubDepartments.includes(subDepartment._id)}
                   />
                   <div className="checkbox-tile subCheckbox-tile">
                     <span className="checkbox-icon"></span>
@@ -36,12 +40,26 @@ const SubDepartmentsList = ({
 
           {data.length > 0 ? (
             <div className="submit-section margint-5 marginb-md1 d-flex media-flex-col gap-1">
-              <button
-                type="submit"
-                className="btn btn-primary font-14 padding-right-2 padding-left-2"
-              >
-                ثبت تغییرات
-              </button>
+              {!submitIsLoading ? (
+                <button
+                  type="submit"
+                  className="btn btn-primary font-14 padding-right-2 padding-left-2"
+                >
+                  ثبت تغییرات
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="btn btn-secondary font-13 d-flex align-items-center"
+                  disabled
+                >
+                  <span
+                    className="spinner-border spinner-border-sm margin-right-4"
+                    role="status"
+                  ></span>
+                  در حال ثبت
+                </button>
+              )}
 
               {!selectAllMode ? (
                 <button

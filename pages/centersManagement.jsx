@@ -122,14 +122,15 @@ const CentersManagement = () => {
       .then((response) => {
         console.log(response.data);
         setCentersData([...centersData, response.data]);
-        $("#addCenterModal").modal("hide");
-        setIsLoading(false);
 
         // reset
         e.target.reset();
         logo = null;
         $("#addCenterLogo").val("");
         $("#logoUploadPreview").attr("src", "");
+
+        $("#addCenterModal").modal("hide");
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -177,15 +178,14 @@ const CentersManagement = () => {
     setEditCenterData(data);
     $("#editCenterModal").modal("show");
     ActiveCenterID = centerId;
-    console.log("centerId", ActiveCenterID);
   };
 
   let newLogo = null;
   const editCenter = async (e) => {
     e.preventDefault();
+
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
-    // const CenterID = formProps.editCenterID;
 
     if (ActiveCenterID) {
       let url = `center/edit/${ActiveCenterID}`;
@@ -234,7 +234,6 @@ const CentersManagement = () => {
     g = newArr;
 
     if (index === -1) {
-      // handle error
       console.log("no match");
     } else
       setCentersData([

@@ -18,6 +18,7 @@ const SubDepartments = () => {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [submitIsLoading, setSubmitIsLoading] = useState(false)
   const [selectAllMode, setSelectAllMode] = useState(false);
   const [selectedDepartments, setSelectedDepartments] = useState([]);
   const [selectedSubDepartments, setSelectedSubDepartments] = useState([]);
@@ -94,13 +95,13 @@ const SubDepartments = () => {
 
     checked
       ? setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: [...subDepartmentsOptions, value],
-        })
+        subDepartmentsOptions: [...subDepartmentsOptions, value],
+      })
       : setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: subDepartmentsOptions.filter(
-            (e) => e !== value
-          ),
-        });
+        subDepartmentsOptions: subDepartmentsOptions.filter(
+          (e) => e !== value
+        ),
+      });
   };
 
   const checkAllSubDeps = () => {
@@ -118,7 +119,7 @@ const SubDepartments = () => {
 
   const handleSubmitSubCheckbox = (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    setSubmitIsLoading(true);
 
     // checked items
     const checkedItems = subDepartmentCheckboxStatus.subDepartmentsOptions;
@@ -146,12 +147,12 @@ const SubDepartments = () => {
       .then((response) => {
         console.log(response.data);
         SuccessAlert("موفق", "ثبت زیر بخش های مرکز با موفقیت انجام گردید!");
-        setIsLoading(false);
+        setSubmitIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
         ErrorAlert("خطا", "ثبت زیر بخش های مرکز با خطا مواجه گردید!");
-        setIsLoading(false);
+        setSubmitIsLoading(false);
       });
   };
 
@@ -163,7 +164,10 @@ const SubDepartments = () => {
       .get(url)
       .then((response) => {
         console.log(response.data);
-        setSelectedSubDepartments();
+        setSelectedSubDepartments(response.data);
+        const selectedIds = response.data.map(item => item._id);
+        setSubDepartmentCheckboxStatus({ subDepartmentsOptions: selectedIds });
+
         setIsLoading(false);
       })
       .catch((err) => {
@@ -207,6 +211,9 @@ const SubDepartments = () => {
                     unCheckAllSubDeps={unCheckAllSubDeps}
                     selectAllMode={selectAllMode}
                     handleSubmitSubCheckbox={handleSubmitSubCheckbox}
+                    selectedSubDepartments={selectedSubDepartments}
+                    checkedSubDepartments={subDepartmentCheckboxStatus.subDepartmentsOptions}
+                    submitIsLoading={submitIsLoading}
                   />
                 </div>
               </div>
