@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
-// import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
@@ -10,10 +9,26 @@ import Loading from "components/commonComponents/loading/loading";
 import SpecialDiseasesListTable from "components/dashboard/specialDiseases/specialDiseasesListTable";
 import AddSpecialDiseaseModal from "components/dashboard/specialDiseases/addSpecialDiseaseModal";
 import EditSpecialDiseaseModal from "components/dashboard/specialDiseases/editSpecialDiseaseModal";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let CenterID = null;
-
-const SpecialDiseases = () => {
+const SpecialDiseases = ({ UserData }) => {
   const Router = useRouter();
 
   const [diseasesList, setDiseasesList] = useState([]);
@@ -164,11 +179,11 @@ const SpecialDiseases = () => {
     if (Router.isReady) {
       CenterID = Router.query.id;
       getDiseasesData();
-      setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
       if (hiddenData) {
         console.log(hiddenData.name);
-        localStorage.removeItem('hiddenData');
+        localStorage.removeItem("hiddenData");
       }
       if (!CenterID) return null;
     }

@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
 import { organ, neighbourhoods, article } from "components/imagepath";
 
-const Sidebar = () => {
+const Sidebar = ({ UserData }) => {
   const router = useRouter();
 
   const [submenuOpen, setSubmenuOpen] = useState(false);

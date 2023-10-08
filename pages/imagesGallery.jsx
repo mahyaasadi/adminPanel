@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { axiosClient } from "class/axiosConfig.js";
-// import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
 import { WarningAlert, QuestionAlert } from "class/AlertManage.js";
@@ -10,10 +9,26 @@ import Loading from "components/commonComponents/loading/loading";
 import ImagesListTable from "components/dashboard/imagesGallery/imagesListTable";
 import UploadImageModal from "components/dashboard/imagesGallery/uploadImageModal";
 import { ErrorAlert } from "class/AlertManage.js";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let CenterID = null;
-
-const ImagesGallery = () => {
+const ImagesGallery = ({ UserData }) => {
   const Router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -148,11 +163,11 @@ const ImagesGallery = () => {
     if (Router.isReady) {
       CenterID = Router.query.id;
       getImagesGallery();
-      setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
       if (hiddenData) {
         console.log(hiddenData.name);
-        localStorage.removeItem('hiddenData');
+        localStorage.removeItem("hiddenData");
       }
       if (!CenterID) return null;
     }
@@ -189,7 +204,9 @@ const ImagesGallery = () => {
                 <div className="card-header border-bottom-0">
                   <div className="row align-items-center">
                     <div className="col">
-                      <p className="card-title font-14 text-secondary">گالری تصاویر  {""} {hiddenData?.name}</p>
+                      <p className="card-title font-14 text-secondary">
+                        گالری تصاویر {""} {hiddenData?.name}
+                      </p>
                     </div>
                     <div className="col-auto d-flex flex-wrap">
                       <div className="form-custom me-2">

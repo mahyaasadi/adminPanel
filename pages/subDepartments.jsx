@@ -8,17 +8,34 @@ import FeatherIcon from "feather-icons-react";
 import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
 import SubDepartmentsList from "components/dashboard/subDepartments/subDepartmentsList";
 import DepartmentsHeader from "components/dashboard/subDepartments/departmentsHeader/departmentsHeader";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let CenterID = null;
 let modalityData = [];
 let modalityFistItem = [];
 let checkedDepItems = [];
 
-const SubDepartments = () => {
+const SubDepartments = ({ UserData }) => {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [submitIsLoading, setSubmitIsLoading] = useState(false)
+  const [submitIsLoading, setSubmitIsLoading] = useState(false);
   const [selectAllMode, setSelectAllMode] = useState(false);
   const [selectedDepartments, setSelectedDepartments] = useState([]);
   const [selectedSubDepartments, setSelectedSubDepartments] = useState([]);
@@ -95,13 +112,13 @@ const SubDepartments = () => {
 
     checked
       ? setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: [...subDepartmentsOptions, value],
-      })
+          subDepartmentsOptions: [...subDepartmentsOptions, value],
+        })
       : setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: subDepartmentsOptions.filter(
-          (e) => e !== value
-        ),
-      });
+          subDepartmentsOptions: subDepartmentsOptions.filter(
+            (e) => e !== value
+          ),
+        });
   };
 
   const checkAllSubDeps = () => {
@@ -165,7 +182,7 @@ const SubDepartments = () => {
       .then((response) => {
         console.log(response.data);
         setSelectedSubDepartments(response.data);
-        const selectedIds = response.data.map(item => item._id);
+        const selectedIds = response.data.map((item) => item._id);
         setSubDepartmentCheckboxStatus({ subDepartmentsOptions: selectedIds });
 
         setIsLoading(false);
@@ -212,7 +229,9 @@ const SubDepartments = () => {
                     selectAllMode={selectAllMode}
                     handleSubmitSubCheckbox={handleSubmitSubCheckbox}
                     selectedSubDepartments={selectedSubDepartments}
-                    checkedSubDepartments={subDepartmentCheckboxStatus.subDepartmentsOptions}
+                    checkedSubDepartments={
+                      subDepartmentCheckboxStatus.subDepartmentsOptions
+                    }
                     submitIsLoading={submitIsLoading}
                   />
                 </div>

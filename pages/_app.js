@@ -6,10 +6,10 @@ import "public/assets/plugins/fontawesome/css/fontawesome.min.css";
 import "public/assets/plugins/fontawesome/css/all.min.css";
 import "public/assets/css/font-awesome.min.css";
 import "public/assets/css/style.css";
-import DashboardLayout from "src/app/dashboard/layout";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.css";
-import { PrimeReactProvider } from 'primereact/api';
+import { PrimeReactProvider } from "primereact/api";
+import DashboardLayout from "pages/dashboardLayout";
 // import {
 //   useQuery,
 //   useMutation,
@@ -45,7 +45,7 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
 
       <PrimeReactProvider>
-        <DashboardLayout>
+        <DashboardLayout UserData={pageProps.UserData}>
           <Component {...pageProps} />
         </DashboardLayout>
       </PrimeReactProvider>

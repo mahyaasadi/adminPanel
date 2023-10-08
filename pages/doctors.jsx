@@ -3,24 +3,38 @@ import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import Head from "next/head";
 import { axiosClient } from "class/axiosConfig.js";
-// import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import DoctorsListTable from "components/dashboard/doctors/doctorsListTable";
 import AddDoctorModal from "components/dashboard/doctors/addDoctorModal";
 import EditDoctorModal from "components/dashboard/doctors/editDoctorModal";
+import { getSession } from "lib/session";
 
-// let CenterID = Cookies.get("CenterID");
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
+
 let CenterID = null;
-
-const DoctorsList = () => {
+const DoctorsList = ({ UserData }) => {
   const Router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
   const [doctorsList, setDoctorsList] = useState([]);
   const [editDoctor, setEditDoctor] = useState({});
-  const [hiddenData, setHiddenData] = useState(null)
+  const [hiddenData, setHiddenData] = useState(null);
 
   //get doctors list
   const getDoctorsData = () => {
@@ -164,14 +178,14 @@ const DoctorsList = () => {
   }, [Router.isReady]);
 
   useEffect(() => {
-    setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+    setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
     if (hiddenData) {
       // Use the data
       console.log(hiddenData.name);
 
       // Optionally clear the data from local storage if it's only needed once
-      localStorage.removeItem('hiddenData');
+      localStorage.removeItem("hiddenData");
     }
   }, []);
 
@@ -207,7 +221,9 @@ const DoctorsList = () => {
                 <div className="card-header border-bottom-0">
                   <div className="row align-items-center">
                     <div className="col">
-                      <p className="card-title font-14 text-secondary"> لیست پزشکان
+                      <p className="card-title font-14 text-secondary">
+                        {" "}
+                        لیست پزشکان
                         {""} {hiddenData?.name}
                       </p>
                     </div>

@@ -10,10 +10,26 @@ import centerPhoneTypeDataClass from "class/centerPhoneTypeDataClass.js";
 import CenterPhoneNumbersList from "components/dashboard/centers/centerPhoneNumbers/centerPhoneNumbersList";
 import AddPhoneNumberModal from "components/dashboard/centers/centerPhoneNumbers/addPhoneNumberModal";
 import EditPhoneNumberModal from "components/dashboard/centers/centerPhoneNumbers/editPhoneNumberModal";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let CenterID = null;
-
-const Insurance = () => {
+const Insurance = ({ UserData }) => {
   const Router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);

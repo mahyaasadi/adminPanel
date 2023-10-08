@@ -12,11 +12,30 @@ import EditModalityModal from "components/dashboard/modalities/editModalityModal
 import SubModalitiesModal from "components/dashboard/modalities/subModalities/subModalitiesModal";
 import AddSubModalityModal from "components/dashboard/modalities/subModalities/addSubModalityModal";
 import EditSubModalityModal from "components/dashboard/modalities/subModalities/editSubModalityModal";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
+
 
 let ActiveModalityID,
   ActiveModalityName = null;
-
-const Modalities = ({}) => {
+const Modalities = ({UserData}) => {
+  console.log({UserData});
+  
   const [isLoading, setIsLoading] = useState(true);
   const [modalityData, setModalityData] = useState([]);
   const [editModalityData, setEditModalityData] = useState({ empty: 1 });

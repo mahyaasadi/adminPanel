@@ -12,11 +12,27 @@ import SubMenuModal from "components/dashboard/menus/subMenu/subMenuModal";
 import AddSubMenuModal from "components/dashboard/menus/subMenu/addSubMenuModal";
 import EditMenuModal from "components/dashboard/menus/editMenuModal";
 import EditSubMenuModal from "components/dashboard/menus/subMenu/editSubMenuModal";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let ActiveMenuID = null;
 let ActiveMenuName = null;
-
-const MenusManagement = () => {
+const MenusManagement = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [menuList, setMenuList] = useState([]);
   const [subMenuList, setSubMenuList] = useState([]);

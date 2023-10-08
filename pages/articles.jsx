@@ -27,6 +27,7 @@ import RelatedArticlesList from "components/dashboard/articles/relatedArticles/r
 import AddRelatedArticleModal from "components/dashboard/articles/relatedArticles/addRelatedArticleModal";
 import SubTextEditor from "components/dashboard/articles/subArticles/subTextEditor";
 import ArticlesPagination from "components/dashboard/articles/articlesPagination";
+import { getSession } from "lib/session";
 
 let ActiveArticleID,
   ActiveSubArticleID,
@@ -35,7 +36,23 @@ let ActiveArticleID,
   ActiveArticleTitle,
   ActiveGroupID = null;
 
-const Articles = () => {
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
+
+const Articles = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [articlesData, setArticlesData] = useState([]);
   const [newArticleDate, setNewArticleDate] = useState("");

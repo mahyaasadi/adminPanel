@@ -9,8 +9,25 @@ import Loading from "components/commonComponents/loading/loading";
 import NeighbourhoodsListTable from "components/dashboard/neighbourhoods/neighbourhoodsListTable";
 import AddStateModal from "components/dashboard/neighbourhoods/addStateModal/addStateModal";
 import EditStateModal from "components/dashboard/neighbourhoods/editStateModal/editStateModal";
+import { getSession } from "lib/session";
 
-const Neighbourhoods = () => {
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
+
+const Neighbourhoods = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [neighbourhoodsData, setNeighbourhoodsData] = useState([]);
   const [editNeighbourhoodData, setEditNeighbourhoodData] = useState([]);

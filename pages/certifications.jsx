@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
-// import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { axiosClient } from "class/axiosConfig.js";
 import FeatherIcon from "feather-icons-react";
@@ -10,11 +9,26 @@ import CertificationsListTable from "/components/dashboard/certifications/certif
 import AddCertificateModal from "components/dashboard/certifications/addCertificateModal";
 import EditCertificateModal from "components/dashboard/certifications/editCertificateModal";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
+import { getSession } from "lib/session";
 
-// let CenterID = Cookies.get("CenterID");
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
+
 let CenterID = null;
-
-const Certifications = () => {
+const Certifications = ({ UserData }) => {
   const Router = useRouter();
 
   const [certificationsList, setCertificationsList] = useState([]);
@@ -170,11 +184,11 @@ const Certifications = () => {
     if (Router.isReady) {
       CenterID = Router.query.id;
       getCertifications();
-      setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
       if (hiddenData) {
         console.log(hiddenData.name);
-        localStorage.removeItem('hiddenData');
+        localStorage.removeItem("hiddenData");
       }
       if (!CenterID) return null;
     }
@@ -213,7 +227,10 @@ const Certifications = () => {
                 <div className="card-header border-bottom-0">
                   <div className="row align-items-center">
                     <div className="col">
-                      <p className="card-title font-14 text-secondary"> لیست مجوزهای {" "}{hiddenData?.name}</p>
+                      <p className="card-title font-14 text-secondary">
+                        {" "}
+                        لیست مجوزهای {hiddenData?.name}
+                      </p>
                     </div>
                     <div className="col-auto d-flex flex-wrap">
                       <div className="form-custom me-2">

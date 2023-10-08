@@ -5,10 +5,26 @@ import { useRouter } from "next/router";
 import Loading from "components/commonComponents/loading/loading";
 import { SuccessAlert } from "class/AlertManage.js";
 import DepartmentsList from "components/dashboard/departments/departmentsList";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let CenterID = null;
-
-const Departments = () => {
+const Departments = ({ UserData }) => {
   const Router = useRouter();
 
   const [departmentsData, setDepartmentsData] = useState([]);

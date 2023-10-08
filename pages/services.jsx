@@ -9,12 +9,29 @@ import ModalitiesHeader from "components/dashboard/services/modalitiesHeader/mod
 import ServicesListTable from "components/dashboard/services/servicesListTable";
 import AddServiceModal from "components/dashboard/services/addServiceModal";
 import EditServiceModal from "components/dashboard/services/editServiceModal";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let ActiveSrvModalityID,
   ActiveSrvModalityName,
   ActiveServiceID = null;
 
-const Services = () => {
+const Services = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [modalityData, setModalityData] = useState([]);
   const [servicesData, setServicesData] = useState([]);

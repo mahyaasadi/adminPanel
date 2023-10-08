@@ -66,7 +66,7 @@ const CentersListTable = ({
         ) : (
           ""
         ),
-      width: "200px",
+      width: "250px",
     },
     {
       name: "اطلاعات مراکز",
@@ -141,7 +141,7 @@ const CentersListTable = ({
           </div>
         );
       },
-      width: "300px",
+      width: "400px",
     },
     {
       name: "عملیات ها",

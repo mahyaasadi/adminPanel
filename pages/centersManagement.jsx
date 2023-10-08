@@ -15,11 +15,28 @@ import BusinessHoursModal from "components/dashboard/centers/centerBusinessHours
 import EditBusinessHourModal from "components/dashboard/centers/centerBusinessHours/editBusinessHoursModal";
 import CenterAboutUsModal from "components/dashboard/centers/aboutUs/centerAboutUsModal";
 import EditAboutUsModal from "components/dashboard/centers/aboutUs/editAboutUsModal";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let ActiveCenterID,
   ActiveCenterName = null;
 
-const CentersManagement = () => {
+const CentersManagement = ({ UserData }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [centersData, setCentersData] = useState([]);

@@ -11,10 +11,26 @@ import EditInsuranceModal from "components/dashboard/insurances/editInsuranceMod
 import insuranceTypeDataClass from "class/insuranceTypeDataClass";
 import insuranceStatusDataClass from "class/insuranceStatusDataClass";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let CenterID = null;
-
-const Insurance = () => {
+const Insurance = ({ UserData }) => {
   const Router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -178,11 +194,11 @@ const Insurance = () => {
     if (Router.isReady) {
       CenterID = Router.query.id;
       getInsuranceData();
-      setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
       if (hiddenData) {
         console.log(hiddenData.name);
-        localStorage.removeItem('hiddenData');
+        localStorage.removeItem("hiddenData");
       }
       if (!CenterID) return null;
     }

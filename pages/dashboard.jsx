@@ -4,10 +4,26 @@ import Select from "react-select";
 import JDate from "jalali-date";
 import Loading from "components/commonComponents/loading/loading";
 import OverviewStats from "components/dashboard/overview/overviewStats";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 const jdate = new JDate();
-
-const Dashboard = () => {
+const Dashboard = ({ UserData }) => {
   const [selectedDuration, setSelectedDuration] = useState("today");
   const overviewOptions = [
     { value: "today", label: "امروز : " + jdate.format("dddd DD MMMM YYYY") },

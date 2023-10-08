@@ -9,16 +9,32 @@ import Loading from "components/commonComponents/loading/loading";
 import SpecializedWorksListTable from "components/dashboard/specializedWorks/specializedWorksListTable";
 import AddSpeWorkModal from "components/dashboard/specializedWorks/addSpeWorkModal";
 import EditSpeWorkModal from "components/dashboard/specializedWorks/editSpeWorkModal";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let CenterID = null;
-
-const SpecializedWorks = () => {
+const SpecializedWorks = ({ UserData }) => {
   const Router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
   const [speWorks, setSpeWorks] = useState([]);
   const [editSpeWork, setEditSpeWork] = useState({});
-  const [hiddenData, setHiddenData] = useState(null)
+  const [hiddenData, setHiddenData] = useState(null);
   //get specializedWorks list
   const getSpecializedWorks = () => {
     CenterID = Router.query.id;
@@ -159,11 +175,11 @@ const SpecializedWorks = () => {
       CenterID = Router.query.id;
 
       getSpecializedWorks();
-      setHiddenData(JSON.parse(localStorage.getItem('hiddenData')))
+      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
       if (hiddenData) {
         console.log(hiddenData.name);
-        localStorage.removeItem('hiddenData');
+        localStorage.removeItem("hiddenData");
       }
       if (!CenterID) return null;
     }
@@ -202,7 +218,7 @@ const SpecializedWorks = () => {
                   <div className="row align-items-center">
                     <div className="col">
                       <p className="card-title font-14 text-secondary">
-                        لیست کارهای تخصصی {" "}{hiddenData?.name}
+                        لیست کارهای تخصصی {hiddenData?.name}
                       </p>
                     </div>
                     <div className="col-auto d-flex flex-wrap">

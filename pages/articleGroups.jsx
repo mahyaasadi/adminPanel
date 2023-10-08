@@ -9,10 +9,26 @@ import Loading from "components/commonComponents/loading/loading";
 import ArticleGroupsListTable from "components/dashboard/articles/articleGroups/articleGroupsListTable";
 import AddArticleGroupModal from "components/dashboard/articles/articleGroups/addArticleGroupModal";
 import EditArticleGroupModal from "components/dashboard/articles/articleGroups/editArticleGroupModal";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let ActiveArticleGrpID = null;
-
-const ArticleGroupsManagement = () => {
+const ArticleGroupsManagement = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [articleGroupsData, setArticleGroupsData] = useState([]);
   const [editArticleGroupData, setEditArticleGroupData] = useState([]);

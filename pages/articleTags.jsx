@@ -9,10 +9,26 @@ import Loading from "components/commonComponents/loading/loading";
 import ArticleTagsListTable from "components/dashboard/articles/articleTags/articleTagsListTable";
 import AddArticleTagModal from "components/dashboard/articles/articleTags/addArticleTagModal";
 import EditArticleTagModal from "components/dashboard/articles/articleTags/editArticleTagModal";
+import { getSession } from "lib/session";
+
+export const getServerSideProps = async ({ req, res }) => {
+  const result = getSession(req, res);
+
+  if (result) {
+    const { UserData } = result;
+    return { props: { UserData } };
+  } else {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/`,
+      },
+    };
+  }
+};
 
 let ActiveArticleTagID = null;
-
-const ArticleTagsManagement = () => {
+const ArticleTagsManagement = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [articleTags, setArticleTags] = useState([]);
   const [editArticleTagData, setEditArticleTagData] = useState([]);

@@ -1,22 +1,20 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { axiosClient } from "class/axiosConfig.js";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import FeatherIcon from "feather-icons-react";
-import { useRouter } from "next/router";
-import { avatar01, headerLogo, logoSmall } from "components/imagepath";
 import { ErrorAlert } from "class/AlertManage.js";
+import { axiosClient } from "class/axiosConfig.js";
+import { setSession } from "@/lib/SessionMange";
+import { avatar01, headerLogo, logoSmall } from "components/imagepath";
 
 let user = null;
-
-const Header = () => {
+const Header = ({ UserData }) => {
   let router = useRouter();
   const [task, settask] = useState(true);
   const [task1, settask1] = useState(true);
-  const [dropdown, setdropdown] = useState(false);
-  const [dropdown1, setdropdown1] = useState(false);
 
   const handletheme = () => {
     document.body.classList.toggle("darkmode");
@@ -32,40 +30,24 @@ const Header = () => {
     document.body.classList.toggle("slide-nav");
   };
 
+  const handleLogout = async (UserData) => {
+    let mngSession = await setSession(UserData);
+    Cookies.set("mngSession", " ", { expires: 1 });
+    router.push("/");
+  };
+
+  const fetchUserToken = async (data) => {
+    document.getElementById("userName").innerHTML = data.FullName;
+    document.getElementById("avatar").setAttribute("src", data.Avatar);
+    document.getElementById("avatar").setAttribute("srcSet", data.Avatar);
+    document.getElementById("dropdownAvatar").setAttribute("src", data.Avatar);
+    document
+      .getElementById("dropdownAvatar")
+      .setAttribute("srcSet", data.Avatar);
+  };
+
   useEffect(() => {
-    let url = "InoAdmin/getUserByToken";
-    let data = { Token: sessionStorage.getItem("SEID") };
-
-    if (data) {
-      axiosClient
-        .post(url, data)
-        .then(function (response) {
-          user = response.data;
-          document.getElementById("userName").innerHTML = user.FullName;
-          document.getElementById("avatar").setAttribute("src", user.Avatar);
-          document.getElementById("avatar").setAttribute("srcSet", user.Avatar);
-
-          document
-            .getElementById("dropdownAvatar")
-            .setAttribute("src", user.Avatar);
-          document
-            .getElementById("dropdownAvatar")
-            .setAttribute("srcSet", user.Avatar);
-
-          if ((user.Admin = true)) {
-            document.getElementById("role").innerHTML = "ادمین";
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-          ErrorAlert("خطا", "ارتباط با سرور در حال حاضر امکان پذیر نمی باشد!");
-        });
-    } else {
-      ErrorAlert("خطا", "خطای ورود به سایت");
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
-    }
+    fetchUserToken(UserData);
   }, []);
 
   return (
@@ -162,9 +144,12 @@ const Header = () => {
               <Link className="dropdown-item" href="/profileSettings">
                 تنظیمات
               </Link>
-              <a className="dropdown-item" href="login.html">
+              <button
+                className="dropdown-item"
+                onClick={() => handleLogout(UserData)}
+              >
                 خروج
-              </a>
+              </button>
             </div>
           </li>
         </ul>
