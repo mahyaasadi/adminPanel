@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import Head from "next/head";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { getSession } from "lib/session";
 import { setSession } from "@/lib/SessionMange";
-import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig";
 import { SuccessAlert, ErrorAlert } from "class/AlertManage";
 import PasswordSettings from "components/userProfile/passwordSettings";
@@ -38,45 +36,42 @@ const ProfileSettings = ({ UserData }) => {
 
   const handleNewPassword = (e) => setNewPassword(e.target.value);
 
-  // const editGeneralUserInfo = (e) => {
-  //   e.preventDefault();
-  //   setIsLoading(true);
+  const editGeneralUserInfo = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  //   let formData = new FormData(e.target);
-  //   const formProps = Object.fromEntries(formData);
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
 
-  //   let url = "InoAdmin/updateUser";
-  //   let data = {
-  //     CenterID: formProps.centerId,
-  //     UserID: formProps.userId,
-  //     FullName: formProps.editUserFullName,
-  //     NickName: formProps.editUserNickName,
-  //     Tel: formProps.editUserTel,
-  //     User: formProps.editUserName,
-  //   };
+    let url = "InoAdmin/updateUser";
+    let data = {
+      UserID: formProps.userId,
+      FullName: formProps.editUserFullName,
+      Tel: formProps.editUserTel,
+      User: formProps.editUserName,
+    };
 
-  //   console.log({ data });
+    console.log({ data });
 
-  //   axiosClient
-  //     .put(url, data)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setUserInfo({
-  //         FullName: response.data.FullName,
-  //         NickName: response.data.NickName,
-  //         Tel: response.data.Tel,
-  //         User: formProps.editUserName,
-  //       });
+    axiosClient
+      .put(url, data)
+      .then((response) => {
+        console.log(response.data);
+        setUserInfo({
+          FullName: response.data.FullName,
+          Tel: response.data.Tel,
+          User: formProps.editUserName,
+        });
 
-  //       SuccessAlert("موفق", "ویرایش اطلاعات با موفقیت انجام گرفت!");
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       setIsLoading(false);
-  //       ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
-  //     });
-  // };
+        SuccessAlert("موفق", "ویرایش اطلاعات با موفقیت انجام گرفت!");
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
+      });
+  };
 
   const editUserPassword = (e) => {
     e.preventDefault();
@@ -122,7 +117,6 @@ const ProfileSettings = ({ UserData }) => {
     setIsLoading(true);
 
     const formProps = Object.fromEntries(formData);
-
     if (formProps.editUserAvatar) {
       let avatarBlob;
 
@@ -166,13 +160,15 @@ const ProfileSettings = ({ UserData }) => {
               );
 
             UserData.Avatar = "https://irannobat.ir" + response.data.Avatar;
+
             // reset cookies
             let resSession = await setSession(UserData);
             Cookies.set("session", resSession, { expires: 1 });
-            SuccessAlert("موفق", "تغییر آواتار با موفقیت انجام گردید!");
+
             setTimeout(() => {
               router.push("/profile");
             }, 300);
+            SuccessAlert("موفق", "تغییر آواتار با موفقیت انجام گردید!");
             setIsLoading(false);
           })
           .catch((err) => {
@@ -184,10 +180,10 @@ const ProfileSettings = ({ UserData }) => {
     }
   };
 
-  //   useEffect(() => {
-  //     $("#newPassValidationText1").hide();
-  //     $("#newPassValidationText2").hide();
-  //   }, []);
+  useEffect(() => {
+    $("#newPassValidationText1").hide();
+    $("#newPassValidationText2").hide();
+  }, []);
 
   return (
     <>
@@ -235,8 +231,7 @@ const ProfileSettings = ({ UserData }) => {
                   <div className="row">
                     <GenralUserInfoSettings
                       userInfo={userInfo}
-                      UserData={userInfo}
-                      // editGeneralUserInfo={editGeneralUserInfo}
+                      editGeneralUserInfo={editGeneralUserInfo}
                       isLoading={isLoading}
                     />
                     <AvatarSettings
@@ -252,6 +247,7 @@ const ProfileSettings = ({ UserData }) => {
                     handleNewPassword={handleNewPassword}
                     editUserPassword={editUserPassword}
                     UserData={userInfo}
+                    isLoading={isLoading}
                   />
                 </div>
               </div>

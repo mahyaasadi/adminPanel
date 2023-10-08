@@ -7,43 +7,44 @@ const PasswordSettings = ({
   handleNewPassword,
   editUserPassword,
   UserData,
+  isLoading
 }) => {
   const router = useRouter();
   const [eye, setEye] = useState(true);
   const onEyeClick = () => setEye(!eye);
 
-  //   const validatePasswordLength = (e) => {
-  //     e.preventDefault();
+  const validatePasswordLength = (e) => {
+    e.preventDefault();
 
-  //     // password length
-  //     if (newPassword.length < 7) {
-  //       $("#newPassValidationText1").show();
-  //       $("#submitNewPasswordBtn").attr("disabled", true);
-  //       return;
-  //     } else {
-  //       $("#newPassValidationText1").hide();
-  //       $("#submitNewPasswordBtn").attr("disabled", false);
-  //     }
-  //   };
+    // password length
+    if (newPassword.length < 7) {
+      $("#newPassValidationText1").show();
+      $("#submitNewPasswordBtn").attr("disabled", true);
+      return;
+    } else {
+      $("#newPassValidationText1").hide();
+      $("#submitNewPasswordBtn").attr("disabled", false);
+    }
+  };
 
-  //   const validateConfirmPassword = (e) => {
-  //     e.preventDefault();
+  const validateConfirmPassword = (e) => {
+    e.preventDefault();
 
-  //     let formData = new FormData(document.getElementById("passwordSettingsFrm"));
-  //     const formProps = Object.fromEntries(formData);
+    let formData = new FormData(document.getElementById("passwordSettingsFrm"));
+    const formProps = Object.fromEntries(formData);
 
-  //     let passValue = $("#newPassword").val();
-  //     let confpassValue = $("#confirmNewPassword").val();
+    let passValue = $("#newPassword").val();
+    let confpassValue = $("#confirmNewPassword").val();
 
-  //     // confirm password validation
-  //     if (passValue !== confpassValue) {
-  //       $("#newPassValidationText2").show();
-  //       $("#submitNewPasswordBtn").attr("disabled", true);
-  //     } else {
-  //       $("#newPassValidationText2").hide();
-  //       $("#submitNewPasswordBtn").attr("disabled", false);
-  //     }
-  //   };
+    // confirm password validation
+    if (passValue !== confpassValue) {
+      $("#newPassValidationText2").show();
+      $("#submitNewPasswordBtn").attr("disabled", true);
+    } else {
+      $("#newPassValidationText2").hide();
+      $("#submitNewPasswordBtn").attr("disabled", false);
+    }
+  };
 
   const handleCancelBtn = (e) => {
     e.preventDefault();
@@ -80,9 +81,8 @@ const PasswordSettings = ({
                   />
                   <span
                     onClick={onEyeClick}
-                    className={`fa toggle-password-current" ${
-                      eye ? "fa-eye-slash" : "fa-eye"
-                    }`}
+                    className={`fa toggle-password-current" ${eye ? "fa-eye-slash" : "fa-eye"
+                      }`}
                   />
                 </div>
 
@@ -99,20 +99,19 @@ const PasswordSettings = ({
                       value={newPassword}
                       onChange={handleNewPassword}
                       autoComplete="false"
-                      //   onBlur={validatePasswordLength}
+                      onBlur={validatePasswordLength}
                       required
                     />
                     <span
                       onClick={onEyeClick}
-                      className={`fa toggle-password-newPass" ${
-                        eye ? "fa-eye-slash" : "fa-eye"
-                      }`}
+                      className={`fa toggle-password-newPass" ${eye ? "fa-eye-slash" : "fa-eye"
+                        }`}
                     />
                   </div>
                 </div>
 
                 {/* password validation */}
-                {/* <div className="marginb-med mt-4">
+                <div className="marginb-med mt-4">
                   <div
                     className="text-secondary font-13 frmValidation form-control inputPadding rounded mb-1"
                     id="newPassValidationText1"
@@ -125,7 +124,7 @@ const PasswordSettings = ({
                       رمز عبور باید حداقل 7 رقم باشد!
                     </div>
                   </div>
-                </div> */}
+                </div>
 
                 <div className="form-group">
                   <label className="lblAbs font-12">
@@ -138,19 +137,18 @@ const PasswordSettings = ({
                       id="confirmNewPassword"
                       className="form-control floating inputPadding rounded"
                       autoComplete="false"
-                      //   onBlur={validateConfirmPassword}
+                      onBlur={validateConfirmPassword}
                       required
                     />
                     <span
                       onClick={onEyeClick}
-                      className={`fa toggle-password-confPass" ${
-                        eye ? "fa-eye-slash" : "fa-eye"
-                      }`}
+                      className={`fa toggle-password-confPass" ${eye ? "fa-eye-slash" : "fa-eye"
+                        }`}
                     />
                   </div>
                 </div>
 
-                {/* <div className="marginb-med mt-4">
+                <div className="marginb-med mt-4">
                   <div
                     className="text-secondary font-13 frmValidation form-control inputPadding rounded mb-1"
                     id="newPassValidationText2"
@@ -163,13 +161,12 @@ const PasswordSettings = ({
                       رمز عبور باید تطابق داشته باشد!
                     </div>
                   </div>
-                </div> */}
+                </div>
 
                 <div className="settings-btns d-flex gap-1 justify-center media-flex-column margin-top-3">
                   <button
                     type="submit"
                     className="btn btn-primary rounded profileSettingsBtn font-13"
-                    id="submitNewPasswordBtn"
                   >
                     ثبت
                   </button>

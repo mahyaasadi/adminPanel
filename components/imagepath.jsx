@@ -1,5 +1,4 @@
 export { default as headerLogo } from "public/assets/img/irannobatLogo.png";
-export { default as logo } from "public/assets/img/newLogo1.jpg";
 export { default as managementLogo } from "public/assets/img/managementLogo.jpg";
 export { default as loginheader } from "public/assets/img/loginHeader.png";
 export { default as logoSmall } from "public/assets/img/logo-small.png";
@@ -59,6 +58,3 @@ export { default as flag04 } from "public/assets/img/flags/flag-04.png";
 export { default as flag05 } from "public/assets/img/flags/flag-05.png";
 export { default as prescription } from "public/assets/img/icon/prescription.png";
 export { default as loading } from "public/assets/img/inoLoading.gif";
-export { default as organ } from "public/assets/img/icon/organ.png";
-export { default as neighbourhoods } from "public/assets/img/icon/neighborhood.png";
-export { default as article } from "public/assets/img/icon/article.png";

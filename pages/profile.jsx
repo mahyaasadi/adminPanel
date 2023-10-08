@@ -20,34 +20,11 @@ export const getServerSideProps = async ({ req, res }) => {
   }
 };
 
+
+
 const Profile = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(UserData);
-
-  //   const getUserById = () => {
-  //     setIsLoading(true);
-
-  //     let url = "AdminUser/getUserById";
-  //     let data = {
-  //       UserID: UserData._id,
-  //     };
-
-  //     axiosClient
-  //       .post(url, data)
-  //       .then((response) => {
-  //         console.log("userInfo", response.data);
-  //         setUserInfo(response.data);
-  //         setIsLoading(false);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         setIsLoading(false);
-  //       });
-  //   };
-
-  //   useEffect(() => {
-  //     getUserById();
-  //   }, []);
 
   return (
     <>
@@ -67,9 +44,9 @@ const Profile = ({ UserData }) => {
                         alt="Profile Image"
                       />
                     </label>
-                    <div className="pro-name">
+                    {/* <div className="pro-name">
                       <p>{UserData.FullName}</p>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="row">
                     <div className="col-md-12">
@@ -83,16 +60,17 @@ const Profile = ({ UserData }) => {
                       <h5>نام کاربری</h5>
                       <p>{userInfo.User}</p>
                     </div>
-                    {/* <div className="col-md-4 mb-3">
-                      <h5>نام مستعار</h5>
-                      <p>{userInfo.NickName}</p>
-                    </div> */}
+
                     <div className="col-md-12">
                       <h6 className="pro-title text-secondary">اطلاعات شخصی</h6>
                     </div>
                     <div className="col-md-4">
                       <h5>شماره همراه</h5>
                       <p>{userInfo.Tel}</p>
+                    </div>
+                    <div className="col-md-4 mb-3">
+                      <h5>کد ملی</h5>
+                      <p>{userInfo.NID}</p>
                     </div>
                   </div>
                 </div>

@@ -117,28 +117,15 @@ const AvatarSettings = ({ UserData, changeUserAvatar, isLoading }) => {
                 </div>
 
                 <div className="d-flex gap-1 justify-center margin-top-3 media-flex-column">
-                  {isLoading ? (
-                    <button
-                      type="submit"
-                      className="btn btn-primary rounded profileSettingsBtn font-13"
-                      id="submitUserBtn"
-                    >
-                      ثبت
-                    </button>
-                  ) : (
-                    <button
-                      type="submit"
-                      className="btn btn-primary rounded d-flex profileSettingsBtn justify-center align-items-center"
-                      disabled
-                    >
-                      <span
-                        className="spinner-border spinner-border-sm me-2"
-                        role="status"
-                      ></span>
-                      <span className="font-13">در حال ثبت</span>
-                    </button>
-                  )}
-                  <Link
+                  <button
+                    type="submit"
+                    className="btn btn-primary rounded profileSettingsBtn font-13"
+                    id="submitUserBtn"
+                  >
+                    ثبت
+                  </button>
+
+                  <button
                     type="button"
                     href="/profileSettings"
                     className="btn btn-outline-dark rounded profileSettingsBtn font-13"
@@ -146,7 +133,7 @@ const AvatarSettings = ({ UserData, changeUserAvatar, isLoading }) => {
                     onClick={handleCancelBtn}
                   >
                     انصراف
-                  </Link>
+                  </button>
                 </div>
               </div>
             </form>

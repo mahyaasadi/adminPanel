@@ -112,13 +112,13 @@ const SubDepartments = ({ UserData }) => {
 
     checked
       ? setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: [...subDepartmentsOptions, value],
-        })
+        subDepartmentsOptions: [...subDepartmentsOptions, value],
+      })
       : setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: subDepartmentsOptions.filter(
-            (e) => e !== value
-          ),
-        });
+        subDepartmentsOptions: subDepartmentsOptions.filter(
+          (e) => e !== value
+        ),
+      });
   };
 
   const checkAllSubDeps = () => {
@@ -220,7 +220,7 @@ const SubDepartments = ({ UserData }) => {
           ) : (
             <div className="row">
               <div className="col-sm-12">
-                <div className="card subDepCard">
+                <div className="card">
                   <SubDepartmentsList
                     data={currentSubDepartments}
                     handleCheckedSubDepartments={handleCheckedSubDepartments}
