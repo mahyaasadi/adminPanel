@@ -35,6 +35,7 @@ const Departments = ({ UserData }) => {
   });
 
   const [modalityData, setModalityData] = useState([]);
+  const [hiddenData, setHiddenData] = useState(null);
 
   // departments checkbox
   const handleCheckedDepartments = (e) => {
@@ -142,14 +143,23 @@ const Departments = ({ UserData }) => {
       CenterID = Router.query.id;
 
       getDepartments();
-      if (!CenterID) return null;
+
+      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
+
+      if (hiddenData) {
+        // Use the data
+        console.log(hiddenData.name);
+
+        // Optionally clear the data from local storage if it's only needed once
+        // localStorage.removeItem("hiddenData");
+      }
     }
   }, [Router.isReady]);
 
   return (
     <>
       <Head>
-        <title>انتخاب بخش</title>
+        <title>انتخاب بخش های مرکز</title>
       </Head>
       <div className="page-wrapper font-13">
         <div className="content container-fluid">
@@ -157,6 +167,25 @@ const Departments = ({ UserData }) => {
             <Loading />
           ) : (
             <div className="departments-container">
+              <div className="p-4 border-bottom-0 d-flex justify-center">
+                <div className="row align-items-center">
+                  <div className="col">
+                    <p className="card-title font-17 text-secondary">
+                      {" "}
+                      بخش های مرکز
+                      {""} {hiddenData?.name}
+                    </p>
+                  </div>
+                  <div className="col-auto d-flex flex-wrap">
+                    <div className="form-custom me-2">
+                      <div
+                        id="tableSearch"
+                        className="dataTables_wrapper"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="checkbox-group-legend">
                 بخش مورد نظر را انتخاب نمایید
               </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
-import { QuestionAlert } from "class/AlertManage.js";
+import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import NeighbourhoodsListTable from "components/dashboard/neighbourhoods/neighbourhoodsListTable";
 import AddStateModal from "components/dashboard/neighbourhoods/addStateModal/addStateModal";
@@ -163,7 +163,7 @@ const Neighbourhoods = ({ UserData }) => {
         .catch((error) => {
           console.log(error);
           setIsLoading(false);
-          // ErrorAlert("خطا", "ویرایش اطلاعات با خطا همراه گرد");
+          ErrorAlert("خطا", "ویرایش اطلاعات با خطا  مواجه گردید!");
         });
     }
   };

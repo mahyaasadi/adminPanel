@@ -55,13 +55,17 @@ const ProfileSettings = ({ UserData }) => {
 
     axiosClient
       .put(url, data)
-      .then((response) => {
+      .then(async (response) => {
         console.log(response.data);
         setUserInfo({
           FullName: response.data.FullName,
           Tel: response.data.Tel,
           User: formProps.editUserName,
         });
+
+        // reset cookies
+        let mngSession = await setSession(UserData);
+        Cookies.set("mngSession", mngSession, { expires: 1 });
 
         SuccessAlert("موفق", "ویرایش اطلاعات با موفقیت انجام گرفت!");
         setIsLoading(false);
@@ -162,8 +166,8 @@ const ProfileSettings = ({ UserData }) => {
             UserData.Avatar = "https://irannobat.ir" + response.data.Avatar;
 
             // reset cookies
-            let resSession = await setSession(UserData);
-            Cookies.set("session", resSession, { expires: 1 });
+            let mngSession = await setSession(UserData);
+            Cookies.set("mngSession", mngSession, { expires: 1 });
 
             setTimeout(() => {
               router.push("/profile");
@@ -197,7 +201,7 @@ const ProfileSettings = ({ UserData }) => {
               <div className="page-header">
                 <div className="row">
                   <div className="col-sm-6">
-                    <p className="font-17 fw-bold text-secondary ">
+                    <p className="font-17 fw-bold text-secondary">
                       تنظیمات پروفایل
                     </p>
                     <hr className="marginb-md1" />

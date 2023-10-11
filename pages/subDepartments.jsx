@@ -44,6 +44,7 @@ const SubDepartments = ({ UserData }) => {
     useState({
       subDepartmentsOptions: [],
     });
+  const [hiddenData, setHiddenData] = useState(null);
 
   // get all departments
   const getDepartments = () => {
@@ -112,13 +113,13 @@ const SubDepartments = ({ UserData }) => {
 
     checked
       ? setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: [...subDepartmentsOptions, value],
-      })
+          subDepartmentsOptions: [...subDepartmentsOptions, value],
+        })
       : setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: subDepartmentsOptions.filter(
-          (e) => e !== value
-        ),
-      });
+          subDepartmentsOptions: subDepartmentsOptions.filter(
+            (e) => e !== value
+          ),
+        });
   };
 
   const checkAllSubDeps = () => {
@@ -165,6 +166,7 @@ const SubDepartments = ({ UserData }) => {
         console.log(response.data);
         SuccessAlert("موفق", "ثبت زیر بخش های مرکز با موفقیت انجام گردید!");
         setSubmitIsLoading(false);
+        setSelectAllMode(false);
       })
       .catch((err) => {
         console.log(err);
@@ -200,6 +202,16 @@ const SubDepartments = ({ UserData }) => {
       getModalities();
       getSelectedSubDepartments();
       if (!CenterID) return null;
+
+      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
+
+      if (hiddenData) {
+        // Use the data
+        console.log(hiddenData.name);
+
+        // Optionally clear the data from local storage if it's only needed once
+        // localStorage.removeItem("hiddenData");
+      }
     }
   }, [router.isReady]);
 
@@ -221,6 +233,26 @@ const SubDepartments = ({ UserData }) => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="card">
+                  <div className="p-4 marginb-3 d-flex justify-center">
+                    <div className="row align-items-center">
+                      <div className="col">
+                        <p className="card-title font-16 text-secondary">
+                          {" "}
+                          زیربخش های مرکز
+                          {""} {hiddenData?.name}
+                        </p>
+                      </div>
+                      <div className="col-auto d-flex flex-wrap">
+                        <div className="form-custom me-2">
+                          <div
+                            id="tableSearch"
+                            className="dataTables_wrapper"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <SubDepartmentsList
                     data={currentSubDepartments}
                     handleCheckedSubDepartments={handleCheckedSubDepartments}

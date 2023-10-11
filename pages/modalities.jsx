@@ -30,12 +30,11 @@ export const getServerSideProps = async ({ req, res }) => {
   }
 };
 
-
 let ActiveModalityID,
   ActiveModalityName = null;
-const Modalities = ({UserData}) => {
-  console.log({UserData});
-  
+const Modalities = ({ UserData }) => {
+  console.log({ UserData });
+
   const [isLoading, setIsLoading] = useState(true);
   const [modalityData, setModalityData] = useState([]);
   const [editModalityData, setEditModalityData] = useState({ empty: 1 });
@@ -346,7 +345,9 @@ const Modalities = ({UserData}) => {
                   <div className="card-header border-bottom-0">
                     <div className="row align-items-center">
                       <div className="col">
-                        <h5 className="card-title font-16">لیست بخش ها</h5>
+                        <h5 className="card-title font-16">
+                          لیست بخش های مرکز
+                        </h5>
                       </div>
                       <div className="col-auto d-flex flex-wrap">
                         <div className="form-custom me-2">

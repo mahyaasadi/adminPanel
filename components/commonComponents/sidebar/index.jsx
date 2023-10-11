@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import FeatherIcon from "feather-icons-react";
 
 const Sidebar = ({ UserData }) => {
-  console.log({ UserData });
+  // console.log({ UserData });
   const router = useRouter();
 
   const [submenuOpen, setSubmenuOpen] = useState(false);
@@ -34,7 +34,7 @@ const Sidebar = ({ UserData }) => {
                 </Link>
               </li>
 
-              {UserData.Admin === true && UserData.Basic === false ? (
+              {UserData?.Admin === true && UserData?.Basic === false ? (
                 <li className={router.pathname == "/menus" ? "active" : ""}>
                   <Link href="/menus">
                     <svg
@@ -57,8 +57,7 @@ const Sidebar = ({ UserData }) => {
                 </li>
               ) : (
                 ""
-              )
-              }
+              )}
 
               <li
                 className={
@@ -129,8 +128,9 @@ const Sidebar = ({ UserData }) => {
                   <span className="menu-arrow"></span>
                 </a>
                 <ul
-                  className={`hiddenSidebar ${submenuOpen ? "d-block" : "hidden"
-                    }`}
+                  className={`hiddenSidebar ${
+                    submenuOpen ? "d-block" : "hidden"
+                  }`}
                 >
                   <li
                     className={router.pathname == "/articles" ? "active" : ""}
