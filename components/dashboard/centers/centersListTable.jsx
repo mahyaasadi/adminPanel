@@ -90,6 +90,19 @@ const CentersListTable = ({
           });
         };
 
+        const linkOptionTemplate = (option, props) => {
+          if (option) {
+            return (
+              <div className="flex align-items-center height-md">
+                <div>{option.label}</div>
+                <hr />
+              </div>
+            );
+          }
+
+          return <span>{props.placeholder}</span>;
+        };
+
         const localLinks = [
           {
             label: "پزشکان",
@@ -137,6 +150,7 @@ const CentersListTable = ({
               onChange={onLocalLinkChange}
               placeholder="انتخاب نمایید"
               optionLabel="label"
+              itemTemplate={linkOptionTemplate}
             />
           </div>
         );
