@@ -258,10 +258,6 @@ const CentersListTable = ({
 
           <button
             className="btn btn-sm btn-outline-secondary btn-border-left editBtn"
-            // href="#"
-            // data-bs-toggle="tooltip"
-            // data-bs-placement="top"
-            // title="ویرایش"
             data-pr-position="top"
             onClick={() => updateCenterInfo(row, row._id)}
           >

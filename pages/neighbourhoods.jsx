@@ -115,6 +115,8 @@ const Neighbourhoods = ({ UserData }) => {
       });
   };
 
+  console.log({ provinceOptionsList });
+
   const FUSelectProvince = (province) => {
     setSelectedProvinceList(province);
   };

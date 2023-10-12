@@ -46,9 +46,7 @@ const Header = ({ UserData }) => {
       .setAttribute("srcSet", data.Avatar);
   };
 
-  useEffect(() => {
-    fetchUserToken(UserData);
-  }, []);
+  useEffect(() => fetchUserToken(UserData), []);
 
   return (
     <>
@@ -102,7 +100,7 @@ const Header = ({ UserData }) => {
             </Link>
           </li>
 
-          {/* <!-- User Menu --> */}
+          {/*  User Menu  */}
           <li className="nav-item dropdown has-arrow">
             <a
               href="#"
