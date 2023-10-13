@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Head from "next/head";
 import Select from "react-select";
 import JDate from "jalali-date";
-import Loading from "components/commonComponents/loading/loading";
-import OverviewStats from "components/dashboard/overview/overviewStats";
 import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
@@ -24,7 +22,9 @@ export const getServerSideProps = async ({ req, res }) => {
 
 const jdate = new JDate();
 const Dashboard = ({ UserData }) => {
+
   const [selectedDuration, setSelectedDuration] = useState("today");
+
   const overviewOptions = [
     { value: "today", label: "امروز : " + jdate.format("dddd DD MMMM YYYY") },
     { value: "lastWeek", label: "هفته گذشته" },
@@ -59,11 +59,10 @@ const Dashboard = ({ UserData }) => {
               </div>
             </div>
           </div>
-
-          <OverviewStats />
         </div>
       </div>
     </>
   );
 };
+
 export default Dashboard;

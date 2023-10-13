@@ -5,10 +5,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import FeatherIcon from "feather-icons-react";
-import { ErrorAlert } from "class/AlertManage.js";
-import { axiosClient } from "class/axiosConfig.js";
 import { setSession } from "@/lib/SessionMange";
-import { avatar01, headerLogo, logoSmall } from "components/imagepath";
+import { avatar01, headerLogo, logoSmall } from "components/commonComponents/imagepath";
 
 let user = null;
 const Header = ({ UserData }) => {

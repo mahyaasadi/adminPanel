@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 
 const AddArticleVideoModal = ({ addVideoToArticle, isLoading }) => {
   // Article Video preview
@@ -72,7 +72,7 @@ const AddArticleVideoModal = ({ addVideoToArticle, isLoading }) => {
                   name="addVideoToArticle"
                   onChange={displayVideoPreview}
                   required
-                  //   id="addSubArticleImg"
+                //   id="addSubArticleImg"
                 />
               </div>
 

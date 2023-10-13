@@ -5,7 +5,7 @@ import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 import ArticleTagsListTable from "components/dashboard/articles/articleTags/articleTagsListTable";
 import AddArticleTagModal from "components/dashboard/articles/articleTags/addArticleTagModal";
 import EditArticleTagModal from "components/dashboard/articles/articleTags/editArticleTagModal";
@@ -35,7 +35,7 @@ const ArticleTagsManagement = ({ UserData }) => {
 
   //get all states
   const getAllArticleTags = () => {
-    let url = "/ArticleTags/getAll";
+    let url = "ArticleTags/getAll";
     setIsLoading(true);
 
     axiosClient

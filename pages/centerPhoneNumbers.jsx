@@ -5,7 +5,7 @@ import FeatherIcon from "feather-icons-react";
 import { useRouter } from "next/router";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 import centerPhoneTypeDataClass from "class/centerPhoneTypeDataClass.js";
 import CenterPhoneNumbersList from "components/dashboard/centers/centerPhoneNumbers/centerPhoneNumbersList";
 import AddPhoneNumberModal from "components/dashboard/centers/centerPhoneNumbers/addPhoneNumberModal";

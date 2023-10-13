@@ -4,7 +4,7 @@ import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 import ModalitiesHeader from "components/dashboard/services/modalitiesHeader/modalitiesHeader";
 import ServicesListTable from "components/dashboard/services/servicesListTable";
 import AddServiceModal from "components/dashboard/services/addServiceModal";
@@ -240,9 +240,7 @@ const Services = ({ UserData }) => {
     }
   };
 
-  useEffect(() => {
-    getModalities();
-  }, []);
+  useEffect(() => getModalities(), []);
 
   return (
     <>

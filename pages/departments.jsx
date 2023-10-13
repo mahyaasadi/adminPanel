@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import { axiosClient } from "class/axiosConfig.js";
 import { useRouter } from "next/router";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 import { SuccessAlert } from "class/AlertManage.js";
 import DepartmentsList from "components/dashboard/departments/departmentsList";
 import { getSession } from "lib/session";
@@ -46,13 +46,13 @@ const Departments = ({ UserData }) => {
 
     checked
       ? setDepartmentsCheckboxStatus({
-          departmentsOptionsList: [...departmentsOptionsList, value],
-        })
+        departmentsOptionsList: [...departmentsOptionsList, value],
+      })
       : setDepartmentsCheckboxStatus({
-          departmentsOptionsList: departmentsOptionsList.filter(
-            (e) => e !== value
-          ),
-        });
+        departmentsOptionsList: departmentsOptionsList.filter(
+          (e) => e !== value
+        ),
+      });
   };
 
   function getModality() {

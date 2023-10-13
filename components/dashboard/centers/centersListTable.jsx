@@ -40,6 +40,17 @@ const CentersListTable = ({
       name: "نام مرکز",
       selector: (row) => row.Name,
       sortable: true,
+      cell: (row) => (
+        <Link
+          className="clinicLink"
+          href={
+            "https://irannobat.ir/ClinicProfile/" +
+            row.EngName.replace(/ /g, "-")
+          }
+        >
+          {row.Name}
+        </Link>
+      ),
       width: "380px",
     },
     {
@@ -58,7 +69,7 @@ const CentersListTable = ({
               className="btn removeImgBtn tooltip-button"
               type="button"
               data-pr-position="top"
-              // onClick={}
+            // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>

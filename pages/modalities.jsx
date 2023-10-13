@@ -5,7 +5,7 @@ import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 import ModalityListTable from "components/dashboard/modalities/modalityListTable";
 import AddModalityModal from "components/dashboard/modalities/addModalityModal";
 import EditModalityModal from "components/dashboard/modalities/editModalityModal";

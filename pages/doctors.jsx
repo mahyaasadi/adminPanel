@@ -5,7 +5,7 @@ import Head from "next/head";
 import { axiosClient } from "class/axiosConfig.js";
 import { useRouter } from "next/router";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 import DoctorsListTable from "components/dashboard/doctors/doctorsListTable";
 import AddDoctorModal from "components/dashboard/doctors/addDoctorModal";
 import EditDoctorModal from "components/dashboard/doctors/editDoctorModal";

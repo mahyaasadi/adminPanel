@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
 import DatePicker from "components/commonComponents/datepicker/DatePicker";
@@ -9,7 +8,6 @@ const EditArticleModal = ({
   data,
   editArticle,
   setArticleDateInDB,
-  FUSelectArticleLanguage,
   handleShowInSliderCheckbox,
   handleCheckedSliderOptions,
   isLoading,
@@ -201,9 +199,6 @@ const EditArticleModal = ({
                   placeholder={"انتخاب کنید"}
                   className="text-center"
                   name="editArticleLanguage"
-                  onChangeValue={(value) =>
-                    FUSelectArticleLanguage(value?.value)
-                  }
                   defaultValue={selectedArticleLanguage}
                   key={data.EngTitle}
                   required
@@ -212,7 +207,7 @@ const EditArticleModal = ({
 
               <div className="form-group">
                 <label className="lblAbs font-12">
-                  توضیحات <span className="text-danger">*</span>
+                  توضیحات
                 </label>
                 <div className="col p-0">
                   <textarea
@@ -221,7 +216,6 @@ const EditArticleModal = ({
                     defaultValue={data.Des}
                     key={data.Des}
                     className="form-control floating inputPadding rounded"
-                    required
                   ></textarea>
                 </div>
               </div>

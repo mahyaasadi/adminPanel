@@ -7,7 +7,6 @@ import articleLanguageDataClass from "class/articleLanguageDataClass.js";
 const AddArticleModal = ({
   addArticle,
   setArticleDateInDB,
-  FUSelectArticleLanguage,
   isLoading,
 }) => {
   // article date
@@ -137,7 +136,7 @@ const AddArticleModal = ({
                     hidden="hidden"
                     id="showInSlider"
                     name="articleShowInSlider"
-                    // required
+                  // required
                   />
                   <label
                     className="showInsliderSwitch font-12"
@@ -160,9 +159,6 @@ const AddArticleModal = ({
                   placeholder={"انتخاب کنید"}
                   className="text-center"
                   name="addArticleLanguage"
-                  onChangeValue={(value) =>
-                    FUSelectArticleLanguage(value?.value)
-                  }
                   defaultValue={articleLanguageDataClass[1]}
                   required
                 />

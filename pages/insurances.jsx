@@ -4,7 +4,7 @@ import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { useRouter } from "next/router";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 import InsuranceListTable from "components/dashboard/insurances/insuranceListTable";
 import AddInsuranceModal from "components/dashboard/insurances/addInsuranceModal";
 import EditInsuranceModal from "components/dashboard/insurances/editInsuranceModal";

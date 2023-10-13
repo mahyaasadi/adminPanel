@@ -36,7 +36,7 @@ const UploadImageModal = ({ uploadImage }) => {
             <form onSubmit={uploadImage}>
               <div className="form-group ">
                 <label className="lblAbs font-12">
-                  عنوان<span className="text-danger">*</span>
+                  عنوان <span className="text-danger">*</span>
                 </label>
                 <input
                   className="form-control floating inputPadding rounded"
@@ -47,13 +47,12 @@ const UploadImageModal = ({ uploadImage }) => {
                 />
               </div>
 
-              <div className="form-group ">
+              <div className="form-group">
                 <label className="lblAbs font-12">توضیحات</label>
                 <input
                   className="form-control floating inputPadding rounded"
                   type="text"
                   name="Des"
-                  // required
                 />
               </div>
 

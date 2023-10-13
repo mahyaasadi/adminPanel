@@ -5,7 +5,7 @@ import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 import MenuListTable from "components/dashboard/menus/menuListTable";
 import AddToMenuModal from "components/dashboard/menus/addToMenuModal";
 import SubMenuModal from "components/dashboard/menus/subMenu/subMenuModal";

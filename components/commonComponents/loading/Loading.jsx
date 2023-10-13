@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { loading } from "components/imagepath";
+import { loading } from "components/commonComponents/imagepath";
 
 const Loading = () => {
   return (
@@ -11,14 +11,6 @@ const Loading = () => {
         height="150"
         alt="loading"
         priority={true}
-        // styyle={{
-        //   "position": relative;
-        //   "color": transparent;
-        //   "margin": auto;
-        //   "display": block;
-        //   "z-index": 99
-        // }}
-        // className="loadingImg"
       />
     </div>
   );

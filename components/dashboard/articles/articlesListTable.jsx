@@ -13,7 +13,7 @@ const ArticlesListTable = ({
   openFAQModal,
   openRelatedArticlesModal,
 }) => {
-  console.log({ articlesData });
+  // console.log({ articlesData });
 
   return (
     <>

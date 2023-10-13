@@ -5,7 +5,7 @@ import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 import ArticleGroupsListTable from "components/dashboard/articles/articleGroups/articleGroupsListTable";
 import AddArticleGroupModal from "components/dashboard/articles/articleGroups/addArticleGroupModal";
 import EditArticleGroupModal from "components/dashboard/articles/articleGroups/editArticleGroupModal";

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 
 const AddSubArticleModal = ({ addSubArticle, isLoading }) => {
   // subArticle img preview
@@ -46,7 +46,7 @@ const AddSubArticleModal = ({ addSubArticle, isLoading }) => {
                     type="text"
                     name="addSubArticleTitle"
                     className="form-control floating inputPadding rounded"
-                    // required
+                  // required
                   />
                 </div>
               </div>
@@ -59,8 +59,8 @@ const AddSubArticleModal = ({ addSubArticle, isLoading }) => {
                     name="addSubArticleText"
                     className="form-control floating inputPadding rounded"
                     rows="10"
-                    // cols="50"
-                    // maxlength="200"
+                  // cols="50"
+                  // maxlength="200"
                   ></textarea>
                 </div>
               </div>

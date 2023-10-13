@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { axiosClient } from "class/axiosConfig";
-import Loading from "components/commonComponents/loading/loading";
-import FeatherIcon from "feather-icons-react";
-import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
+import Loading from "@/components/commonComponents/loading/loading";
+import { ErrorAlert, SuccessAlert } from "class/AlertManage.js";
 import SubDepartmentsList from "components/dashboard/subDepartments/subDepartmentsList";
 import DepartmentsHeader from "components/dashboard/subDepartments/departmentsHeader/departmentsHeader";
 import { getSession } from "lib/session";
@@ -36,6 +34,7 @@ const SubDepartments = ({ UserData }) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [submitIsLoading, setSubmitIsLoading] = useState(false);
+  const [hiddenData, setHiddenData] = useState(null);
   const [selectAllMode, setSelectAllMode] = useState(false);
   const [selectedDepartments, setSelectedDepartments] = useState([]);
   const [selectedSubDepartments, setSelectedSubDepartments] = useState([]);
@@ -44,7 +43,6 @@ const SubDepartments = ({ UserData }) => {
     useState({
       subDepartmentsOptions: [],
     });
-  const [hiddenData, setHiddenData] = useState(null);
 
   // get all departments
   const getDepartments = () => {
@@ -109,17 +107,17 @@ const SubDepartments = ({ UserData }) => {
     const { value, checked } = e.target;
     const { subDepartmentsOptions } = subDepartmentCheckboxStatus;
 
-    console.log(`${value} is ${checked}`);
+    // console.log(`${value} is ${checked}`);
 
     checked
       ? setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: [...subDepartmentsOptions, value],
-        })
+        subDepartmentsOptions: [...subDepartmentsOptions, value],
+      })
       : setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: subDepartmentsOptions.filter(
-            (e) => e !== value
-          ),
-        });
+        subDepartmentsOptions: subDepartmentsOptions.filter(
+          (e) => e !== value
+        ),
+      });
   };
 
   const checkAllSubDeps = () => {
@@ -158,7 +156,7 @@ const SubDepartments = ({ UserData }) => {
       subDepartment: result,
     };
 
-    console.log({ data });
+    // console.log({ data });
 
     axiosClient
       .post(url, data)
@@ -167,6 +165,10 @@ const SubDepartments = ({ UserData }) => {
         SuccessAlert("موفق", "ثبت زیر بخش های مرکز با موفقیت انجام گردید!");
         setSubmitIsLoading(false);
         setSelectAllMode(false);
+
+        setTimeout(() => {
+          getSelectedSubDepartments()
+        }, 50);
       })
       .catch((err) => {
         console.log(err);
@@ -204,14 +206,6 @@ const SubDepartments = ({ UserData }) => {
       if (!CenterID) return null;
 
       setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
-
-      if (hiddenData) {
-        // Use the data
-        console.log(hiddenData.name);
-
-        // Optionally clear the data from local storage if it's only needed once
-        // localStorage.removeItem("hiddenData");
-      }
     }
   }, [router.isReady]);
 

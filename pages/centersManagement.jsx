@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { axiosClient } from "class/axiosConfig.js";
 import FeatherIcon from "feather-icons-react";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 import CenterSearch from "components/dashboard/centers/centerSearch";
 import CentersListTable from "components/dashboard/centers/centersListTable";
 import AddCenterModal from "components/dashboard/centers/addCenterModal/addCenterModal";

@@ -5,7 +5,7 @@ import Head from "next/head";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
-import Loading from "components/commonComponents/loading/loading";
+import Loading from "@/components/commonComponents/loading/loading";
 import ArticlesListTable from "components/dashboard/articles/articlesListTable";
 import ArticleSearch from "components/dashboard/articles/articleSearch";
 import AddArticleModal from "components/dashboard/articles/addArticleModal";
@@ -26,15 +26,13 @@ import EditFAQModal from "components/dashboard/articles/FAQ/editFaqModal";
 import RelatedArticlesList from "components/dashboard/articles/relatedArticles/relatedArticleList";
 import AddRelatedArticleModal from "components/dashboard/articles/relatedArticles/addRelatedArticleModal";
 import SubTextEditor from "components/dashboard/articles/subArticles/subTextEditor";
-import ArticlesPagination from "components/dashboard/articles/articlesPagination";
 import { getSession } from "lib/session";
+import Paginator from "components/commonComponents/paginator";
 
 let ActiveArticleID,
   ActiveSubArticleID,
-  selectedArticleLanguage,
   ActiveVideoID,
-  ActiveArticleTitle,
-  ActiveGroupID = null;
+  ActiveArticleTitle = null;
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -134,14 +132,10 @@ const Articles = ({ UserData }) => {
   const nPages = Math.ceil(searchedArticles.length / itemsPerPage);
 
   // Article Date
-  const setArticleDateInDB = (newDate) => {
-    setNewArticleDate(newDate);
-  };
+  const setArticleDateInDB = (newDate) => setNewArticleDate(newDate);
 
   // Article language
-  const FUSelectArticleLanguage = (lang) => {
-    selectedArticleLanguage = lang;
-  };
+  const FUSelectArticleLanguage = (lang) => selectedArticleLanguage = lang;
 
   let sliderCheckbox = false;
   const [sliderCheckboxStatus, setSliderCheckboxStatus] = useState({
@@ -162,9 +156,9 @@ const Articles = ({ UserData }) => {
 
     checked
       ? // Case 1 : The user checks the box
-        setSliderCheckboxStatus({ sliderCheckbox: true })
+      setSliderCheckboxStatus({ sliderCheckbox: true })
       : // Case 2  : The user unchecks the box
-        setSliderCheckboxStatus({ sliderCheckbox: false });
+      setSliderCheckboxStatus({ sliderCheckbox: false });
   };
 
   function handleShowInSliderCheckbox(data) {
@@ -236,12 +230,10 @@ const Articles = ({ UserData }) => {
       Image: articleImg,
     };
 
-    console.log("data", data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setArticlesData([response.data, ...articlesData]);
 
         // reseting
@@ -296,7 +288,7 @@ const Articles = ({ UserData }) => {
     axiosClient
       .put(url, Data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         updateArticleItem(formProps.editArticleID, response.data);
         $("#editArticleModal").modal("hide");
       })
@@ -313,10 +305,10 @@ const Articles = ({ UserData }) => {
     index === -1
       ? console.log("no match")
       : setArticlesData([
-          ...articlesData.slice(0, index),
-          g,
-          ...articlesData.slice(index + 1),
-        ]);
+        ...articlesData.slice(0, index),
+        g,
+        ...articlesData.slice(index + 1),
+      ]);
   };
 
   // Delete Article
@@ -325,24 +317,22 @@ const Articles = ({ UserData }) => {
       "حذف مقاله !",
       "آیا از حذف مقاله اطمینان دارید؟"
     );
-    // setIsLoading(true);
 
     if (result) {
+      setIsLoading(true);
       let url = `Article/delete/${id}`;
 
       await axiosClient
         .delete(url)
         .then((response) => {
           setArticlesData(articlesData.filter((a) => a._id !== id));
-          // setIsLoading(false);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
-          // setIsLoading(false);
+          setIsLoading(false);
           ErrorAlert("خطا", "حذف مقاله با خطا مواجه گردید!");
         });
-    } else {
-      // setIsLoading(false);
     }
   };
 
@@ -381,12 +371,10 @@ const Articles = ({ UserData }) => {
       CalToAction: formProps.articleCallToAction === "on" ? true : false,
     };
 
-    console.log("data", data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setSubArticlesData([...subArticlesData, response.data]);
 
         // reseting articles
@@ -443,7 +431,7 @@ const Articles = ({ UserData }) => {
     axiosClient
       .put(url, Data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         updateSubArticleItem(formProps.editSubArticleID, response.data);
 
         // reset
@@ -479,13 +467,13 @@ const Articles = ({ UserData }) => {
 
   // Delete SubArticle
   const deleteSubArticle = async (id) => {
-    // setIsLoading(true);
     let result = await QuestionAlert(
       "حذف زیر مقاله !",
       "آیا از حذف زیر مقاله اطمینان دارید؟"
     );
 
     if (result) {
+      setIsLoading(true);
       let url = `Article/deleteSubArticle/${ActiveArticleID}/${id}`;
 
       await axiosClient
@@ -493,11 +481,11 @@ const Articles = ({ UserData }) => {
         .then((response) => {
           setSubArticlesData(subArticlesData.filter((a) => a._id !== id));
           getAllArticles();
-          // setIsLoading(false);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
-          // setIsLoading(false);
+          setIsLoading(false);
         });
     }
   };
@@ -548,9 +536,7 @@ const Articles = ({ UserData }) => {
     ActiveArticleID = id;
   };
 
-  const openAddArticleVideoModal = () => {
-    $("#addArticleVideoModal").modal("show");
-  };
+  const openAddArticleVideoModal = () => $("#addArticleVideoModal").modal("show");
 
   // Add Article Video
   let articleVideo = null;
@@ -571,12 +557,10 @@ const Articles = ({ UserData }) => {
       Video: articleVideo,
     };
 
-    console.log("data", data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setArticleVideosData([...articleVideosData, response.data]);
 
         $("#addArticleVideoModal").modal("hide");
@@ -601,9 +585,9 @@ const Articles = ({ UserData }) => {
       "حذف ویدیو  !",
       "آیا از حذف ویدیو اطمینان دارید؟"
     );
-    setIsLoading(true);
 
     if (result) {
+      setIsLoading(true);
       let url = `Article/deleteVideo/${ActiveArticleID}/${id}`;
 
       await axiosClient
@@ -640,12 +624,10 @@ const Articles = ({ UserData }) => {
       Name: formProps.editVideoName,
     };
 
-    console.log("data", data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         updateArticleVideoItem(formProps.editVideoID, response.data);
 
         // reset
@@ -705,7 +687,6 @@ const Articles = ({ UserData }) => {
     ActiveArticleID = id;
     ActiveArticleTitle = articleTitle;
     setSelectedArticleGrp(GroupsData);
-    // console.log(GroupsData);
   };
 
   const openAttachGrpModal = () => {
@@ -713,9 +694,7 @@ const Articles = ({ UserData }) => {
   };
 
   let selectedGroup = "";
-  const FUSelectArticleGroup = (value) => {
-    selectedGroup = value;
-  };
+  const FUSelectArticleGroup = (value) => selectedGroup = value;
 
   // add group
   const addGrpToArticle = (e) => {
@@ -723,12 +702,9 @@ const Articles = ({ UserData }) => {
     setIsLoading(true);
 
     let url = `/Article/addGroup/${ActiveArticleID}`;
-
     let data = {
       GroupID: selectedGroup,
     };
-
-    console.log("data", data);
 
     axiosClient
       .post(url, data)
@@ -759,9 +735,9 @@ const Articles = ({ UserData }) => {
       "حذف  گروه از مقاله!",
       "آیا از حذف گروه اطمینان دارید؟"
     );
-    setIsLoading(true);
 
     if (result) {
+      setIsLoading(true);
       let url = `Article/deleteGroup/${ActiveArticleID}/${id}`;
 
       await axiosClient
@@ -815,30 +791,23 @@ const Articles = ({ UserData }) => {
   };
 
   let selectedTag = "";
-  const FUSelectArticleTag = (value) => {
-    selectedTag = value;
-  };
+  const FUSelectArticleTag = (value) => selectedTag = value;
 
-  const openAttachTagModal = () => {
-    $("#attachTagModal").modal("show");
-  };
+  const openAttachTagModal = () => $("#attachTagModal").modal("show");
 
   const addTagToArticle = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     let url = `Article/addTag/${ActiveArticleID}`;
-
     let data = {
       TagID: selectedTag,
     };
 
-    console.log("data", data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         getAllArticles();
 
         response.data.msg === "گروه تکراری"
@@ -862,9 +831,9 @@ const Articles = ({ UserData }) => {
       "حذف  تگ از مقاله!",
       "آیا از حذف تگ اطمینان دارید؟"
     );
-    setIsLoading(true);
 
     if (result) {
+      setIsLoading(true);
       let url = `Article/deleteTag/${ActiveArticleID}/${id}`;
 
       await axiosClient
@@ -892,9 +861,7 @@ const Articles = ({ UserData }) => {
     ActiveArticleTitle = articleTitle;
   };
 
-  const openAddFAQModal = () => {
-    $("#addFAQModal").modal("show");
-  };
+  const openAddFAQModal = () => $("#addFAQModal").modal("show");
 
   // Add FAQ
   const addFAQ = (e) => {
@@ -910,12 +877,10 @@ const Articles = ({ UserData }) => {
       Ans: formProps.addFAQAnswer,
     };
 
-    console.log("data", data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setArticleFAQData([...articleFAQData, response.data]);
         getAllArticles();
 
@@ -936,9 +901,9 @@ const Articles = ({ UserData }) => {
       "حذف پرسش از مقاله!",
       "آیا از حذف پرسش اطمینان دارید؟"
     );
-    setIsLoading(true);
 
     if (result) {
+      setIsLoading(true);
       let url = `Article/deleteFAQ/${articleID}/${id}`;
 
       await axiosClient
@@ -969,7 +934,6 @@ const Articles = ({ UserData }) => {
 
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
-
     let FAQID = formProps.editFAQId;
 
     let url = `Article/updateFAQ/${ActiveArticleID}/${FAQID}`;
@@ -978,12 +942,10 @@ const Articles = ({ UserData }) => {
       Ans: formProps.editFAQAnswer,
     };
 
-    console.log("data", data);
-
     axiosClient
       .put(url, data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         updateFAQItem(formProps.editFAQId, response.data);
 
         getAllArticles();
@@ -1025,27 +987,22 @@ const Articles = ({ UserData }) => {
   };
 
   let selectedRelatedArticle = "";
-  const FUSelectRelatedArticle = (value) => {
-    selectedRelatedArticle = value;
-  };
+  const FUSelectRelatedArticle = (value) => selectedRelatedArticle = value;
 
   // add related article
   const addRelatedArticle = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     let url = `Article/addRelated/${ActiveArticleID}`;
     let data = {
       RelatedID: selectedRelatedArticle,
     };
 
-    setIsLoading(true);
-
-    console.log("data", data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         getAllArticles();
 
         $("#attachRelatedArticle").modal("hide");
@@ -1068,9 +1025,9 @@ const Articles = ({ UserData }) => {
       "آیا از حذف مقاله مرتبط اطمینان دارید؟"
     );
 
-    setIsLoading(true);
 
     if (result) {
+      setIsLoading(true);
       let url = `/Article/deleteRelated/${ActiveArticleID}/${id}`;
 
       await axiosClient
@@ -1164,7 +1121,11 @@ const Articles = ({ UserData }) => {
                     openRelatedArticlesModal={openRelatedArticlesModal}
                   />
 
-                  <ArticlesPagination
+                  {/* <ArticlesPagination
+                    
+                  /> */}
+
+                  <Paginator
                     nPages={nPages}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
