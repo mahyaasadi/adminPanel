@@ -578,14 +578,10 @@ const CentersManagement = ({ UserData }) => {
   };
 
   useEffect(() => {
-    getCentersData();
-    getAllProvinces();
-  }, []);
-
-  useEffect(() => {
     if (router.isReady) {
       setSelectedPage(router.query.page);
-      console.log({ selectedPage });
+      getCentersData();
+      getAllProvinces();
     }
   }, [router.isReady]);
 

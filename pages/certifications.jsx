@@ -56,9 +56,7 @@ const Certifications = ({ UserData }) => {
     }
   };
 
-  useEffect(() => {
-    getCertifications();
-  }, []);
+  useEffect(() => getCertifications(), []);
 
   //Add Certifications
   const addCertificate = (e) => {

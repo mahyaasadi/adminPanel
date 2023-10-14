@@ -26,27 +26,6 @@ const EditCenterModal = ({
     }),
   };
 
-  let selectedProvince = null;
-  if (data.Province) {
-    selectedProvince = {
-      value: data?.Province?.Finglish,
-      label: data?.Province?.Name,
-    };
-  }
-  // console.log(selectedProvince);
-
-  useEffect(() => {
-    setSelectedProvinceList(selectedProvince);
-    // console.log(selectedProvinceList);
-
-    let findCities = provinceOptionsList.find(
-      (x) => x.value === data?.Province?.Finglish
-    );
-    // console.log(findCities);
-
-    if (findCities) setCityOption(findCities.cities);
-  }, [data]);
-
   const displayPreview = (e) => {
     var urlCreator = window.URL || window.webkitURL;
     if (e.target.files.length !== 0) {
@@ -54,6 +33,24 @@ const EditCenterModal = ({
       $("#currentLogo").attr("src", imageUrl);
     }
   };
+
+  let selectedProvince = null;
+  if (data.Province) {
+    selectedProvince = {
+      value: data?.Province?.Finglish,
+      label: data?.Province?.Name,
+    };
+  }
+
+  useEffect(() => {
+    setSelectedProvinceList(selectedProvince);
+
+    let findCities = provinceOptionsList.find(
+      (x) => x.value === data?.Province?.Finglish
+    );
+
+    if (findCities) setCityOption(findCities.cities);
+  }, [data]);
 
   return (
     <div

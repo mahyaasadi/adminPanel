@@ -46,13 +46,13 @@ const Departments = ({ UserData }) => {
 
     checked
       ? setDepartmentsCheckboxStatus({
-        departmentsOptionsList: [...departmentsOptionsList, value],
-      })
+          departmentsOptionsList: [...departmentsOptionsList, value],
+        })
       : setDepartmentsCheckboxStatus({
-        departmentsOptionsList: departmentsOptionsList.filter(
-          (e) => e !== value
-        ),
-      });
+          departmentsOptionsList: departmentsOptionsList.filter(
+            (e) => e !== value
+          ),
+        });
   };
 
   function getModality() {
@@ -141,18 +141,8 @@ const Departments = ({ UserData }) => {
   useEffect(() => {
     if (Router.isReady) {
       CenterID = Router.query.id;
-
       getDepartments();
-
       setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
-
-      if (hiddenData) {
-        // Use the data
-        console.log(hiddenData.name);
-
-        // Optionally clear the data from local storage if it's only needed once
-        // localStorage.removeItem("hiddenData");
-      }
     }
   }, [Router.isReady]);
 

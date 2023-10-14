@@ -181,10 +181,6 @@ const DoctorsList = ({ UserData }) => {
     setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
     if (hiddenData) {
-      // Use the data
-      console.log(hiddenData.name);
-
-      // Optionally clear the data from local storage if it's only needed once
       localStorage.removeItem("hiddenData");
     }
   }, []);

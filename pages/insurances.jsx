@@ -197,7 +197,6 @@ const Insurance = ({ UserData }) => {
       setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
       if (hiddenData) {
-        console.log(hiddenData.name);
         localStorage.removeItem("hiddenData");
       }
       if (!CenterID) return null;

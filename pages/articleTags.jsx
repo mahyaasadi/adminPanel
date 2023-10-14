@@ -156,9 +156,7 @@ const ArticleTagsManagement = ({ UserData }) => {
     }
   };
 
-  useEffect(() => {
-    getAllArticleTags();
-  }, []);
+  useEffect(() => getAllArticleTags(), []);
 
   return (
     <>

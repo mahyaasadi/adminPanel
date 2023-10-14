@@ -309,9 +309,7 @@ const Modalities = ({ UserData }) => {
       ]);
   };
 
-  useEffect(() => {
-    getModalities();
-  }, []);
+  useEffect(() => getModalities(), []);
 
   return (
     <>

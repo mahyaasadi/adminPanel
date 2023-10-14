@@ -220,9 +220,7 @@ const ArticleGroupsManagement = ({ UserData }) => {
     }
   };
 
-  useEffect(() => {
-    getAllArticleGroups();
-  }, []);
+  useEffect(() => getAllArticleGroups(), []);
 
   return (
     <>
