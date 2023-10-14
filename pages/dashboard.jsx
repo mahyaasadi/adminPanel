@@ -132,16 +132,23 @@ const Dashboard = ({ UserData }) => {
                   </div>
                 </div>
               </div>
-              <div className="chart-container">
-                <div className="">
-                  <OverviewStats class generalStats={generalStats} />
+
+              <OverviewStats class generalStats={generalStats} />
+
+              <div className="row">
+                <div className="chart-container col-7">
+                  <div className="card">
+                    <div className="card-body">
+                      <PieChartComponent
+                        data={centerTotalStats}
+                        labels={centerLabels}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="card col-5 d-flex justify-center">
-                  <div className="card-body">
-                    <PieChartComponent
-                      data={centerTotalStats}
-                      labels={centerLabels}
-                    />
+                <div className="col-5">
+                  <div className="card">
+                    <div className="card-body"></div>
                   </div>
                 </div>
               </div>
