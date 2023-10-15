@@ -30,8 +30,8 @@ export const getServerSideProps = async ({ req, res }) => {
   }
 };
 
-let ActiveMenuID = null;
-let ActiveMenuName = null;
+let ActiveMenuID,
+  ActiveMenuName = null;
 const MenusManagement = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [menuList, setMenuList] = useState([]);
@@ -112,7 +112,6 @@ const MenusManagement = ({ UserData }) => {
       .get(url)
       .then((response) => {
         setMenuList(response.data);
-        // console.log("menuList", response.data);
         setIsLoading(false);
       })
       .catch((error) => {
