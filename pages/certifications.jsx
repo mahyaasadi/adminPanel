@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { axiosClient } from "class/axiosConfig.js";
 import FeatherIcon from "feather-icons-react";
-import Loading from "@/components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/loading";
 import CertificationsListTable from "/components/dashboard/certifications/certificationsListTable";
 import AddCertificateModal from "components/dashboard/certifications/addCertificateModal";
 import EditCertificateModal from "components/dashboard/certifications/editCertificateModal";
@@ -185,9 +185,9 @@ const Certifications = ({ UserData }) => {
       setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
       if (hiddenData) {
-        console.log(hiddenData.name);
         localStorage.removeItem("hiddenData");
       }
+
       if (!CenterID) return null;
     }
   }, [Router.isReady]);

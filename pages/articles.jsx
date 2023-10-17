@@ -2,10 +2,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
-import Loading from "@/components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/loading";
 import ArticlesListTable from "components/dashboard/articles/articlesListTable";
 import ArticleSearch from "components/dashboard/articles/articleSearch";
 import AddArticleModal from "components/dashboard/articles/addArticleModal";
@@ -26,13 +27,7 @@ import EditFAQModal from "components/dashboard/articles/FAQ/editFaqModal";
 import RelatedArticlesList from "components/dashboard/articles/relatedArticles/relatedArticleList";
 import AddRelatedArticleModal from "components/dashboard/articles/relatedArticles/addRelatedArticleModal";
 import SubTextEditor from "components/dashboard/articles/subArticles/subTextEditor";
-import { getSession } from "lib/session";
 import Paginator from "components/commonComponents/paginator";
-
-let ActiveArticleID,
-  ActiveSubArticleID,
-  ActiveVideoID,
-  ActiveArticleTitle = null;
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -50,33 +45,35 @@ export const getServerSideProps = async ({ req, res }) => {
   }
 };
 
+let ActiveArticleID,
+  ActiveSubArticleID,
+  ActiveVideoID,
+  ActiveArticleTitle = null;
+
 const Articles = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [articlesData, setArticlesData] = useState([]);
   const [newArticleDate, setNewArticleDate] = useState("");
   const [editArticleData, setEditArticleData] = useState({ empty: 1 });
   const [editSubArticleData, setEditSubArticleData] = useState({ empty: 1 });
-  const [editArticleVideoData, setEditArticleVideoData] = useState([]);
   const [subArticlesData, setSubArticlesData] = useState();
+  // --------------
   const [articleVideosData, setArticleVideosData] = useState();
+  const [editArticleVideoData, setEditArticleVideoData] = useState([]);
   // --------------
   const [selectedArticleGroups, setSelectedArticleGrp] = useState([]);
   const [articleGroupsData, setArticleGroupsData] = useState([]);
   const [articleGroupsOptionsList, setArticleGroupsOptionsList] = useState([]);
-
   // --------------
   const [selectedArticleTags, setSelectedArticleTags] = useState([]);
   const [articleTagsData, setArticleTagsData] = useState([]);
   const [articleTagsOptionsList, setArticleTagsOptionsList] = useState([]);
-
   //  -------------
   const [articleFAQData, setArticleFAQData] = useState([]);
   const [editedFAQData, setEditedFAQData] = useState([]);
-
   // -------------
   const [relatedArticlesData, setRelatedArticlesData] = useState([]);
   const [relatedArticlesOptions, setRelatedArticlesOptions] = useState([]);
-
   // -------------
 
   // Get all articles
@@ -135,7 +132,7 @@ const Articles = ({ UserData }) => {
   const setArticleDateInDB = (newDate) => setNewArticleDate(newDate);
 
   // Article language
-  const FUSelectArticleLanguage = (lang) => selectedArticleLanguage = lang;
+  const FUSelectArticleLanguage = (lang) => (selectedArticleLanguage = lang);
 
   let sliderCheckbox = false;
   const [sliderCheckboxStatus, setSliderCheckboxStatus] = useState({
@@ -156,9 +153,9 @@ const Articles = ({ UserData }) => {
 
     checked
       ? // Case 1 : The user checks the box
-      setSliderCheckboxStatus({ sliderCheckbox: true })
+        setSliderCheckboxStatus({ sliderCheckbox: true })
       : // Case 2  : The user unchecks the box
-      setSliderCheckboxStatus({ sliderCheckbox: false });
+        setSliderCheckboxStatus({ sliderCheckbox: false });
   };
 
   function handleShowInSliderCheckbox(data) {
@@ -305,10 +302,10 @@ const Articles = ({ UserData }) => {
     index === -1
       ? console.log("no match")
       : setArticlesData([
-        ...articlesData.slice(0, index),
-        g,
-        ...articlesData.slice(index + 1),
-      ]);
+          ...articlesData.slice(0, index),
+          g,
+          ...articlesData.slice(index + 1),
+        ]);
   };
 
   // Delete Article
@@ -536,7 +533,8 @@ const Articles = ({ UserData }) => {
     ActiveArticleID = id;
   };
 
-  const openAddArticleVideoModal = () => $("#addArticleVideoModal").modal("show");
+  const openAddArticleVideoModal = () =>
+    $("#addArticleVideoModal").modal("show");
 
   // Add Article Video
   let articleVideo = null;
@@ -694,7 +692,7 @@ const Articles = ({ UserData }) => {
   };
 
   let selectedGroup = "";
-  const FUSelectArticleGroup = (value) => selectedGroup = value;
+  const FUSelectArticleGroup = (value) => (selectedGroup = value);
 
   // add group
   const addGrpToArticle = (e) => {
@@ -791,7 +789,7 @@ const Articles = ({ UserData }) => {
   };
 
   let selectedTag = "";
-  const FUSelectArticleTag = (value) => selectedTag = value;
+  const FUSelectArticleTag = (value) => (selectedTag = value);
 
   const openAttachTagModal = () => $("#attachTagModal").modal("show");
 
@@ -987,7 +985,7 @@ const Articles = ({ UserData }) => {
   };
 
   let selectedRelatedArticle = "";
-  const FUSelectRelatedArticle = (value) => selectedRelatedArticle = value;
+  const FUSelectRelatedArticle = (value) => (selectedRelatedArticle = value);
 
   // add related article
   const addRelatedArticle = (e) => {
@@ -1024,7 +1022,6 @@ const Articles = ({ UserData }) => {
       "حذف مقاله مرتبط !",
       "آیا از حذف مقاله مرتبط اطمینان دارید؟"
     );
-
 
     if (result) {
       setIsLoading(true);

@@ -2,14 +2,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
-import Loading from "@/components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/loading";
 import NeighbourhoodsListTable from "components/dashboard/neighbourhoods/neighbourhoodsListTable";
 import AddStateModal from "components/dashboard/neighbourhoods/addStateModal/addStateModal";
 import EditStateModal from "components/dashboard/neighbourhoods/editStateModal/editStateModal";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);

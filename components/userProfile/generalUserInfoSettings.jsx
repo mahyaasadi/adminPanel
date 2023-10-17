@@ -1,11 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const GenralUserInfoSettings = ({
-  userInfo,
-  editGeneralUserInfo,
-  isLoading,
-}) => {
+const GenralUserInfoSettings = ({ userInfo, editGeneralUserInfo }) => {
   const router = useRouter();
 
   const handleCancelBtn = (e) => {
@@ -21,9 +17,7 @@ const GenralUserInfoSettings = ({
             <div className="card-header">
               <p className="font-16 fw-bold text-secondary">اطلاعات شخصی</p>
             </div>
-            <form
-              onSubmit={editGeneralUserInfo}
-            >
+            <form onSubmit={editGeneralUserInfo}>
               <div className="form-group mt-4">
                 <input
                   type="hidden"

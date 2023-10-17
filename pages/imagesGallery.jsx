@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import { axiosClient } from "class/axiosConfig.js";
 import { useRouter } from "next/router";
+import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
+import { axiosClient } from "class/axiosConfig.js";
 import { WarningAlert, QuestionAlert } from "class/AlertManage.js";
-import Loading from "@/components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/loading";
 import ImagesListTable from "components/dashboard/imagesGallery/imagesListTable";
 import UploadImageModal from "components/dashboard/imagesGallery/uploadImageModal";
 import Paginator from "components/commonComponents/paginator";
 import { ErrorAlert } from "class/AlertManage.js";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);

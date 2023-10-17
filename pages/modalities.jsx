@@ -2,17 +2,17 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
-import Loading from "@/components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/loading";
 import ModalityListTable from "components/dashboard/modalities/modalityListTable";
 import AddModalityModal from "components/dashboard/modalities/addModalityModal";
 import EditModalityModal from "components/dashboard/modalities/editModalityModal";
 import SubModalitiesModal from "components/dashboard/modalities/subModalities/subModalitiesModal";
 import AddSubModalityModal from "components/dashboard/modalities/subModalities/addSubModalityModal";
 import EditSubModalityModal from "components/dashboard/modalities/subModalities/editSubModalityModal";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -148,8 +148,6 @@ const Modalities = ({ UserData }) => {
       Disabled: disabledCheckboxStatus.modalityDisabledCheckbox,
     };
 
-    console.log("data", Data);
-
     axiosClient
       .put(url, Data)
       .then((response) => {
@@ -206,8 +204,6 @@ const Modalities = ({ UserData }) => {
       Link: formProps.addSubModalityLink,
       Des: formProps.addSubModalityDes,
     };
-
-    console.log({ data });
 
     axiosClient
       .post(url, data)
@@ -276,12 +272,9 @@ const Modalities = ({ UserData }) => {
       Des: formProps.editSubModalityDes,
     };
 
-    // console.log({ data });
-
     axiosClient
       .put(url, data)
       .then((response) => {
-        // console.log(response.data);
         updateSubItem(formProps.editSubModalityId, response.data);
         getModalities();
         $("#editSubModalityModal").modal("hide");

@@ -5,7 +5,7 @@ import Select from "react-select";
 import JDate from "jalali-date";
 import { getSession } from "lib/session";
 import OverviewStats from "components/dashboard/overview/overviewStats";
-import Loading from "components/commonComponents/loading/Loading";
+import Loading from "components/commonComponents/loading/loading";
 import PieChartComponent from "components/dashboard/overview/statsPieChart";
 
 export const getServerSideProps = async ({ req, res }) => {
@@ -71,7 +71,6 @@ const Dashboard = ({ UserData }) => {
     axiosClient
       .post(url)
       .then((response) => {
-        console.log(response.data);
         setGeneralStats(response.data);
         setStatsIsLoading(false);
       })
@@ -83,7 +82,6 @@ const Dashboard = ({ UserData }) => {
     axiosClient
       .post(centerStatsUrl)
       .then((response) => {
-        console.log(response.data);
         const labels = [];
         const counts = [];
         for (let i = 0; i < response.data.length; i++) {

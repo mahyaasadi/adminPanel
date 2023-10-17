@@ -1,12 +1,4 @@
-// import FeatherIcon from "feather-icons-react";
-// import Image from "next/image";
-import ExtraSmallLoader from "@/components/commonComponents/loading/extraSmallLoader";
-// import {
-//   eventsAccepted,
-//   payment,
-//   talking,
-// } from "components/commonComponents/imagepath";
-// import PieChartComponent from "./statsPieChart";
+import ExtraSmallLoader from "components/commonComponents/loading/extraSmallLoader";
 
 const OverviewStats = ({ generalStats }) => {
   return (
@@ -171,4 +163,3 @@ const OverviewStats = ({ generalStats }) => {
 };
 
 export default OverviewStats;
-

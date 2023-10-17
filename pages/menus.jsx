@@ -2,17 +2,17 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
-import Loading from "@/components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/loading";
 import MenuListTable from "components/dashboard/menus/menuListTable";
 import AddToMenuModal from "components/dashboard/menus/addToMenuModal";
 import SubMenuModal from "components/dashboard/menus/subMenu/subMenuModal";
 import AddSubMenuModal from "components/dashboard/menus/subMenu/addSubMenuModal";
 import EditMenuModal from "components/dashboard/menus/editMenuModal";
 import EditSubMenuModal from "components/dashboard/menus/subMenu/editSubMenuModal";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -53,17 +53,13 @@ const MenusManagement = ({ UserData }) => {
     const { value, checked } = e.target;
     const { menuAccessList } = menuPermissionStatus;
 
-    console.log(`${value} is ${checked}`);
-    // Case 1 : The user checks the box
-    if (checked) {
-      setMenuPermissionStatus({ menuAccessList: [...menuAccessList, value] });
-    }
-    // Case 2  : The user unchecks the box
-    else {
-      setMenuPermissionStatus({
-        menuAccessList: menuAccessList.filter((e) => e !== value),
-      });
-    }
+    // console.log(`${value} is ${checked}`);
+
+    checked
+      ? setMenuPermissionStatus({ menuAccessList: [...menuAccessList, value] })
+      : setMenuPermissionStatus({
+          menuAccessList: menuAccessList.filter((e) => e !== value),
+        });
   };
 
   // subMenu permission checkbox
@@ -71,7 +67,7 @@ const MenusManagement = ({ UserData }) => {
     const { value, checked } = e.target;
     const { subMenuAccessList } = subMenuPermissionStatus;
 
-    console.log(`${value} is ${checked}`);
+    // console.log(`${value} is ${checked}`);
 
     if (checked) {
       setSubMenuPermissionStatus({
@@ -137,8 +133,6 @@ const MenusManagement = ({ UserData }) => {
       Priority: parseInt(formProps.addMenuPriority),
     };
 
-    console.log("addData", addData);
-
     axiosClient
       .post(url, addData)
       .then((response) => {
@@ -180,12 +174,9 @@ const MenusManagement = ({ UserData }) => {
       Priority: parseInt(formProps.addSubMenuPriority),
     };
 
-    console.log("addedData", data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log("addSubResponse", response.data);
         setSubMenuList([...subMenuList, response.data]);
         setIsLoading(false);
 
@@ -233,8 +224,6 @@ const MenusManagement = ({ UserData }) => {
       SelectedVal.push($(".EditPerCheckBox:checkbox:checked")[element].value);
     });
 
-    console.log("selected", SelectedVal);
-
     let url = `/InoMenu/update/${menuId}`;
     let data = {
       Name: formProps.editMenuName,
@@ -244,14 +233,10 @@ const MenusManagement = ({ UserData }) => {
       Priority: parseInt(formProps.editMenuPriority),
     };
 
-    console.log("data", data);
-
     axiosClient
       .put(url, data)
       .then((response) => {
-        console.log(response.data);
         updateMenuItem(formProps.editMenuID, response.data);
-
         $("#editMenuModal").modal("hide");
       })
       .catch((error) => {
@@ -265,7 +250,6 @@ const MenusManagement = ({ UserData }) => {
     g = newArr;
 
     if (index === -1) {
-      // handle error
       console.log("no match");
     } else
       setMenuList([
@@ -287,7 +271,6 @@ const MenusManagement = ({ UserData }) => {
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
     let subMenuId = formProps.editSubMenuID;
-    let url = `/InoMenu/update/${ActiveMenuID}`;
 
     let selectedPer = $(".EditSubMenuPerCheckBox:checkbox:checked");
     let SelectedPerVal = [];
@@ -297,8 +280,7 @@ const MenusManagement = ({ UserData }) => {
       );
     });
 
-    console.log("selected", SelectedPerVal);
-
+    let url = `/InoMenu/update/${ActiveMenuID}`;
     let data = {
       Name: formProps.editSubMenuName,
       Url: formProps.editSubMenuUrl,
@@ -306,8 +288,6 @@ const MenusManagement = ({ UserData }) => {
       SubMenuID: subMenuId,
       Priority: parseInt(formProps.editSubMenuPriority),
     };
-
-    console.log("data", data);
 
     axiosClient
       .put(url, data)
@@ -329,7 +309,6 @@ const MenusManagement = ({ UserData }) => {
     g = newArr;
 
     if (index === -1) {
-      // handle error
       console.log("no match");
     } else
       setSubMenuList([
@@ -375,14 +354,12 @@ const MenusManagement = ({ UserData }) => {
       "?آیا از حذف زیر منو مطمئن هستید"
     );
 
-    setIsLoading(true);
     if (result) {
+      setIsLoading(true);
       let url = `/InoMenu/deleteSubMenu/${ActiveMenuID}`;
       let data = {
         SubMenuID: id,
       };
-
-      console.log("MenuID: ", ActiveMenuID, "subMenuID :", id);
 
       await axiosClient
         .delete(url, { data })

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
@@ -9,7 +10,6 @@ import Loading from "@/components/commonComponents/loading/loading";
 import ArticleGroupsListTable from "components/dashboard/articles/articleGroups/articleGroupsListTable";
 import AddArticleGroupModal from "components/dashboard/articles/articleGroups/addArticleGroupModal";
 import EditArticleGroupModal from "components/dashboard/articles/articleGroups/editArticleGroupModal";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);

@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
-import { useRouter } from "next/router";
-import Loading from "@/components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/loading";
 import InsuranceListTable from "components/dashboard/insurances/insuranceListTable";
 import AddInsuranceModal from "components/dashboard/insurances/addInsuranceModal";
 import EditInsuranceModal from "components/dashboard/insurances/editInsuranceModal";
 import insuranceTypeDataClass from "class/insuranceTypeDataClass";
 import insuranceStatusDataClass from "class/insuranceStatusDataClass";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);

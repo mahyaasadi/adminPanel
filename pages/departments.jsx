@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import { getSession } from "lib/session";
 import { axiosClient } from "class/axiosConfig.js";
 import { useRouter } from "next/router";
-import Loading from "@/components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/loading";
 import { SuccessAlert } from "class/AlertManage.js";
 import DepartmentsList from "components/dashboard/departments/departmentsList";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -143,6 +143,10 @@ const Departments = ({ UserData }) => {
       CenterID = Router.query.id;
       getDepartments();
       setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
+
+      if (hiddenData) {
+        localStorage.removeItem("hiddenData");
+      }
     }
   }, [Router.isReady]);
 

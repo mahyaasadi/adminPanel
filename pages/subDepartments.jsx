@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { getSession } from "lib/session";
 import { axiosClient } from "class/axiosConfig";
-import Loading from "@/components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/loading";
 import { ErrorAlert, SuccessAlert } from "class/AlertManage.js";
 import SubDepartmentsList from "components/dashboard/subDepartments/subDepartmentsList";
 import DepartmentsHeader from "components/dashboard/subDepartments/departmentsHeader/departmentsHeader";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -111,13 +111,13 @@ const SubDepartments = ({ UserData }) => {
 
     checked
       ? setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: [...subDepartmentsOptions, value],
-      })
+          subDepartmentsOptions: [...subDepartmentsOptions, value],
+        })
       : setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: subDepartmentsOptions.filter(
-          (e) => e !== value
-        ),
-      });
+          subDepartmentsOptions: subDepartmentsOptions.filter(
+            (e) => e !== value
+          ),
+        });
   };
 
   const checkAllSubDeps = () => {
@@ -156,8 +156,6 @@ const SubDepartments = ({ UserData }) => {
       subDepartment: result,
     };
 
-    // console.log({ data });
-
     axiosClient
       .post(url, data)
       .then((response) => {
@@ -167,7 +165,7 @@ const SubDepartments = ({ UserData }) => {
         setSelectAllMode(false);
 
         setTimeout(() => {
-          getSelectedSubDepartments()
+          getSelectedSubDepartments();
         }, 50);
       })
       .catch((err) => {
@@ -206,6 +204,10 @@ const SubDepartments = ({ UserData }) => {
       if (!CenterID) return null;
 
       setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
+
+      if (hiddenData) {
+        localStorage.removeItem("hiddenData");
+      }
     }
   }, [router.isReady]);
 

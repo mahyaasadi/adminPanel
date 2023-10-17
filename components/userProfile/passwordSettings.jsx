@@ -7,7 +7,6 @@ const PasswordSettings = ({
   handleNewPassword,
   editUserPassword,
   UserData,
-  isLoading
 }) => {
   const router = useRouter();
   const [eye, setEye] = useState(true);
@@ -81,8 +80,9 @@ const PasswordSettings = ({
                   />
                   <span
                     onClick={onEyeClick}
-                    className={`fa toggle-password-current" ${eye ? "fa-eye-slash" : "fa-eye"
-                      }`}
+                    className={`fa toggle-password-current" ${
+                      eye ? "fa-eye-slash" : "fa-eye"
+                    }`}
                   />
                 </div>
 
@@ -104,8 +104,9 @@ const PasswordSettings = ({
                     />
                     <span
                       onClick={onEyeClick}
-                      className={`fa toggle-password-newPass" ${eye ? "fa-eye-slash" : "fa-eye"
-                        }`}
+                      className={`fa toggle-password-newPass" ${
+                        eye ? "fa-eye-slash" : "fa-eye"
+                      }`}
                     />
                   </div>
                 </div>
@@ -142,8 +143,9 @@ const PasswordSettings = ({
                     />
                     <span
                       onClick={onEyeClick}
-                      className={`fa toggle-password-confPass" ${eye ? "fa-eye-slash" : "fa-eye"
-                        }`}
+                      className={`fa toggle-password-confPass" ${
+                        eye ? "fa-eye-slash" : "fa-eye"
+                      }`}
                     />
                   </div>
                 </div>

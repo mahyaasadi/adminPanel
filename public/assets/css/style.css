@@ -9909,15 +9909,10 @@ input:checked+.showInsliderSwitch:active::before {
   opacity: 1;
 }
 
-/* //////   Loading  ////// */
+/*  Loading  */
 
 /* main loader */
 .loading {
-  /* position: fixed;
-  z-index: 999;
-  height: 1em;
-  width: 2em;
-  overflow: show; */
   margin: auto;
   display: block;
 }
@@ -10054,11 +10049,6 @@ input:checked+.showInsliderSwitch:active::before {
 
 .p-chart {
   padding: 10px;
-}
-
-.chart-container {
-  /* width: 80%; */
-  /* margin: 0 auto; center the chart */
 }
 
 .clinicLink {
