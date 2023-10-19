@@ -1,14 +1,11 @@
 import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
+import selectfieldColourStyles from "class/selectfieldStyle";
 import DatePicker from "components/commonComponents/datepicker/DatePicker";
 import articleLanguageDataClass from "class/articleLanguageDataClass.js";
 
-const AddArticleModal = ({
-  addArticle,
-  setArticleDateInDB,
-  isLoading,
-}) => {
+const AddArticleModal = ({ addArticle, setArticleDateInDB, isLoading }) => {
   // article date
   const setArticleDate = (value) => {
     let articleDate =
@@ -19,16 +16,6 @@ const AddArticleModal = ({
       value?.day.toString();
 
     setArticleDateInDB(articleDate);
-  };
-
-  const colourStyles = {
-    menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    control: (styles) => ({
-      ...styles,
-      minHeight: 43,
-      borderRadius: 20,
-      border: "1px solid #E6E9F4",
-    }),
   };
 
   // article img preview
@@ -136,7 +123,7 @@ const AddArticleModal = ({
                     hidden="hidden"
                     id="showInSlider"
                     name="articleShowInSlider"
-                  // required
+                    // required
                   />
                   <label
                     className="showInsliderSwitch font-12"
@@ -151,7 +138,7 @@ const AddArticleModal = ({
                 </label>
 
                 <SelectField
-                  styles={colourStyles}
+                  styles={selectfieldColourStyles}
                   options={articleLanguageDataClass}
                   errorMessage={""}
                   error={false}

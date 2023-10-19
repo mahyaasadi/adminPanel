@@ -78,7 +78,7 @@ const CentersManagement = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        // console.log("all centers", response.data);
+        console.log("all centers", response.data);
         setCentersData(response.data);
         setIsLoading(false);
       })
@@ -128,11 +128,12 @@ const CentersManagement = ({ UserData }) => {
       Address: formProps.addCenterAddress,
       Loc: formProps.addCenterLocation,
       Domain: formProps.addCenterDomain,
+      ManageTel: formProps.addContactNumber,
       ViewDes: formProps.addCenterDescription,
       Logo: logo,
     };
 
-    console.log("data", data);
+    console.log({ data });
 
     axiosClient
       .post(url, data)
@@ -220,11 +221,12 @@ const CentersManagement = ({ UserData }) => {
         Address: formProps.editCenterAddress,
         Loc: formProps.editCenterLocation,
         Domain: formProps.editCenterDomain,
+        ManageTel: formProps.editContactNumber,
         ViewDes: formProps.editCenterDescription,
         Logo: newLogo,
       };
 
-      console.log("data", data);
+      console.log({ data });
 
       axiosClient
         .put(url, data)

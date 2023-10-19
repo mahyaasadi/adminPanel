@@ -6,7 +6,11 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import FeatherIcon from "feather-icons-react";
 import { setSession } from "@/lib/SessionMange";
-import { avatar01, headerLogo, logoSmall } from "components/commonComponents/imagepath";
+import {
+  avatar01,
+  headerLogo,
+  logoSmall,
+} from "components/commonComponents/imagepath";
 
 let user = null;
 const Header = ({ UserData }) => {
@@ -59,9 +63,9 @@ const Header = ({ UserData }) => {
               priority={true}
             />
           </Link>
-          <Link href="/dashboard" className="logo logo-small">
+          {/* <Link href="/dashboard" className="logo logo-small">
             <Image src={logoSmall} alt="Logo" width={30} height={30} />
-          </Link>
+          </Link> */}
           <Link href="#" id="toggle_btn" onClick={handlesidebar}>
             <FeatherIcon icon="chevrons-left" />
           </Link>

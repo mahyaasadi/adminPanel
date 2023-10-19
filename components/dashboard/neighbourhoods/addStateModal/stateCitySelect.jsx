@@ -1,4 +1,5 @@
 import SelectField from "components/commonComponents/selectfield";
+import selectfieldColourStyles from "class/selectfieldStyle";
 
 const StateCitySelect = ({ cityOptionsList, FUSelectCity }) => {
   let selectCityData = [];
@@ -11,16 +12,6 @@ const StateCitySelect = ({ cityOptionsList, FUSelectCity }) => {
     selectCityData.push(cityObj);
   }
 
-  const colourStyles = {
-    menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    control: (styles) => ({
-      ...styles,
-      minHeight: 43,
-      borderRadius: 20,
-      border: "1px solid #E6E9F4",
-    }),
-  };
-
   return (
     <>
       <div className="col media-w-100">
@@ -28,7 +19,7 @@ const StateCitySelect = ({ cityOptionsList, FUSelectCity }) => {
           شهر <span className="text-danger">*</span>
         </label>
         <SelectField
-          styles={colourStyles}
+          styles={selectfieldColourStyles}
           className="text-center font-12 editCitySelectOptions"
           id="stateCitySelect"
           options={selectCityData}

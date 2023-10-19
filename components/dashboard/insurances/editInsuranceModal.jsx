@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
+import selectfieldColourStyles from "class/selectfieldStyle";
 
 const EditInsuranceModal = ({
   editInsurance,
@@ -12,16 +13,6 @@ const EditInsuranceModal = ({
 }) => {
   const selectedType = { value: data.Type, label: data.Type };
   const selectedStatus = { value: data.Status, label: data.Status };
-
-  const colourStyles = {
-    menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    control: (styles) => ({
-      ...styles,
-      minHeight: 43,
-      borderRadius: 20,
-      border: "1px solid #E6E9F4",
-    }),
-  };
 
   return (
     <div
@@ -75,7 +66,7 @@ const EditInsuranceModal = ({
                   نوع بیمه<span className="text-danger">*</span>
                 </label>
                 <SelectField
-                  styles={colourStyles}
+                  styles={selectfieldColourStyles}
                   options={insuranceType}
                   errorMessage={""}
                   error={false}
@@ -91,10 +82,10 @@ const EditInsuranceModal = ({
 
               <div className="col media-w-100 font-12">
                 <label className="lblDrugIns font-12">
-                  نوع بیمه<span className="text-danger">*</span>
+                  وضعیت بیمه<span className="text-danger">*</span>
                 </label>
                 <SelectField
-                  styles={colourStyles}
+                  styles={selectfieldColourStyles}
                   options={insuranceStatus}
                   errorMessage={""}
                   error={false}
@@ -125,4 +116,5 @@ const EditInsuranceModal = ({
     </div>
   );
 };
+
 export default EditInsuranceModal;

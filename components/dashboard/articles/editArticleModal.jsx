@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
+import selectfieldColourStyles from "class/selectfieldStyle";
 import DatePicker from "components/commonComponents/datepicker/DatePicker";
 import articleLanguageDataClass from "class/articleLanguageDataClass.js";
 
@@ -22,16 +23,6 @@ const EditArticleModal = ({
       value?.day.toString();
 
     setArticleDateInDB(articleDate);
-  };
-
-  const colourStyles = {
-    menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    control: (styles) => ({
-      ...styles,
-      minHeight: 43,
-      borderRadius: 20,
-      border: "1px solid #E6E9F4",
-    }),
   };
 
   // article img preview
@@ -191,7 +182,7 @@ const EditArticleModal = ({
                 </label>
 
                 <SelectField
-                  styles={colourStyles}
+                  styles={selectfieldColourStyles}
                   options={articleLanguageDataClass}
                   errorMessage={""}
                   error={false}
@@ -206,9 +197,7 @@ const EditArticleModal = ({
               </div>
 
               <div className="form-group">
-                <label className="lblAbs font-12">
-                  توضیحات
-                </label>
+                <label className="lblAbs font-12">توضیحات</label>
                 <div className="col p-0">
                   <textarea
                     type="text"

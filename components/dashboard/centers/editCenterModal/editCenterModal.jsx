@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
+import selectfieldColourStyles from "class/selectfieldStyle";
 import EditCitySelect from "./editCitySelect";
 
 const EditCenterModal = ({
@@ -16,16 +17,6 @@ const EditCenterModal = ({
   selectedProvinceList,
   isLoading,
 }) => {
-  const colourStyles = {
-    menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    control: (styles) => ({
-      ...styles,
-      minHeight: 43,
-      borderRadius: 20,
-      border: "1px solid #E6E9F4",
-    }),
-  };
-
   const displayPreview = (e) => {
     var urlCreator = window.URL || window.webkitURL;
     if (e.target.files.length !== 0) {
@@ -121,7 +112,7 @@ const EditCenterModal = ({
                     استان <span className="text-danger">*</span>
                   </label>
                   <SelectField
-                    styles={colourStyles}
+                    styles={selectfieldColourStyles}
                     id="editProvinceSelectOptions"
                     options={provinceOptionsList}
                     className="text-center font-12"
@@ -172,16 +163,33 @@ const EditCenterModal = ({
                   />
                 </div>
               </div>
-              <div className="form-group">
-                <label className="lblAbs font-12">لوکیشن</label>
-                <div className="col p-0">
-                  <input
-                    className="form-control floating inputPadding rounded"
-                    type="text"
-                    name="editCenterLocation"
-                    defaultValue={data.Loc}
-                    key={data.loc}
-                  />
+
+              <div className="row">
+                <div className="form-group col-md-6 col-12">
+                  <label className="lblAbs font-12">لوکیشن</label>
+                  <div className="col p-0">
+                    <input
+                      className="form-control floating inputPadding rounded"
+                      type="text"
+                      dir="ltr"
+                      name="editCenterLocation"
+                      defaultValue={data.Loc}
+                      key={data.loc}
+                    />
+                  </div>
+                </div>
+                <div className="form-group col-md-6 col-12">
+                  <label className="lblAbs font-12">شماره تلفن رابط</label>
+                  <div className="col p-0">
+                    <input
+                      className="form-control floating inputPadding rounded"
+                      type="text"
+                      dir="ltr"
+                      name="editContactNumber"
+                      defaultValue={data.ManageTel}
+                      key={data.ManageTel}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="form-group">

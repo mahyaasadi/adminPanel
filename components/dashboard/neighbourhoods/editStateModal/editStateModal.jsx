@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
+import selectfieldColourStyles from "class/selectfieldStyle";
 import EditStateCitySelect from "./editStateCitySelect";
 
 const EditStateModal = ({
@@ -14,16 +15,6 @@ const EditStateModal = ({
   setSelectedProvinceList,
   selectedProvinceList,
 }) => {
-  const colourStyles = {
-    menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    control: (styles) => ({
-      ...styles,
-      minHeight: 43,
-      borderRadius: 20,
-      border: "1px solid #E6E9F4",
-    }),
-  };
-
   let selectedProvince = null;
   if (data) {
     selectedProvince = {
@@ -114,7 +105,7 @@ const EditStateModal = ({
                     استان <span className="text-danger">*</span>
                   </label>
                   <SelectField
-                    styles={colourStyles}
+                    styles={selectfieldColourStyles}
                     id="editSelectStateProvince"
                     options={provinceOptionsList}
                     className="text-center font-12"

@@ -1,20 +1,12 @@
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
+import selectfieldColourStyles from "class/selectfieldStyle";
 
 const AddGroupToArticleModal = ({
   grpOptions,
   FUSelectArticleGroup,
   addGrpToArticle,
 }) => {
-  const colourStyles = {
-    menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    control: (styles) => ({
-      ...styles,
-      minHeight: 43,
-      borderRadius: 20,
-      border: "1px solid #E6E9F4",
-    }),
-  };
   return (
     <div
       className="modal fade contentmodal"
@@ -46,7 +38,7 @@ const AddGroupToArticleModal = ({
                   گروه <span className="text-danger">*</span>
                 </label>
                 <SelectField
-                  styles={colourStyles}
+                  styles={selectfieldColourStyles}
                   options={grpOptions}
                   errorMessage={""}
                   error={false}
@@ -55,7 +47,6 @@ const AddGroupToArticleModal = ({
                   className="text-center"
                   required
                   onChangeValue={(value) => FUSelectArticleGroup(value?.value)}
-                  //   key={data.Type}
                 />
               </div>
               <div className="submit-section">

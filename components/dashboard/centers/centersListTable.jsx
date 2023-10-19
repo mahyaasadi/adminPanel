@@ -25,6 +25,8 @@ const CentersListTable = ({
 }) => {
   const router = useRouter();
 
+  console.log({ data });
+
   data?.map((center, index) => {
     data[index].rowNumber = index + 1;
   });

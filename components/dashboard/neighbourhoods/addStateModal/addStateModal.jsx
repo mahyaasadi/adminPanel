@@ -1,5 +1,6 @@
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
+import selectfieldColourStyles from "class/selectfieldStyle";
 import StateCitySelect from "./stateCitySelect";
 
 const AddStateModal = ({
@@ -10,16 +11,6 @@ const AddStateModal = ({
   setCityOption,
   cityOptionsList,
 }) => {
-  const colourStyles = {
-    menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    control: (styles) => ({
-      ...styles,
-      minHeight: 43,
-      borderRadius: 20,
-      border: "1px solid #E6E9F4",
-    }),
-  };
-
   return (
     <div
       className="modal fade contentmodal"
@@ -83,7 +74,7 @@ const AddStateModal = ({
                     استان <span className="text-danger">*</span>
                   </label>
                   <SelectField
-                    styles={colourStyles}
+                    styles={selectfieldColourStyles}
                     id="selectStateProvince"
                     options={provinceOptionsList}
                     className="text-center font-12"

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
+import selectfieldColourStyles from "class/selectfieldStyle";
 import CitySelect from "./citySelect";
 
 const AddCenterModal = ({
@@ -13,23 +14,11 @@ const AddCenterModal = ({
   defaultData,
   isLoading,
 }) => {
-  const colourStyles = {
-    menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    control: (styles) => ({
-      ...styles,
-      minHeight: 43,
-      borderRadius: 20,
-      border: "1px solid #E6E9F4",
-    }),
-  };
-
   const displayPreview = (e) => {
     var urlCreator = window.URL || window.webkitURL;
     var imageUrl = urlCreator.createObjectURL(e.target.files[0]);
     $("#logoUploadPreview").attr("src", imageUrl);
   };
-
-  // console.log(defaultData);
   return (
     <div
       className="modal fade contentmodal"
@@ -98,7 +87,7 @@ const AddCenterModal = ({
                     استان <span className="text-danger">*</span>
                   </label>
                   <SelectField
-                    styles={colourStyles}
+                    styles={selectfieldColourStyles}
                     id="ProvinceSelectOptions"
                     options={provinceOptionsList}
                     className="text-center font-12"
@@ -145,14 +134,29 @@ const AddCenterModal = ({
                 </div>
               </div>
 
-              <div className="form-group">
-                <label className="lblAbs font-12">لوکیشن</label>
-                <div className="col p-0">
-                  <input
-                    className="form-control floating inputPadding rounded"
-                    type="text"
-                    name="addCenterLocation"
-                  />
+              <div className="row">
+                <div className="form-group col-md-6 col-12">
+                  <label className="lblAbs font-12">لوکیشن</label>
+                  <div className="col p-0">
+                    <input
+                      className="form-control floating inputPadding rounded"
+                      type="text"
+                      dir="ltr"
+                      name="addCenterLocation"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group col-md-6 col-12">
+                  <label className="lblAbs font-12">شماره تلفن رابط</label>
+                  <div className="col p-0">
+                    <input
+                      className="form-control floating inputPadding rounded"
+                      dir="ltr"
+                      type="text"
+                      name="addContactNumber"
+                    />
+                  </div>
                 </div>
               </div>
 
