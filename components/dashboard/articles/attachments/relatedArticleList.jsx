@@ -9,12 +9,9 @@ import { Tooltip } from "primereact/tooltip";
 const RelatedArticlesList = ({
   data,
   articleTitle,
-  ActiveArticleID,
   removeRelatedArticle,
+  openAddRelatedArticleModal
 }) => {
-  const openAttachRelatedArticleModal = () => {
-    $("#attachRelatedArticle").modal("show");
-  };
 
   const columns = [
     {
@@ -89,7 +86,7 @@ const RelatedArticlesList = ({
               <div className="addLoeing-btn">
                 <button
                   className="btn btn-primary font-14"
-                  onClick={openAttachRelatedArticleModal}
+                  onClick={openAddRelatedArticleModal}
                 >
                   <i className="me-1">
                     <FeatherIcon icon="plus-square" />

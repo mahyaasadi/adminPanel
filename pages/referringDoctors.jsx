@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
-import { QuestionAlert } from "class/AlertManage.js";
+import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
-// import RefDocsTable from "components/dashboard/refDocs/refDocsTable";
-// import RefDocModal from "components/dashboard/refDocs/refDocModal";
+import RefDocsTable from "components/dashboard/refDocs/refDocsTable";
+import RefDocModal from "components/dashboard/refDocs/refDocModal";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -26,12 +24,14 @@ export const getServerSideProps = async ({ req, res }) => {
   }
 };
 
-const SpecialDiseases = ({ UserData }) => {
-  const Router = useRouter();
-
+const referringDoctors = ({ UserData }) => {
   const [refDocData, setRefDocData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [editRefDocData, setEditRefDocData] = useState([]);
+  const [modalMode, setModalMode] = useState("add");
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
 
   // get referringDoctors list
   const getRefDocsData = () => {
@@ -51,127 +51,128 @@ const SpecialDiseases = ({ UserData }) => {
       });
   };
 
-  //   // add new disease
-  //   const addDisease = (e) => {
-  //     e.preventDefault();
-  //     setIsLoading(true);
+  // add new refDoctor
+  const openAddModal = () => {
+    setModalMode("add");
+    setShowModal(true)
+  };
 
-  //     CenterID = Router.query.id;
-  //     let url = "Center/addSpecialDiseases";
-  //     let formData = new FormData(e.target);
-  //     const formProps = Object.fromEntries(formData);
+  const addRefDoctor = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  //     let data = {
-  //       CenterID: CenterID,
-  //       Name: formProps.diseaseName,
-  //       EngName: formProps.diseaseEngName,
-  //     };
+    let url = "ReferrerPhysician/add";
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
 
-  //     if (CenterID) {
-  //       axiosClient
-  //         .post(url, data)
-  //         .then((response) => {
-  //           setDiseasesList([...diseasesList, response.data]);
-  //           $("#addSpecialDiseaseModal").modal("hide");
-  //           setIsLoading(false);
-  //           e.target.reset();
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //           setIsLoading(false);
-  //         });
-  //     }
-  //   };
+    let data = {
+      MSID: formProps.MSID,
+      FullName: formProps.refDocFullName,
+      Expertise: formProps.refDocExpertise,
+      Tel: formProps.refDocTel,
+      Address: formProps.refDocAddress,
+    };
 
-  //   // edit disease
-  //   const editDisease = (e) => {
-  //     e.preventDefault();
-  //     setIsLoading(true);
+    console.log({ data });
 
-  //     CenterID = Router.query.id;
-  //     let url = "Center/EditSpecialDiseases";
-  //     let formData = new FormData(e.target);
-  //     const formProps = Object.fromEntries(formData);
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data);
+        setRefDocData([...refDocData, response.data]);
+        setShowModal(false)
+        setIsLoading(false);
+        e.target.reset();
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  };
 
-  //     let data = {
-  //       CenterID: CenterID,
-  //       SDID: formProps.diseaseId,
-  //       Name: formProps.editDiseaseName,
-  //       EngName: formProps.editDiseaseEngName,
-  //     };
+  // edit refDoctor
+  const openEditRefDocModal = (data) => {
+    setModalMode("edit");
+    setEditRefDocData(data);
+    setShowModal(true);
+  };
 
-  //     if (CenterID) {
-  //       axiosClient
-  //         .post(url, data)
-  //         .then((response) => {
-  //           console.log(response.data);
-  //           updateItem(formProps.diseaseId, response.data);
-  //           $("#editSpecialDiseaseModal").modal("hide");
-  //           setIsLoading(false);
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //           setIsLoading(false);
-  //           ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
-  //         });
-  //     }
-  //   };
+  const editRefDoctor = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  //   const updateItem = (id, newArr) => {
-  //     let index = diseasesList.findIndex((x) => x._id === id);
-  //     let g = diseasesList[index];
-  //     g = newArr;
+    let url = "ReferrerPhysician/Update";
+    let formData = new FormData(e.target);
+    const formProps = Object.fromEntries(formData);
 
-  //     if (index === -1) {
-  //       // handle error
-  //       console.log("no match");
-  //     } else
-  //       setDiseasesList([
-  //         ...diseasesList.slice(0, index),
-  //         g,
-  //         ...diseasesList.slice(index + 1),
-  //       ]);
-  //   };
+    let data = {
+      MSID: formProps.MSID,
+      FullName: formProps.refDocFullName,
+      Expertise: formProps.refDocExpertise,
+      Tel: formProps.refDocTel,
+      Address: formProps.refDocAddress,
+    };
 
-  //   const openEditRefDocModal = (data) => {
-  //     setEditRefDocData(data);
-  //     openRefDocModal(true)
-  // };
+    console.log({ data });
 
-  //   // delete doctor
-  //   const deleteRefDoc = async (id) => {
-  //     CenterID = Router.query.id;
-  //     let result = await QuestionAlert(
-  //       "حذف پزشک!",
-  //       "آیا از حذف پزشک اطمینان دارید؟"
-  //     );
+    axiosClient
+      .put(url, data)
+      .then((response) => {
+        console.log(response.data);
+        updateItem(formProps.refDocID, response.data);
+        setShowModal(false)
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
+      });
+  };
 
-  //     if (result) {
-  //       setIsLoading(true);
-  //       let url = "RefDoc/Delete";
-  //       let data = {
-  //         CenterIDو
-  //         MSID: id,
-  //       };
+  const updateItem = (id, newArr) => {
+    let index = refDocData.findIndex((x) => x._id === id);
+    let g = refDocData[index];
+    g = newArr;
 
-  //       if (CenterID) {
-  //         await axiosClient
-  //           .delete(url, { data })
-  //           .then((response) => {
-  //             setRefDocData(refDocData.filter((a) => a._id !== id));
-  //             setIsLoading(false);
-  //           })
-  //           .catch(function (error) {
-  //             console.log(error);
-  //             setIsLoading(false);
-  //           });
-  //       }
-  //     }
-  //   };
+    if (index === -1) {
+      console.log("no match");
+    } else
+      setRefDocData([
+        ...refDocData.slice(0, index),
+        g,
+        ...refDocData.slice(index + 1),
+      ]);
+  };
 
-  useEffect(() => {
-    getRefDocsData();
-  }, []);
+  // delete doctor
+  const deleteRefDoc = async (id) => {
+    let result = await QuestionAlert(
+      "حذف پزشک!",
+      "آیا از حذف پزشک اطمینان دارید؟"
+    );
+
+    if (result) {
+      setIsLoading(true);
+      let url = "RefDoc/Delete";
+      let data = {
+        MSID: id,
+      };
+
+      await axiosClient
+        .delete(url, { data })
+        .then((response) => {
+          setRefDocData(refDocData.filter((a) => a._id !== id));
+          setIsLoading(false);
+        })
+        .catch(function (error) {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  };
+
+  useEffect(() => getRefDocsData(), []);
 
   return (
     <>
@@ -179,59 +180,68 @@ const SpecialDiseases = ({ UserData }) => {
         <title>پزشکان ارجاع دهنده</title>
       </Head>
       <div className="page-wrapper">
-        <div className="content container-fluid">
-          <div className="page-header">
-            <div className="row align-items-center">
-              <div className="col-md-12 d-flex justify-content-end">
-                <button
-                  className="btn btn-primary btn-add font-14 media-font-12"
-                  //   onClick={openAddModal}
-                >
-                  <i className="me-1">
-                    <FeatherIcon icon="plus-square" />
-                  </i>{" "}
-                  اضافه کردن
-                </button>
+        {isLoading ? <Loading /> : (
+          <div className="content container-fluid">
+            <div className="page-header">
+              <div className="row align-items-center">
+                <div className="col-md-12 d-flex justify-content-end">
+                  <button
+                    className="btn btn-primary btn-add font-14 media-font-12"
+                    onClick={openAddModal}
+                  >
+                    <i className="me-1">
+                      <FeatherIcon icon="plus-square" />
+                    </i>{" "}
+                    اضافه کردن
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="card">
-                <div className="card-header border-bottom-0">
-                  <div className="row align-items-center">
-                    <div className="col">
-                      <p className="card-title font-14 text-secondary">
-                        لیست پزشکان ارجاع دهنده
-                      </p>
-                    </div>
-                    <div className="col-auto d-flex flex-wrap">
-                      <div className="form-custom me-2">
-                        <div
-                          id="tableSearch"
-                          className="dataTables_wrapper"
-                        ></div>
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="card">
+                  <div className="card-header border-bottom-0">
+                    <div className="row align-items-center">
+                      <div className="col">
+                        <p className="card-title font-14 text-secondary">
+                          لیست پزشکان ارجاع دهنده
+                        </p>
+                      </div>
+                      <div className="col-auto d-flex flex-wrap">
+                        <div className="form-custom me-2">
+                          <div
+                            id="tableSearch"
+                            className="dataTables_wrapper"
+                          ></div>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <RefDocsTable
+                    data={refDocData}
+                    openEditRefDocModal={openEditRefDocModal}
+                    deleteRefDoc={deleteRefDoc}
+                  />
                 </div>
-                {/* <RefDocsTable
-                  data={diseasesList}
-                  openEditRefDocModal={openEditRefDocModal}
-                  deleteRefDoc={deleteRefDoc}
-                /> */}
-              </div>
 
-              <div id="tablepagination" className="dataTables_wrapper"></div>
+                <div id="tablepagination" className="dataTables_wrapper"></div>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* <RefDocModal /> */}
+        )}
+        <RefDocModal
+          isLoading={isLoading}
+          mode={modalMode}
+          show={showModal}
+          onHide={handleCloseModal}
+          onSubmit={modalMode == "add" ? addRefDoctor : editRefDoctor}
+          data={editRefDocData}
+        />
       </div>
     </>
   );
 };
 
-export default SpecialDiseases;
+export default referringDoctors;

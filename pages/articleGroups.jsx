@@ -1,15 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Head from "next/head";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
-import Loading from "@/components/commonComponents/loading/loading";
+import Loading from "components/commonComponents/loading/loading";
+import ArticleGroupsModal from "components/dashboard/articles/articleGroups/articleGroupsModal"
 import ArticleGroupsListTable from "components/dashboard/articles/articleGroups/articleGroupsListTable";
-import AddArticleGroupModal from "components/dashboard/articles/articleGroups/addArticleGroupModal";
-import EditArticleGroupModal from "components/dashboard/articles/articleGroups/editArticleGroupModal";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -32,18 +30,21 @@ const ArticleGroupsManagement = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [articleGroupsData, setArticleGroupsData] = useState([]);
   const [editArticleGroupData, setEditArticleGroupData] = useState([]);
+  const [modalMode, setModalMode] = useState("add");
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
 
   // Get all
   const getAllArticleGroups = () => {
-    let url = "/ArticleGroup/getAll";
     setIsLoading(true);
+    let url = "/ArticleGroup/getAll";
 
     axiosClient
       .get(url)
       .then((response) => {
-        // console.log(response.data);
-        setIsLoading(false);
         setArticleGroupsData(response.data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -52,14 +53,19 @@ const ArticleGroupsManagement = ({ UserData }) => {
   };
 
   // Add Article Group
+  const openAddModal = () => {
+    setModalMode("add");
+    setShowModal(true)
+  }
+
   const addArticleGroup = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    let url = "ArticleGroup/add";
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
+    let url = "ArticleGroup/add";
     let data = {
       Title: formProps.articleGroupTitle,
       EngTitle: formProps.articleGroupEngTitle,
@@ -73,10 +79,10 @@ const ArticleGroupsManagement = ({ UserData }) => {
       .then((response) => {
         console.log(response.data);
         setArticleGroupsData([...articleGroupsData, response.data]);
-        setIsLoading(false);
 
-        $("#addArticleGroupModal").modal("hide");
+        setShowModal(false)
         e.target.reset();
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -88,17 +94,18 @@ const ArticleGroupsManagement = ({ UserData }) => {
   const updateArticleGroup = (data, articleGrpId) => {
     setEditArticleGroupData(data);
     ActiveArticleGrpID = articleGrpId;
-    $("#editArticleGroupModal").modal("show");
+    setShowModal(true);
+    setModalMode("edit")
   };
 
   const editArticleGroup = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    let url = `ArticleGroup/update/${ActiveArticleGrpID}`;
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
+    let url = `ArticleGroup/update/${ActiveArticleGrpID}`;
     let data = {
       Title: formProps.editArticleGrpTitle,
       EngTitle: formProps.editArticleGrpEngTitle,
@@ -111,8 +118,8 @@ const ArticleGroupsManagement = ({ UserData }) => {
         console.log(response.data);
         updateArticleGroupItem(formProps.editArticleGrpID, response.data);
 
+        setShowModal(false)
         setIsLoading(false);
-        $("#editArticleGroupModal").modal("hide");
       })
       .catch((error) => {
         console.log(error);
@@ -122,11 +129,10 @@ const ArticleGroupsManagement = ({ UserData }) => {
 
   const updateArticleGroupItem = (id, newArr) => {
     let index = articleGroupsData.findIndex((x) => x._id === id);
-
     let g = articleGroupsData[index];
     g = newArr;
+
     if (index === -1) {
-      // handle error
       console.log("no match");
     } else
       setArticleGroupsData([
@@ -202,10 +208,10 @@ const ArticleGroupsManagement = ({ UserData }) => {
       "حذف گروه مقاله !",
       "آیا از حذف گروه مقاله اطمینان دارید؟"
     );
-    setIsLoading(true);
 
     if (result) {
       let url = `ArticleGroup/delete/${id}`;
+      setIsLoading(true);
 
       await axiosClient
         .delete(url)
@@ -236,22 +242,19 @@ const ArticleGroupsManagement = ({ UserData }) => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col-md-12 d-flex justify-content-end">
-                  <Link
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addArticleGroupModal"
+                  <button
+                    onClick={openAddModal}
                     className="btn btn-primary btn-add"
                   >
                     <i className="me-1">
                       <FeatherIcon icon="plus-square" />
                     </i>{" "}
                     افزودن
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* <!-- Menu List --> */}
             <div className="row">
               <div className="col-sm-12">
                 <div className="card">
@@ -285,11 +288,14 @@ const ArticleGroupsManagement = ({ UserData }) => {
             </div>
           </div>
         )}
-        <AddArticleGroupModal addArticleGroup={addArticleGroup} />
 
-        <EditArticleGroupModal
+        <ArticleGroupsModal
+          show={showModal}
+          onHide={handleCloseModal}
+          isLoading={isLoading}
+          mode={modalMode}
+          onSubmit={modalMode == "add" ? addArticleGroup : editArticleGroup}
           data={editArticleGroupData}
-          editArticleGroup={editArticleGroup}
         />
       </div>
     </>

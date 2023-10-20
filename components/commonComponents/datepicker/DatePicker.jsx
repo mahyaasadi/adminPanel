@@ -1,4 +1,3 @@
-import { useState } from "react";
 import FeatherIcon from "feather-icons-react";
 import DtPicker, { convertToFa } from "react-calendar-datetime-picker";
 import "react-calendar-datetime-picker/dist/index.css";
@@ -25,9 +24,7 @@ const DatePicker = ({ setArticleDate, defDate }) => {
       day: currentDay,
     };
   }
-  // console.log(artDate);
 
-  const [todaysDate, setTodaysDate] = useState(artDate);
   const test = (e) => {
     if (e?.month.toString().length == 1) {
       e.month = "0" + e.month.toString();

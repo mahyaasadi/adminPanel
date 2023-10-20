@@ -1,11 +1,7 @@
 import { useEffect } from "react";
-import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
-import { axiosClient } from "class/axiosConfig.js";
-import Loading from "@/components/commonComponents/loading/loading";
 
 const AddArticleVideoModal = ({ addVideoToArticle, isLoading }) => {
-  // Article Video preview
   const displayVideoPreview = (e) => {
     var urlCreator = window.URL || window.webkitURL;
     if (e.target.files.length !== 0) {
@@ -14,9 +10,7 @@ const AddArticleVideoModal = ({ addVideoToArticle, isLoading }) => {
     }
   };
 
-  useEffect(() => {
-    $("#ArticleVideoPreview").hide("");
-  }, []);
+  useEffect(() => $("#ArticleVideoPreview").hide(""), []);
 
   return (
     <div
@@ -31,7 +25,6 @@ const AddArticleVideoModal = ({ addVideoToArticle, isLoading }) => {
             <p className="mb-0 text-secondary font-14 fw-bold">
               افزودن ویدیو به مقاله
             </p>
-            {/* <p>article title</p> */}
             <button
               type="button"
               className="close-btn"
@@ -72,7 +65,6 @@ const AddArticleVideoModal = ({ addVideoToArticle, isLoading }) => {
                   name="addVideoToArticle"
                   onChange={displayVideoPreview}
                   required
-                //   id="addSubArticleImg"
                 />
               </div>
 

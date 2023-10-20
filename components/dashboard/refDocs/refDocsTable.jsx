@@ -1,66 +1,79 @@
-import { useState } from "react";
-import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import DataTable from "react-data-table-component";
-import SelectField from "components/commonComponents/selectfield";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 import { Tooltip } from "primereact/tooltip";
 
-const InsuranceListTable = ({ data, deleteInsurance, updateInsurance }) => {
+const RefDocTable = ({ data, deleteRefDoc, openEditRefDocModal }) => {
+  //   data?.map((refDoc, index) => {
+  //     data[index].rowNumber = index + 1;
+  //   });
+
   const columns = [
     {
-      name: "نام پزشک",
-      selector: (row) => row.FullName,
+      name: "ردیف",
+      selector: (row) => row.rowNumber,
       sortable: true,
-      width: "auto",
+      width: "80px",
     },
     {
-      name: "تخصص",
-      selector: (row) => row.Expertise,
+      name: "شناسه",
+      selector: (row) => row.MSID,
       sortable: true,
-      width: "auto",
+      width: "100px",
     },
-    {
-      name: "وضعیت بیمه",
-      selector: (row) => row.Status,
-      sortable: true,
-      width: "auto",
-    },
-    {
-      name: "عملیات ها",
-      selector: (row) => row._id,
-      sortable: true,
+    //     {
+    //       name: "نام پزشک",
+    //       selector: (row) => row.FullName,
+    //       sortable: true,
+    //       width: "250px",
+    //     },
+    //     {
+    //       name: "تخصص",
+    //       selector: (row) => row.Expertise,
+    //       sortable: true,
+    //       width: "300px",
+    //     },
+    //     {
+    //       name: "آدرس",
+    //       selector: (row) => row.Address,
+    //       sortable: true,
+    //       width: "300px",
+    //     },
+    //     {
+    //       name: "عملیات ها",
+    //       selector: (row) => row._id,
+    //       sortable: true,
 
-      cell: (row) => (
-        <div className="actions d-flex gap-1">
-          <button
-            className="btn btn-sm btn-outline-danger removeBtn"
-            onClick={() => deleteInsurance(row._id)}
-            data-pr-position="top"
-          >
-            <Tooltip target=".removeBtn">حذف</Tooltip>
-            <FeatherIcon
-              icon="trash-2"
-              style={{ width: "16px", height: "16px" }}
-            />
-          </button>
-          <button
-            className="btn btn-sm btn-outline-secondary btn-border-left editBtn"
-            onClick={() => updateInsurance(row)}
-            data-pr-position="top"
-          >
-            <Tooltip target=".editBtn">ویرایش</Tooltip>
-            <FeatherIcon
-              icon="edit-3"
-              style={{ width: "16px", height: "16px" }}
-            />
-          </button>
-        </div>
-      ),
-      width: "200px",
-    },
+    //       cell: (row) => (
+    //         <div className="actions d-flex gap-1">
+    //           <button
+    //             className="btn btn-sm btn-outline-danger removeBtn"
+    //             onClick={() => deleteRefDoc(row.MSID)}
+    //             data-pr-position="top"
+    //           >
+    //             <Tooltip target=".removeBtn">حذف</Tooltip>
+    //             <FeatherIcon
+    //               icon="trash-2"
+    //               style={{ width: "16px", height: "16px" }}
+    //             />
+    //           </button>
+    //           <button
+    //             className="btn btn-sm btn-outline-secondary btn-border-left editBtn"
+    //             onClick={() => openEditRefDocModal(row)}
+    //             data-pr-position="top"
+    //           >
+    //             <Tooltip target=".editBtn">ویرایش</Tooltip>
+    //             <FeatherIcon
+    //               icon="edit-3"
+    //               style={{ width: "16px", height: "16px" }}
+    //             />
+    //           </button>
+    //         </div>
+    //       ),
+    //       width: "200px",
+    //     },
   ];
 
   const tableData = {
@@ -91,4 +104,4 @@ const InsuranceListTable = ({ data, deleteInsurance, updateInsurance }) => {
   );
 };
 
-export default InsuranceListTable;
+export default RefDocTable;

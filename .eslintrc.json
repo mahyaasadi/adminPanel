@@ -7,7 +7,6 @@
       "javascript": {}
     }
   },
-  // "parser": "javascript-eslint/parser",
   "parserOptions": {
     "project": "jsconfig.json",
     "jsconfigRootDir": "./",
@@ -65,4 +64,3 @@
     //   //   "@typescript-eslint/unbound-method": "off"
   }
 }
-

@@ -2,14 +2,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import ArticleTagsListTable from "components/dashboard/articles/articleTags/articleTagsListTable";
-import AddArticleTagModal from "components/dashboard/articles/articleTags/addArticleTagModal";
-import EditArticleTagModal from "components/dashboard/articles/articleTags/editArticleTagModal";
-import { getSession } from "lib/session";
+import ArticleTagsModal from "components/dashboard/articles/articleTags/articleTagsModal";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -32,6 +31,10 @@ const ArticleTagsManagement = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [articleTags, setArticleTags] = useState([]);
   const [editArticleTagData, setEditArticleTagData] = useState([]);
+  const [modalMode, setModalMode] = useState("add");
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
 
   //get all states
   const getAllArticleTags = () => {
@@ -41,7 +44,6 @@ const ArticleTagsManagement = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        // console.log(response.data);
         setIsLoading(false);
         setArticleTags(response.data);
       })
@@ -52,6 +54,11 @@ const ArticleTagsManagement = ({ UserData }) => {
   };
 
   // Add Tag to Article
+  const openAddModal = () => {
+    setModalMode("add");
+    setShowModal(true)
+  }
+
   const addArticleTag = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -72,7 +79,7 @@ const ArticleTagsManagement = ({ UserData }) => {
         setArticleTags([...articleTags, response.data]);
 
         setIsLoading(false);
-        $("#addArticleTagModal").modal("hide");
+        setShowModal(false)
         e.target.reset();
       })
       .catch((error) => {
@@ -85,17 +92,18 @@ const ArticleTagsManagement = ({ UserData }) => {
   const updateArticleTag = (data, articleTagId) => {
     setEditArticleTagData(data);
     ActiveArticleTagID = articleTagId;
-    $("#editArticleTagModal").modal("show");
+    setModalMode("edit");
+    setShowModal(true)
   };
 
-  const editArticleGroup = (e) => {
+  const editArticleTag = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    let url = `ArticleTags/update/${ActiveArticleTagID}`;
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
+    let url = `ArticleTags/update/${ActiveArticleTagID}`;
     let data = {
       Title: formProps.editArticleTagTitle,
       EngTitle: formProps.editArticleTagEngTitle,
@@ -107,8 +115,8 @@ const ArticleTagsManagement = ({ UserData }) => {
         console.log(response.data);
         updateArticleTagItem(formProps.editArticleTagID, response.data);
 
+        setShowModal(false)
         setIsLoading(false);
-        $("#editArticleTagModal").modal("hide");
       })
       .catch((error) => {
         console.log(error);
@@ -118,11 +126,10 @@ const ArticleTagsManagement = ({ UserData }) => {
 
   const updateArticleTagItem = (id, newArr) => {
     let index = articleTags.findIndex((x) => x._id === id);
-
     let g = articleTags[index];
     g = newArr;
+
     if (index === -1) {
-      // handle error
       console.log("no match");
     } else
       setArticleTags([
@@ -138,9 +145,9 @@ const ArticleTagsManagement = ({ UserData }) => {
       "حذف تگ مقاله !",
       "?آیا از حذف مطمئن هستید"
     );
-    setIsLoading(true);
 
     if (result) {
+      setIsLoading(true);
       let url = `ArticleTags/delete/${id}`;
 
       await axiosClient
@@ -171,17 +178,15 @@ const ArticleTagsManagement = ({ UserData }) => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col-md-12 d-flex justify-content-end">
-                  <Link
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addArticleTagModal"
+                  <button
+                    onClick={openAddModal}
                     className="btn btn-primary btn-add"
                   >
                     <i className="me-1">
                       <FeatherIcon icon="plus-square" />
                     </i>{" "}
                     افزودن
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -217,11 +222,14 @@ const ArticleTagsManagement = ({ UserData }) => {
             </div>
           </div>
         )}
-        <AddArticleTagModal addArticleTag={addArticleTag} />
 
-        <EditArticleTagModal
+        <ArticleTagsModal
+          show={showModal}
+          onHide={handleCloseModal}
+          isLoading={isLoading}
+          mode={modalMode}
+          onSubmit={modalMode == "add" ? addArticleTag : editArticleTag}
           data={editArticleTagData}
-          editArticleGroup={editArticleGroup}
         />
       </div>
     </>

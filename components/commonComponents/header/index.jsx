@@ -5,14 +5,12 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import FeatherIcon from "feather-icons-react";
-import { setSession } from "@/lib/SessionMange";
+import { setSession } from "lib/SessionMange";
 import {
   avatar01,
   headerLogo,
-  logoSmall,
 } from "components/commonComponents/imagepath";
 
-let user = null;
 const Header = ({ UserData }) => {
   let router = useRouter();
   const [task, settask] = useState(true);
@@ -24,13 +22,9 @@ const Header = ({ UserData }) => {
     settask1(!task1);
   };
 
-  const handlesidebar = () => {
-    document.body.classList.toggle("mini-sidebar");
-  };
+  const handlesidebar = () => document.body.classList.toggle("mini-sidebar");
 
-  const handlesidebarmobilemenu = () => {
-    document.body.classList.toggle("slide-nav");
-  };
+  const handlesidebarmobilemenu = () => document.body.classList.toggle("slide-nav");
 
   const handleLogout = async (UserData) => {
     let mngSession = await setSession(UserData);
@@ -38,7 +32,7 @@ const Header = ({ UserData }) => {
     router.push("/");
   };
 
-  const fetchUserToken = async (data) => {
+  const fetchUserToken = (data) => {
     document.getElementById("userName").innerHTML = data.FullName;
     document.getElementById("avatar").setAttribute("src", data.Avatar);
     document.getElementById("avatar").setAttribute("srcSet", data.Avatar);
@@ -48,7 +42,7 @@ const Header = ({ UserData }) => {
       .setAttribute("srcSet", data.Avatar);
   };
 
-  useEffect(() => fetchUserToken(UserData), []);
+  useEffect(() => fetchUserToken(UserData), [UserData]);
 
   return (
     <>
@@ -63,9 +57,6 @@ const Header = ({ UserData }) => {
               priority={true}
             />
           </Link>
-          {/* <Link href="/dashboard" className="logo logo-small">
-            <Image src={logoSmall} alt="Logo" width={30} height={30} />
-          </Link> */}
           <Link href="#" id="toggle_btn" onClick={handlesidebar}>
             <FeatherIcon icon="chevrons-left" />
           </Link>
