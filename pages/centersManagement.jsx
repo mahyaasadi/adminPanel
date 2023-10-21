@@ -110,7 +110,6 @@ const CentersManagement = ({ UserData }) => {
     e.preventDefault();
     setIsLoading(true);
 
-    let url = "Center/add";
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
@@ -118,6 +117,7 @@ const CentersManagement = ({ UserData }) => {
       logo = await convertBase64(formProps.logo);
     }
 
+    let url = "Center/add";
     let data = {
       Name: formProps.addCenterName,
       EngName: formProps.addCenterEngName,
@@ -236,7 +236,7 @@ const CentersManagement = ({ UserData }) => {
           updateItem(formProps.editCenterID, response.data);
 
           $("#editCenterModal").modal("hide");
-          // $("#editCenterLogo").val("");
+          // e.target.reset();
         })
         .catch((error) => {
           console.log(error);
@@ -263,7 +263,6 @@ const CentersManagement = ({ UserData }) => {
   };
 
   // ----- business hours -----
-
   const getBusinessHours = (centerId) => {
     let url = `CenterProfile/getBusinessHours/${centerId}`;
     setIsLoading(true);
@@ -338,7 +337,6 @@ const CentersManagement = ({ UserData }) => {
   };
 
   // ------ about us -------
-
   const getCenterAboutUs = (centerId) => {
     let url = `/CenterProfile/getAboutUs/${centerId}`;
     setIsLoading(true);
@@ -387,7 +385,7 @@ const CentersManagement = ({ UserData }) => {
       AboutUs: formProps.editAboutUsText,
     };
 
-    console.log("data", data);
+    // console.log("data", data);
 
     axiosClient
       .put(url, data)
@@ -462,9 +460,7 @@ const CentersManagement = ({ UserData }) => {
     let findIndex = centersData.findIndex((x) => x._id === id);
     centersData[findIndex] = findCenter;
 
-    // console.log({ findCenter });
     setCentersData(centersData);
-    // console.log({ centersData });
   };
 
   // activate center
@@ -524,9 +520,7 @@ const CentersManagement = ({ UserData }) => {
     let findIndex = centersData.findIndex((x) => x._id === id);
     centersData[findIndex] = findCenter;
 
-    console.log({ findCenter });
     setCentersData(centersData);
-    console.log({ centersData });
   };
 
   // activate center
@@ -543,7 +537,7 @@ const CentersManagement = ({ UserData }) => {
       await axiosClient
         .put(url)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           changeCenterSearchableState(id, true);
           setIsLoading(false);
         })
@@ -568,7 +562,7 @@ const CentersManagement = ({ UserData }) => {
       await axiosClient
         .put(url)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           changeCenterSearchableState(id, false);
           setIsLoading(false);
         })

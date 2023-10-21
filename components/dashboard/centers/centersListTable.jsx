@@ -156,7 +156,7 @@ const CentersListTable = ({
         ];
 
         return (
-          <div>
+          <div className="w-50">
             <Dropdown
               value={localSelectedLink}
               options={localLinks}

@@ -7,6 +7,7 @@ import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import RefDocsTable from "components/dashboard/refDocs/refDocsTable";
 import RefDocModal from "components/dashboard/refDocs/refDocModal";
+import RefDocsSearch from "components/dashboard/refDocs/refDocsSearch";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -54,17 +55,17 @@ const referringDoctors = ({ UserData }) => {
   // add new refDoctor
   const openAddModal = () => {
     setModalMode("add");
-    setShowModal(true)
+    setShowModal(true);
   };
 
   const addRefDoctor = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    let url = "ReferrerPhysician/add";
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
 
+    let url = "ReferrerPhysician/add";
     let data = {
       MSID: formProps.MSID,
       FullName: formProps.refDocFullName,
@@ -73,14 +74,12 @@ const referringDoctors = ({ UserData }) => {
       Address: formProps.refDocAddress,
     };
 
-    console.log({ data });
-
     axiosClient
       .post(url, data)
       .then((response) => {
         console.log(response.data);
-        setRefDocData([...refDocData, response.data]);
-        setShowModal(false)
+        setRefDocData([response.data, ...refDocData]);
+        setShowModal(false);
         setIsLoading(false);
         e.target.reset();
       })
@@ -106,6 +105,7 @@ const referringDoctors = ({ UserData }) => {
     const formProps = Object.fromEntries(formData);
 
     let data = {
+      ID: formProps.refDocID,
       MSID: formProps.MSID,
       FullName: formProps.refDocFullName,
       Expertise: formProps.refDocExpertise,
@@ -120,7 +120,7 @@ const referringDoctors = ({ UserData }) => {
       .then((response) => {
         console.log(response.data);
         updateItem(formProps.refDocID, response.data);
-        setShowModal(false)
+        setShowModal(false);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -154,10 +154,12 @@ const referringDoctors = ({ UserData }) => {
 
     if (result) {
       setIsLoading(true);
-      let url = "RefDoc/Delete";
+      let url = "ReferrerPhysician/Delete";
       let data = {
-        MSID: id,
+        ID: id,
       };
+
+      console.log({ data });
 
       await axiosClient
         .delete(url, { data })
@@ -172,6 +174,20 @@ const referringDoctors = ({ UserData }) => {
     }
   };
 
+  const searchRefDocs = (Text) => {
+    let url = "ReferrerPhysician/FindByMSID/" + Text;
+
+    axiosClient
+      .get(url)
+      .then((response) => {
+        console.log(response.data);
+        setRefDocData(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => getRefDocsData(), []);
 
   return (
@@ -180,11 +196,17 @@ const referringDoctors = ({ UserData }) => {
         <title>پزشکان ارجاع دهنده</title>
       </Head>
       <div className="page-wrapper">
-        {isLoading ? <Loading /> : (
+        {isLoading ? (
+          <Loading />
+        ) : (
           <div className="content container-fluid">
             <div className="page-header">
               <div className="row align-items-center">
-                <div className="col-md-12 d-flex justify-content-end">
+                <div className="col-md-12 d-flex gap-2 justify-content-end media-srvHeader">
+                  <RefDocsSearch
+                    searchRefDocs={searchRefDocs}
+                    getRefDocsData={getRefDocsData}
+                  />
                   <button
                     className="btn btn-primary btn-add font-14 media-font-12"
                     onClick={openAddModal}
@@ -208,14 +230,6 @@ const referringDoctors = ({ UserData }) => {
                           لیست پزشکان ارجاع دهنده
                         </p>
                       </div>
-                      <div className="col-auto d-flex flex-wrap">
-                        <div className="form-custom me-2">
-                          <div
-                            id="tableSearch"
-                            className="dataTables_wrapper"
-                          ></div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                   <RefDocsTable
@@ -224,12 +238,9 @@ const referringDoctors = ({ UserData }) => {
                     deleteRefDoc={deleteRefDoc}
                   />
                 </div>
-
-                <div id="tablepagination" className="dataTables_wrapper"></div>
               </div>
             </div>
           </div>
-
         )}
         <RefDocModal
           isLoading={isLoading}

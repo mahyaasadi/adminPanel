@@ -43,11 +43,6 @@ const AddCenterModal = ({
           </div>
           <div className="modal-body centerModalBody">
             <form onSubmit={addCenter} id="frmAddCenter" dir="rtl">
-              {/* <input
-                type="hidden"
-                value={defaultData?._id}
-                name="addCenterID"
-              /> */}
               <div className="row">
                 <div className="col">
                   <div className="form-group">
@@ -60,7 +55,6 @@ const AddCenterModal = ({
                         className="form-control floating inputPadding rounded"
                         name="addCenterName"
                         required
-                        // defaultValue={defaultData?.Name}
                       />
                     </div>
                   </div>
@@ -74,7 +68,6 @@ const AddCenterModal = ({
                         type="text"
                         className="form-control floating inputPadding rounded"
                         name="addCenterEngName"
-                        // defaultValue={defaultData?.EngName}
                       />
                     </div>
                   </div>
@@ -227,4 +220,5 @@ const AddCenterModal = ({
     </div>
   );
 };
+
 export default AddCenterModal;

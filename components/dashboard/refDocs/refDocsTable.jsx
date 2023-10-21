@@ -6,9 +6,9 @@ import { tableCustomStyles } from "components/commonComponents/customTableStyle/
 import { Tooltip } from "primereact/tooltip";
 
 const RefDocTable = ({ data, deleteRefDoc, openEditRefDocModal }) => {
-  //   data?.map((refDoc, index) => {
-  //     data[index].rowNumber = index + 1;
-  //   });
+  data?.map((refDoc, index) => {
+    data[index].rowNumber = index + 1;
+  });
 
   const columns = [
     {
@@ -18,62 +18,59 @@ const RefDocTable = ({ data, deleteRefDoc, openEditRefDocModal }) => {
       width: "80px",
     },
     {
-      name: "شناسه",
+      name: "شماره نظام پزشکی",
       selector: (row) => row.MSID,
       sortable: true,
-      width: "100px",
+      width: "200px",
     },
-    //     {
-    //       name: "نام پزشک",
-    //       selector: (row) => row.FullName,
-    //       sortable: true,
-    //       width: "250px",
-    //     },
-    //     {
-    //       name: "تخصص",
-    //       selector: (row) => row.Expertise,
-    //       sortable: true,
-    //       width: "300px",
-    //     },
-    //     {
-    //       name: "آدرس",
-    //       selector: (row) => row.Address,
-    //       sortable: true,
-    //       width: "300px",
-    //     },
-    //     {
-    //       name: "عملیات ها",
-    //       selector: (row) => row._id,
-    //       sortable: true,
-
-    //       cell: (row) => (
-    //         <div className="actions d-flex gap-1">
-    //           <button
-    //             className="btn btn-sm btn-outline-danger removeBtn"
-    //             onClick={() => deleteRefDoc(row.MSID)}
-    //             data-pr-position="top"
-    //           >
-    //             <Tooltip target=".removeBtn">حذف</Tooltip>
-    //             <FeatherIcon
-    //               icon="trash-2"
-    //               style={{ width: "16px", height: "16px" }}
-    //             />
-    //           </button>
-    //           <button
-    //             className="btn btn-sm btn-outline-secondary btn-border-left editBtn"
-    //             onClick={() => openEditRefDocModal(row)}
-    //             data-pr-position="top"
-    //           >
-    //             <Tooltip target=".editBtn">ویرایش</Tooltip>
-    //             <FeatherIcon
-    //               icon="edit-3"
-    //               style={{ width: "16px", height: "16px" }}
-    //             />
-    //           </button>
-    //         </div>
-    //       ),
-    //       width: "200px",
-    //     },
+    {
+      name: "نام پزشک",
+      selector: (row) => row.FullName,
+      sortable: true,
+      width: "270px",
+    },
+    {
+      name: "تخصص",
+      selector: (row) => row.Expertise,
+      width: "300px",
+    },
+    {
+      name: "آدرس",
+      selector: (row) => row.Address,
+      sortable: true,
+      width: "300px",
+    },
+    {
+      name: "عملیات ها",
+      selector: (row) => row._id,
+      cell: (row) => (
+        <div className="actions d-flex gap-1">
+          <button
+            className="btn btn-sm btn-outline-danger removeBtn"
+            onClick={() => deleteRefDoc(row._id)}
+            data-pr-position="top"
+          >
+            <Tooltip target=".removeBtn">حذف</Tooltip>
+            <FeatherIcon
+              icon="trash-2"
+              style={{ width: "16px", height: "16px" }}
+            />
+          </button>
+          <button
+            className="btn btn-sm btn-outline-secondary btn-border-left editBtn"
+            onClick={() => openEditRefDocModal(row)}
+            data-pr-position="top"
+          >
+            <Tooltip target=".editBtn">ویرایش</Tooltip>
+            <FeatherIcon
+              icon="edit-3"
+              style={{ width: "16px", height: "16px" }}
+            />
+          </button>
+        </div>
+      ),
+      width: "200px",
+    },
   ];
 
   const tableData = {
@@ -91,6 +88,7 @@ const RefDocTable = ({ data, deleteRefDoc, openEditRefDocModal }) => {
             defaultSortAsc={false}
             pagination
             highlightOnHover
+            paginationPerPage="20"
             noDataComponent={
               <div style={{ padding: "24px", fontSize: "13px" }}>
                 موردی برای نمایش وجود ندارد.

@@ -216,7 +216,6 @@ const EditCenterModal = ({
                   type="file"
                   className="upload"
                   name="editLogo"
-                  id="editCenterLogo"
                   onChange={displayPreview}
                   key={data.Logo}
                 />
