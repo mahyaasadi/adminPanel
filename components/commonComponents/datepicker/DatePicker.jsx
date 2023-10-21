@@ -8,41 +8,41 @@ const currentYear = jdate.getFullYear();
 const currentMonth = jdate.getMonth();
 const currentDay = jdate.getDate();
 
-const DatePicker = ({ setArticleDate, defDate }) => {
-  let artDate = null;
-  if (defDate) {
-    defDate = defDate.replaceAll(/\//g, "");
-    artDate = {
-      year: parseInt(defDate.substr(0, 4)),
-      month: parseInt(defDate.substr(4, 2)),
-      day: parseInt(defDate.substr(6, 2)),
+const DatePicker = ({ setDate, defaultDate, label }) => {
+  let initialDate = null;
+  if (defaultDate) {
+    defaultDate = defaultDate.replaceAll(/\//g, "");
+    initialDate = {
+      year: parseInt(defaultDate.substr(0, 4)),
+      month: parseInt(defaultDate.substr(4, 2)),
+      day: parseInt(defaultDate.substr(6, 2)),
     };
   } else {
-    artDate = {
+    initialDate = {
       year: currentYear,
       month: currentMonth,
       day: currentDay,
     };
   }
 
-  const test = (e) => {
-    if (e?.month.toString().length == 1) {
+  const handleDateChange = (e) => {
+    if (e?.month.toString().length === 1) {
       e.month = "0" + e.month.toString();
     }
-    if (e?.day.toString().length == 1) {
+    if (e?.day.toString().length === 1) {
       e.day = "0" + e.day;
     }
-    setArticleDate(e);
+    setDate(e);
   };
 
   return (
     <>
       <div className="datePickerContainer d-flex align-items-center">
         <label className="lblAbs datePickerLbl font-12">
-          تاریخ <span className="text-danger">*</span>
+          {label}
         </label>
         <DtPicker
-          onChange={test}
+          onChange={handleDateChange}
           type="single"
           local="fa"
           inputClass="datePickerInput rounded font-12"
@@ -51,9 +51,9 @@ const DatePicker = ({ setArticleDate, defDate }) => {
           placeholder="&nbsp;"
           daysClass="fullDay"
           inputName="date"
-          required
-          name="articleDate"
-          initValue={artDate}
+          // required
+          name="selectedDate"
+          initValue={initialDate}
         />
 
         <i className="calendarIcon text-secondary">

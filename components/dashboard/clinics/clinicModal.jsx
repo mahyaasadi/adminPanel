@@ -1,6 +1,6 @@
 import { Modal } from "react-bootstrap";
-import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
+import DatePicker from "components/commonComponents/datepicker/DatePicker";
 
 const ClinicModal = ({
   mode = "add", // Default is 'add'
@@ -9,14 +9,26 @@ const ClinicModal = ({
   isLoading,
   show,
   onHide,
+  setClinicExpireDateInDB
 }) => {
+  const addClinicExpireDate = (value) => {
+    let expireDate =
+      value?.year.toString() +
+      "/" +
+      value?.month.toString() +
+      "/" +
+      value?.day.toString();
+
+    setClinicExpireDateInDB(expireDate);
+  };
+
   const displayPreview = (e) => {
     var urlCreator = window.URL || window.webkitURL;
     var imageUrl = urlCreator.createObjectURL(e.target.files[0]);
     $("#logoUploadPreview").attr("src", imageUrl);
   };
 
-  const modalTitle = mode === "edit" ? "ویرایش اطلاعات" : "اضافه کردن مطب";
+  const modalTitle = mode === "edit" ? "ویرایش اطلاعات" : "اضافه کردن کلینیک";
   const submitText = mode === "edit" ? "ثبت تغییرات" : "ثبت";
 
   return (
@@ -68,17 +80,11 @@ const ClinicModal = ({
           </div>
 
           <div className="form-group">
-            <label className="lblAbs font-12">تاریخ پایان قرارداد</label>
-            <div className="col p-0">
-              <input
-                className="form-control floating inputPadding rounded"
-                type="text"
-                dir="ltr"
-                name="clinicExpireDate"
-                defaultValue={mode === "edit" ? data.ExpireDate : ""}
-                key={data.ExpireDate}
-              />
-            </div>
+            <DatePicker
+              defaultDate={mode == "edit" ? data.ExpireDate : ""}
+              setDate={addClinicExpireDate}
+              label="تاریخ پایان قرارداد"
+            />
           </div>
 
           <div className="form-group">
@@ -108,7 +114,7 @@ const ClinicModal = ({
               id="clinicLogo"
               onChange={displayPreview}
               key={data.Logo}
-              //   required
+            //   required
             />
           </div>
 

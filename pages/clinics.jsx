@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Head from "next/head";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
-import ClinicListTable from "components/dashboard/clinics/clinicListTable";
 import ClinicModal from "components/dashboard/clinics/clinicModal";
+import ClinicListTable from "components/dashboard/clinics/clinicListTable";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -30,10 +29,12 @@ const Clinics = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [clinicData, setClinicData] = useState([]);
   const [editClinicData, setEditClinicData] = useState([]);
+  const [expireDate, setExpireDate] = useState("")
   const [modalMode, setModalMode] = useState("add");
   const [showModal, setShowModal] = useState(false);
 
   const handleCloseModal = () => setShowModal(false);
+  const setClinicExpireDateInDB = (newDate) => setExpireDate(newDate);
 
   // get clinics list
   const getClinicsData = () => {
@@ -50,6 +51,7 @@ const Clinics = ({ UserData }) => {
       .catch((error) => {
         console.log(error);
         setIsLoading(false);
+        ErrorAlert("خطا", "!خطا در دریافت اطلاعات کلینیک ها");
       });
   };
 
@@ -86,7 +88,7 @@ const Clinics = ({ UserData }) => {
       Name: formProps.clinicName,
       ManageTel: formProps.clinicManageTel,
       Address: formProps.clinicAddress,
-      ExpireDate: formProps.clinicExpireDate,
+      ExpireDate: expireDate,
       Logo: clinicLogo,
     };
 
@@ -110,6 +112,7 @@ const Clinics = ({ UserData }) => {
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
+        ErrorAlert("خطا", "افزودن کلینیک با خطا مواجه گردید!");
       });
   };
 
@@ -139,7 +142,7 @@ const Clinics = ({ UserData }) => {
         Name: formProps.clinicName,
         ManageTel: formProps.clinicManageTel,
         Address: formProps.clinicAddress,
-        ExpireDate: formProps.clinicExpireDate,
+        ExpireDate: expireDate,
         Logo: newClinicLogo,
       };
 
@@ -156,6 +159,7 @@ const Clinics = ({ UserData }) => {
         .catch((err) => {
           console.log(err);
           setIsLoading(false);
+          ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
         });
     }
   };
@@ -178,8 +182,8 @@ const Clinics = ({ UserData }) => {
   // remove clinic
   const deleteClinic = async (id) => {
     let result = await QuestionAlert(
-      "حذف مطب !",
-      "?آیا از حذف مطب مطمئن هستید"
+      "حذف کلینیک !",
+      "?آیا از حذف کلینیک مطمئن هستید"
     );
 
     if (result) {
@@ -190,10 +194,16 @@ const Clinics = ({ UserData }) => {
         .delete(url)
         .then((response) => {
           console.log(response.data);
-          //   setClinicData(clinicData.filter((a) => a._id !== id));
-          //   const findClinic = clinicData.find((a) => a._id == id);
-          //   console.log({ findClinic });
-          //   getClinicsData();
+
+          if (response.data && response.data.Deleted) {
+            const updatedClinicData = clinicData.map(clinic => {
+              if (clinic._id === id) {
+                return { ...clinic, Deleted: true };
+              }
+              return clinic;
+            });
+            setClinicData(updatedClinicData);
+          }
           setIsLoading(false);
         })
         .catch((error) => {
@@ -208,7 +218,7 @@ const Clinics = ({ UserData }) => {
   return (
     <>
       <Head>
-        <title>مدیریت مطب ها</title>
+        <title>مدیریت کلینیک ها</title>
       </Head>
       <div className="page-wrapper">
         <div className="content container-fluid">
@@ -262,6 +272,7 @@ const Clinics = ({ UserData }) => {
           isLoading={isLoading}
           data={editClinicData}
           onSubmit={modalMode === "add" ? addClinic : editClinic}
+          setClinicExpireDateInDB={setClinicExpireDateInDB}
         />
       </div>
     </>

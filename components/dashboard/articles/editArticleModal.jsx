@@ -136,8 +136,9 @@ const EditArticleModal = ({
               <div className="row media-flex-col">
                 <div className="form-group col">
                   <DatePicker
-                    defDate={data.Date}
-                    setArticleDate={setArticleDate}
+                    defaultDate={data.Date}
+                    setDate={setArticleDate}
+                    label="تاریخ"
                   />
                 </div>
 

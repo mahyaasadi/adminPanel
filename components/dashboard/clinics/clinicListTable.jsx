@@ -1,15 +1,12 @@
-import { useState } from "react";
-import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
-import { Dropdown } from "primereact/dropdown";
 import { Tooltip } from "primereact/tooltip";
 
 const ClinicListTable = ({ data, updateClinic, deleteClinic }) => {
-  data?.map((center, index) => {
+  data?.map((clinic, index) => {
     data[index].rowNumber = index + 1;
   });
   const columns = [
@@ -37,7 +34,7 @@ const ClinicListTable = ({ data, updateClinic, deleteClinic }) => {
               className="btn removeImgBtn tooltip-button"
               type="button"
               data-pr-position="top"
-              // onClick={}
+            // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>

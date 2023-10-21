@@ -98,7 +98,7 @@ const AddArticleModal = ({ addArticle, setArticleDateInDB, isLoading }) => {
 
               <div className="row media-flex-col">
                 <div className="form-group col">
-                  <DatePicker setArticleDate={setArticleDate} />
+                  <DatePicker setDate={setArticleDate} label="تاریخ" />
                 </div>
 
                 <div className="form-group col">
@@ -123,7 +123,7 @@ const AddArticleModal = ({ addArticle, setArticleDateInDB, isLoading }) => {
                     hidden="hidden"
                     id="showInSlider"
                     name="articleShowInSlider"
-                    // required
+                  // required
                   />
                   <label
                     className="showInsliderSwitch font-12"

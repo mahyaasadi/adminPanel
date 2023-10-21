@@ -147,8 +147,6 @@ const Articles = ({ UserData }) => {
     const { value, checked } = e.target;
     const { sliderCheckbox } = sliderCheckboxStatus;
 
-    // console.log(`${value} is ${checked}`);
-
     checked
       ? setSliderCheckboxStatus({ sliderCheckbox: true })
       : setSliderCheckboxStatus({ sliderCheckbox: false });
@@ -275,9 +273,12 @@ const Articles = ({ UserData }) => {
       Image: newArticleImg,
     };
 
+    console.log({ Data });
+
     axiosClient
       .put(url, Data)
       .then((response) => {
+        console.log(response.data);
         updateArticleItem(formProps.editArticleID, response.data);
         $("#editArticleModal").modal("hide");
       })

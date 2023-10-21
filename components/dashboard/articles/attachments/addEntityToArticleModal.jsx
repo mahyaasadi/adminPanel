@@ -1,6 +1,4 @@
 import { Modal } from 'react-bootstrap';
-import selectfieldColourStyles from "class/selectfieldStyle";
-import SelectField from "components/commonComponents/selectfield";
 import { Dropdown } from 'primereact/dropdown';
 
 const AddEntityToArticleModal = ({
