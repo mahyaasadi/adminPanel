@@ -243,12 +243,12 @@ const referringDoctors = ({ UserData }) => {
           </div>
         )}
         <RefDocModal
-          isLoading={isLoading}
           mode={modalMode}
           show={showModal}
           onHide={handleCloseModal}
           onSubmit={modalMode == "add" ? addRefDoctor : editRefDoctor}
           data={editRefDocData}
+          isLoading={isLoading}
         />
       </div>
     </>

@@ -38,9 +38,7 @@ const DatePicker = ({ setDate, defaultDate, label }) => {
   return (
     <>
       <div className="datePickerContainer d-flex align-items-center">
-        <label className="lblAbs datePickerLbl font-12">
-          {label}
-        </label>
+        <label className="lblAbs datePickerLbl font-12">{label}</label>
         <DtPicker
           onChange={handleDateChange}
           type="single"
@@ -51,7 +49,6 @@ const DatePicker = ({ setDate, defaultDate, label }) => {
           placeholder="&nbsp;"
           daysClass="fullDay"
           inputName="date"
-          // required
           name="selectedDate"
           initValue={initialDate}
         />

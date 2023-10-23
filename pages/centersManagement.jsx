@@ -224,6 +224,7 @@ const CentersManagement = ({ UserData }) => {
         ManageTel: formProps.editContactNumber,
         ViewDes: formProps.editCenterDescription,
         Logo: newLogo,
+        LogoName: formProps.currentLogo,
       };
 
       console.log({ data });

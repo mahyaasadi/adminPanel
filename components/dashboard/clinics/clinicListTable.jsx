@@ -1,3 +1,4 @@
+import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
@@ -34,7 +35,7 @@ const ClinicListTable = ({ data, updateClinic, deleteClinic }) => {
               className="btn removeImgBtn tooltip-button"
               type="button"
               data-pr-position="top"
-            // onClick={}
+              // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>
@@ -42,7 +43,13 @@ const ClinicListTable = ({ data, updateClinic, deleteClinic }) => {
         ) : (
           ""
         ),
-      width: "750px",
+      width: "300px",
+    },
+    {
+      name: "شماره تماس رابط",
+      selector: (row) => row.ManageTel,
+      sortable: true,
+      width: "600px",
     },
     {
       name: "عملیات ها",
@@ -86,6 +93,21 @@ const ClinicListTable = ({ data, updateClinic, deleteClinic }) => {
               icon="edit-3"
             />
           </button>
+
+          <Link
+            className="btn btn-sm btn-outline-primary addUserBtn d-flex align-items-center justify-center"
+            href={{
+              pathname: "/clinicUsersManagement",
+              query: { id: row._id, name: row.Name },
+            }}
+            data-pr-position="top"
+          >
+            <Tooltip target=".addUserBtn">افزودن کاربر</Tooltip>
+            <FeatherIcon
+              style={{ width: "16px", height: "16px" }}
+              icon="user-plus"
+            />
+          </Link>
         </div>
       ),
       width: "150px",

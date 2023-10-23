@@ -220,6 +220,8 @@ const EditCenterModal = ({
                   key={data.Logo}
                 />
               </div>
+
+              <input type="hidden" value={data.Logo} name="currentLogo" />
               <div
                 className="d-flex justify-center mt-4"
                 id="currentLogoContainer"

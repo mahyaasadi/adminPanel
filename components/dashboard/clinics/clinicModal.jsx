@@ -9,7 +9,7 @@ const ClinicModal = ({
   isLoading,
   show,
   onHide,
-  setClinicExpireDateInDB
+  setClinicExpireDateInDB,
 }) => {
   const addClinicExpireDate = (value) => {
     let expireDate =
@@ -28,7 +28,7 @@ const ClinicModal = ({
     $("#logoUploadPreview").attr("src", imageUrl);
   };
 
-  const modalTitle = mode === "edit" ? "ویرایش اطلاعات" : "اضافه کردن کلینیک";
+  const modalTitle = mode === "edit" ? "ویرایش اطلاعات" : "اضافه کردن مطب";
   const submitText = mode === "edit" ? "ثبت تغییرات" : "ثبت";
 
   return (
@@ -100,6 +100,7 @@ const ClinicModal = ({
             </div>
           </div>
 
+          <input type="hidden" value={data.Logo} name="currentLogo" />
           <div className="change-photo-btn">
             <div>
               <i>
@@ -114,7 +115,7 @@ const ClinicModal = ({
               id="clinicLogo"
               onChange={displayPreview}
               key={data.Logo}
-            //   required
+              //   required
             />
           </div>
 

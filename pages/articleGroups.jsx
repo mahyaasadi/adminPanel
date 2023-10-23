@@ -148,7 +148,6 @@ const ArticleGroupsManagement = ({ UserData }) => {
     findArticleGroup.Important = type;
     let findIndex = articleGroupsData.findIndex((x) => x._id === id);
     articleGroupsData[findIndex] = findArticleGroup;
-    console.log(findArticleGroup);
     setArticleGroupsData(articleGroupsData);
   };
 

@@ -29,7 +29,7 @@ const Clinics = ({ UserData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [clinicData, setClinicData] = useState([]);
   const [editClinicData, setEditClinicData] = useState([]);
-  const [expireDate, setExpireDate] = useState("")
+  const [expireDate, setExpireDate] = useState("");
   const [modalMode, setModalMode] = useState("add");
   const [showModal, setShowModal] = useState(false);
 
@@ -143,7 +143,7 @@ const Clinics = ({ UserData }) => {
         ManageTel: formProps.clinicManageTel,
         Address: formProps.clinicAddress,
         ExpireDate: expireDate,
-        Logo: newClinicLogo,
+        Logo: newClinicLogo ? newClinicLogo : formProps.currentLogo,
       };
 
       console.log({ data });
@@ -196,7 +196,7 @@ const Clinics = ({ UserData }) => {
           console.log(response.data);
 
           if (response.data && response.data.Deleted) {
-            const updatedClinicData = clinicData.map(clinic => {
+            const updatedClinicData = clinicData.map((clinic) => {
               if (clinic._id === id) {
                 return { ...clinic, Deleted: true };
               }
@@ -218,7 +218,7 @@ const Clinics = ({ UserData }) => {
   return (
     <>
       <Head>
-        <title>مدیریت کلینیک ها</title>
+        <title>مدیریت مطب ها</title>
       </Head>
       <div className="page-wrapper">
         <div className="content container-fluid">
@@ -245,7 +245,7 @@ const Clinics = ({ UserData }) => {
                   <div className="row align-items-center">
                     <div className="col">
                       <p className="card-title font-14 text-secondary">
-                        لیست کلینیک ها
+                        لیست مطب ها
                       </p>
                     </div>
                   </div>
