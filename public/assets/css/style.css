@@ -9802,6 +9802,12 @@ input:checked+.showInsliderSwitch:active::before {
   .md-flex-col {
     flex-direction: column;
   }
+
+  .filterCentersContainer {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
 }
 
 @media (max-width: 992px) {
@@ -10063,6 +10069,11 @@ input:checked+.showInsliderSwitch:active::before {
 .p-dropdown-items-wrapper {
   max-height: 300px !important;
   direction: ltr;
+}
+
+.p-inputtext {
+  font-size: 13px;
+  padding-right: 2rem
 }
 
 .p-tooltip {

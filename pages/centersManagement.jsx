@@ -182,9 +182,16 @@ const CentersManagement = ({ UserData }) => {
     setSelectedProvinceList(province);
   };
 
-  let SelectedCity = "";
+  const [centerCityOptions, setCenterCityOptions] = useState([]);
+  const FUSelectCenterProvince = (province) => {
+    setSelectedProvinceList(province);
+    let findCities = provinceOptionsList.find((x) => x.value === province);
+    setCityOptionsList(findCities?.cities);
+  };
+
+  const [SelectedCity, setSelectedCity] = useState(null);
   const FUSelectCity = (city) => {
-    SelectedCity = city;
+    setSelectedCity(city);
   };
 
   const setCityOption = (data) => {
@@ -573,6 +580,46 @@ const CentersManagement = ({ UserData }) => {
         });
     }
   };
+  const [selectedSearchByOption, setSelectedSearchByOption] =
+    useState("centersName");
+
+  const centersSearchByOptions = [
+    { value: "doctors", label: "پزشکان" },
+    { value: "centersName", label: "نام مرکز" },
+  ];
+
+  const applyCenterSearch = (searchBy, searchedText) => {
+    let url = "Center";
+
+    if (searchBy === "doctors") {
+      url += "/SearchByDoctor";
+    } else if (searchBy === "centersName") {
+      url += "/SearchByCenterName";
+    }
+
+    let data = {
+      ProvinceFinglish: selectedProvinceList,
+      CityFinglish: SelectedCity,
+      // Text: centerSearchInput,
+      Text: searchedText,
+    };
+
+    console.log({ url, data });
+
+    axiosClient
+      .post(url, data)
+      .then((response) => {
+        console.log(response.data);
+        setCentersData(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // useEffect(() => {
+  //   applyCenterSearch(selectedSearchByOption);
+  // }, [selectedSearchByOption]);
 
   useEffect(() => {
     if (router.isReady) {
@@ -594,22 +641,23 @@ const CentersManagement = ({ UserData }) => {
           <div className="content container-fluid">
             <div className="page-header">
               <div className="row align-items-center">
-                <div className="col-md-12 d-flex gap-2 justify-content-end media-srvHeader">
+                <div className="col-md-12 media-srvHeader">
                   <CenterSearch
                     centerSearchInput={centerSearchInput}
                     setCenterSearchInput={setCenterSearchInput}
+                    centersSearchByOptions={centersSearchByOptions}
+                    selectedSearchByOption={selectedSearchByOption}
+                    setSelectedSearchByOption={setSelectedSearchByOption}
+                    provinceOptionsList={provinceOptionsList}
+                    FUSelectCenterProvince={FUSelectCenterProvince}
+                    selectedProvinceList={selectedProvinceList}
+                    cityOptionsList={cityOptionsList}
+                    FUSelectCity={FUSelectCity}
+                    SelectedCity={SelectedCity}
+                    applyCenterSearch={applyCenterSearch}
+                    selectedSearchByOption={selectedSearchByOption}
+                    getCentersData={getCentersData}
                   />
-                  <Link
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addCenterModal"
-                    className="btn btn-primary btn-add"
-                  >
-                    <i className="me-1">
-                      <FeatherIcon icon="plus-square" />
-                    </i>{" "}
-                    افزودن
-                  </Link>
                 </div>
               </div>
             </div>
@@ -634,7 +682,7 @@ const CentersManagement = ({ UserData }) => {
                   </div>
 
                   <CentersListTable
-                    data={searchedCenters}
+                    data={centersData}
                     updateCenterInfo={updateCenterInfo}
                     openBusinessHoursModal={openBusinessHoursModal}
                     openAboutUsModal={openAboutUsModal}

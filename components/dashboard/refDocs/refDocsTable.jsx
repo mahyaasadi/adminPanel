@@ -31,14 +31,14 @@ const RefDocTable = ({ data, deleteRefDoc, openEditRefDocModal }) => {
     },
     {
       name: "تخصص",
-      selector: (row) => row.Expertise,
-      width: "300px",
+      selector: (row) => row.Expertise.substr(0, 50) + " ...",
+      width: "450px",
     },
     {
       name: "آدرس",
       selector: (row) => row.Address,
       sortable: true,
-      width: "500px",
+      width: "380px",
     },
     {
       name: "عملیات ها",

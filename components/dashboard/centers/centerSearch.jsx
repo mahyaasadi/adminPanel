@@ -1,17 +1,123 @@
-const CenterSearch = ({ centerSearchInput, setCenterSearchInput }) => {
+import Link from "next/link";
+import FeatherIcon from "feather-icons-react";
+import { Dropdown } from "primereact/dropdown";
+import { Tooltip } from "primereact/tooltip";
+
+const CenterSearch = ({
+  centerSearchInput,
+  setCenterSearchInput,
+  centersSearchByOptions,
+  selectedSearchByOption,
+  setSelectedSearchByOption,
+  provinceOptionsList,
+  FUSelectCenterProvince,
+  selectedProvinceList,
+  cityOptionsList,
+  FUSelectCity,
+  SelectedCity,
+  applyCenterSearch,
+  getCentersData,
+}) => {
+  let selectCityData = [];
+  for (let i = 0; i < cityOptionsList.length; i++) {
+    const item = cityOptionsList[i];
+    let cityObj = {
+      value: item.Info[0].Finglish,
+      label: item.CityName,
+    };
+    selectCityData.push(cityObj);
+  }
+
+  const handleSearchSubmit = (e) => {
+    if (e.key === "Enter") {
+      applyCenterSearch(selectedSearchByOption, e.target.value);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    if (!inputValue.trim()) {
+      // reset data
+      getCentersData();
+    }
+  };
+
+  const handleSearchClick = () => {
+    const searchValue = $("#centerSearchInput").val();
+    applyCenterSearch(selectedSearchByOption, searchValue);
+  };
+
   return (
-    <div className="box col-md-3 col-12 relative">
-      <div className="search">
-        <label className="lblAbs font-13">جستجوی مرکز</label>
-        <input
-          onChange={(e) => setCenterSearchInput(e.target.value)}
-          value={centerSearchInput}
-          autoComplete="off"
-          className="form-control rounded-sm font-12 articleSearchInput"
-          placeholder="نام مرکز ..."
-          type="text"
-        />
-        <i className="fe fe-search articleSearchIcon"></i>
+    <div className="card ">
+      <div
+        id="centerSearchFrm"
+        className="card-body filterCentersContainer row align-items-center"
+      >
+        <div className="col-md-1 col-12">
+          <Link
+            href="#"
+            data-bs-toggle="modal"
+            data-bs-target="#addCenterModal"
+            className="btn btn-primary btn-add w-100 addCenter"
+          >
+            <Tooltip target=".addCenter">افزودن مرکز</Tooltip>
+            <FeatherIcon icon="plus-square" />
+          </Link>
+        </div>
+        <div className="col-md-2 col-12">
+          <label className="lblAbs font-12">بر اساس</label>
+          <Dropdown
+            value={selectedSearchByOption}
+            onChange={(e) => setSelectedSearchByOption(e.value)}
+            options={centersSearchByOptions}
+            optionLabel="label"
+            placeholder="انتخاب کنید"
+            showClear
+          />
+        </div>
+        <div className="col-md-2 col-12">
+          <label className="lblAbs font-12">استان</label>
+          <Dropdown
+            value={selectedProvinceList}
+            onChange={(e) => FUSelectCenterProvince(e.value)}
+            options={provinceOptionsList}
+            optionLabel="label"
+            placeholder="انتخاب کنید"
+            filter
+            showClear
+          />
+        </div>
+        <div className="col-md-2 col-12">
+          <label className="lblAbs font-12">شهر</label>
+          <Dropdown
+            value={SelectedCity}
+            onChange={(e) => FUSelectCity(e.value)}
+            options={selectCityData}
+            optionLabel="label"
+            placeholder="انتخاب کنید"
+            filter
+            showClear
+          />
+        </div>
+        <div className="search col-md-4 col-12">
+          <label className="lblAbs font-12">جستجوی مرکز</label>
+          <input
+            onKeyUp={handleSearchSubmit}
+            // onChange={(e) => setCenterSearchInput(e.target.value)}
+            onChange={handleInputChange}
+            id="centerSearchInput"
+            // value={centerSearchInput}
+            autoComplete="off"
+            className="form-control rounded-sm font-12 articleSearchInput"
+            placeholder="نام مرکز ..."
+            type="text"
+          />
+        </div>
+        <div className="col-md-1 col-12">
+          <button onClick={handleSearchClick} className="btn btn-primary w-100">
+            <i className="fe fe-search"></i>
+          </button>
+        </div>
       </div>
     </div>
   );
