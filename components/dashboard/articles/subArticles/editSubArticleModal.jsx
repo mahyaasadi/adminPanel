@@ -18,9 +18,7 @@ const EditSubArticleModal = ({
     }
   };
 
-  useEffect(() => {
-    handleCallToActionSwitch(data);
-  }, [data]);
+  useEffect(() => handleCallToActionSwitch(data), [data]);
 
   return (
     <div
@@ -113,8 +111,8 @@ const EditSubArticleModal = ({
                   defaultValue={data.Image}
                   key={data.Image}
                   id="editSubArticleImg"
-                  // required
-                  // id="SubArticleImg"
+                // required
+                // id="SubArticleImg"
                 />
 
                 {/* Img variations */}

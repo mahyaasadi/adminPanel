@@ -97,9 +97,7 @@ const Dashboard = ({ UserData }) => {
       });
   };
 
-  useEffect(() => {
-    getGeneralStats(selectedDuration);
-  }, [selectedDuration]);
+  useEffect(() => getGeneralStats(selectedDuration), [selectedDuration]);
 
   return (
     <>

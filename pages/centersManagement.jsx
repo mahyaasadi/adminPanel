@@ -584,8 +584,8 @@ const CentersManagement = ({ UserData }) => {
     useState("centersName");
 
   const centersSearchByOptions = [
-    { value: "doctors", label: "پزشکان" },
     { value: "centersName", label: "نام مرکز" },
+    { value: "doctors", label: "پزشکان" },
   ];
 
   const applyCenterSearch = (searchBy, searchedText) => {
@@ -616,10 +616,6 @@ const CentersManagement = ({ UserData }) => {
         console.log(err);
       });
   };
-
-  // useEffect(() => {
-  //   applyCenterSearch(selectedSearchByOption);
-  // }, [selectedSearchByOption]);
 
   useEffect(() => {
     if (router.isReady) {

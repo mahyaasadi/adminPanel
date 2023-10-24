@@ -173,7 +173,7 @@ const DoctorsList = ({ UserData }) => {
       CenterID = Router.query.id;
       console.log("CenterID", CenterID);
       getDoctorsData();
-      if (!CenterID) return null;
+      // if (!CenterID) return null;
     }
   }, [Router.isReady]);
 

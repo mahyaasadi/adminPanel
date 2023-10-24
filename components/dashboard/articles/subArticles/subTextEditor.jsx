@@ -5,9 +5,7 @@ import { Editor } from "primereact/editor";
 const SubTextEditor = ({ data }) => {
   const [text, setText] = useState(null);
 
-  useEffect(() => {
-    setText(data.Text);
-  }, [data]);
+  useEffect(() => setText(data.Text), [data]);
 
   return (
     <>

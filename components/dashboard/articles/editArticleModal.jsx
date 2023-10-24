@@ -46,9 +46,7 @@ const EditArticleModal = ({
     label: languageLabel,
   };
 
-  useEffect(() => {
-    handleShowInSliderCheckbox(data);
-  }, [data]);
+  useEffect(() => handleShowInSliderCheckbox(data), [data]);
 
   return (
     <div

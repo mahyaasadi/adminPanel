@@ -8,9 +8,7 @@ const EditModalityModal = ({
   handleDisabledSwitch,
   handleCheckedDisabledModality,
 }) => {
-  useEffect(() => {
-    handleDisabledSwitch(data);
-  }, [data]);
+  useEffect(() => handleDisabledSwitch(data), [data]);
 
   return (
     <div

@@ -8,9 +8,7 @@ const EditSubMenuModal = ({
   handleCheckedSubMenuPermissions,
   editSubMenuCheckList,
 }) => {
-  useEffect(() => {
-    editSubMenuCheckList(data);
-  }, [data]);
+  useEffect(() => editSubMenuCheckList(data), [data]);
 
   return (
     <div

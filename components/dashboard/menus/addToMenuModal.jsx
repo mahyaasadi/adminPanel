@@ -1,7 +1,4 @@
-import { axiosClient } from "class/axiosConfig.js";
-import { useState, useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
-import Loading from "@/components/commonComponents/loading/loading";
 
 const AddToMenuModal = ({
   permissionsList,

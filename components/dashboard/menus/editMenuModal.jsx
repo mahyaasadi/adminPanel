@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 
 const EditMenuModal = ({
@@ -8,9 +8,7 @@ const EditMenuModal = ({
   editMenuCheckList,
   handleCheckedMenuPermissions,
 }) => {
-  useEffect(() => {
-    editMenuCheckList(data);
-  }, [data]);
+  useEffect(() => editMenuCheckList(data), [data]);
 
   return (
     <div

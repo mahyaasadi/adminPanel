@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
 import selectfieldColourStyles from "class/selectfieldStyle";
@@ -29,6 +29,7 @@ const EditStateModal = ({
     let findCities = provinceOptionsList.find(
       (x) => x.value === data.ProvinceFin
     );
+
     if (findCities) setCityOption(findCities.cities);
   }, [data]);
 

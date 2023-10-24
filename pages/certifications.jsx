@@ -188,7 +188,7 @@ const Certifications = ({ UserData }) => {
         localStorage.removeItem("hiddenData");
       }
 
-      if (!CenterID) return null;
+      // if (!CenterID) return null;
     }
   }, [Router.isReady]);
 

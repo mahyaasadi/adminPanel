@@ -111,13 +111,13 @@ const SubDepartments = ({ UserData }) => {
 
     checked
       ? setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: [...subDepartmentsOptions, value],
-        })
+        subDepartmentsOptions: [...subDepartmentsOptions, value],
+      })
       : setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: subDepartmentsOptions.filter(
-            (e) => e !== value
-          ),
-        });
+        subDepartmentsOptions: subDepartmentsOptions.filter(
+          (e) => e !== value
+        ),
+      });
   };
 
   const checkAllSubDeps = () => {
@@ -201,7 +201,7 @@ const SubDepartments = ({ UserData }) => {
       getDepartments();
       getModalities();
       getSelectedSubDepartments();
-      if (!CenterID) return null;
+      // if (!CenterID) return null;
 
       setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 

@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import FeatherIcon from "feather-icons-react";
-import { axiosClient } from "class/axiosConfig";
+import { useState } from "react";
 import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
@@ -44,9 +41,6 @@ const Profile = ({ UserData }) => {
                         alt="Profile Image"
                       />
                     </label>
-                    {/* <div className="pro-name">
-                      <p>{UserData.FullName}</p>
-                    </div> */}
                   </div>
                   <div className="row">
                     <div className="col-md-12">
@@ -84,4 +78,3 @@ const Profile = ({ UserData }) => {
 };
 
 export default Profile;
-

@@ -199,7 +199,7 @@ const Insurance = ({ UserData }) => {
       if (hiddenData) {
         localStorage.removeItem("hiddenData");
       }
-      if (!CenterID) return null;
+      // if (!CenterID) return null;
     }
   }, [Router.isReady]);
 
