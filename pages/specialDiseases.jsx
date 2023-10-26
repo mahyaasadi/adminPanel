@@ -178,14 +178,11 @@ const SpecialDiseases = ({ UserData }) => {
   useEffect(() => {
     if (Router.isReady) {
       CenterID = Router.query.id;
-      getDiseasesData();
-      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
-      if (hiddenData) {
-        console.log(hiddenData.name);
-        localStorage.removeItem("hiddenData");
-      }
-      // if (!CenterID) return null;
+      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
+      if (hiddenData) localStorage.removeItem("hiddenData");
+
+      getDiseasesData();
     }
   }, [Router.isReady]);
 

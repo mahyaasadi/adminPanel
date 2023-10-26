@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 
 const EditSubMenuModal = ({
@@ -77,9 +77,7 @@ const EditSubMenuModal = ({
               </div>
 
               <div className="form-group">
-                <label className="lblAbs font-12">
-                  اولویت
-                </label>
+                <label className="lblAbs font-12">اولویت</label>
                 <div className="col p-0">
                   <input
                     className="form-control floating inputPadding rounded"

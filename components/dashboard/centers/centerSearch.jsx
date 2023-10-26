@@ -4,8 +4,6 @@ import { Dropdown } from "primereact/dropdown";
 import { Tooltip } from "primereact/tooltip";
 
 const CenterSearch = ({
-  centerSearchInput,
-  setCenterSearchInput,
   centersSearchByOptions,
   selectedSearchByOption,
   setSelectedSearchByOption,
@@ -29,17 +27,13 @@ const CenterSearch = ({
   }
 
   const handleSearchSubmit = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter")
       applyCenterSearch(selectedSearchByOption, e.target.value);
-    }
   };
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
-    if (!inputValue.trim()) {
-      // reset data
-      getCentersData();
-    }
+    if (!inputValue.trim()) getCentersData();
   };
 
   const handleSearchClick = () => {
@@ -64,6 +58,7 @@ const CenterSearch = ({
             <FeatherIcon icon="plus-square" />
           </Link>
         </div>
+
         <div className="col-md-2 col-12">
           <label className="lblAbs font-12">بر اساس</label>
           <Dropdown
@@ -75,6 +70,7 @@ const CenterSearch = ({
             showClear
           />
         </div>
+
         <div className="col-md-2 col-12">
           <label className="lblAbs font-12">استان</label>
           <Dropdown
@@ -87,6 +83,7 @@ const CenterSearch = ({
             showClear
           />
         </div>
+
         <div className="col-md-2 col-12">
           <label className="lblAbs font-12">شهر</label>
           <Dropdown
@@ -99,20 +96,20 @@ const CenterSearch = ({
             showClear
           />
         </div>
+
         <div className="search col-md-4 col-12">
           <label className="lblAbs font-12">جستجوی مرکز</label>
           <input
             onKeyUp={handleSearchSubmit}
-            // onChange={(e) => setCenterSearchInput(e.target.value)}
             onChange={handleInputChange}
             id="centerSearchInput"
-            // value={centerSearchInput}
             autoComplete="off"
-            className="form-control rounded-sm font-12 articleSearchInput"
-            placeholder="نام مرکز ..."
+            className="form-control rounded-sm font-11 articleSearchInput"
+            placeholder="نام مرکز / نام پزشک ..."
             type="text"
           />
         </div>
+
         <div className="col-md-1 col-12">
           <button onClick={handleSearchClick} className="btn btn-primary w-100">
             <i className="fe fe-search"></i>

@@ -171,19 +171,13 @@ const DoctorsList = ({ UserData }) => {
   useEffect(() => {
     if (Router.isReady) {
       CenterID = Router.query.id;
-      console.log("CenterID", CenterID);
+
+      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
+      if (hiddenData) localStorage.removeItem("hiddenData");
+
       getDoctorsData();
-      // if (!CenterID) return null;
     }
   }, [Router.isReady]);
-
-  useEffect(() => {
-    setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
-
-    if (hiddenData) {
-      localStorage.removeItem("hiddenData");
-    }
-  }, []);
 
   return (
     <>

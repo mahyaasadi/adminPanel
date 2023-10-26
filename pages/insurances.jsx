@@ -196,9 +196,7 @@ const Insurance = ({ UserData }) => {
       getInsuranceData();
       setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
-      if (hiddenData) {
-        localStorage.removeItem("hiddenData");
-      }
+      if (hiddenData) localStorage.removeItem("hiddenData");
       // if (!CenterID) return null;
     }
   }, [Router.isReady]);

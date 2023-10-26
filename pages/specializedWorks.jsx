@@ -174,14 +174,10 @@ const SpecializedWorks = ({ UserData }) => {
     if (Router.isReady) {
       CenterID = Router.query.id;
 
-      getSpecializedWorks();
       setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
+      if (hiddenData) localStorage.removeItem("hiddenData");
 
-      if (hiddenData) {
-        console.log(hiddenData.name);
-        localStorage.removeItem("hiddenData");
-      }
-      // if (!CenterID) return null;
+      getSpecializedWorks();
     }
   }, [Router.isReady]);
 

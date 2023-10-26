@@ -111,13 +111,13 @@ const SubDepartments = ({ UserData }) => {
 
     checked
       ? setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: [...subDepartmentsOptions, value],
-      })
+          subDepartmentsOptions: [...subDepartmentsOptions, value],
+        })
       : setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: subDepartmentsOptions.filter(
-          (e) => e !== value
-        ),
-      });
+          subDepartmentsOptions: subDepartmentsOptions.filter(
+            (e) => e !== value
+          ),
+        });
   };
 
   const checkAllSubDeps = () => {
@@ -198,16 +198,13 @@ const SubDepartments = ({ UserData }) => {
   useEffect(() => {
     if (router.isReady) {
       CenterID = router.query.id;
+
+      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
+      if (hiddenData) localStorage.removeItem("hiddenData");
+
       getDepartments();
       getModalities();
       getSelectedSubDepartments();
-      // if (!CenterID) return null;
-
-      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
-
-      if (hiddenData) {
-        localStorage.removeItem("hiddenData");
-      }
     }
   }, [router.isReady]);
 
