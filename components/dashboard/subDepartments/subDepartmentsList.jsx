@@ -8,7 +8,6 @@ const SubDepartmentsList = ({
   checkedSubDepartments,
   submitIsLoading
 }) => {
-
   return (
     <>
       <div className="d-flex justify-center p-25 subDepScroller">

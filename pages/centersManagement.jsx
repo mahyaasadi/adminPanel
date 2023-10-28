@@ -1,10 +1,9 @@
 "use client";
-import { useState, useEffect, use } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { getSession } from "lib/session";
 import { axiosClient } from "class/axiosConfig.js";
-import FeatherIcon from "feather-icons-react";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import CenterSearch from "components/dashboard/centers/centerSearch";
@@ -15,7 +14,6 @@ import BusinessHoursModal from "components/dashboard/centers/centerBusinessHours
 import EditBusinessHourModal from "components/dashboard/centers/centerBusinessHours/editBusinessHoursModal";
 import CenterAboutUsModal from "components/dashboard/centers/aboutUs/centerAboutUsModal";
 import EditAboutUsModal from "components/dashboard/centers/aboutUs/editAboutUsModal";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -35,25 +33,23 @@ export const getServerSideProps = async ({ req, res }) => {
 
 let ActiveCenterID,
   ActiveCenterName = null;
-
 const CentersManagement = ({ UserData }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [centersData, setCentersData] = useState([]);
+  const [editCenterData, setEditCenterData] = useState([]);
+  // --------------------
   const [provinceOptionsList, setProvinceOptionsList] = useState([]);
   const [cityOptionsList, setCityOptionsList] = useState([]);
-
-  const [editCenterData, setEditCenterData] = useState([]);
   const [selectedProvinceList, setSelectedProvinceList] = useState("");
-
+  const [SelectedCity, setSelectedCity] = useState(null);
   // -------------------
   const [businessHourData, setBusinessHourData] = useState([]);
   const [editBusinessHourData, setEditBusinessHourData] = useState({
     empty: 1,
   });
-
-  // -------------------
   const [centerAboutUsData, setCenterAboutUsData] = useState([]);
+  // -------------------
 
   const initialPage = Number(router.query.page) || 1; // Default to page 1 if no page is provided in the URL.
   const [selectedPage, setSelectedPage] = useState(initialPage);
@@ -88,12 +84,6 @@ const CentersManagement = ({ UserData }) => {
         ErrorAlert("خطا", "خطا در دریافت اطلاعات مرکز");
       });
   };
-
-  // Search In Centers
-  const [centerSearchInput, setCenterSearchInput] = useState("");
-  const searchedCenters = centersData.filter((center) =>
-    center.Name.toLowerCase().includes(centerSearchInput.toLowerCase())
-  );
 
   // Convert logoUrl to Base64
   const convertBase64 = (file) => {
@@ -132,8 +122,6 @@ const CentersManagement = ({ UserData }) => {
       ViewDes: formProps.addCenterDescription,
       Logo: logo,
     };
-
-    console.log({ data });
 
     axiosClient
       .post(url, data)
@@ -182,14 +170,12 @@ const CentersManagement = ({ UserData }) => {
     setSelectedProvinceList(province);
   };
 
-  const [centerCityOptions, setCenterCityOptions] = useState([]);
   const FUSelectCenterProvince = (province) => {
     setSelectedProvinceList(province);
     let findCities = provinceOptionsList.find((x) => x.value === province);
     setCityOptionsList(findCities?.cities);
   };
 
-  const [SelectedCity, setSelectedCity] = useState(null);
   const FUSelectCity = (city) => {
     setSelectedCity(city);
   };
@@ -310,7 +296,6 @@ const CentersManagement = ({ UserData }) => {
       data[index].Start = "00:00";
       data[index].End = "24:00";
       data[index].Close = false;
-      console.log(data);
     });
     $("#editCenterBusinessHourModal").modal("show");
     await setEditBusinessHourData(data);
@@ -331,7 +316,6 @@ const CentersManagement = ({ UserData }) => {
     axiosClient
       .put(url, data)
       .then((response) => {
-        console.log(response.data);
         setBusinessHourData(response.data);
 
         $("#editCenterBusinessHourModal").modal("hide");
@@ -353,7 +337,6 @@ const CentersManagement = ({ UserData }) => {
       axiosClient
         .get(url)
         .then((response) => {
-          // console.log(response.data);
           setCenterAboutUsData(response.data);
           setIsLoading(false);
         })
@@ -393,8 +376,6 @@ const CentersManagement = ({ UserData }) => {
       AboutUs: formProps.editAboutUsText,
     };
 
-    // console.log("data", data);
-
     axiosClient
       .put(url, data)
       .then((response) => {
@@ -417,8 +398,9 @@ const CentersManagement = ({ UserData }) => {
     let findIndex = centersData.findIndex((x) => x._id === id);
     centersData[findIndex].OR = type;
     let data = centersData;
+
     await setCentersData([]);
-    console.log(centersData);
+
     setTimeout(() => {
       setCentersData(data);
     }, 100);
@@ -442,6 +424,7 @@ const CentersManagement = ({ UserData }) => {
         });
     }
   };
+
   const deActiveOR = async (id) => {
     let result = await QuestionAlert(
       "تغییر وضعیت نوبت دهی!",
@@ -545,7 +528,6 @@ const CentersManagement = ({ UserData }) => {
       await axiosClient
         .put(url)
         .then((response) => {
-          // console.log(response.data);
           changeCenterSearchableState(id, true);
           setIsLoading(false);
         })
@@ -570,7 +552,6 @@ const CentersManagement = ({ UserData }) => {
       await axiosClient
         .put(url)
         .then((response) => {
-          // console.log(response.data);
           changeCenterSearchableState(id, false);
           setIsLoading(false);
         })
@@ -588,7 +569,7 @@ const CentersManagement = ({ UserData }) => {
     { value: "doctors", label: "پزشکان" },
   ];
 
-  const applyCenterSearch = (searchBy, searchedText) => {
+  const fetchCenterData = (searchBy, searchedText, province, city) => {
     let url = "Center";
 
     if (searchBy === "doctors") {
@@ -598,23 +579,34 @@ const CentersManagement = ({ UserData }) => {
     }
 
     let data = {
-      ProvinceFinglish: selectedProvinceList,
-      CityFinglish: SelectedCity,
-      // Text: centerSearchInput,
+      ProvinceFinglish: province,
+      CityFinglish: city,
       Text: searchedText,
     };
-
-    console.log({ url, data });
 
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
         setCentersData(response.data);
       })
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  const applyCenterSearch = (searchBy, searchedText) => {
+    fetchCenterData(searchBy, searchedText, selectedProvinceList, SelectedCity);
+
+    // Update the URL without reloading the page
+    router.push({
+      pathname: router.pathname,
+      query: {
+        searchBy: searchBy,
+        searchedText: searchedText,
+        province: selectedProvinceList,
+        city: SelectedCity,
+      },
+    });
   };
 
   useEffect(() => {
@@ -624,6 +616,19 @@ const CentersManagement = ({ UserData }) => {
       getAllProvinces();
     }
   }, [router.isReady]);
+
+  useEffect(() => {
+    const { searchBy, searchedText, province, city } = router.query;
+
+    console.log({ city });
+    if (searchBy && searchedText &&
+      (searchBy !== selectedSearchByOption || province !== selectedProvinceList || city !== SelectedCity)
+    ) {
+      fetchCenterData(searchBy, searchedText, province, city);
+      // setSelectedProvinceList(province);
+      // setSelectedCity(city);
+    }
+  }, [router.query]);
 
   return (
     <>
@@ -639,8 +644,6 @@ const CentersManagement = ({ UserData }) => {
               <div className="row align-items-center">
                 <div className="col-md-12 media-srvHeader">
                   <CenterSearch
-                    centerSearchInput={centerSearchInput}
-                    setCenterSearchInput={setCenterSearchInput}
                     centersSearchByOptions={centersSearchByOptions}
                     selectedSearchByOption={selectedSearchByOption}
                     setSelectedSearchByOption={setSelectedSearchByOption}
@@ -651,7 +654,6 @@ const CentersManagement = ({ UserData }) => {
                     FUSelectCity={FUSelectCity}
                     SelectedCity={SelectedCity}
                     applyCenterSearch={applyCenterSearch}
-                    selectedSearchByOption={selectedSearchByOption}
                     getCentersData={getCentersData}
                   />
                 </div>

@@ -8,7 +8,6 @@ const OverviewStats = ({ generalStats }) => {
           <div className="card-body">
             <div className="dash-widget-header">
               <span className="dash-widget-icon bg-totalReq">
-                {/* <FeatherIcon icon="users" /> */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -26,7 +25,6 @@ const OverviewStats = ({ generalStats }) => {
               </span>
               <div className="dash-count mt-1">
                 <h5 className="dash-title">تعداد درخواست ها</h5>
-
                 <div className="dash-counts">
                   <p>
                     {generalStats.Total === undefined ? (
@@ -48,7 +46,6 @@ const OverviewStats = ({ generalStats }) => {
           <div className="card-body">
             <div className="dash-widget-header">
               <span className="dash-widget-icon bg-talking">
-                {/* <Image src={talking} alt="talking" /> */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -87,7 +84,6 @@ const OverviewStats = ({ generalStats }) => {
           <div className="card-body">
             <div className="dash-widget-header">
               <span className="dash-widget-icon bg-waiting">
-                {/* <Image src={payment} alt="waitingForPayment" /> */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -126,7 +122,6 @@ const OverviewStats = ({ generalStats }) => {
           <div className="card-body">
             <div className="dash-widget-header">
               <span className="dash-widget-icon bg-turnGiven">
-                {/* <Image src={eventsAccepted} alt="eventsAccepted" /> */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

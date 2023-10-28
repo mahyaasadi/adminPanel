@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { getSession } from "lib/session";
@@ -7,9 +6,8 @@ import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
+import SpecialDiseasesModal from "components/dashboard/specialDiseases/speDiseasesModal";
 import SpecialDiseasesListTable from "components/dashboard/specialDiseases/specialDiseasesListTable";
-import AddSpecialDiseaseModal from "components/dashboard/specialDiseases/addSpecialDiseaseModal";
-import EditSpecialDiseaseModal from "components/dashboard/specialDiseases/editSpecialDiseaseModal";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -33,15 +31,19 @@ const SpecialDiseases = ({ UserData }) => {
 
   const [diseasesList, setDiseasesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [editedDisease, setEditedDisease] = useState([]);
+  const [editDiseaseData, setEditDiseaseData] = useState([]);
+  const [modalMode, setModalMode] = useState("add"); // Default mode
+  const [showModal, setShowModal] = useState(false);
   const [hiddenData, setHiddenData] = useState(null);
+
+  const handleCloseModal = () => setShowModal(false);
 
   // get diseases list
   const getDiseasesData = () => {
     CenterID = Router.query.id;
-    let url = `Center/getSpecialDiseases/${CenterID}`;
     setIsLoading(true);
 
+    let url = `Center/getSpecialDiseases/${CenterID}`;
     if (CenterID) {
       axiosClient
         .get(url)
@@ -58,15 +60,20 @@ const SpecialDiseases = ({ UserData }) => {
   };
 
   // add new disease
+  const openAddModal = () => {
+    setModalMode("add");
+    setShowModal(true)
+  };
+
   const addDisease = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    CenterID = Router.query.id;
-    let url = "Center/addSpecialDiseases";
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
+    CenterID = Router.query.id;
 
+    let url = "Center/addSpecialDiseases";
     let data = {
       CenterID: CenterID,
       Name: formProps.diseaseName,
@@ -78,7 +85,7 @@ const SpecialDiseases = ({ UserData }) => {
         .post(url, data)
         .then((response) => {
           setDiseasesList([...diseasesList, response.data]);
-          $("#addSpecialDiseaseModal").modal("hide");
+          setShowModal(false)
           setIsLoading(false);
           e.target.reset();
         })
@@ -90,15 +97,21 @@ const SpecialDiseases = ({ UserData }) => {
   };
 
   // edit disease
+  const updateDisease = (data) => {
+    setEditDiseaseData(data);
+    setModalMode("edit")
+    setShowModal(true)
+  };
+
   const editDisease = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    CenterID = Router.query.id;
-    let url = "Center/EditSpecialDiseases";
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
+    CenterID = Router.query.id;
 
+    let url = "Center/EditSpecialDiseases";
     let data = {
       CenterID: CenterID,
       SDID: formProps.diseaseId,
@@ -112,7 +125,7 @@ const SpecialDiseases = ({ UserData }) => {
         .then((response) => {
           console.log(response.data);
           updateItem(formProps.diseaseId, response.data);
-          $("#editSpecialDiseaseModal").modal("hide");
+          setShowModal(false)
           setIsLoading(false);
         })
         .catch((error) => {
@@ -129,7 +142,6 @@ const SpecialDiseases = ({ UserData }) => {
     g = newArr;
 
     if (index === -1) {
-      // handle error
       console.log("no match");
     } else
       setDiseasesList([
@@ -139,20 +151,15 @@ const SpecialDiseases = ({ UserData }) => {
       ]);
   };
 
-  const updateDisease = (data) => {
-    setEditedDisease(data);
-    $("#editSpecialDiseaseModal").modal("show");
-  };
-
   // delete disease
   const deleteDisease = async (id) => {
     let result = await QuestionAlert(
       "حذف بیماری !",
       "آیا از حذف بیماری خاص اطمینان دارید؟"
     );
-    setIsLoading(true);
 
     if (result) {
+      setIsLoading(true);
       CenterID = Router.query.id;
       let url = "Center/DeleteSpecialDiseases";
       let data = {
@@ -192,62 +199,57 @@ const SpecialDiseases = ({ UserData }) => {
         <title>بیماری های خاص</title>
       </Head>
       <div className="page-wrapper">
-        <div className="content container-fluid">
-          <div className="page-header">
-            <div className="row align-items-center">
-              <div className="col-md-12 d-flex justify-content-end">
-                <Link
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#addSpecialDiseaseModal"
-                  className="btn btn-primary btn-add font-14 media-font-12"
-                >
-                  <i className="me-1">
-                    <FeatherIcon icon="plus-square" />
-                  </i>{" "}
-                  اضافه کردن
-                </Link>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className="content container-fluid">
+            <div className="page-header">
+              <div className="row align-items-center">
+                <div className="col-md-12 d-flex justify-content-end">
+                  <button
+                    onClick={openAddModal}
+                    className="btn btn-primary btn-add font-14 media-font-12"
+                  >
+                    <i className="me-1">
+                      <FeatherIcon icon="plus-square" />
+                    </i>{" "}
+                    اضافه کردن
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="card">
-                <div className="card-header border-bottom-0">
-                  <div className="row align-items-center">
-                    <div className="col">
-                      <p className="card-title font-14 text-secondary">
-                        لیست بیماری های خاص {""} {hiddenData?.name}
-                      </p>
-                    </div>
-                    <div className="col-auto d-flex flex-wrap">
-                      <div className="form-custom me-2">
-                        <div
-                          id="tableSearch"
-                          className="dataTables_wrapper"
-                        ></div>
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="card">
+                  <div className="card-header border-bottom-0">
+                    <div className="row align-items-center">
+                      <div className="col">
+                        <p className="card-title font-14 text-secondary">
+                          لیست بیماری های خاص {""} {hiddenData?.name}
+                        </p>
                       </div>
                     </div>
                   </div>
-                </div>
-                <SpecialDiseasesListTable
-                  data={diseasesList}
-                  updateDisease={updateDisease}
-                  deleteDisease={deleteDisease}
-                />
-              </div>
 
-              <div id="tablepagination" className="dataTables_wrapper"></div>
+                  <SpecialDiseasesListTable
+                    data={diseasesList}
+                    updateDisease={updateDisease}
+                    deleteDisease={deleteDisease}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
-        <AddSpecialDiseaseModal addDisease={addDisease} />
-
-        <EditSpecialDiseaseModal
-          data={editedDisease}
-          editDisease={editDisease}
+        <SpecialDiseasesModal
+          mode={modalMode}
+          data={editDiseaseData}
+          isLoading={isLoading}
+          onHide={handleCloseModal}
+          show={showModal}
+          onSubmit={modalMode == "edit" ? editDisease : addDisease}
         />
       </div>
     </>

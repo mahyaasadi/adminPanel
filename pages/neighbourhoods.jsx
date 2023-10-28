@@ -1,15 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Head from "next/head";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
-import NeighbourhoodsListTable from "components/dashboard/neighbourhoods/neighbourhoodsListTable";
-import AddStateModal from "components/dashboard/neighbourhoods/addStateModal/addStateModal";
-import EditStateModal from "components/dashboard/neighbourhoods/editStateModal/editStateModal";
+import NeighbourhoodsListTable from "@/components/dashboard/neighbourhoods/neighbourhoodsTable";
+import NeighbourhoodsModal from "@/components/dashboard/neighbourhoods/neighbourhoodsModal";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -34,6 +32,10 @@ const Neighbourhoods = ({ UserData }) => {
   const [provinceOptionsList, setProvinceOptionsList] = useState([]);
   const [cityOptionsList, setCityOptionsList] = useState([]);
   const [selectedProvinceList, setSelectedProvinceList] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState('add');
+
+  const handleCloseModal = () => setShowModal(false);
 
   //get all states
   const getAllStates = () => {
@@ -43,7 +45,6 @@ const Neighbourhoods = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        // console.log(response.data);
         setIsLoading(false);
         setNeighbourhoodsData(response.data);
       })
@@ -54,14 +55,19 @@ const Neighbourhoods = ({ UserData }) => {
   };
 
   // Add new state
+  const openAddModal = () => {
+    setModalMode('add');
+    setShowModal(true)
+  }
+
   const addNewState = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     let formData = new FormData(e.target);
     const formProps = Object.fromEntries(formData);
-    let url = "/State/add";
 
+    let url = "/State/add";
     let data = {
       State: formProps.addStateName,
       Finglish: formProps.addStateEngName,
@@ -71,17 +77,14 @@ const Neighbourhoods = ({ UserData }) => {
       CityFin: formProps.addStateCity,
     };
 
-    console.log("data", data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
-        setIsLoading(false);
-
         setNeighbourhoodsData([...neighbourhoodsData, response.data]);
-        $("#addStateModal").modal("hide");
+        setShowModal(false)
+
         e.target.reset();
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -90,9 +93,9 @@ const Neighbourhoods = ({ UserData }) => {
   };
 
   const getAllProvinces = () => {
-    let url = "Province/getAll";
     setIsLoading(true);
 
+    let url = "Province/getAll";
     axiosClient
       .get(url)
       .then((response) => {
@@ -115,21 +118,10 @@ const Neighbourhoods = ({ UserData }) => {
       });
   };
 
-  console.log({ provinceOptionsList });
-
-  const FUSelectProvince = (province) => {
-    setSelectedProvinceList(province);
-  };
-
+  const FUSelectProvince = (province) => setSelectedProvinceList(province);
   let SelectedCity = "";
-
-  const FUSelectCity = (city) => {
-    SelectedCity = city;
-  };
-
-  const setCityOption = (data) => {
-    setCityOptionsList(data);
-  };
+  const FUSelectCity = (city) => SelectedCity = city;
+  const setCityOption = (data) => setCityOptionsList(data);
 
   // Edit State
   const editState = async (e) => {
@@ -150,17 +142,13 @@ const Neighbourhoods = ({ UserData }) => {
       CityFin: formProps.editStateCity,
     };
 
-    console.log("data", data);
-
     if (StateID) {
       axiosClient
         .put(url, data)
         .then((response) => {
-          console.log(response.data);
           updateItem(StateID, response.data);
-
           setIsLoading(false);
-          $("#editStateModal").modal("hide");
+          setShowModal(false)
         })
         .catch((error) => {
           console.log(error);
@@ -176,7 +164,6 @@ const Neighbourhoods = ({ UserData }) => {
     g = newArr;
 
     if (index === -1) {
-      // handle error
       console.log("no match");
     } else
       setNeighbourhoodsData([
@@ -188,15 +175,16 @@ const Neighbourhoods = ({ UserData }) => {
 
   const updateState = (data) => {
     setEditNeighbourhoodData(data);
-    $("#editStateModal").modal("show");
+    setShowModal(true);
+    setModalMode('edit')
   };
 
   // Delete State
   const deleteState = async (id) => {
     let result = await QuestionAlert("حذف محله!", "آیا از حذف مطمئن هستید");
-    setIsLoading(true);
 
     if (result) {
+      setIsLoading(true);
       let url = `/State/Delete/${id}`;
 
       await axiosClient
@@ -230,22 +218,19 @@ const Neighbourhoods = ({ UserData }) => {
             <div className="page-header">
               <div className="row align-items-center">
                 <div className="col-md-12 d-flex justify-content-end">
-                  <Link
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addStateModal"
+                  <button
+                    onClick={openAddModal}
                     className="btn btn-primary btn-add"
                   >
                     <i className="me-1">
                       <FeatherIcon icon="plus-square" />
                     </i>{" "}
                     افزودن
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* <!-- Menu List --> */}
             <div className="row">
               <div className="col-sm-12">
                 <div className="card">
@@ -253,14 +238,6 @@ const Neighbourhoods = ({ UserData }) => {
                     <div className="row align-items-center">
                       <div className="col">
                         <h5 className="card-title font-16">لیست محله ها</h5>
-                      </div>
-                      <div className="col-auto d-flex flex-wrap">
-                        <div className="form-custom me-2">
-                          <div
-                            id="tableSearch"
-                            className="dataTables_wrapper"
-                          ></div>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -271,32 +248,24 @@ const Neighbourhoods = ({ UserData }) => {
                     deleteState={deleteState}
                   />
                 </div>
-
-                <div id="tablepagination" className="dataTables_wrapper"></div>
               </div>
             </div>
           </div>
         )}
 
-        <AddStateModal
-          addNewState={addNewState}
+        <NeighbourhoodsModal
+          isLoading={isLoading}
+          show={showModal}
+          mode={modalMode}
+          onHide={handleCloseModal}
+          onSubmit={modalMode === "add" ? addNewState : editState}
           provinceOptionsList={provinceOptionsList}
           FUSelectProvince={FUSelectProvince}
           FUSelectCity={FUSelectCity}
           setCityOption={setCityOption}
           cityOptionsList={cityOptionsList}
-        />
-
-        <EditStateModal
-          data={editNeighbourhoodData}
-          editState={editState}
-          provinceOptionsList={provinceOptionsList}
-          FUSelectProvince={FUSelectProvince}
-          FUSelectCity={FUSelectCity}
-          cityOptionsList={cityOptionsList}
-          setCityOption={setCityOption}
           setSelectedProvinceList={setSelectedProvinceList}
-          selectedProvinceList={selectedProvinceList}
+          data={editNeighbourhoodData}
         />
       </div>
     </>
