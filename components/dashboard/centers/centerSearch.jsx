@@ -15,6 +15,7 @@ const CenterSearch = ({
   SelectedCity,
   applyCenterSearch,
   getCentersData,
+  searchIsLoading,
 }) => {
   let selectCityData = [];
   for (let i = 0; i < cityOptionsList.length; i++) {
@@ -111,9 +112,21 @@ const CenterSearch = ({
         </div>
 
         <div className="col-md-1 col-12">
-          <button onClick={handleSearchClick} className="btn btn-primary w-100">
-            <i className="fe fe-search"></i>
-          </button>
+          {!searchIsLoading ? (
+            <button
+              onClick={handleSearchClick}
+              className="btn btn-primary w-100"
+            >
+              <i className="fe fe-search"></i>
+            </button>
+          ) : (
+            <button type="submit" className="btn btn-primary w-100" disabled>
+              <span
+                className="spinner-border spinner-border-sm"
+                role="status"
+              ></span>
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -50,6 +50,7 @@ const CentersManagement = ({ UserData }) => {
   });
   const [centerAboutUsData, setCenterAboutUsData] = useState([]);
   // -------------------
+  const [searchIsLoading, setSearchIsLoading] = useState(false);
 
   const initialPage = Number(router.query.page) || 1; // Default to page 1 if no page is provided in the URL.
   const [selectedPage, setSelectedPage] = useState(initialPage);
@@ -570,6 +571,7 @@ const CentersManagement = ({ UserData }) => {
   ];
 
   const fetchCenterData = (searchBy, searchedText, province, city) => {
+    setSearchIsLoading(true);
     let url = "Center";
 
     if (searchBy === "doctors") {
@@ -588,16 +590,17 @@ const CentersManagement = ({ UserData }) => {
       .post(url, data)
       .then((response) => {
         setCentersData(response.data);
+        setSearchIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setSearchIsLoading(false);
       });
-  }
+  };
 
   const applyCenterSearch = (searchBy, searchedText) => {
     fetchCenterData(searchBy, searchedText, selectedProvinceList, SelectedCity);
 
-    // Update the URL without reloading the page
     router.push({
       pathname: router.pathname,
       query: {
@@ -620,9 +623,12 @@ const CentersManagement = ({ UserData }) => {
   useEffect(() => {
     const { searchBy, searchedText, province, city } = router.query;
 
-    console.log({ city });
-    if (searchBy && searchedText &&
-      (searchBy !== selectedSearchByOption || province !== selectedProvinceList || city !== SelectedCity)
+    if (
+      searchBy &&
+      searchedText &&
+      (searchBy !== selectedSearchByOption ||
+        province !== selectedProvinceList ||
+        city !== SelectedCity)
     ) {
       fetchCenterData(searchBy, searchedText, province, city);
       // setSelectedProvinceList(province);
@@ -655,6 +661,7 @@ const CentersManagement = ({ UserData }) => {
                     SelectedCity={SelectedCity}
                     applyCenterSearch={applyCenterSearch}
                     getCentersData={getCentersData}
+                    searchIsLoading={searchIsLoading}
                   />
                 </div>
               </div>
@@ -700,7 +707,6 @@ const CentersManagement = ({ UserData }) => {
             </div>
           </div>
         )}
-
         <AddCenterModal
           addCenter={addCenter}
           provinceOptionsList={provinceOptionsList}
@@ -711,7 +717,6 @@ const CentersManagement = ({ UserData }) => {
           defaultData={editCenterData}
           isLoading={isLoading}
         />
-
         <EditCenterModal
           data={editCenterData}
           editCenter={editCenter}
@@ -724,25 +729,21 @@ const CentersManagement = ({ UserData }) => {
           selectedProvinceList={selectedProvinceList}
           isLoading={isLoading}
         />
-
         <BusinessHoursModal
           data={businessHourData}
           updateBusinessHour={updateBusinessHour}
           changeToAllDayMode={changeToAllDayMode}
         />
-
         <EditBusinessHourModal
           data={editBusinessHourData}
           editBusinessHours={editBusinessHours}
           isLoading={isLoading}
         />
-
         <CenterAboutUsModal
           data={centerAboutUsData}
           CenterName={ActiveCenterName}
           updateAboutUs={updateAboutUs}
         />
-
         <EditAboutUsModal
           data={centerAboutUsData}
           isLoading={isLoading}
