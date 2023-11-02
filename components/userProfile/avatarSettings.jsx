@@ -20,27 +20,6 @@ const AvatarSettings = ({ UserData, changeUserAvatar, isLoading }) => {
     }
   };
 
-  useEffect(() => {
-    if (avatarSrc !== UserData.Avatar && imageElement.current) {
-      if (cropper) {
-        cropper.destroy();
-      }
-
-      const newCropper = new Cropper(imageElement.current, {
-        aspectRatio: 1,
-      });
-
-      setCropper(newCropper);
-    }
-
-    return () => {
-      if (cropper) {
-        cropper.destroy();
-        setCropper(null);
-      }
-    };
-  }, [avatarSrc]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,6 +43,23 @@ const AvatarSettings = ({ UserData, changeUserAvatar, isLoading }) => {
     e.preventDefault();
     router.push("/profile");
   };
+
+  useEffect(() => {
+    if (avatarSrc !== UserData.Avatar && imageElement.current) {
+      if (cropper) cropper.destroy();
+      const newCropper = new Cropper(imageElement.current, {
+        aspectRatio: 1,
+      });
+      setCropper(newCropper);
+    }
+
+    return () => {
+      if (cropper) {
+        cropper.destroy();
+        setCropper(null);
+      }
+    };
+  }, [avatarSrc]);
 
   return (
     <>

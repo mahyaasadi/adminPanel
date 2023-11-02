@@ -42,7 +42,7 @@ const Departments = ({ UserData }) => {
     const { value, checked } = e.target;
     const { departmentsOptionsList } = departmentsCheckboxStatus;
 
-    console.log(`${value} is ${checked}`);
+    // console.log(`${value} is ${checked}`);
 
     checked
       ? setDepartmentsCheckboxStatus({
@@ -56,8 +56,9 @@ const Departments = ({ UserData }) => {
   };
 
   function getModality() {
-    let url = "Modality/getAll";
     setIsLoading(true);
+
+    let url = "Modality/getAll";
     axiosClient
       .get(url)
       .then(function (response) {
@@ -119,8 +120,6 @@ const Departments = ({ UserData }) => {
       }
     });
 
-    console.log("selectedDepartments", selectedDepartments);
-
     let url = "Center/SetDepartments";
     let PostData = {
       CenterID: CenterID,
@@ -136,7 +135,6 @@ const Departments = ({ UserData }) => {
         console.log(error);
       });
   };
-  console.log({ departmentsData });
 
   useEffect(() => {
     if (Router.isReady) {

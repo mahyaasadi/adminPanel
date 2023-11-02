@@ -165,9 +165,9 @@ const Insurance = ({ UserData }) => {
       "حذف شماره!",
       "آیا از حذف شماره مرکز مطمئن هستید"
     );
-    setIsLoading(true);
 
     if (result) {
+      setIsLoading(true);
       let url = "CenterProfile/DeletePhones";
       CenterID = Router.query.id;
       let data = {
