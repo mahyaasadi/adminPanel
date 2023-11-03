@@ -12,7 +12,6 @@ const SpeWorksModal = ({
     const submitText = mode === "edit" ? "ثبت تغییرات" : "ثبت";
 
     return (
-
         <Modal show={show} onHide={onHide} centered>
             <Modal.Header closeButton>
                 <Modal.Title>

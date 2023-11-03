@@ -1,124 +1,127 @@
-import Link from "next/link";
+import { useEffect } from 'react';
+import { Modal } from 'react-bootstrap';
 import FeatherIcon from "feather-icons-react";
-import { Tooltip } from "primereact/tooltip";
 
 const ArticleVideosModal = ({
-  data,
-  openAddArticleVideoModal,
-  updateArticleVideo,
-  deleteArticleVideo,
+    mode = "add", // Default is 'add'
+    onSubmit,
+    data = {},
+    isLoading,
+    show,
+    onHide
 }) => {
-  return (
-    <>
-      <div
-        className="modal fade contentmodal"
-        id="articleVideosModal"
-        tabIndex="-1"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered modal-lg">
-          <div className="modal-content">
-            <div className="modal-header padding-r-30">
-              <div className="loeing-header">
-                <p className="text-secondary font-15 fw-bold">ویدئوهای مقاله</p>
-              </div>
-              <button
-                type="button"
-                className="close-btn"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
-                <i>
-                  <FeatherIcon icon="x-circle" />
-                </i>
-              </button>
-            </div>
+    const modalTitle = mode === "edit" ? "ویرایش اطلاعات" : "افزودن ویدیو";
+    const submitText = mode === "edit" ? "ثبت تغییرات" : "ثبت";
 
-            <div className="modal-body videoModalBody">
-              <div className="row align-items-center">
-                <div className="col-md-12">
-                  <button
-                    onClick={() => openAddArticleVideoModal()}
-                    className="btn btn-primary btn-add font-14"
-                  >
-                    <i className="me-1">
-                      <FeatherIcon icon="plus-square" />
-                    </i>{" "}
-                    افزودن ویدیو
-                  </button>
-                </div>
-              </div>
-              <div dir="rtl" className="row mt-4">
-                {data?.map((videoItem, index) => (
-                  <div className="col-6" key={index}>
-                    <div className="card">
-                      <div className="card-body ">
-                        <div className="d-flex flex-col">
-                          <div className="col-12">
-                            <video
-                              src={
-                                "https://irannobat.ir/blog/videos/" +
-                                videoItem.Name
-                              }
-                              width="100%"
-                              height="200"
-                              controls
-                            ></video>
-                          </div>
+    const displayVideoPreview = (e) => {
+        var urlCreator = window.URL || window.webkitURL;
+        if (e.target.files.length !== 0) {
+            var videoUrl = urlCreator.createObjectURL(e.target.files[0]);
+            $("#ArticleVideoPreview").attr("src", videoUrl);
+        }
+    };
 
-                          <div className="px-4">
-                            <p className="py-1 mt-2 text-secondary font-14 fw-bold">
-                              عنوان : {videoItem.Title}
-                            </p>
-                          </div>
-                        </div>
-
-                        <hr />
-
-                        <div
-                          className="d-flex justify-flex-end gap-1"
-                          id="infoContainer"
-                          dir="rtl"
-                        >
-                          <button
-                            button="button"
-                            className="btn btn-sm btn-outline-secondary btn-border-left editVideo"
-                            onClick={() =>
-                              updateArticleVideo(videoItem, videoItem._id)
-                            }
-                            data-pr-position="top"
-                          >
-                            <Tooltip target=".editVideo">ویرایش</Tooltip>
-                            <FeatherIcon
-                              style={{ width: "14px", height: "14px" }}
-                              icon="edit-3"
-                            />
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-outline-danger deleteVideo"
-                            onClick={() => deleteArticleVideo(videoItem._id)}
-                            data-pr-position="top"
-                          >
-                            <Tooltip target=".deleteVideo">حذف</Tooltip>
-                            <FeatherIcon
-                              style={{ width: "14px", height: "14px" }}
-                              icon="trash-2"
-                            />
-                          </button>
-                        </div>
-                      </div>
+    // useEffect(() => $("#ArticleVideoPreview").hide(""), []);
+    return (
+        <Modal show={show} onHide={onHide} centered>
+            <Modal.Header closeButton>
+                <Modal.Title>
+                    <p className="mb-0 text-secondary font-14 fw-bold">{modalTitle}</p>
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <form onSubmit={onSubmit}>
+                    <div className="form-group col">
+                        <label className="lblAbs font-12">
+                            عنوان <span className="text-danger">*</span>
+                        </label>
+                        {/* <div className="col p-0"> */}
+                        <input
+                            type="text"
+                            className="form-control floating inputPadding rounded"
+                            // name={mode == "add" ? "addVideoTitle" : "editVideoName"}
+                            // defaultValue={mode == "edit" ? data.Title : ""}
+                            // key={data.Title}
+                            required
+                        />
+                        {/* </div> */}
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+
+                    {/* {mode == "edit" && (
+                        <div className="">
+                            <input
+                                type="hidden"
+                                className="form-control floating"
+                                name="editVideoID"
+                                value={data._id}
+                            />
+                            <input
+                                type="hidden"
+                                className="form-control floating"
+                                name="editVideoName"
+                                value={data.Name}
+                                key={data.Name}
+                            />
+                        </div>
+                    )}
+
+                    {mode === "add" && (
+                        <div className="">
+                            <div className="change-photo-btn">
+                                <div>
+                                    <i>
+                                        <FeatherIcon icon="upload" />
+                                    </i>
+                                    <p>آپلود فایل</p>
+                                </div>
+                                <input
+                                    type="file"
+                                    className="upload"
+                                    name="addVideoToArticle"
+                                    onChange={displayVideoPreview}
+                                    required
+                                />
+                            </div>
+
+                            <div className="previewImgContainer">
+                                <video
+                                    src=""
+                                    alt=""
+                                    width="350"
+                                    id="ArticleVideoPreview"
+                                    className="d-block m-auto previewImg"
+                                    controls
+                                ></video>
+                            </div>
+                        </div>
+                    )} */}
+
+                    <div className="submit-section">
+                        {!isLoading ? (
+                            <button
+                                type="submit"
+                                className="btn btn-primary rounded btn-save font-13"
+                            >
+                                {submitText}
+                            </button>
+                        ) : (
+                            <button
+                                type="submit"
+                                className="btn btn-primary rounded font-13"
+                                disabled
+                            >
+                                <span
+                                    className="spinner-border spinner-border-sm me-2"
+                                    role="status"
+                                ></span>
+                                در حال ثبت
+                            </button>
+                        )}
+                    </div>
+                </form>
+            </Modal.Body>
+        </Modal>
+    );
 };
 
 export default ArticleVideosModal;
-

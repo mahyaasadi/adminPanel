@@ -1,4 +1,3 @@
-import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 
 const EditArticleModal = ({ data, editArticleVideo }) => {
