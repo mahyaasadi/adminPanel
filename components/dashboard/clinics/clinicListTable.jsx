@@ -6,10 +6,11 @@ import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 import { Tooltip } from "primereact/tooltip";
 
-const ClinicListTable = ({ data, updateClinic, deleteClinic }) => {
+const ClinicListTable = ({ data, updateClinic, deleteClinic, reActivateClinic }) => {
   data?.map((clinic, index) => {
     data[index].rowNumber = index + 1;
   });
+
   const columns = [
     {
       name: "ردیف",
@@ -35,7 +36,7 @@ const ClinicListTable = ({ data, updateClinic, deleteClinic }) => {
               className="btn removeImgBtn tooltip-button"
               type="button"
               data-pr-position="top"
-              // onClick={}
+            // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>
@@ -49,7 +50,7 @@ const ClinicListTable = ({ data, updateClinic, deleteClinic }) => {
       name: "شماره تماس رابط",
       selector: (row) => row.ManageTel,
       sortable: true,
-      width: "600px",
+      width: "300px",
     },
     {
       name: "عملیات ها",
@@ -59,10 +60,10 @@ const ClinicListTable = ({ data, updateClinic, deleteClinic }) => {
           {row.Deleted ? (
             <button
               className="btn btn-sm btn-danger removedBtn"
-              onClick={() => deleteClinic(row._id)}
+              onClick={() => reActivateClinic(row._id)}
               data-pr-position="top"
             >
-              <Tooltip target=".removedBtn">حذف شده</Tooltip>
+              <Tooltip target=".removedBtn">فعال سازی</Tooltip>
               <FeatherIcon
                 style={{ width: "16px", height: "16px" }}
                 icon="trash-2"

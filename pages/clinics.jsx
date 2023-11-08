@@ -51,7 +51,7 @@ const Clinics = ({ UserData }) => {
       .catch((error) => {
         console.log(error);
         setIsLoading(false);
-        ErrorAlert("خطا", "!خطا در دریافت اطلاعات کلینیک ها");
+        ErrorAlert("خطا", "!خطا در دریافت اطلاعات مطب ها");
       });
   };
 
@@ -112,7 +112,7 @@ const Clinics = ({ UserData }) => {
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
-        ErrorAlert("خطا", "افزودن کلینیک با خطا مواجه گردید!");
+        ErrorAlert("خطا", "افزودن مطب با خطا مواجه گردید!");
       });
   };
 
@@ -182,8 +182,8 @@ const Clinics = ({ UserData }) => {
   // remove clinic
   const deleteClinic = async (id) => {
     let result = await QuestionAlert(
-      "حذف کلینیک !",
-      "?آیا از حذف کلینیک مطمئن هستید"
+      "حذف مطب!",
+      "آیا از حذف مطب اطمینان دارید؟"
     );
 
     if (result) {
@@ -193,8 +193,6 @@ const Clinics = ({ UserData }) => {
       await axiosClient
         .delete(url)
         .then((response) => {
-          console.log(response.data);
-
           if (response.data && response.data.Deleted) {
             const updatedClinicData = clinicData.map((clinic) => {
               if (clinic._id === id) {
@@ -212,6 +210,36 @@ const Clinics = ({ UserData }) => {
         });
     }
   };
+
+  const reActivateClinic = async (id) => {
+    let result = await QuestionAlert(
+      "فعال سازی !",
+      "?آیا از فعال سازی کلینیک مطمئن هستید"
+    );
+
+    if (result) {
+      setIsLoading(true);
+      let url = `Clinic/Active/${id}`
+
+      axiosClient.put(url)
+        .then((response) => {
+          if (response.data.Deleted === false) {
+            const activatedClinicData = clinicData.map((clinic) => {
+              if (clinic._id === id) {
+                return { ...clinic, Deleted: false };
+              }
+              return clinic;
+            });
+            setClinicData(activatedClinicData);
+          }
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+        })
+    }
+  }
 
   useEffect(() => getClinicsData(), []);
 
@@ -258,6 +286,7 @@ const Clinics = ({ UserData }) => {
                     data={clinicData}
                     updateClinic={updateClinic}
                     deleteClinic={deleteClinic}
+                    reActivateClinic={reActivateClinic}
                   />
                 )}
               </div>
