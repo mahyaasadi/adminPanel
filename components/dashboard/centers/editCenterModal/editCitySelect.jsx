@@ -3,7 +3,7 @@ import selectfieldColourStyles from "class/selectfieldStyle";
 
 const EditCitySelect = ({ data, cityOptionsList, FUSelectCity }) => {
   let selectCityData = [];
-  for (let i = 0; i < cityOptionsList.length; i++) {
+  for (let i = 0; i < cityOptionsList?.length; i++) {
     const item = cityOptionsList[i];
     let cityObj = {
       value: item.Info[0].Finglish,

@@ -6,7 +6,12 @@ import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
 import { Tooltip } from "primereact/tooltip";
 
-const ClinicListTable = ({ data, updateClinic, deleteClinic, reActivateClinic }) => {
+const ClinicListTable = ({
+  data,
+  updateClinic,
+  deleteClinic,
+  reActivateClinic,
+}) => {
   data?.map((clinic, index) => {
     data[index].rowNumber = index + 1;
   });
@@ -22,7 +27,7 @@ const ClinicListTable = ({ data, updateClinic, deleteClinic, reActivateClinic })
       name: "نام مطب",
       selector: (row) => row.Name,
       sortable: true,
-      width: "200px",
+      width: "250px",
     },
     {
       name: "لوگو",
@@ -36,7 +41,7 @@ const ClinicListTable = ({ data, updateClinic, deleteClinic, reActivateClinic })
               className="btn removeImgBtn tooltip-button"
               type="button"
               data-pr-position="top"
-            // onClick={}
+              // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>
@@ -44,13 +49,13 @@ const ClinicListTable = ({ data, updateClinic, deleteClinic, reActivateClinic })
         ) : (
           ""
         ),
-      width: "300px",
+      width: "250px",
     },
     {
       name: "شماره تماس رابط",
       selector: (row) => row.ManageTel,
       sortable: true,
-      width: "300px",
+      width: "600px",
     },
     {
       name: "عملیات ها",
