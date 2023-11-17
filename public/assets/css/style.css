@@ -4661,7 +4661,7 @@ html.menu-opened body {
 
 .loginBg {
   background-image: url("/assets/img/bg5.jpg");
-  height: 110vh;
+  height: 100%;
   /* width: 100%; */
 }
 

@@ -15,9 +15,8 @@ import SubArticlesModal from "components/dashboard/articles/subArticles/subArtic
 import AddSubArticleModal from "components/dashboard/articles/subArticles/addSubArticleModal";
 import EditSubArticleModal from "components/dashboard/articles/subArticles/editSubArticleModal";
 import ArticleVideosList from "components/dashboard/articles/articleVideos/articleVideosList";
-import ArticleVideosModal from "@/components/dashboard/articles/articleVideos/articleVideosModal";
-// import AddArticleVideoModal from "components/dashboard/articles/articleVideos/addArticleVideoModal";
-// import EditArticleVideoModal from "components/dashboard/articles/articleVideos/editArticleVideoModal";
+import AddArticleVideoModal from "components/dashboard/articles/articleVideos/addArticleVideoModal";
+import EditArticleVideoModal from "components/dashboard/articles/articleVideos/editArticleVideoModal";
 import GrpAttachmentList from "components/dashboard/articles/attachments/grpAttachmentsList";
 import TagAttachmentList from "components/dashboard/articles/attachments/tagAttachmentsList";
 import FAQListTableModal from "components/dashboard/articles/FAQ/faqListTableModal";
@@ -61,11 +60,9 @@ const Articles = ({ UserData }) => {
   const [editArticleVideoData, setEditArticleVideoData] = useState([]);
   // --------------
   const [selectedArticleGroups, setSelectedArticleGrp] = useState([]);
-  // const [articleGroupsData, setArticleGroupsData] = useState([]);
   const [articleGroupsOptionsList, setArticleGroupsOptionsList] = useState([]);
   // --------------
   const [selectedArticleTags, setSelectedArticleTags] = useState([]);
-  // const [articleTagsData, setArticleTagsData] = useState([]);
   const [articleTagsOptionsList, setArticleTagsOptionsList] = useState([]);
   //  -------------
   const [articleFAQData, setArticleFAQData] = useState([]);
@@ -76,11 +73,8 @@ const Articles = ({ UserData }) => {
   // -------------
   const [showEntityModal, setShowEntityModal] = useState(false);
   const [entityType, setEntityType] = useState("group")
-  const [modalMode, setModalMode] = useState('add');
-  const [showVideoModal, setShowVideoModal] = useState(false);
 
   const handleCloseEntityModal = () => setShowEntityModal(false);
-  const handleCloseVideoModal = () => setShowVideoModal(false);
 
   // Get all articles
   const getAllArticles = () => {
@@ -523,8 +517,7 @@ const Articles = ({ UserData }) => {
   };
 
   const openAddArticleVideoModal = () => {
-    setModalMode('add');
-    setShowVideoModal(true)
+    $("#addArticleVideoModal").modal("show");
   }
 
   // Add Article Video
@@ -546,13 +539,13 @@ const Articles = ({ UserData }) => {
       Video: articleVideo,
     };
 
+    console.log({ data });
+
     axiosClient
       .post(url, data)
       .then((response) => {
         setArticleVideosData([...articleVideosData, response.data]);
-
-        // $("#addArticleVideoModal").modal("hide");
-        setShowVideoModal(false)
+        $("#addArticleVideoModal").modal("hide");
         setIsLoading(false);
 
         // reset
@@ -595,9 +588,7 @@ const Articles = ({ UserData }) => {
 
   // Edit Article Video
   const updateArticleVideo = (data, id) => {
-    // $("#editArticleVideoModal").modal("show");
-    setModalMode('edit');
-    setShowVideoModal(true)
+    $("#editArticleVideoModal").modal("show");
     setEditArticleVideoData(data);
     ActiveVideoID = id;
   };
@@ -622,8 +613,7 @@ const Articles = ({ UserData }) => {
 
         // reset
         getAllArticles();
-        // $("#editArticleVideoModal").modal("hide");
-        setShowVideoModal(false)
+        $("#editArticleVideoModal").modal("hide");
         setIsLoading(false);
       })
       .catch((error) => {
@@ -1181,23 +1171,14 @@ const Articles = ({ UserData }) => {
           updateArticleVideo={updateArticleVideo}
         />
 
-        <ArticleVideosModal
-          mode={modalMode}
-          show={showVideoModal}
-          onHide={handleCloseVideoModal}
-          data={editArticleVideoData}
-          onSubmit={modalMode === "edit" ? editArticleVideo : addVideoToArticle}
-          isLoading={isLoading}
-        />
-
-        {/* <AddArticleVideoModal
+        <AddArticleVideoModal
           addVideoToArticle={addVideoToArticle}
           isLoading={isLoading}
         />
         <EditArticleVideoModal
           data={editArticleVideoData}
           editArticleVideo={editArticleVideo}
-        /> */}
+        />
 
         {/* FAQ */}
         <FAQListTableModal

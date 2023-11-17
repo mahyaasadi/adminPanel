@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 
 const AddArticleVideoModal = ({ addVideoToArticle, isLoading }) => {
@@ -10,7 +9,7 @@ const AddArticleVideoModal = ({ addVideoToArticle, isLoading }) => {
     }
   };
 
-  useEffect(() => $("#ArticleVideoPreview").hide(""), []);
+  // useEffect(() => $("#ArticleVideoPreview").hide(""), []);
 
   return (
     <div
