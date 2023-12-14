@@ -43,7 +43,7 @@ const CenterSearch = ({
   };
 
   return (
-    <div className="card ">
+    <div className="card">
       <div
         id="centerSearchFrm"
         className="card-body filterCentersContainer row align-items-center"

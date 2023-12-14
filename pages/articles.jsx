@@ -24,7 +24,7 @@ import AddFAQModal from "components/dashboard/articles/FAQ/addFaqModal";
 import EditFAQModal from "components/dashboard/articles/FAQ/editFaqModal";
 import RelatedArticlesList from "components/dashboard/articles/attachments/relatedArticleList";
 import SubTextEditor from "components/dashboard/articles/subArticles/subTextEditor";
-import AddEntityToArticleModal from "components/dashboard/articles/attachments/addEntityToArticleModal"
+import AddEntityToArticleModal from "components/dashboard/articles/attachments/addEntityToArticleModal";
 import Paginator from "components/commonComponents/paginator";
 
 export const getServerSideProps = async ({ req, res }) => {
@@ -72,7 +72,7 @@ const Articles = ({ UserData }) => {
   const [relatedArticlesOptions, setRelatedArticlesOptions] = useState([]);
   // -------------
   const [showEntityModal, setShowEntityModal] = useState(false);
-  const [entityType, setEntityType] = useState("group")
+  const [entityType, setEntityType] = useState("group");
 
   const handleCloseEntityModal = () => setShowEntityModal(false);
 
@@ -113,7 +113,7 @@ const Articles = ({ UserData }) => {
       article.EngTitle.toLowerCase().includes(articleSearchInput.toLowerCase())
   );
 
-  // Pagination 
+  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const indexOfLastRecord = currentPage * itemsPerPage;
@@ -293,10 +293,10 @@ const Articles = ({ UserData }) => {
     index === -1
       ? console.log("no match")
       : setArticlesData([
-        ...articlesData.slice(0, index),
-        g,
-        ...articlesData.slice(index + 1),
-      ]);
+          ...articlesData.slice(0, index),
+          g,
+          ...articlesData.slice(index + 1),
+        ]);
   };
 
   // Delete Article
@@ -518,7 +518,7 @@ const Articles = ({ UserData }) => {
 
   const openAddArticleVideoModal = () => {
     $("#addArticleVideoModal").modal("show");
-  }
+  };
 
   // Add Article Video
   let articleVideo = null;
@@ -665,18 +665,18 @@ const Articles = ({ UserData }) => {
 
   const openGrpAttachmentModal = (articleTitle, id, GroupsData) => {
     $("#grpAttachmentModal").modal("show");
-    setEntityType("group")
+    setEntityType("group");
     ActiveArticleID = id;
     ActiveArticleTitle = articleTitle;
     setSelectedArticleGrp(GroupsData);
   };
 
   const openAttachGrpModal = () => {
-    setShowEntityModal(true)
+    setShowEntityModal(true);
     setEntityType("group");
   };
 
-  const [selectedGroup, setSelectedGroup] = useState("")
+  const [selectedGroup, setSelectedGroup] = useState("");
   const FUSelectArticleGroup = (value) => setSelectedGroup(value);
 
   // add group
@@ -700,10 +700,10 @@ const Articles = ({ UserData }) => {
           ? ErrorAlert("خطا", "گروه اضافه شده تکراری می باشد!")
           : SuccessAlert("موفق", "افزودن گروه به مقاله با موفقیت انجام گردید!");
 
-        setShowEntityModal(false)
+        setShowEntityModal(false);
         $("#grpAttachmentModal").modal("hide");
         e.target.reset();
-        setSelectedGroup(null)
+        setSelectedGroup(null);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -747,7 +747,7 @@ const Articles = ({ UserData }) => {
     ActiveArticleID = id;
     ActiveArticleTitle = articleTitle;
     setSelectedArticleTags(TagsData);
-    setEntityType("tag")
+    setEntityType("tag");
   };
 
   // Get All Article Tags
@@ -776,13 +776,13 @@ const Articles = ({ UserData }) => {
       });
   };
 
-  const [selectedTag, setSelectedTag] = useState("")
-  const FUSelectArticleTag = (value) => setSelectedTag(value)
+  const [selectedTag, setSelectedTag] = useState("");
+  const FUSelectArticleTag = (value) => setSelectedTag(value);
 
   const openAttachTagModal = () => {
     setShowEntityModal(true);
-    setEntityType("tag")
-  }
+    setEntityType("tag");
+  };
 
   const addTagToArticle = (e) => {
     e.preventDefault();
@@ -802,10 +802,10 @@ const Articles = ({ UserData }) => {
           ? ErrorAlert("خطا", "گروه اضافه شده تکراری می باشد!")
           : SuccessAlert("موفق", "افزودن تگ به مقاله با موفقیت انجام گردید!");
 
-        setShowEntityModal(false)
+        setShowEntityModal(false);
         $("#tagsAttachmentModal").modal("hide");
         e.target.reset();
-        setSelectedTag(null)
+        setSelectedTag(null);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -968,20 +968,20 @@ const Articles = ({ UserData }) => {
     relatedArticles
   ) => {
     $("#relatedArticlesModal").modal("show");
-    setEntityType("related")
+    setEntityType("related");
     ActiveArticleTitle = articleTitle;
     ActiveArticleID = articleId;
     setRelatedArticlesData(relatedArticles);
   };
 
-  const [selectedRelatedArticle, setSelectedRelatedArticle] = useState("")
+  const [selectedRelatedArticle, setSelectedRelatedArticle] = useState("");
   const FUSelectRelatedArticle = (value) => setSelectedRelatedArticle(value);
 
   // add related article
   const openAddRelatedArticleModal = () => {
     setShowEntityModal(true);
-    setEntityType("related")
-  }
+    setEntityType("related");
+  };
 
   const addRelatedArticle = (e) => {
     e.preventDefault();
@@ -997,11 +997,11 @@ const Articles = ({ UserData }) => {
       .then((response) => {
         getAllArticles();
 
-        setShowEntityModal(false)
+        setShowEntityModal(false);
         $("#relatedArticlesModal").modal("hide");
         SuccessAlert("موفق", "افزودن مقاله مرتبط با موفقیت انجام گردید!");
         e.target.reset();
-        setSelectedRelatedArticle(null)
+        setSelectedRelatedArticle(null);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -1204,29 +1204,29 @@ const Articles = ({ UserData }) => {
             entityType === "tag"
               ? articleTagsOptionsList
               : entityType === "group"
-                ? articleGroupsOptionsList
-                : relatedArticlesOptions
+              ? articleGroupsOptionsList
+              : relatedArticlesOptions
           }
           FUSelectEntity={
             entityType === "tag"
               ? FUSelectArticleTag
               : entityType === "group"
-                ? FUSelectArticleGroup
-                : FUSelectRelatedArticle
+              ? FUSelectArticleGroup
+              : FUSelectRelatedArticle
           }
           onSubmit={
             entityType === "tag"
               ? addTagToArticle
               : entityType === "group"
-                ? addGrpToArticle
-                : addRelatedArticle
+              ? addGrpToArticle
+              : addRelatedArticle
           }
           selectedOption={
             entityType === "tag"
               ? selectedTag
               : entityType === "group"
-                ? selectedGroup
-                : selectedRelatedArticle
+              ? selectedGroup
+              : selectedRelatedArticle
           }
         />
 
