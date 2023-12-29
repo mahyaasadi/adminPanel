@@ -58,7 +58,7 @@ const FAQListTableModal = ({
           </button>
         </div>
       ),
-      width: "120px",
+      width: "auto",
     },
   ];
 

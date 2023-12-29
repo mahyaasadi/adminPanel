@@ -23,8 +23,8 @@ const DepartmentsList = ({ departmentsData, handleCheckedDepartments }) => {
                     departmentData.Icon
                   }
                   alt=""
-                  width="50px"
-                  height="50px"
+                  width="55px"
+                  height="55px"
                 />
 
                 <span className="checkbox-label">

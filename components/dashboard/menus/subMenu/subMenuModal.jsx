@@ -51,7 +51,7 @@ const SubMenuModal = ({
           </button>
         </div>
       ),
-      width: "150px",
+      width: "auto",
     },
   ];
 

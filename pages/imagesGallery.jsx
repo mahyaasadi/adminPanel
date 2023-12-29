@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
+import { convertBase64 } from "utils/convertBase64";
 import { WarningAlert, QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import ImagesListTable from "components/dashboard/imagesGallery/imagesListTable";
@@ -69,25 +70,6 @@ const ImagesGallery = ({ UserData }) => {
     }
   };
 
-  // Convert imageUrl to Base64
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      // console.log(file);
-
-      fileReader.onload = () => {
-        // console.log(fileReader.result);
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        // console.log(error);
-        reject(error);
-      };
-    });
-  };
-
   // Upload image
   let img = null;
   const uploadImage = async (e) => {
@@ -132,7 +114,7 @@ const ImagesGallery = ({ UserData }) => {
     }
   };
 
-  // Delete Message
+  // Delete Image
   const deleteImage = async (data) => {
     let result = await QuestionAlert(
       "حذف تصویر!",
@@ -218,14 +200,6 @@ const ImagesGallery = ({ UserData }) => {
                         گالری تصاویر {""} {hiddenData?.name}
                       </p>
                     </div>
-                    <div className="col-auto d-flex flex-wrap">
-                      <div className="form-custom me-2">
-                        <div
-                          id="tableSearch"
-                          className="dataTables_wrapper"
-                        ></div>
-                      </div>
-                    </div>
                   </div>
                 </div>
 
@@ -248,7 +222,6 @@ const ImagesGallery = ({ UserData }) => {
                   </div>
                 )}
               </div>
-              <div id="tablepagination" className="dataTables_wrapper"></div>
             </div>
           </div>
         </div>
@@ -258,4 +231,5 @@ const ImagesGallery = ({ UserData }) => {
     </>
   );
 };
+
 export default ImagesGallery;

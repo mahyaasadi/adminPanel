@@ -230,17 +230,9 @@ const Certifications = ({ UserData }) => {
                         لیست مجوزهای {hiddenData?.name}
                       </p>
                     </div>
-                    <div className="col-auto d-flex flex-wrap">
-                      <div className="form-custom me-2">
-                        <div
-                          id="tableSearch"
-                          className="dataTables_wrapper"
-                        ></div>
-                      </div>
-                    </div>
+
                   </div>
                 </div>
-
                 {isLoading ? (
                   <Loading />
                 ) : (
@@ -251,7 +243,6 @@ const Certifications = ({ UserData }) => {
                   />
                 )}
               </div>
-              <div id="tablepagination" className="dataTables_wrapper"></div>
             </div>
           </div>
         </div>

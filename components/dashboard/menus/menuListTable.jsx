@@ -72,7 +72,7 @@ const MenuListTable = ({
           </Link>
         </div>
       ),
-      width: "250px",
+      width: "auto",
     },
   ];
 

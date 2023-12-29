@@ -237,14 +237,6 @@ const Insurance = ({ UserData }) => {
                         لیست بیمه های تحت پوشش {""} {hiddenData?.name}
                       </p>
                     </div>
-                    <div className="col-auto d-flex flex-wrap">
-                      <div className="form-custom me-2">
-                        <div
-                          id="tableSearch"
-                          className="dataTables_wrapper"
-                        ></div>
-                      </div>
-                    </div>
                   </div>
                 </div>
 
@@ -258,7 +250,6 @@ const Insurance = ({ UserData }) => {
                   />
                 )}
               </div>
-              <div id="tablepagination" className="dataTables_wrapper"></div>
             </div>
           </div>
         </div>

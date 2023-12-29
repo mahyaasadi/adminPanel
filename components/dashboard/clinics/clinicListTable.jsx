@@ -21,13 +21,13 @@ const ClinicListTable = ({
       name: "ردیف",
       selector: (row) => row.rowNumber,
       sortable: true,
-      width: "85px",
+      width: "auto",
     },
     {
       name: "نام مطب",
       selector: (row) => row.Name,
       sortable: true,
-      width: "250px",
+      width: "auto",
     },
     {
       name: "لوگو",
@@ -41,7 +41,7 @@ const ClinicListTable = ({
               className="btn removeImgBtn tooltip-button"
               type="button"
               data-pr-position="top"
-              // onClick={}
+            // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>
@@ -49,13 +49,13 @@ const ClinicListTable = ({
         ) : (
           ""
         ),
-      width: "250px",
+      width: "auto",
     },
     {
       name: "شماره تماس رابط",
       selector: (row) => row.ManageTel,
       sortable: true,
-      width: "600px",
+      width: "auto",
     },
     {
       name: "عملیات ها",
@@ -116,7 +116,7 @@ const ClinicListTable = ({
           </Link>
         </div>
       ),
-      width: "150px",
+      width: "auto",
     },
   ];
 

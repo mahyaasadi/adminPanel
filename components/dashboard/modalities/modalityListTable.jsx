@@ -18,19 +18,19 @@ const ModalityListTable = ({
       name: "عنوان",
       selector: (row) => row.Modality,
       sortable: true,
-      width: "280px",
+      width: "auto",
     },
     {
       name: "عنوان کامل",
       selector: (row) => row.FullName,
       sortable: true,
-      width: "280px",
+      width: "auto",
     },
     {
       name: "عنوان فارسی",
       selector: (row) => row.PerFullName,
       sortable: true,
-      width: "400px",
+      width: "auto",
     },
     {
       name: "آیکون",
@@ -40,11 +40,11 @@ const ModalityListTable = ({
           <img
             src={"https://irannobat.ir/admin/assets/img/" + row.Icon}
             alt=""
-            style={{ width: "28px", height: "28px" }}
+            style={{ width: "32px", height: "32px" }}
           />
         </div>
       ),
-      width: "370px",
+      width: "auto",
     },
     {
       name: "عملیات ها",
@@ -75,7 +75,7 @@ const ModalityListTable = ({
           </button>
         </div>
       ),
-      width: "150px",
+      width: "auto",
     },
   ];
 

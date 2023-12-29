@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
+import { convertBase64 } from "utils/convertBase64";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
@@ -53,16 +54,6 @@ const Clinics = ({ UserData }) => {
         setIsLoading(false);
         ErrorAlert("خطا", "!خطا در دریافت اطلاعات مطب ها");
       });
-  };
-
-  // Convert logoUrl to Base64
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => resolve(fileReader.result);
-      fileReader.onerror = (error) => reject(error);
-    });
   };
 
   // add clinic

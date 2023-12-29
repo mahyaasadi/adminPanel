@@ -197,15 +197,7 @@ const ArticleTagsManagement = ({ UserData }) => {
                   <div className="card-header border-bottom-0">
                     <div className="row align-items-center">
                       <div className="col">
-                        <h5 className="card-title font-16">لیست تگ مقالات</h5>
-                      </div>
-                      <div className="col-auto d-flex flex-wrap">
-                        <div className="form-custom me-2">
-                          <div
-                            id="tableSearch"
-                            className="dataTables_wrapper"
-                          ></div>
-                        </div>
+                        <h5 className="card-title font-16 text-secondary">لیست تگ مقالات</h5>
                       </div>
                     </div>
                   </div>
@@ -216,8 +208,6 @@ const ArticleTagsManagement = ({ UserData }) => {
                     deleteArticleTag={deleteArticleTag}
                   />
                 </div>
-
-                <div id="tablepagination" className="dataTables_wrapper"></div>
               </div>
             </div>
           </div>

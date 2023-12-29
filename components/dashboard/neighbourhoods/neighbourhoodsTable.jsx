@@ -59,7 +59,7 @@ const NeighbourhoodsListTable = ({ data, deleteState, updateState }) => {
           </button>
         </div>
       ),
-      width: "200px",
+      width: "auto",
     },
   ];
 
@@ -77,6 +77,7 @@ const NeighbourhoodsListTable = ({ data, deleteState, updateState }) => {
             defaultSortField="id"
             defaultSortAsc={false}
             pagination
+            paginationPerPage={40}
             highlightOnHover
             noDataComponent={
               <div style={{ padding: "24px", fontSize: "13px" }}>

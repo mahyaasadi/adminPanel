@@ -3,8 +3,9 @@ import Head from "next/head";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { getSession } from "lib/session";
-import { setSession } from "@/lib/SessionMange";
+import { setSession } from "lib/SessionMange";
 import { axiosClient } from "class/axiosConfig";
+import { convertBase64 } from "utils/convertBase64";
 import { SuccessAlert, ErrorAlert } from "class/AlertManage";
 import PasswordSettings from "components/userProfile/passwordSettings";
 import AvatarSettings from "components/userProfile/avatarSettings";
@@ -105,16 +106,6 @@ const ProfileSettings = ({ UserData }) => {
         setIsLoading(false);
         ErrorAlert("خطا", "تغییر رمز عبور با خطا مواجه گردید!");
       });
-  };
-
-  // Convert imageUrl to Base64
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => resolve(fileReader.result);
-      fileReader.onerror = (error) => reject(error);
-    });
   };
 
   const changeUserAvatar = async (formData) => {

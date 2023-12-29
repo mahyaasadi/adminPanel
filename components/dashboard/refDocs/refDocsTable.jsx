@@ -15,30 +15,30 @@ const RefDocTable = ({ data, deleteRefDoc, openEditRefDocModal }) => {
       name: "ردیف",
       selector: (row) => row.rowNumber,
       sortable: true,
-      width: "80px",
+      width: "auto",
     },
     {
       name: "شماره نظام پزشکی",
       selector: (row) => row.MSID,
       sortable: true,
-      width: "200px",
+      width: "auto",
     },
     {
       name: "نام پزشک",
       selector: (row) => row.FullName,
       sortable: true,
-      width: "270px",
+      width: "auto",
     },
     {
       name: "تخصص",
       selector: (row) => row.Expertise.substr(0, 50) + " ...",
-      width: "450px",
+      width: "auto",
     },
     {
       name: "آدرس",
       selector: (row) => row.Address,
       sortable: true,
-      width: "380px",
+      width: "auto",
     },
     {
       name: "عملیات ها",
@@ -69,7 +69,7 @@ const RefDocTable = ({ data, deleteRefDoc, openEditRefDocModal }) => {
           </button>
         </div>
       ),
-      width: "200px",
+      width: "auto",
     },
   ];
 

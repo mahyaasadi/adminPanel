@@ -37,7 +37,7 @@ const GrpAttachmentList = ({
           </button>
         </div>
       ),
-      width: "120px",
+      width: "auto",
     },
   ];
 

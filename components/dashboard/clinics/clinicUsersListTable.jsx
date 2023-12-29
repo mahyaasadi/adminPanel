@@ -16,31 +16,31 @@ const ClinicUsersListTable = ({
       name: "نام کاربر",
       selector: (row) => row.FullName,
       sortable: true,
-      width: "200px",
+      width: "auto",
     },
     {
       name: "نام مستعار",
       selector: (row) => row.NickName,
       sortable: true,
-      width: "200px",
+      width: "auto",
     },
     {
       name: "نام کاربری",
       selector: (row) => row.User,
       sortable: true,
-      width: "200px",
+      width: "auto",
     },
     {
       name: "کد ملی",
       selector: (row) => row.NID,
       sortable: true,
-      width: "200px",
+      width: "auto",
     },
     {
       name: "شماره همراه",
       selector: (row) => row.Tel,
       sortable: true,
-      width: "450px",
+      width: "auto",
     },
     {
       name: "عملیات ها",
@@ -92,7 +92,7 @@ const ClinicUsersListTable = ({
           </button>
         </div>
       ),
-      width: "150px",
+      width: "auto",
     },
   ];
 

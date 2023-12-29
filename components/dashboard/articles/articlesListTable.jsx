@@ -19,8 +19,8 @@ const ArticlesListTable = ({
     <>
       <div className="row p-4">
         {articlesData.map((articleData, index) => (
-          <div className="col-sm-6 col-lg-4 col-xxl-3 articleCard" key={index}>
-            <div className="card">
+          <div className="col-sm-6 col-lg-4 col-xxl-3" key={index}>
+            <div className="card articleCard">
               <div className="card-body">
                 <div className="articleImgContainer">
                   <img

@@ -54,7 +54,7 @@ const ArticleTagsListTable = ({ data, updateArticleTag, deleteArticleTag }) => {
           </button>
         </div>
       ),
-      width: "200px",
+      width: "auto",
     },
   ];
 

@@ -99,7 +99,7 @@ const ArticleGroupsListTable = ({
           )}
         </div>
       ),
-      width: "200px",
+      width: "auto",
     },
   ];
 

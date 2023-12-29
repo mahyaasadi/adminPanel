@@ -62,7 +62,7 @@ const DoctorsListTable = ({ data, deletePhysician, updatePhysician }) => {
           </button>
         </div>
       ),
-      width: "200px",
+      width: "auto",
     },
   ];
 

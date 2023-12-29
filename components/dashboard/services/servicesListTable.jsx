@@ -15,13 +15,13 @@ const ServicesListTable = ({ data, deleteService, updateService }) => {
       name: "کد خدمت",
       selector: (row) => row._id,
       sortable: true,
-      width: "120px",
+      width: "100px",
     },
     {
       name: "نام خدمت",
-      selector: (row) => row.Service.substr(0, 35) + " ...",
+      selector: (row) => row.Service.substr(0, 45) + " ...",
       sortable: true,
-      width: "350px",
+      width: "340px",
     },
     {
       name: "تعرفه دولتی",

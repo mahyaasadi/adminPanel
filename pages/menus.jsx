@@ -58,8 +58,8 @@ const MenusManagement = ({ UserData }) => {
     checked
       ? setMenuPermissionStatus({ menuAccessList: [...menuAccessList, value] })
       : setMenuPermissionStatus({
-          menuAccessList: menuAccessList.filter((e) => e !== value),
-        });
+        menuAccessList: menuAccessList.filter((e) => e !== value),
+      });
   };
 
   // subMenu permission checkbox
@@ -437,8 +437,6 @@ const MenusManagement = ({ UserData }) => {
                     updateMenu={updateMenu}
                   />
                 </div>
-
-                <div id="tablepagination" className="dataTables_wrapper"></div>
               </div>
             </div>
           </div>

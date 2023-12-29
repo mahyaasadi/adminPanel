@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { getSession } from "lib/session";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
+import { convertBase64 } from "utils/convertBase64";
 import Loading from "components/commonComponents/loading/loading";
 import CenterSearch from "components/dashboard/centers/centerSearch";
 import CentersListTable from "components/dashboard/centers/centersListTable";
@@ -67,7 +68,7 @@ const CentersManagement = ({ UserData }) => {
     );
   };
 
-  //get all centers
+  // Get all centers
   const getCentersData = () => {
     setIsLoading(true);
     let url = "Center/getAll";
@@ -84,16 +85,6 @@ const CentersManagement = ({ UserData }) => {
         setIsLoading(false);
         ErrorAlert("خطا", "خطا در دریافت اطلاعات مرکز");
       });
-  };
-
-  // Convert logoUrl to Base64
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => resolve(fileReader.result);
-      fileReader.onerror = (error) => reject(error);
-    });
   };
 
   let logo = null;
@@ -671,19 +662,6 @@ const CentersManagement = ({ UserData }) => {
               <div className="col-sm-12">
                 <div className="card">
                   <div className="card-header border-bottom-0">
-                    <div className="row align-items-center">
-                      <div className="col">
-                        <h5 className="card-title font-16">لیست مراکز</h5>
-                      </div>
-                      <div className="col-auto d-flex flex-wrap">
-                        <div className="form-custom me-2">
-                          <div
-                            id="tableSearch"
-                            className="dataTables_wrapper"
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
 
                   <CentersListTable
@@ -701,12 +679,11 @@ const CentersManagement = ({ UserData }) => {
                     removeSearchableCenter={removeSearchableCenter}
                   />
                 </div>
-
-                <div id="tablepagination" className="dataTables_wrapper"></div>
               </div>
             </div>
           </div>
         )}
+
         <AddCenterModal
           addCenter={addCenter}
           provinceOptionsList={provinceOptionsList}

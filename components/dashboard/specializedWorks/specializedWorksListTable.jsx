@@ -58,7 +58,7 @@ const SpecialiazedWorksListTable = ({ data, updateSpeWork, deleteSpeWork }) => {
           </button>
         </div>
       ),
-      width: "200px",
+      width: "auto",
     },
   ];
 

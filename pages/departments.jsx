@@ -46,13 +46,13 @@ const Departments = ({ UserData }) => {
 
     checked
       ? setDepartmentsCheckboxStatus({
-          departmentsOptionsList: [...departmentsOptionsList, value],
-        })
+        departmentsOptionsList: [...departmentsOptionsList, value],
+      })
       : setDepartmentsCheckboxStatus({
-          departmentsOptionsList: departmentsOptionsList.filter(
-            (e) => e !== value
-          ),
-        });
+        departmentsOptionsList: departmentsOptionsList.filter(
+          (e) => e !== value
+        ),
+      });
   };
 
   function getModality() {
@@ -167,14 +167,6 @@ const Departments = ({ UserData }) => {
                       بخش های مرکز
                       {""} {hiddenData?.name}
                     </p>
-                  </div>
-                  <div className="col-auto d-flex flex-wrap">
-                    <div className="form-custom me-2">
-                      <div
-                        id="tableSearch"
-                        className="dataTables_wrapper"
-                      ></div>
-                    </div>
                   </div>
                 </div>
               </div>

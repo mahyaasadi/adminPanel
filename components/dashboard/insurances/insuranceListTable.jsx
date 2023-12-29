@@ -56,7 +56,7 @@ const InsuranceListTable = ({ data, deleteInsurance, updateInsurance }) => {
           </button>
         </div>
       ),
-      width: "200px",
+      width: "auto",
     },
   ];
 

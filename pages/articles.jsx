@@ -5,6 +5,7 @@ import Head from "next/head";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
+import { convertBase64 } from "utils/convertBase64";
 import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import ArticlesListTable from "components/dashboard/articles/articlesListTable";
@@ -182,16 +183,6 @@ const Articles = ({ UserData }) => {
     }
   }
 
-  // Convert imageUrl to Base64
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => resolve(fileReader.result);
-      fileReader.onerror = (error) => reject(error);
-    });
-  };
-
   // Add Article
   let articleImg = null;
   const addArticle = async (e) => {
@@ -293,10 +284,10 @@ const Articles = ({ UserData }) => {
     index === -1
       ? console.log("no match")
       : setArticlesData([
-          ...articlesData.slice(0, index),
-          g,
-          ...articlesData.slice(index + 1),
-        ]);
+        ...articlesData.slice(0, index),
+        g,
+        ...articlesData.slice(index + 1),
+      ]);
   };
 
   // Delete Article
@@ -516,9 +507,7 @@ const Articles = ({ UserData }) => {
     ActiveArticleID = id;
   };
 
-  const openAddArticleVideoModal = () => {
-    $("#addArticleVideoModal").modal("show");
-  };
+  const openAddArticleVideoModal = () => $("#addArticleVideoModal").modal("show");
 
   // Add Article Video
   let articleVideo = null;
@@ -1088,18 +1077,7 @@ const Articles = ({ UserData }) => {
             <div className="row">
               <div className="">
                 <div className="card">
-                  <div className="card-header border-bottom-0">
-                    <div className="row align-items-center">
-                      <div className="col-auto d-flex flex-wrap">
-                        <div className="form-custom me-2">
-                          <div
-                            id="tableSearch"
-                            className="dataTables_wrapper"
-                          ></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <div className="card-header border-bottom-0"></div>
 
                   <ArticlesListTable
                     articlesData={currentItems}
@@ -1204,29 +1182,29 @@ const Articles = ({ UserData }) => {
             entityType === "tag"
               ? articleTagsOptionsList
               : entityType === "group"
-              ? articleGroupsOptionsList
-              : relatedArticlesOptions
+                ? articleGroupsOptionsList
+                : relatedArticlesOptions
           }
           FUSelectEntity={
             entityType === "tag"
               ? FUSelectArticleTag
               : entityType === "group"
-              ? FUSelectArticleGroup
-              : FUSelectRelatedArticle
+                ? FUSelectArticleGroup
+                : FUSelectRelatedArticle
           }
           onSubmit={
             entityType === "tag"
               ? addTagToArticle
               : entityType === "group"
-              ? addGrpToArticle
-              : addRelatedArticle
+                ? addGrpToArticle
+                : addRelatedArticle
           }
           selectedOption={
             entityType === "tag"
               ? selectedTag
               : entityType === "group"
-              ? selectedGroup
-              : selectedRelatedArticle
+                ? selectedGroup
+                : selectedRelatedArticle
           }
         />
 

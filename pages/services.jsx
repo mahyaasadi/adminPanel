@@ -297,7 +297,6 @@ const Services = ({ UserData }) => {
                   />
                 )}
               </div>
-              <div id="tablepagination" className="dataTables_wrapper"></div>
             </div>
           </div>
         </div>

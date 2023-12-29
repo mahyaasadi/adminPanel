@@ -67,14 +67,15 @@ const ArticleGroupsModal = ({
                             توضیحات <span className="text-danger">*</span>
                         </label>
                         <div className="col p-0">
-                            <input
+                            <textarea
                                 className="form-control floating inputPadding rounded"
                                 type="text"
                                 name={mode == "add" ? "articleGroupDescription" : "editArticleGrpDes"}
                                 defaultValue={mode === "edit" ? data.Des : ""}
+                                cols={10}
                                 key={data.Des}
                                 required
-                            />
+                            ></textarea>
                         </div>
                     </div>
 
