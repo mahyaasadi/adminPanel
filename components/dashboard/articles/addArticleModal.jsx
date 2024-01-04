@@ -52,9 +52,9 @@ const AddArticleModal = ({ addArticle, setArticleDateInDB, isLoading }) => {
           <div className="modal-body centerModalBody">
             <form dir="rtl" onSubmit={addArticle}>
               <div className="row">
-                <div className="form-group col">
+                <div className="form-group col-md-4 col-12">
                   <label className="lblAbs font-12">
-                    عنوان <span className="text-danger">*</span>
+                    عنوان صفحه <span className="text-danger">*</span>
                   </label>
                   <div className="col p-0">
                     <input
@@ -66,7 +66,21 @@ const AddArticleModal = ({ addArticle, setArticleDateInDB, isLoading }) => {
                   </div>
                 </div>
 
-                <div className="form-group col">
+                <div className="form-group col-md-4 col-12">
+                  <label className="lblAbs font-12">
+                    Heading <span className="text-danger">*</span>
+                  </label>
+                  <div className="col p-0">
+                    <input
+                      type="text"
+                      name="addArticleHeading"
+                      className="form-control floating inputPadding rounded"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group col-md-4 col-12">
                   <label className="lblAbs font-12">
                     عنوان انگلیسی <span className="text-danger">*</span>
                   </label>
@@ -123,7 +137,7 @@ const AddArticleModal = ({ addArticle, setArticleDateInDB, isLoading }) => {
                     hidden="hidden"
                     id="showInSlider"
                     name="articleShowInSlider"
-                  // required
+                    // required
                   />
                   <label
                     className="showInsliderSwitch font-12"

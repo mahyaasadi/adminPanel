@@ -83,7 +83,7 @@ const EditArticleModal = ({
                     value={data._id}
                   />
                   <label className="lblAbs font-12">
-                    عنوان<span className="text-danger">*</span>
+                    عنوان صفحه <span className="text-danger">*</span>
                   </label>
                   <div className="col p-0">
                     <input
@@ -93,6 +93,22 @@ const EditArticleModal = ({
                       defaultValue={data.Title}
                       key={data.Title}
                       required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group col-md-4 col-12">
+                  <label className="lblAbs font-12">
+                    Heading <span className="text-danger">*</span>
+                  </label>
+                  <div className="col p-0">
+                    <input
+                      type="text"
+                      name="editArticleHeading"
+                      className="form-control floating inputPadding rounded"
+                      required
+                      defaultValue={data.PageTitle}
+                      key={data.PageTitle}
                     />
                   </div>
                 </div>

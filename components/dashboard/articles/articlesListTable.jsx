@@ -67,7 +67,7 @@ const ArticlesListTable = ({
                   <button
                     type="button"
                     data-pr-position="top"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12 subArticle"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 subArticle d-flex align-items-center"
                     onClick={() =>
                       openSubArticleModal(articleData, articleData._id)
                     }
@@ -82,7 +82,7 @@ const ArticlesListTable = ({
                   <button
                     type="button"
                     data-pr-position="top"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12 articleGrp"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 articleGrp d-flex align-items-center"
                     onClick={() =>
                       openGrpAttachmentModal(
                         articleData.EngTitle,
@@ -100,7 +100,7 @@ const ArticlesListTable = ({
                   <button
                     type="button"
                     data-pr-position="top"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12 articleTag"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 articleTag d-flex align-items-center"
                     onClick={() =>
                       openTagsAttachmentModal(
                         articleData.EngTitle,
@@ -119,7 +119,7 @@ const ArticlesListTable = ({
                   <button
                     type="button"
                     data-pr-position="top"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12 articleVids"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 articleVids d-flex align-items-center"
                     onClick={() =>
                       openArticleVideoModal(articleData, articleData._id)
                     }
@@ -134,7 +134,7 @@ const ArticlesListTable = ({
                   <button
                     type="button"
                     data-pr-position="top"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12 relatedArticles"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 relatedArticles d-flex align-items-center"
                     onClick={() =>
                       openRelatedArticlesModal(
                         articleData.EngTitle,
@@ -153,7 +153,7 @@ const ArticlesListTable = ({
                   <button
                     type="button"
                     data-pr-position="top"
-                    className="padding-sm btn btn-sm btn-outline-primary font-12 faq"
+                    className="padding-sm btn btn-sm btn-outline-primary font-12 faq d-flex align-items-center"
                     onClick={() =>
                       openFAQModal(
                         articleData.EngTitle,
@@ -171,7 +171,7 @@ const ArticlesListTable = ({
 
                   <button
                     button="button"
-                    className="padding-sm btn btn-sm btn-outline-secondary btn-border-left editArticle"
+                    className="padding-sm btn btn-sm btn-outline-secondary btn-border-left editArticle d-flex align-items-center"
                     onClick={() => updateArticle(articleData, articleData._id)}
                     data-pr-position="top"
                   >
@@ -183,7 +183,7 @@ const ArticlesListTable = ({
                   </button>
                   <button
                     type="button"
-                    className="padding-sm btn btn-sm btn-outline-danger deleteArticle"
+                    className="padding-sm btn btn-sm btn-outline-danger deleteArticle d-flex align-items-center"
                     data-pr-position="top"
                     onClick={() => deleteArticle(articleData._id)}
                   >

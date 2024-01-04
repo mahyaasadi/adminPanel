@@ -199,6 +199,7 @@ const Articles = ({ UserData }) => {
     let url = "Article/add";
     let data = {
       Title: formProps.addArticleTitle,
+      PageTitle: formProps.addArticleHeading,
       EngTitle: formProps.addArticleEngName,
       Creator: formProps.addArticleAuthor,
       POT: formProps.addArticlePOT,
@@ -251,6 +252,7 @@ const Articles = ({ UserData }) => {
     let url = `Article/update/${ActiveArticleID}`;
     let Data = {
       Title: formProps.editArticleTitle,
+      PageTitle: formProps.editArticleHeading,
       EngTitle: formProps.editArticleEngName,
       Creator: formProps.editArticleAuthor,
       POT: formProps.editArticlePOT,
@@ -262,12 +264,9 @@ const Articles = ({ UserData }) => {
       Image: newArticleImg,
     };
 
-    console.log({ Data });
-
     axiosClient
       .put(url, Data)
       .then((response) => {
-        console.log(response.data);
         updateArticleItem(formProps.editArticleID, response.data);
         $("#editArticleModal").modal("hide");
       })
@@ -284,10 +283,10 @@ const Articles = ({ UserData }) => {
     index === -1
       ? console.log("no match")
       : setArticlesData([
-        ...articlesData.slice(0, index),
-        g,
-        ...articlesData.slice(index + 1),
-      ]);
+          ...articlesData.slice(0, index),
+          g,
+          ...articlesData.slice(index + 1),
+        ]);
   };
 
   // Delete Article
@@ -507,7 +506,8 @@ const Articles = ({ UserData }) => {
     ActiveArticleID = id;
   };
 
-  const openAddArticleVideoModal = () => $("#addArticleVideoModal").modal("show");
+  const openAddArticleVideoModal = () =>
+    $("#addArticleVideoModal").modal("show");
 
   // Add Article Video
   let articleVideo = null;
@@ -1182,29 +1182,29 @@ const Articles = ({ UserData }) => {
             entityType === "tag"
               ? articleTagsOptionsList
               : entityType === "group"
-                ? articleGroupsOptionsList
-                : relatedArticlesOptions
+              ? articleGroupsOptionsList
+              : relatedArticlesOptions
           }
           FUSelectEntity={
             entityType === "tag"
               ? FUSelectArticleTag
               : entityType === "group"
-                ? FUSelectArticleGroup
-                : FUSelectRelatedArticle
+              ? FUSelectArticleGroup
+              : FUSelectRelatedArticle
           }
           onSubmit={
             entityType === "tag"
               ? addTagToArticle
               : entityType === "group"
-                ? addGrpToArticle
-                : addRelatedArticle
+              ? addGrpToArticle
+              : addRelatedArticle
           }
           selectedOption={
             entityType === "tag"
               ? selectedTag
               : entityType === "group"
-                ? selectedGroup
-                : selectedRelatedArticle
+              ? selectedGroup
+              : selectedRelatedArticle
           }
         />
 

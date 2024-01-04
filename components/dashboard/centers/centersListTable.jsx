@@ -25,14 +25,14 @@ const CentersListTable = ({
 }) => {
   const router = useRouter();
 
-  data?.map((center, index) => data[index].rowNumber = index + 1)
+  data?.map((center, index) => (data[index].rowNumber = index + 1));
 
   const columns = [
     {
       name: "ردیف",
       selector: (row) => row.rowNumber,
       sortable: true,
-      width: "85px",
+      width: "auto",
     },
     {
       name: "نام مرکز",
@@ -49,7 +49,7 @@ const CentersListTable = ({
           {row.Name}
         </Link>
       ),
-      width: "380px",
+      width: "auto",
     },
     {
       name: "لوگو",
@@ -67,7 +67,7 @@ const CentersListTable = ({
               className="btn removeImgBtn tooltip-button"
               type="button"
               data-pr-position="top"
-            // onClick={}
+              // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>
@@ -75,7 +75,7 @@ const CentersListTable = ({
         ) : (
           ""
         ),
-      width: "150px",
+      width: "auto",
     },
     {
       name: "اطلاعات مراکز",
@@ -93,10 +93,14 @@ const CentersListTable = ({
             })
           );
 
-          router.push({
-            pathname: e.value.pathname,
-            query: e.value.query,
-          });
+          router.push(
+            {
+              pathname: e.value.pathname,
+              query: e.value.query,
+            },
+            undefined,
+            { shallow: true }
+          );
         };
 
         const linkOptionTemplate = (option, props) => {
@@ -152,7 +156,7 @@ const CentersListTable = ({
         ];
 
         return (
-          <div className="w-50">
+          <div className="w-75">
             <Dropdown
               value={localSelectedLink}
               options={localLinks}
@@ -164,7 +168,7 @@ const CentersListTable = ({
           </div>
         );
       },
-      width: "400px",
+      width: "auto",
     },
     {
       name: "عملیات ها",
@@ -297,7 +301,7 @@ const CentersListTable = ({
           </button>
         </div>
       ),
-      width: "150px",
+      width: "auto",
     },
   ];
 

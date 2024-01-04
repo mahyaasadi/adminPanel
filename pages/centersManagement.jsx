@@ -615,11 +615,11 @@ const CentersManagement = ({ UserData }) => {
     const { searchBy, searchedText, province, city } = router.query;
 
     if (
-      searchBy &&
-      searchedText &&
-      (searchBy !== selectedSearchByOption ||
-        province !== selectedProvinceList ||
-        city !== SelectedCity)
+      searchBy ||
+      searchedText ||
+      searchBy !== selectedSearchByOption ||
+      province !== selectedProvinceList ||
+      city !== SelectedCity
     ) {
       fetchCenterData(searchBy, searchedText, province, city);
       // setSelectedProvinceList(province);
@@ -661,8 +661,7 @@ const CentersManagement = ({ UserData }) => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="card">
-                  <div className="card-header border-bottom-0">
-                  </div>
+                  <div className="card-header border-bottom-0"></div>
 
                   <CentersListTable
                     data={centersData}

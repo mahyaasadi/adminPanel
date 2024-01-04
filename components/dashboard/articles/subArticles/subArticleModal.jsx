@@ -11,8 +11,6 @@ const SubArticlesModal = ({
   isLoading,
   openSubTextEditor,
 }) => {
-  console.log("subData", data);
-
   const MoveToUp = (id) => {
     let index = data.findIndex((x) => x._id === id);
 
@@ -24,7 +22,6 @@ const SubArticlesModal = ({
       data[ParentIndex] = thisIndexData;
 
       let thisElement = $("#CardContent" + id);
-      // console.log(thisElement);
       let parentElement = $("#CardContent" + ParentIndexData._id);
       $("#Card" + index).html(parentElement);
       $("#Card" + ParentIndex).html(thisElement);
