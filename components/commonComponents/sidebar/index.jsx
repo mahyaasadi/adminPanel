@@ -18,7 +18,7 @@ const Sidebar = ({ UserData }) => {
 
   return (
     <>
-      <div className="sidebar" id="sidebar">
+      <div className="sidebar shadow" id="sidebar">
         <div className="sidebar-inner slimscroll">
           <div id="sidebar-menu" className="sidebar-menu">
             <ul>
@@ -148,9 +148,8 @@ const Sidebar = ({ UserData }) => {
                   <span className="menu-arrow"></span>
                 </a>
                 <ul
-                  className={`hiddenSidebar ${
-                    submenuOpen ? "d-block" : "hidden"
-                  }`}
+                  className={`hiddenSidebar ${submenuOpen ? "d-block" : "hidden"
+                    }`}
                 >
                   <li
                     className={router.pathname == "/articles" ? "active" : ""}

@@ -7,6 +7,7 @@ import Loading from "components/commonComponents/loading/loading";
 import { ErrorAlert, SuccessAlert } from "class/AlertManage.js";
 import SubDepartmentsList from "components/dashboard/subDepartments/subDepartmentsList";
 import DepartmentsHeader from "components/dashboard/subDepartments/departmentsHeader/departmentsHeader";
+import { Skeleton } from "primereact/skeleton";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -34,6 +35,8 @@ const SubDepartments = ({ UserData }) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [submitIsLoading, setSubmitIsLoading] = useState(false);
+  const [subDepIsLoading, setSubDepIsLoading] = useState(false)
+
   const [hiddenData, setHiddenData] = useState(null);
   const [selectAllMode, setSelectAllMode] = useState(false);
   const [selectedDepartments, setSelectedDepartments] = useState([]);
@@ -87,7 +90,7 @@ const SubDepartments = ({ UserData }) => {
 
   // get subDeps related to each department
   const handleDepartmentClick = (departmentId) => {
-    setIsLoading(true);
+    setSubDepIsLoading(true);
 
     const correspondingModality = modalityData.find(
       (mod) => mod._id === departmentId
@@ -95,10 +98,10 @@ const SubDepartments = ({ UserData }) => {
 
     if (correspondingModality) {
       setCurrentSubDepartments(correspondingModality.Sub);
-      setIsLoading(false);
+      setSubDepIsLoading(false);
     } else {
       setCurrentSubDepartments([]);
-      setIsLoading(false);
+      setSubDepIsLoading(false);
     }
   };
 
@@ -111,13 +114,13 @@ const SubDepartments = ({ UserData }) => {
 
     checked
       ? setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: [...subDepartmentsOptions, value],
-        })
+        subDepartmentsOptions: [...subDepartmentsOptions, value],
+      })
       : setSubDepartmentCheckboxStatus({
-          subDepartmentsOptions: subDepartmentsOptions.filter(
-            (e) => e !== value
-          ),
-        });
+        subDepartmentsOptions: subDepartmentsOptions.filter(
+          (e) => e !== value
+        ),
+      });
   };
 
   const checkAllSubDeps = () => {
@@ -215,12 +218,18 @@ const SubDepartments = ({ UserData }) => {
       </Head>
       <div className="page-wrapper">
         <div className="content container-fluid">
-          <DepartmentsHeader
-            data={selectedDepartments}
-            handleDepartmentClick={handleDepartmentClick}
-          />
+          {!isLoading ? (
+            <DepartmentsHeader
+              data={selectedDepartments}
+              handleDepartmentClick={handleDepartmentClick}
+            />
+          ) : (
+            <div className="mb-1 depHedaerSkeleton">
+              <Skeleton></Skeleton>
+            </div>
+          )}
 
-          {isLoading ? (
+          {subDepIsLoading ? (
             <Loading />
           ) : (
             <div className="row">
@@ -246,6 +255,7 @@ const SubDepartments = ({ UserData }) => {
                     </div>
                   </div>
 
+
                   <SubDepartmentsList
                     data={currentSubDepartments}
                     handleCheckedSubDepartments={handleCheckedSubDepartments}
@@ -259,6 +269,7 @@ const SubDepartments = ({ UserData }) => {
                     }
                     submitIsLoading={submitIsLoading}
                   />
+
                 </div>
               </div>
             </div>

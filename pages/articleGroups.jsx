@@ -43,6 +43,7 @@ const ArticleGroupsManagement = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
+        console.log(response.data);
         setArticleGroupsData(response.data);
         setIsLoading(false);
       })
@@ -70,7 +71,7 @@ const ArticleGroupsManagement = ({ UserData }) => {
       Title: formProps.articleGroupTitle,
       EngTitle: formProps.articleGroupEngTitle,
       Des: formProps.articleGroupDescription,
-      Sort: formProps.articlePriority,
+      Sort: parseInt(formProps.articlePriority),
     };
 
     console.log(data);
@@ -111,7 +112,7 @@ const ArticleGroupsManagement = ({ UserData }) => {
       Title: formProps.editArticleGrpTitle,
       EngTitle: formProps.editArticleGrpEngTitle,
       Des: formProps.editArticleGrpDes,
-      Sort: formProps.articlePriority,
+      Sort: parseInt(formProps.articlePriority),
     };
 
     axiosClient
@@ -120,6 +121,9 @@ const ArticleGroupsManagement = ({ UserData }) => {
         console.log(response.data);
         updateArticleGroupItem(formProps.editArticleGrpID, response.data);
 
+        setTimeout(() => {
+          getAllArticleGroups()
+        }, 200);
         setShowModal(false);
         setIsLoading(false);
       })

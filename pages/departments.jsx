@@ -29,6 +29,7 @@ const Departments = ({ UserData }) => {
 
   const [departmentsData, setDepartmentsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [depIsLoading, setDepIsLoading] = useState(false)
 
   const [departmentsCheckboxStatus, setDepartmentsCheckboxStatus] = useState({
     departmentsOptionsList: [],
@@ -97,11 +98,12 @@ const Departments = ({ UserData }) => {
 
   const SubmitFrmSetDepartment = (e) => {
     e.preventDefault();
-    CenterID = Router.query.id;
+    setDepIsLoading(true);
 
+    CenterID = Router.query.id;
+    let selectedDepartments = [];
     let data = $(".checkbox-input:checked").serialize();
     data = data.split("&");
-    let selectedDepartments = [];
 
     data.map((dep) => {
       let depId = dep.replace("Dep=", "");
@@ -128,11 +130,13 @@ const Departments = ({ UserData }) => {
 
     axiosClient
       .post(url, PostData)
-      .then((response) =>
+      .then((response) => {
+        setDepIsLoading(false)
         SuccessAlert("موفق !", "ذخیره اطلاعات با موفقیت انجام گردید")
-      )
+      })
       .catch((error) => {
         console.log(error);
+        setDepIsLoading(false)
       });
   };
 
@@ -184,10 +188,24 @@ const Departments = ({ UserData }) => {
                     handleCheckedDepartments={handleCheckedDepartments}
                   />
                 </div>
+
                 <div className="submitDepartments-btn d-flex justify-center w-100">
-                  <button className="btn btn-sm btn-secondary rounded col-lg-4 col-7">
-                    ثبت
-                  </button>
+                  {!depIsLoading ? (
+                    <button className="btn btn-secondary rounded col-lg-4 col-7">
+                      ثبت
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-secondary rounded col-lg-4 col-7"
+                      disabled
+                    >
+                      <span
+                        className="spinner-border spinner-border-sm margin-right-1"
+                        role="status"
+                      ></span>
+                      در حال ثبت
+                    </button>
+                  )}
                 </div>
               </form>
             </div>

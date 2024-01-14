@@ -323,9 +323,9 @@ const CentersManagement = ({ UserData }) => {
   // ------ about us -------
   const getCenterAboutUs = (centerId) => {
     let url = `/CenterProfile/getAboutUs/${centerId}`;
-    setIsLoading(true);
 
     if (centerId) {
+      setIsLoading(true);
       axiosClient
         .get(url)
         .then((response) => {
@@ -614,17 +614,17 @@ const CentersManagement = ({ UserData }) => {
   useEffect(() => {
     const { searchBy, searchedText, province, city } = router.query;
 
-    if (
-      searchBy ||
-      searchedText ||
-      searchBy !== selectedSearchByOption ||
-      province !== selectedProvinceList ||
-      city !== SelectedCity
-    ) {
-      fetchCenterData(searchBy, searchedText, province, city);
-      // setSelectedProvinceList(province);
-      // setSelectedCity(city);
-    }
+    // if (
+    //   searchBy ||
+    //   searchedText ||
+    //   searchBy !== selectedSearchByOption ||
+    //   province !== selectedProvinceList ||
+    //   city !== SelectedCity
+    // ) {
+    fetchCenterData(searchBy, searchedText, province, city);
+    // setSelectedProvinceList(province);
+    // setSelectedCity(city);
+    // }
   }, [router.query]);
 
   return (

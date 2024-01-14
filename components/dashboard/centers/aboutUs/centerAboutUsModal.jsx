@@ -1,5 +1,6 @@
 import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
+import { Tooltip } from "primereact/tooltip";
 
 const CenterAboutUsModal = ({ data, CenterName, updateAboutUs }) => {
   return (
@@ -13,9 +14,9 @@ const CenterAboutUsModal = ({ data, CenterName, updateAboutUs }) => {
         <div className="modal-content">
           <div className="modal-header">
             <div className="loeing-header">
-                <p className="mb-0 text-secondary font-14 fw-bold">درباره مرکز</p>
-                <span className="ServiceName font-13">{CenterName}</span>
-              </div>
+              <p className="mb-0 text-secondary font-14 fw-bold">درباره مرکز</p>
+              <span className="ServiceName font-13">{CenterName}</span>
+            </div>
             <button
               type="button"
               className="close-btn"
@@ -31,12 +32,12 @@ const CenterAboutUsModal = ({ data, CenterName, updateAboutUs }) => {
             <div className="d-flex justify-flex-end gap-1 marginb-1">
               <button
                 onClick={() => updateAboutUs(data)}
-                className="btn btn-primary font-13"
+                className="btn btn-primary font-13 editAboutUs"
               >
-                <i className="me-1">
-                  <FeatherIcon icon="edit-3" style={{ width: "16px" }} />
-                </i>{" "}
-                ویرایش
+                {/* <i className="me-1"> */}
+                <FeatherIcon icon="edit-3" style={{ width: "16px" }} />
+                {/* </i>{" "} */}
+                <Tooltip target=".editAboutUs">ویرایش</Tooltip>
               </button>
             </div>
 

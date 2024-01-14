@@ -30,6 +30,7 @@ const BusinessHoursModal = ({
               </i>
             </button>
           </div>
+          
           <div className="modal-body">
             <div className="d-flex justify-flex-end gap-1 marginb-1">
               <button

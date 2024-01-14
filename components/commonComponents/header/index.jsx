@@ -22,7 +22,11 @@ const Header = ({ UserData }) => {
     settask1(!task1);
   };
 
-  const handlesidebar = () => document.body.classList.toggle("mini-sidebar");
+  const handlesidebar = () => {
+    document.body.classList.toggle("mini-sidebar");
+    $(".hiddenSidebar").removeClass("d-block");
+    $(".hiddenSidebar").attr("style", "display: none");
+  }
 
   const handlesidebarmobilemenu = () => document.body.classList.toggle("slide-nav");
 
@@ -46,18 +50,21 @@ const Header = ({ UserData }) => {
 
   return (
     <>
-      <div className="content-header">
+      <div className="content-header shadow-sm">
         {/* Logo */}
         <div className="header-left">
           <Link href="/dashboard" className="logo">
-            <Image
+            {/* <Image
               src={headerLogo}
               alt="Logo"
               unoptimized={true}
               priority={true}
-            />
+            /> */}
+
+            ایران نوبت
           </Link>
-          <Link href="#" id="toggle_btn" onClick={handlesidebar}>
+
+          <Link href="#" id="toggle_btn" className="toggle_btn" onClick={handlesidebar}>
             <FeatherIcon icon="chevrons-left" />
           </Link>
         </div>

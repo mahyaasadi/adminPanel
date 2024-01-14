@@ -43,45 +43,46 @@ const EditAboutUsModal = ({ data, isLoading, editCenterAboutUs }) => {
               <div className="row">
                 <div className="form-group">
                   <div className="col p-0">
-                      <input
-                        type="hidden"
-                        name="editCenterAboutUsID"
-                        defaultValue={data._id}
-                        key={data._id}
-                      />
+                    <input
+                      type="hidden"
+                      name="editCenterAboutUsID"
+                      defaultValue={data._id}
+                      key={data._id}
+                    />
 
-                      <label className="lblAbs font-14">درباره ما</label>
-                      <textarea
-                        type="text"
-                        className="form-control floating inputPadding rounded font-13"
-                        name="editAboutUsText"
-                        defaultValue={data.AboutUs}
-                        key={data.AboutUs}
-                      ></textarea>
+                    <label className="lblAbs font-15 fw-bold">درباره ما</label>
+                    <textarea
+                      type="text"
+                      className="form-control floating inputPadding rounded font-13"
+                      name="editAboutUsText"
+                      defaultValue={data.AboutUs}
+                      key={data.AboutUs}
+                      rows="6"
+                    ></textarea>
                   </div>
                 </div>
               </div>
 
               <div className="submit-section">
-                {!isLoading ? ( 
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-save rounded"
-                >
-                  ثبت تغییرات
-                </button>
+                {!isLoading ? (
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-save rounded font-13"
+                  >
+                    ثبت تغییرات
+                  </button>
                 ) : (
-                <button
-                  type="submit"
-                  className="btn btn-primary rounded"
-                  disabled
-                >
-                  <span
-                    className="spinner-border spinner-border-sm me-2"
-                    role="status"
-                  ></span>
-                  در حال ثبت
-                </button>
+                  <button
+                    type="submit"
+                    className="btn btn-sm btn-primary rounded"
+                    disabled
+                  >
+                    <span
+                      className="spinner-border spinner-border-sm me-2 font-13"
+                      role="status"
+                    ></span>
+                    در حال ثبت
+                  </button>
                 )}
               </div>
             </form>

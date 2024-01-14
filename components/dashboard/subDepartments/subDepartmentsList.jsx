@@ -42,21 +42,21 @@ const SubDepartmentsList = ({
               {!submitIsLoading ? (
                 <button
                   type="submit"
-                  className="btn btn-primary font-14 padding-right-2 padding-left-2"
+                  className="btn btn-primary padding-right-2 padding-left-2"
                 >
                   ثبت تغییرات
                 </button>
               ) : (
                 <button
                   type="submit"
-                  className="btn btn-secondary font-13 d-flex align-items-center"
+                  className="btn btn-secondary d-flex align-items-center"
                   disabled
                 >
+                  در حال ثبت
                   <span
-                    className="spinner-border spinner-border-sm margin-right-4"
+                    className="spinner-border spinner-border-sm margin-right-1"
                     role="status"
                   ></span>
-                  در حال ثبت
                 </button>
               )}
 

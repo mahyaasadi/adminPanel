@@ -80,7 +80,7 @@ const ClinicListTable = ({
               onClick={() => deleteClinic(row._id)}
               data-pr-position="top"
             >
-              <Tooltip target=".removeDoctorBtn">حذف</Tooltip>
+              <Tooltip target=".removeDoctorBtn">غیر فعال سازی</Tooltip>
               <FeatherIcon
                 style={{ width: "16px", height: "16px" }}
                 icon="trash-2"

@@ -27,7 +27,7 @@ const DepartmentsList = ({ departmentsData, handleCheckedDepartments }) => {
                   height="55px"
                 />
 
-                <span className="checkbox-label">
+                <span className="checkbox-label" dir="rtl">
                   {departmentData.PerFullName}
                 </span>
               </div>

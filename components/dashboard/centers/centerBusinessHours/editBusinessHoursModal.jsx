@@ -41,104 +41,106 @@ const EditBusinessHourModal = ({ data, editBusinessHours, isLoading }) => {
           <div className="modal-body">
             <form onSubmit={editBusinessHours}>
               <div className="row">
-                <div className="form-group col">
-                  <div className="col p-0">
-                    {data.empty !== 1
-                      ? data.map((item, index) => (
-                        <div key={index} className="row marginb-md1">
-                          <div className="col-sm-3 col-12">
-                            <input
-                              type="hidden"
-                              name="editDayInWeekNumber"
-                              defaultValue={item.Number}
-                              key={item.Number}
-                            />
+                {/* <div className="col"> */}
+                <div className="col p-0">
+                  {data.empty !== 1
+                    ? data.map((item, index) => (
+                      <div key={index} className="row marginb-sm">
+                        <div className="col-sm-3 col-12">
+                          <input
+                            type="hidden"
+                            name="editDayInWeekNumber"
+                            defaultValue={item.Number}
+                            key={item.Number}
+                          />
 
-                            <input
-                              type="text"
-                              id={item.Number}
-                              defaultValue={item.Name}
-                              key={item.Name}
-                              className="form-control floating inputPadding rounded text-center font-12"
-                              required
-                              readOnly
-                            />
-                          </div>
+                          <input
+                            type="text"
+                            id={item.Number}
+                            defaultValue={item.Name}
+                            key={item.Name}
+                            className="form-control floating inputPadding rounded text-center font-12"
+                            required
+                            readOnly
+                          />
+                        </div>
 
-                          <div className="col-sm-3 col-6 sm-mt-1">
-                            <label className="lblAbs font-12">
-                              ساعت شروع
-                            </label>
-                            <input
-                              type="text"
-                              dir="ltr"
-                              id={"ST" + index}
-                              onChange={handleStartTime}
-                              defaultValue={item.Start}
-                              key={item.Start}
-                              className="form-control floating inputPadding rounded text-center font-12"
-                            />
-                          </div>
+                        <div className="col-sm-3 col-6 sm-mt-1">
+                          <label className="lblAbs font-12">
+                            ساعت شروع
+                          </label>
+                          <input
+                            type="text"
+                            dir="ltr"
+                            id={"ST" + index}
+                            onChange={handleStartTime}
+                            defaultValue={item.Start}
+                            key={item.Start}
+                            placeholder="00:00"
+                            className="form-control floating inputPadding rounded text-center font-12"
+                          />
+                        </div>
 
-                          <div className="col-sm-3 col-6 sm-mt-1">
-                            <label className="lblAbs font-12">
-                              ساعت پایان
-                            </label>
-                            <input
-                              type="text"
-                              dir="ltr"
-                              id={"ET" + index}
-                              onChange={handleEndTime}
-                              defaultValue={item.End}
-                              key={item.End}
-                              className="form-control floating inputPadding rounded text-center font-12"
-                            />
-                          </div>
+                        <div className="col-sm-3 col-6 sm-mt-1">
+                          <label className="lblAbs font-12">
+                            ساعت پایان
+                          </label>
+                          <input
+                            type="text"
+                            dir="ltr"
+                            id={"ET" + index}
+                            onChange={handleEndTime}
+                            defaultValue={item.End}
+                            key={item.End}
+                            placeholder="00:00"
+                            className="form-control floating inputPadding rounded text-center font-12"
+                          />
+                        </div>
 
-                          <div className="col-sm-3">
-                            <div className="form-group d-flex align-items-center justify-center gap-3">
-                              <input
-                                type="checkbox"
-                                hidden="hidden"
-                                id={"closeCenterSwitch" + index}
-                                name="switchCloseCenter"
-                                key={item.Close}
-                                className="switchCloseCenter"
-                                defaultChecked={item.Close ? "" : "checked"}
-                                onChange={handleClosedSwitch}
-                              />
-                              <label
-                                className="showInsliderSwitch mt-2"
-                                htmlFor={"closeCenterSwitch" + index}
-                              ></label>
-                              <p className="text-secondary font-11 d-flex align-items-center justify-center">
-                                باز / بسته
-                              </p>
-                            </div>
+                        <div className="col-sm-3">
+                          <div className="form-group d-flex align-items-center justify-center gap-3">
+                            <input
+                              type="checkbox"
+                              hidden="hidden"
+                              id={"closeCenterSwitch" + index}
+                              name="switchCloseCenter"
+                              key={item.Close}
+                              className="switchCloseCenter"
+                              defaultChecked={item.Close ? "" : "checked"}
+                              onChange={handleClosedSwitch}
+                            />
+                            <label
+                              className="showInsliderSwitch mt-2"
+                              htmlFor={"closeCenterSwitch" + index}
+                            ></label>
+                            <p className="text-secondary font-11 d-flex align-items-center justify-center">
+                              باز / بسته
+                            </p>
                           </div>
                         </div>
-                      ))
-                      : ""}
-                  </div>
+                      </div>
+                    ))
+                    : ""}
                 </div>
               </div>
+              {/* </div> */}
 
               <div className="submit-section mt-0">
                 {!isLoading ? (
                   <button
                     type="submit"
-                    className="btn btn-primary btn-save rounded"
+                    className="btn btn-sm btn-primary btn-save rounded font-13"
                   >
                     ثبت تغییرات
                   </button>
                 ) : (
                   <button
                     type="submit"
-                    className="btn btn-primary rounded"
+                    className="btn btn-sm btn-primary rounded"
                     disabled
                   >
                     <span
-                      className="spinner-border spinner-border-sm me-2"
+                      className="spinner-border spinner-border-sm me-2 font-13"
                       role="status"
                     ></span>
                     در حال ثبت
@@ -148,8 +150,8 @@ const EditBusinessHourModal = ({ data, editBusinessHours, isLoading }) => {
             </form>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 
