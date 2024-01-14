@@ -84,6 +84,7 @@ const Dashboard = ({ UserData }) => {
       .then((response) => {
         const labels = [];
         const counts = [];
+        console.log(response.data);
         for (let i = 0; i < response.data.length; i++) {
           const item = response.data[i];
           labels.push(item.Center);
@@ -129,7 +130,7 @@ const Dashboard = ({ UserData }) => {
                 </div>
               </div>
 
-              <OverviewStats class generalStats={generalStats} />
+              <OverviewStats generalStats={generalStats} />
 
               <div className="row">
                 <div className="chart-container col-md-7 col-12">

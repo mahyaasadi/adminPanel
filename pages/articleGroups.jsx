@@ -6,7 +6,7 @@ import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
-import ArticleGroupsModal from "components/dashboard/articles/articleGroups/articleGroupsModal"
+import ArticleGroupsModal from "components/dashboard/articles/articleGroups/articleGroupsModal";
 import ArticleGroupsListTable from "components/dashboard/articles/articleGroups/articleGroupsListTable";
 
 export const getServerSideProps = async ({ req, res }) => {
@@ -55,8 +55,8 @@ const ArticleGroupsManagement = ({ UserData }) => {
   // Add Article Group
   const openAddModal = () => {
     setModalMode("add");
-    setShowModal(true)
-  }
+    setShowModal(true);
+  };
 
   const addArticleGroup = (e) => {
     e.preventDefault();
@@ -70,6 +70,7 @@ const ArticleGroupsManagement = ({ UserData }) => {
       Title: formProps.articleGroupTitle,
       EngTitle: formProps.articleGroupEngTitle,
       Des: formProps.articleGroupDescription,
+      Sort: formProps.articlePriority,
     };
 
     console.log(data);
@@ -80,7 +81,7 @@ const ArticleGroupsManagement = ({ UserData }) => {
         console.log(response.data);
         setArticleGroupsData([...articleGroupsData, response.data]);
 
-        setShowModal(false)
+        setShowModal(false);
         e.target.reset();
         setIsLoading(false);
       })
@@ -95,7 +96,7 @@ const ArticleGroupsManagement = ({ UserData }) => {
     setEditArticleGroupData(data);
     ActiveArticleGrpID = articleGrpId;
     setShowModal(true);
-    setModalMode("edit")
+    setModalMode("edit");
   };
 
   const editArticleGroup = (e) => {
@@ -110,6 +111,7 @@ const ArticleGroupsManagement = ({ UserData }) => {
       Title: formProps.editArticleGrpTitle,
       EngTitle: formProps.editArticleGrpEngTitle,
       Des: formProps.editArticleGrpDes,
+      Sort: formProps.articlePriority,
     };
 
     axiosClient
@@ -118,7 +120,7 @@ const ArticleGroupsManagement = ({ UserData }) => {
         console.log(response.data);
         updateArticleGroupItem(formProps.editArticleGrpID, response.data);
 
-        setShowModal(false)
+        setShowModal(false);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -259,7 +261,9 @@ const ArticleGroupsManagement = ({ UserData }) => {
                   <div className="card-header border-bottom-0">
                     <div className="row align-items-center">
                       <div className="col">
-                        <h5 className="card-title font-16 text-secondary">لیست گروه مقالات</h5>
+                        <h5 className="card-title font-16 text-secondary">
+                          لیست گروه مقالات
+                        </h5>
                       </div>
                     </div>
                   </div>
