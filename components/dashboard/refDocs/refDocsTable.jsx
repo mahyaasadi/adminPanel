@@ -46,7 +46,7 @@ const RefDocTable = ({ data, deleteRefDoc, openEditRefDocModal }) => {
       cell: (row) => (
         <div className="actions d-flex gap-1">
           <button
-            className="btn btn-sm btn-outline-danger removeBtn"
+            className="btn btn-sm btn-outline-danger removeBtn d-flex justify-center align-items-center"
             onClick={() => deleteRefDoc(row._id)}
             data-pr-position="top"
           >
@@ -57,7 +57,7 @@ const RefDocTable = ({ data, deleteRefDoc, openEditRefDocModal }) => {
             />
           </button>
           <button
-            className="btn btn-sm btn-outline-secondary btn-border-left editBtn"
+            className="btn btn-sm btn-outline-secondary btn-border-left editBtn d-flex justify-center align-items-center"
             onClick={() => openEditRefDocModal(row)}
             data-pr-position="top"
           >
@@ -88,7 +88,7 @@ const RefDocTable = ({ data, deleteRefDoc, openEditRefDocModal }) => {
             defaultSortAsc={false}
             pagination
             highlightOnHover
-            paginationPerPage="20"
+            paginationPerPage="50"
             noDataComponent={
               <div style={{ padding: "24px", fontSize: "13px" }}>
                 موردی برای نمایش وجود ندارد.

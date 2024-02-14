@@ -8,8 +8,6 @@ import "cropperjs/dist/cropper.css";
 const AvatarSettings = ({ UserData, changeUserAvatar, isLoading }) => {
   const router = useRouter();
 
-  console.log({ UserData });
-
   const [avatarSrc, setAvatarSrc] = useState(UserData.Avatar);
   const [cropper, setCropper] = useState(null);
   const imageElement = useRef(null);

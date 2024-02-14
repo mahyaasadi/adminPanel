@@ -85,7 +85,6 @@ const Articles = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        // console.log("articles", response.data);
         setArticlesData(response.data);
 
         let selectRelatedArticles = [];
@@ -482,7 +481,6 @@ const Articles = ({ UserData }) => {
       axiosClient
         .put(url, data)
         .then((response) => {
-          console.log("res", response.data);
           setSubArticlesData([]);
           setTimeout(() => {
             setSubArticlesData(response.data);
@@ -527,8 +525,6 @@ const Articles = ({ UserData }) => {
       Title: formProps.addVideoTitle,
       Video: articleVideo,
     };
-
-    console.log({ data });
 
     axiosClient
       .post(url, data)

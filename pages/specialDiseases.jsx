@@ -48,7 +48,6 @@ const SpecialDiseases = ({ UserData }) => {
       axiosClient
         .get(url)
         .then(function (response) {
-          console.log(response.data);
           setDiseasesList(response.data);
           setIsLoading(false);
         })
@@ -62,7 +61,7 @@ const SpecialDiseases = ({ UserData }) => {
   // add new disease
   const openAddModal = () => {
     setModalMode("add");
-    setShowModal(true)
+    setShowModal(true);
   };
 
   const addDisease = (e) => {
@@ -85,7 +84,7 @@ const SpecialDiseases = ({ UserData }) => {
         .post(url, data)
         .then((response) => {
           setDiseasesList([...diseasesList, response.data]);
-          setShowModal(false)
+          setShowModal(false);
           setIsLoading(false);
           e.target.reset();
         })
@@ -99,8 +98,8 @@ const SpecialDiseases = ({ UserData }) => {
   // edit disease
   const updateDisease = (data) => {
     setEditDiseaseData(data);
-    setModalMode("edit")
-    setShowModal(true)
+    setModalMode("edit");
+    setShowModal(true);
   };
 
   const editDisease = (e) => {
@@ -123,9 +122,8 @@ const SpecialDiseases = ({ UserData }) => {
       axiosClient
         .post(url, data)
         .then((response) => {
-          console.log(response.data);
           updateItem(formProps.diseaseId, response.data);
-          setShowModal(false)
+          setShowModal(false);
           setIsLoading(false);
         })
         .catch((error) => {

@@ -56,8 +56,8 @@ const ArticleTagsManagement = ({ UserData }) => {
   // Add Tag to Article
   const openAddModal = () => {
     setModalMode("add");
-    setShowModal(true)
-  }
+    setShowModal(true);
+  };
 
   const addArticleTag = (e) => {
     e.preventDefault();
@@ -75,11 +75,10 @@ const ArticleTagsManagement = ({ UserData }) => {
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
         setArticleTags([...articleTags, response.data]);
 
         setIsLoading(false);
-        setShowModal(false)
+        setShowModal(false);
         e.target.reset();
       })
       .catch((error) => {
@@ -93,7 +92,7 @@ const ArticleTagsManagement = ({ UserData }) => {
     setEditArticleTagData(data);
     ActiveArticleTagID = articleTagId;
     setModalMode("edit");
-    setShowModal(true)
+    setShowModal(true);
   };
 
   const editArticleTag = (e) => {
@@ -112,10 +111,9 @@ const ArticleTagsManagement = ({ UserData }) => {
     axiosClient
       .put(url, data)
       .then((response) => {
-        console.log(response.data);
         updateArticleTagItem(formProps.editArticleTagID, response.data);
 
-        setShowModal(false)
+        setShowModal(false);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -197,7 +195,9 @@ const ArticleTagsManagement = ({ UserData }) => {
                   <div className="card-header border-bottom-0">
                     <div className="row align-items-center">
                       <div className="col">
-                        <h5 className="card-title font-16 text-secondary">لیست تگ مقالات</h5>
+                        <h5 className="card-title font-16 text-secondary">
+                          لیست تگ مقالات
+                        </h5>
                       </div>
                     </div>
                   </div>

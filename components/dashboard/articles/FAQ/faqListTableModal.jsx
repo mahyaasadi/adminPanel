@@ -145,7 +145,6 @@ export default FAQListTableModal;
 //       const currentlyActiveAccordionItemHeader = document.querySelector(
 //         ".accordion-item-header.active"
 //       );
-//       console.log("clicked");
 //       if (
 //         currentlyActiveAccordionItemHeader &&
 //         currentlyActiveAccordionItemHeader !== accordionItemHeader

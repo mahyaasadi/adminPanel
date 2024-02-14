@@ -28,6 +28,7 @@ const jdate = new JDate();
 const Dashboard = ({ UserData }) => {
   const [selectedDuration, setSelectedDuration] = useState("today");
   const [statIsLoading, setStatsIsLoading] = useState(true);
+  const [pieStatIsLoading, setPieStatIsLoading] = useState(false);
   const [generalStats, setGeneralStats] = useState([]);
   const [statsPlaceholder, setStatsPlaceholder] = useState(
     "امروز : " + jdate.format("dddd DD MMMM YYYY")
@@ -36,8 +37,9 @@ const Dashboard = ({ UserData }) => {
   const [centerTotalStats, setCenterTotalStats] = useState([]);
 
   const overviewOptions = [
-    { value: "today", label: "امروز : " + jdate.format("dddd DD MMMM YYYY") },
     { value: "lastWeek", label: "هفته گذشته" },
+    { value: "yesterday", label: "دیروز" },
+    { value: "today", label: "امروز : " + jdate.format("dddd DD MMMM YYYY") },
     {
       value: "lastMonth",
       label: "ماه جاری : " + jdate.format("MMMM YYY"),
@@ -46,12 +48,16 @@ const Dashboard = ({ UserData }) => {
 
   const getGeneralStats = (duration) => {
     setStatsIsLoading(true);
+    setPieStatIsLoading(true);
     let url = "Dashboard";
     let centerStatsUrl = "Dashboard";
 
     if (duration === "today") {
       url += "/MngTodayStatistics";
       setStatsPlaceholder("امروز : " + jdate.format("dddd DD MMMM YYYY"));
+    } else if (duration === "yesterday") {
+      url += "/MngYesterDayStatistics";
+      setStatsPlaceholder("دیروز");
     } else if (duration === "lastWeek") {
       url += "/MngLastWeekStatistics";
       setStatsPlaceholder("هفته گذشته");
@@ -62,6 +68,8 @@ const Dashboard = ({ UserData }) => {
 
     if (duration === "today") {
       centerStatsUrl += "/MngTodayStatisticsGroupByCenter";
+    } else if (duration === "yesterday") {
+      centerStatsUrl += "/MngYesterDayStatisticsGroupByCenter";
     } else if (duration === "lastWeek") {
       centerStatsUrl += "/MngLastWeekStatisticsGroupByCenter";
     } else if (duration === "lastMonth") {
@@ -71,6 +79,7 @@ const Dashboard = ({ UserData }) => {
     axiosClient
       .post(url)
       .then((response) => {
+        console.log(response.data);
         setGeneralStats(response.data);
         setStatsIsLoading(false);
       })
@@ -84,17 +93,21 @@ const Dashboard = ({ UserData }) => {
       .then((response) => {
         const labels = [];
         const counts = [];
-        console.log(response.data);
+
         for (let i = 0; i < response.data.length; i++) {
           const item = response.data[i];
-          labels.push(item.Center);
-          counts.push(item.Count);
+          if (item) {
+            labels.push(item?.Center);
+            counts.push(item?.Count);
+          }
         }
         setCenterLabels(labels);
         setCenterTotalStats(counts);
+        setPieStatIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setPieStatIsLoading(false);
       });
   };
 
@@ -107,7 +120,7 @@ const Dashboard = ({ UserData }) => {
       </Head>
       <div className="main-wrapper">
         <div className="page-wrapper">
-          {statIsLoading ? (
+          {statIsLoading || pieStatIsLoading ? (
             <Loading />
           ) : (
             <div className="content container-fluid pb-0">

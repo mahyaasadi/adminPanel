@@ -1,5 +1,6 @@
 import { Chart } from "primereact/chart";
 import { useState, useEffect } from "react";
+import Loading from "components/commonComponents/loading/loading";
 
 const PieChartComponent = ({ labels, data }) => {
   const [chartData, setChartData] = useState({});
@@ -7,11 +8,12 @@ const PieChartComponent = ({ labels, data }) => {
 
   useEffect(() => {
     const labelColors = {
-      "مرکز تصویربرداری رازی (دکتر علیزاده)": "#93bdbf",
-      "سونوگرافی و رادیولوژی ژرفا | دکتر سعید خسروی": "#2d5246",
       "ایران نوبت": "#e38766",
+      "مرکز تصویربرداری رازی (دکتر علیزاده) تهران": "#6491af",
+      "سونوگرافی و رادیولوژی ژرفا | دکتر سعید خسروی": "#2d5246",
       "کلینیک روانشناسی و مشاوره موج آرامش": "#E91E63",
-      "رادیولوژی و سونوگرافی اکباتان": "#0E76BC",
+      "مرکز رادیولوژی و سونوگرافی اکباتان تهران": "#0E76BC",
+      "مرکز رادیولوژی و سونوگرافی مهر آبادان": "#cbdc42",
     };
 
     const backgroundColors = labels.map((label) => {

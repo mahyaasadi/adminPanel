@@ -76,7 +76,6 @@ const CentersManagement = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log("all centers", response.data);
         setCentersData(response.data);
         setIsLoading(false);
       })
@@ -118,7 +117,6 @@ const CentersManagement = ({ UserData }) => {
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
         setCentersData([...centersData, response.data]);
 
         // reset
@@ -212,12 +210,9 @@ const CentersManagement = ({ UserData }) => {
         LogoName: formProps.currentLogo,
       };
 
-      console.log({ data });
-
       axiosClient
         .put(url, data)
         .then((response) => {
-          console.log(response.data);
           response.data._id = ActiveCenterID;
           updateItem(formProps.editCenterID, response.data);
 
@@ -257,7 +252,6 @@ const CentersManagement = ({ UserData }) => {
       axiosClient
         .get(url)
         .then((response) => {
-          console.log(response.data);
           setBusinessHourData(response.data);
           setIsLoading(false);
         })
@@ -284,7 +278,6 @@ const CentersManagement = ({ UserData }) => {
 
   const changeToAllDayMode = async (data) => {
     data?.map((item, index) => {
-      console.log(data[index]);
       data[index].Start = "00:00";
       data[index].End = "24:00";
       data[index].Close = false;
@@ -302,8 +295,6 @@ const CentersManagement = ({ UserData }) => {
       CenterID: ActiveCenterID,
       BusinessHours: editBusinessHourData,
     };
-
-    console.log("data", data);
 
     axiosClient
       .put(url, data)
@@ -371,7 +362,6 @@ const CentersManagement = ({ UserData }) => {
     axiosClient
       .put(url, data)
       .then((response) => {
-        console.log(response.data);
         setCenterAboutUsData(response.data);
 
         e.target.reset();
@@ -460,7 +450,6 @@ const CentersManagement = ({ UserData }) => {
       await axiosClient
         .put(url)
         .then((response) => {
-          console.log(response.data);
           changeCenterActiveState(id, false);
           setIsLoading(false);
         })
@@ -485,7 +474,6 @@ const CentersManagement = ({ UserData }) => {
       await axiosClient
         .put(url)
         .then((response) => {
-          console.log(response.data);
           changeCenterActiveState(id, true);
           setIsLoading(false);
         })
@@ -614,17 +602,11 @@ const CentersManagement = ({ UserData }) => {
   useEffect(() => {
     const { searchBy, searchedText, province, city } = router.query;
 
-    // if (
-    //   searchBy ||
-    //   searchedText ||
-    //   searchBy !== selectedSearchByOption ||
-    //   province !== selectedProvinceList ||
-    //   city !== SelectedCity
-    // ) {
-    fetchCenterData(searchBy, searchedText, province, city);
-    // setSelectedProvinceList(province);
-    // setSelectedCity(city);
-    // }
+    if (searchBy || searchedText || searchBy || province || city) {
+      fetchCenterData(searchBy, searchedText, province, city);
+      // setSelectedProvinceList(province);
+      // setSelectedCity(city);
+    }
   }, [router.query]);
 
   return (

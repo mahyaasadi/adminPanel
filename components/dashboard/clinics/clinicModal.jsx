@@ -115,7 +115,6 @@ const ClinicModal = ({
               id="clinicLogo"
               onChange={displayPreview}
               key={data.Logo}
-              //   required
             />
           </div>
 

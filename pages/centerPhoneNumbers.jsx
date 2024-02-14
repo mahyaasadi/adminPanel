@@ -50,7 +50,6 @@ const Insurance = ({ UserData }) => {
       axiosClient
         .get(url)
         .then(function (response) {
-          console.log(response.data);
           setPhoneNumbersList(response.data);
           setIsLoading(false);
         })
@@ -82,13 +81,10 @@ const Insurance = ({ UserData }) => {
       Type: selectedPhoneType,
     };
 
-    console.log("data", data);
-
     if (CenterID) {
       axiosClient
         .post(url, data)
         .then((response) => {
-          console.log(response.data);
           setPhoneNumbersList([...phoneNumbersList, response.data]);
 
           setIsLoading(false);
@@ -125,13 +121,10 @@ const Insurance = ({ UserData }) => {
       Type: formProps.editPhoneType,
     };
 
-    console.log("data", data);
-
     if (CenterID) {
       axiosClient
         .put(url, data)
         .then((response) => {
-          console.log(response.data);
           updateItem(formProps.editCenterPhoneeID, response.data);
           $("#editCenterPhoneModal").modal("hide");
           setIsLoading(false);

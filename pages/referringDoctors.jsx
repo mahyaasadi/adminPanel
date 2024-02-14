@@ -42,7 +42,6 @@ const referringDoctors = ({ UserData }) => {
     axiosClient
       .get(url)
       .then(function (response) {
-        console.log(response.data);
         setRefDocData(response.data);
         setIsLoading(false);
       })
@@ -72,12 +71,12 @@ const referringDoctors = ({ UserData }) => {
       Expertise: formProps.refDocExpertise,
       Tel: formProps.refDocTel,
       Address: formProps.refDocAddress,
+      Location: formProps.refDocLocation,
     };
 
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
         setRefDocData([response.data, ...refDocData]);
         setShowModal(false);
         setIsLoading(false);
@@ -111,14 +110,12 @@ const referringDoctors = ({ UserData }) => {
       Expertise: formProps.refDocExpertise,
       Tel: formProps.refDocTel,
       Address: formProps.refDocAddress,
+      Location: formProps.refDocLocation,
     };
-
-    console.log({ data });
 
     axiosClient
       .put(url, data)
       .then((response) => {
-        console.log(response.data);
         updateItem(formProps.refDocID, response.data);
         setShowModal(false);
         setIsLoading(false);
@@ -159,8 +156,6 @@ const referringDoctors = ({ UserData }) => {
         ID: id,
       };
 
-      console.log({ data });
-
       await axiosClient
         .delete(url, { data })
         .then((response) => {
@@ -180,7 +175,6 @@ const referringDoctors = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log(response.data);
         setRefDocData(response.data);
       })
       .catch((err) => {

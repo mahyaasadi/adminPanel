@@ -53,13 +53,11 @@ const MenusManagement = ({ UserData }) => {
     const { value, checked } = e.target;
     const { menuAccessList } = menuPermissionStatus;
 
-    // console.log(`${value} is ${checked}`);
-
     checked
       ? setMenuPermissionStatus({ menuAccessList: [...menuAccessList, value] })
       : setMenuPermissionStatus({
-        menuAccessList: menuAccessList.filter((e) => e !== value),
-      });
+          menuAccessList: menuAccessList.filter((e) => e !== value),
+        });
   };
 
   // subMenu permission checkbox
@@ -136,7 +134,6 @@ const MenusManagement = ({ UserData }) => {
     axiosClient
       .post(url, addData)
       .then((response) => {
-        console.log(response.data);
         setMenuList([...menuList, response.data]);
 
         $("#addToMenuModal").modal("hide");

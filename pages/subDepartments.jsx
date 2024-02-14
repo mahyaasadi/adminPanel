@@ -35,7 +35,7 @@ const SubDepartments = ({ UserData }) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [submitIsLoading, setSubmitIsLoading] = useState(false);
-  const [subDepIsLoading, setSubDepIsLoading] = useState(false)
+  const [subDepIsLoading, setSubDepIsLoading] = useState(false);
 
   const [hiddenData, setHiddenData] = useState(null);
   const [selectAllMode, setSelectAllMode] = useState(false);
@@ -60,7 +60,6 @@ const SubDepartments = ({ UserData }) => {
         checkedDepItems = response.data.filter((depItem) => depItem.Checked);
         modalityFistItem = checkedDepItems[0]._id;
 
-        console.log({ modalityFistItem });
         setSelectedDepartments(checkedDepItems);
         setIsLoading(false);
       })
@@ -110,17 +109,15 @@ const SubDepartments = ({ UserData }) => {
     const { value, checked } = e.target;
     const { subDepartmentsOptions } = subDepartmentCheckboxStatus;
 
-    // console.log(`${value} is ${checked}`);
-
     checked
       ? setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: [...subDepartmentsOptions, value],
-      })
+          subDepartmentsOptions: [...subDepartmentsOptions, value],
+        })
       : setSubDepartmentCheckboxStatus({
-        subDepartmentsOptions: subDepartmentsOptions.filter(
-          (e) => e !== value
-        ),
-      });
+          subDepartmentsOptions: subDepartmentsOptions.filter(
+            (e) => e !== value
+          ),
+        });
   };
 
   const checkAllSubDeps = () => {
@@ -162,7 +159,6 @@ const SubDepartments = ({ UserData }) => {
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
         SuccessAlert("موفق", "ثبت زیر بخش های مرکز با موفقیت انجام گردید!");
         setSubmitIsLoading(false);
         setSelectAllMode(false);
@@ -185,7 +181,6 @@ const SubDepartments = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log(response.data);
         setSelectedSubDepartments(response.data);
         const selectedIds = response.data.map((item) => item._id);
         setSubDepartmentCheckboxStatus({ subDepartmentsOptions: selectedIds });
@@ -255,7 +250,6 @@ const SubDepartments = ({ UserData }) => {
                     </div>
                   </div>
 
-
                   <SubDepartmentsList
                     data={currentSubDepartments}
                     handleCheckedSubDepartments={handleCheckedSubDepartments}
@@ -269,7 +263,6 @@ const SubDepartments = ({ UserData }) => {
                     }
                     submitIsLoading={submitIsLoading}
                   />
-
                 </div>
               </div>
             </div>

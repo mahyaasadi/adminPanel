@@ -45,7 +45,6 @@ const Clinics = ({ UserData }) => {
     axiosClient
       .get(url)
       .then(function (response) {
-        console.log(response.data);
         setClinicData(response.data);
         setIsLoading(false);
       })
@@ -83,12 +82,9 @@ const Clinics = ({ UserData }) => {
       Logo: clinicLogo,
     };
 
-    console.log({ data });
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
         setClinicData([...clinicData, response.data]);
 
         // reset
@@ -137,12 +133,9 @@ const Clinics = ({ UserData }) => {
         Logo: newClinicLogo ? newClinicLogo : formProps.currentLogo,
       };
 
-      console.log({ data });
-
       axiosClient
         .put(url, data)
         .then((response) => {
-          console.log(response.data);
           updateClinicItem(formProps.clinicID, response.data);
           setShowModal(false);
           setIsLoading(false);
@@ -210,9 +203,10 @@ const Clinics = ({ UserData }) => {
 
     if (result) {
       setIsLoading(true);
-      let url = `Clinic/Active/${id}`
+      let url = `Clinic/Active/${id}`;
 
-      axiosClient.put(url)
+      axiosClient
+        .put(url)
         .then((response) => {
           if (response.data.Deleted === false) {
             const activatedClinicData = clinicData.map((clinic) => {
@@ -228,9 +222,9 @@ const Clinics = ({ UserData }) => {
         .catch((err) => {
           console.log(err);
           setIsLoading(false);
-        })
+        });
     }
-  }
+  };
 
   useEffect(() => getClinicsData(), []);
 

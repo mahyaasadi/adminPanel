@@ -43,7 +43,6 @@ const ArticleGroupsManagement = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log(response.data);
         setArticleGroupsData(response.data);
         setIsLoading(false);
       })
@@ -74,12 +73,9 @@ const ArticleGroupsManagement = ({ UserData }) => {
       Sort: parseInt(formProps.articlePriority),
     };
 
-    console.log(data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
         setArticleGroupsData([...articleGroupsData, response.data]);
 
         setShowModal(false);
@@ -118,11 +114,10 @@ const ArticleGroupsManagement = ({ UserData }) => {
     axiosClient
       .put(url, data)
       .then((response) => {
-        console.log(response.data);
         updateArticleGroupItem(formProps.editArticleGrpID, response.data);
 
         setTimeout(() => {
-          getAllArticleGroups()
+          getAllArticleGroups();
         }, 200);
         setShowModal(false);
         setIsLoading(false);
@@ -171,7 +166,6 @@ const ArticleGroupsManagement = ({ UserData }) => {
       await axiosClient
         .put(url)
         .then((response) => {
-          console.log(response.data);
           ChangeImportanceState(id, true);
           setIsLoading(false);
         })
@@ -196,7 +190,6 @@ const ArticleGroupsManagement = ({ UserData }) => {
       await axiosClient
         .put(url)
         .then((response) => {
-          console.log(response.data);
           ChangeImportanceState(id, false);
           setIsLoading(false);
         })

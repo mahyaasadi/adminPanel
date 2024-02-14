@@ -29,7 +29,7 @@ const Departments = ({ UserData }) => {
 
   const [departmentsData, setDepartmentsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [depIsLoading, setDepIsLoading] = useState(false)
+  const [depIsLoading, setDepIsLoading] = useState(false);
 
   const [departmentsCheckboxStatus, setDepartmentsCheckboxStatus] = useState({
     departmentsOptionsList: [],
@@ -43,17 +43,15 @@ const Departments = ({ UserData }) => {
     const { value, checked } = e.target;
     const { departmentsOptionsList } = departmentsCheckboxStatus;
 
-    // console.log(`${value} is ${checked}`);
-
     checked
       ? setDepartmentsCheckboxStatus({
-        departmentsOptionsList: [...departmentsOptionsList, value],
-      })
+          departmentsOptionsList: [...departmentsOptionsList, value],
+        })
       : setDepartmentsCheckboxStatus({
-        departmentsOptionsList: departmentsOptionsList.filter(
-          (e) => e !== value
-        ),
-      });
+          departmentsOptionsList: departmentsOptionsList.filter(
+            (e) => e !== value
+          ),
+        });
   };
 
   function getModality() {
@@ -131,12 +129,12 @@ const Departments = ({ UserData }) => {
     axiosClient
       .post(url, PostData)
       .then((response) => {
-        setDepIsLoading(false)
-        SuccessAlert("موفق !", "ذخیره اطلاعات با موفقیت انجام گردید")
+        setDepIsLoading(false);
+        SuccessAlert("موفق !", "ذخیره اطلاعات با موفقیت انجام گردید");
       })
       .catch((error) => {
         console.log(error);
-        setDepIsLoading(false)
+        setDepIsLoading(false);
       });
   };
 

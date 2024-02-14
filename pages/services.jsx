@@ -45,7 +45,6 @@ const Services = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log("modalities", response.data);
         setIsLoading(false);
         setModalityData(response.data);
       })
@@ -66,7 +65,6 @@ const Services = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log("services", response.data);
         setServicesData(response.data);
         setIsLoading(false);
       })
@@ -116,12 +114,9 @@ const Services = ({ UserData }) => {
       SA: formProps.arteshShare,
     };
 
-    console.log("data", data);
-
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log("response", response.data);
         setServicesData([...servicesData, response.data]);
 
         $("#addServiceModal").modal("hide");
@@ -141,10 +136,6 @@ const Services = ({ UserData }) => {
     ActiveServiceID = serviceID;
 
     $("#editServiceModal").modal("show");
-    console.log(
-      "ActiveSrvModality",
-      ActiveSrvModalityName + ActiveSrvModalityID
-    );
   };
 
   const editService = async (e) => {
@@ -179,12 +170,9 @@ const Services = ({ UserData }) => {
       SA: formProps.arteshShare,
     };
 
-    console.log("data", data);
-
     await axiosClient
       .put(url, data)
       .then((response) => {
-        console.log(response.data);
         updateItem(formProps.editSrvID, response.data);
         $("#editServiceModal").modal("hide");
         setIsLoading(false);
@@ -225,8 +213,6 @@ const Services = ({ UserData }) => {
         Modality: ActiveSrvModalityID,
         ServiceID: id,
       };
-
-      console.log("data", data);
 
       await axiosClient
         .delete(url, { data })

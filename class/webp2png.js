@@ -30,7 +30,6 @@ const WebPDecodeAndDraw = function (data) {
 };
 
 export default function getImage(img) {
-  console.log(img);
   // Create an empty canvas element
   let canvas = document.createElement("canvas");
   canvas.width = img.width;

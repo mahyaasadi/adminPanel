@@ -33,8 +33,6 @@ export const getServerSideProps = async ({ req, res }) => {
 let ActiveModalityID,
   ActiveModalityName = null;
 const Modalities = ({ UserData }) => {
-  console.log({ UserData });
-
   const [isLoading, setIsLoading] = useState(true);
   const [modalityData, setModalityData] = useState([]);
   const [editModalityData, setEditModalityData] = useState({ empty: 1 });
@@ -50,7 +48,6 @@ const Modalities = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log("modalities", response.data);
         setIsLoading(false);
         setModalityData(response.data);
       })
@@ -128,7 +125,6 @@ const Modalities = ({ UserData }) => {
     $("#editModalityModal").modal("show");
     setEditModalityData(data);
     ActiveModalityID = id;
-    console.log("ActiveModalityID", ActiveModalityID);
   };
 
   const editModality = async (e) => {
@@ -151,7 +147,6 @@ const Modalities = ({ UserData }) => {
     axiosClient
       .put(url, Data)
       .then((response) => {
-        console.log(response.data);
         updateModalityItem(formProps.editModalityID, response.data);
         $("#editModalityModal").modal("hide");
         setIsLoading(false);
@@ -208,7 +203,6 @@ const Modalities = ({ UserData }) => {
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
         setSubModalityData([...subModalityData, response.data]);
 
         getModalities();

@@ -28,7 +28,6 @@ export const getServerSideProps = async ({ req, res }) => {
 };
 
 const ProfileSettings = ({ UserData }) => {
-  console.log({ UserData });
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -52,12 +51,9 @@ const ProfileSettings = ({ UserData }) => {
       User: formProps.editUserName,
     };
 
-    console.log({ data });
-
     axiosClient
       .put(url, data)
       .then(async (response) => {
-        console.log(response.data);
         setUserInfo({
           FullName: response.data.FullName,
           Tel: response.data.Tel,
@@ -92,12 +88,9 @@ const ProfileSettings = ({ UserData }) => {
       NewPassword: newPassword,
     };
 
-    console.log({ data });
-
     axiosClient
       .put(url, data)
       .then((response) => {
-        console.log(response.data);
         setIsLoading(false);
         SuccessAlert("موفق", "رمز عبور با موفقیت تغییر پیدا کرد!");
       })
@@ -123,8 +116,6 @@ const ProfileSettings = ({ UserData }) => {
           UserID: formProps.userId,
           Avatar: avatarBlob,
         };
-
-        console.log({ data });
 
         axiosClient
           .put(url, data)

@@ -13,8 +13,6 @@ const ArticlesListTable = ({
   openFAQModal,
   openRelatedArticlesModal,
 }) => {
-  // console.log({ articlesData });
-
   return (
     <>
       <div className="row p-4">

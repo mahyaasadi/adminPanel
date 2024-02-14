@@ -53,7 +53,6 @@ const ClinicUsersManagement = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        console.log(response.data);
         setClinicUserData(response.data);
         setIsLoading(false);
       })
@@ -130,7 +129,6 @@ const ClinicUsersManagement = ({ UserData }) => {
     axiosClient
       .put(url, data)
       .then((response) => {
-        console.log(response.data);
         updateUserItem(formProps.clinicUserID, response.data);
         setShowModal(false);
         setIsLoading(false);

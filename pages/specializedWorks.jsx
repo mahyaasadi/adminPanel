@@ -61,7 +61,7 @@ const SpecializedWorks = ({ UserData }) => {
   // Add SpeWork
   const openAddModal = () => {
     setShowModal(true);
-    setModalMode("add")
+    setModalMode("add");
   };
 
   const addSpeWork = (e) => {
@@ -84,9 +84,8 @@ const SpecializedWorks = ({ UserData }) => {
       axiosClient
         .post(url, data)
         .then((response) => {
-          console.log(response.data);
           setSpeWorks([...speWorks, response.data]);
-          setShowModal(false)
+          setShowModal(false);
           setIsLoading(false);
           e.target.reset();
         })
@@ -100,7 +99,7 @@ const SpecializedWorks = ({ UserData }) => {
   // Edit SpeWorks
   const editSpeWorks = (e) => {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
 
     CenterID = Router.query.id;
     let formData = new FormData(e.target);
@@ -120,13 +119,13 @@ const SpecializedWorks = ({ UserData }) => {
         .put(url, Data)
         .then((response) => {
           updateItem(formProps.EditSpeWorkID, response.data);
-          setShowModal(false)
-          setIsLoading(false)
+          setShowModal(false);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
           ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
-          setIsLoading(false)
+          setIsLoading(false);
         });
     }
   };
@@ -149,7 +148,7 @@ const SpecializedWorks = ({ UserData }) => {
   const updateSpeWork = (data) => {
     setEditSpeWorkData(data);
     setModalMode("edit");
-    setShowModal(true)
+    setShowModal(true);
   };
 
   // Delete SpeWork

@@ -41,7 +41,7 @@ const ClinicListTable = ({
               className="btn removeImgBtn tooltip-button"
               type="button"
               data-pr-position="top"
-            // onClick={}
+              // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>
@@ -64,7 +64,7 @@ const ClinicListTable = ({
         <div className="actions d-flex gap-2">
           {row.Deleted ? (
             <button
-              className="btn btn-sm btn-danger removedBtn"
+              className="btn btn-sm btn-danger removedBtn d-flex align-items-center"
               onClick={() => reActivateClinic(row._id)}
               data-pr-position="top"
             >
@@ -76,7 +76,7 @@ const ClinicListTable = ({
             </button>
           ) : (
             <button
-              className="btn btn-sm btn-outline-danger removeDoctorBtn"
+              className="btn btn-sm btn-outline-danger removeDoctorBtn d-flex align-items-center"
               onClick={() => deleteClinic(row._id)}
               data-pr-position="top"
             >
@@ -89,7 +89,7 @@ const ClinicListTable = ({
           )}
 
           <button
-            className="btn btn-sm btn-outline-secondary btn-border-left editDoctorBtn"
+            className="btn btn-sm btn-outline-secondary btn-border-left editDoctorBtn d-flex align-items-center"
             onClick={() => updateClinic(row, row._id)}
             data-pr-position="top"
           >
