@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { axiosClient } from "class/axiosConfig";
 import { Dropdown } from "primereact/dropdown";
 import { Tooltip } from "primereact/tooltip";
-import Loading from "components/commonComponents/loading/loading";
+import JDate from "jalali-date";
+// import Loading from "components/commonComponents/loading/loading";
 import DatePicker from "components/commonComponents/datepicker/DatePicker";
 import { dateShortcutsData } from "class/staticDropdownOptions";
 import { handleDateOptionsSelect } from "utils/defaultDateRanges";
 
+const jdate = new JDate();
 const FilterCentersReports = ({ getFilteredCenters }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [DateFrom, setDateFrom] = useState(null);
@@ -42,8 +44,8 @@ const FilterCentersReports = ({ getFilteredCenters }) => {
     setDateTo(dateToValue);
   };
 
-  const applyFilterOnReports = (e, reset) => {
-    e.preventDefault();
+  const applyFilterOnReports = (e, reset, defDate) => {
+    e && e.preventDefault();
     setIsLoading(true);
 
     let url = "Dashboard/CenterCountAppointment";
@@ -59,7 +61,12 @@ const FilterCentersReports = ({ getFilteredCenters }) => {
       };
     }
 
-    console.log({ data });
+    if (defDate) {
+      data = {
+        DateFrom: jdate.format("YYYY/MM/DD"),
+        DateTo: jdate.format("YYYY/MM/DD"),
+      }
+    }
 
     axiosClient
       .post(url, data)
@@ -69,7 +76,6 @@ const FilterCentersReports = ({ getFilteredCenters }) => {
         );
 
         itemsArray.sort((a, b) => b.count - a.count);
-
         getFilteredCenters(itemsArray);
 
         setIsLoading(false);
@@ -80,10 +86,12 @@ const FilterCentersReports = ({ getFilteredCenters }) => {
       });
   };
 
+  useEffect(() => applyFilterOnReports(null, 0, true), [])
+
   return (
     <div className="card shadow filterReceptionCard p-relative">
       <label className="lblAbs fw-bold font-13">فیلتر گزارشات</label>
-      <form onSubmit={(e) => applyFilterOnReports(e, 0)}>
+      <form onSubmit={(e) => applyFilterOnReports(e, 0, false)}>
         <div className="card-body row align-items-center mt-3 searchContainerPadding receptionSearch-header">
           <div className="col-12 col-lg-3 mb-3">
             <DatePicker setDate={changeDateTo} label="از تاریخ" />
@@ -128,7 +136,7 @@ const FilterCentersReports = ({ getFilteredCenters }) => {
 
           <div className="col-12 col-lg-2 mb-3">
             <button
-              onClick={(e) => applyFilterOnReports(e, 1)}
+              onClick={(e) => applyFilterOnReports(e, 1, false)}
               data-pr-position="top"
               className="btn btn-primary d-flex align-items-center justify-center refreshBtn w-100 height-40"
             >
