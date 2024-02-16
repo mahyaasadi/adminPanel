@@ -33,6 +33,7 @@ const ArticlesListTable = ({
                         "https://irannobat.ir/blog/" +
                         articleData.EngTitle.replace(/ /g, "-")
                       }
+                      target="_blank"
                     >
                       مشاهده مقاله
                     </Link>

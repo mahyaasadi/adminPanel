@@ -26,3 +26,27 @@ export const centerPhoneTypeDataClass = [
   { label: "همراه", value: "همراه" },
   { label: "فکس", value: "فکس" },
 ];
+
+export const styleLinkOptions = [
+  {
+    label: "style1", value: [
+      `
+      .linkContainer {
+        display: flex;
+        justify-content: center;
+        color: rgb(13, 177, 202)
+      },
+      .buttonContainer {
+        width: 100%;
+      }
+      .linkStyle {
+        color: rgb(13, 177, 202);
+      }
+      `
+    ]
+  }
+  // }
+]
+
+
+

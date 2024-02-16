@@ -260,6 +260,18 @@ const Sidebar = ({ UserData }) => {
                   <span>گزارش تعداد نوبت مراکز</span>
                 </Link>
               </li>
+
+              <li
+                className={
+                  router.pathname == "/styleLinkCreator" ? "active" : ""
+                }
+              >
+                <Link href="/styleLinkCreator">
+                  <FeatherIcon icon="link" style={{ width: "15px", height: "15px" }} />
+
+                  <span>لینک سازی داخلی</span>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

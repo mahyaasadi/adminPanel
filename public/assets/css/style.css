@@ -10181,8 +10181,7 @@ input:checked + .showInsliderSwitch:active::before {
 .p-dropdown {
   width: 100%;
   height: 40px;
-  border: 1px solid lightgray;
-  /* border-radius: 20px; */
+  border: 1px solid #e6e9f4;
   display: flex !important;
   text-align: center !important;
   align-items: center !important;
@@ -10252,11 +10251,7 @@ input:checked + .showInsliderSwitch:active::before {
   font-size: 20px;
 }
 
-/* .buttonContainer {
-  display: flex;
-  gap: 1.5rem;
-}
-
+/* 
 .buttonLink {
   display: inline-block;
   font-weight: 400;
@@ -10279,4 +10274,26 @@ input:checked + .showInsliderSwitch:active::before {
 
 .height-40 {
   height: 40px !important;
+}
+
+.generated-html {
+  padding: 20px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  margin-top: 3rem;
+}
+
+.buttonContainer {
+  /* display: flex;
+  gap: 1.5rem; */
+  width: 100%;
+}
+
+.linkContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.linkStyle {
+  color: rgb(13, 177, 202);
 }
