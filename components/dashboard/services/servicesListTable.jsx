@@ -1,13 +1,11 @@
 "use client";
 import React from "react";
-import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
+import { Tooltip } from "primereact/tooltip";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
-import numberWithCommas from "class/numberWithComma";
-import { Tooltip } from "primereact/tooltip";
 
 const ServicesListTable = ({ data, deleteService, updateService }) => {
   const columns = [
@@ -26,35 +24,35 @@ const ServicesListTable = ({ data, deleteService, updateService }) => {
     {
       name: "تعرفه دولتی",
       selector: (row) =>
-        row.GovernmentalTariff ? numberWithCommas(row.GovernmentalTariff) : "",
+        row.GovernmentalTariff ? parseInt(row.GovernmentalTariff).toLocaleString() : "",
       sortable: true,
       width: "150px",
     },
     {
       name: "تعرفه خصوصی",
       selector: (row) =>
-        row.PrivateTariff ? numberWithCommas(row.PrivateTariff) : "",
+        row.PrivateTariff ? parseInt(row.PrivateTariff).toLocaleString() : "",
       sortable: true,
       width: "150px",
     },
     {
       name: "تعرفه آزاد مرکز",
       selector: (row) =>
-        row.FreeTariff ? numberWithCommas(row.FreeTariff) : "",
+        row.FreeTariff ? parseInt(row.FreeTariff).toLocaleString() : "",
       sortable: true,
       width: "150px",
     },
     {
       name: "سهم بیمار تامین و خدمات",
       selector: (row) =>
-        row.PatientCost ? numberWithCommas(row.PatientCost) : "",
+        row.PatientCost ? parseInt(row.PatientCost).toLocaleString() : "",
       sortable: true,
       width: "200px",
     },
     {
       name: "سهم بیمار ارتش",
       selector: (row) =>
-        row.ArteshPatientCost ? numberWithCommas(row.ArteshPatientCost) : "",
+        row.ArteshPatientCost ? parseInt(row.ArteshPatientCost).toLocaleString() : "",
       sortable: true,
       width: "220px",
     },

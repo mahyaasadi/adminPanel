@@ -54,6 +54,7 @@ const AddInsuranceModal = ({
                 </label>
                 <SelectField
                   styles={selectfieldColourStyles}
+                  className="text-center"
                   options={insuranceType}
                   errorMessage={""}
                   error={false}
@@ -72,6 +73,7 @@ const AddInsuranceModal = ({
                 <SelectField
                   styles={selectfieldColourStyles}
                   options={insuranceStatus}
+                  className="text-center"
                   errorMessage={""}
                   error={false}
                   label={false}

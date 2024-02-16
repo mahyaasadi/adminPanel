@@ -3,7 +3,7 @@ import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
 import selectfieldColourStyles from "class/selectfieldStyle";
 import DatePicker from "components/commonComponents/datepicker/DatePicker";
-import articleLanguageDataClass from "class/articleLanguageDataClass.js";
+import { articleLanguageDataClass } from "class/staticDropdownOptions";
 
 const EditArticleModal = ({
   data,

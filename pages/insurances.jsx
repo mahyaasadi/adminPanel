@@ -9,8 +9,7 @@ import Loading from "components/commonComponents/loading/loading";
 import InsuranceListTable from "components/dashboard/insurances/insuranceListTable";
 import AddInsuranceModal from "components/dashboard/insurances/addInsuranceModal";
 import EditInsuranceModal from "components/dashboard/insurances/editInsuranceModal";
-import insuranceTypeDataClass from "class/insuranceTypeDataClass";
-import insuranceStatusDataClass from "class/insuranceStatusDataClass";
+import { insuranceTypeDataClass, insuranceStatusDataClass } from "class/staticDropdownOptions";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 
 export const getServerSideProps = async ({ req, res }) => {
@@ -37,23 +36,13 @@ const Insurance = ({ UserData }) => {
   const [insuranceList, setInsuranceList] = useState([]);
   const [editedInsurance, setEditedInsurance] = useState([]);
   const [hiddenData, setHiddenData] = useState(null);
-  const [insuranceType, setInsuranceType] = useState(insuranceTypeDataClass);
-  const [insuranceStatus, setInsuranceStatus] = useState(
-    insuranceStatusDataClass
-  );
 
   let SelectInsuranceType,
     SelectInsuranceStatus = "";
+  const FUSelectInsuranceType = (Type) => SelectInsuranceType = Type;
+  const FUSelectInsuranceStatus = (Status) => SelectInsuranceStatus = Status;
 
-  const FUSelectInsuranceType = (Type) => {
-    SelectInsuranceType = Type;
-  };
-
-  const FUSelectInsuranceStatus = (Status) => {
-    SelectInsuranceStatus = Status;
-  };
-
-  //Get insurance list
+  // Get Insurance List
   const getInsuranceData = () => {
     CenterID = Router.query.id;
     let url = `CenterProfile/getCenterInsurance/${CenterID}`;
@@ -197,7 +186,6 @@ const Insurance = ({ UserData }) => {
       setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
 
       if (hiddenData) localStorage.removeItem("hiddenData");
-      // if (!CenterID) return null;
     }
   }, [Router.isReady]);
 
@@ -258,8 +246,8 @@ const Insurance = ({ UserData }) => {
       <AddInsuranceModal
         data={insuranceList}
         addInsurance={addInsurance}
-        insuranceType={insuranceType}
-        insuranceStatus={insuranceStatus}
+        insuranceType={insuranceTypeDataClass}
+        insuranceStatus={insuranceStatusDataClass}
         FUSelectInsuranceType={FUSelectInsuranceType}
         FUSelectInsuranceStatus={FUSelectInsuranceStatus}
       />
@@ -267,8 +255,8 @@ const Insurance = ({ UserData }) => {
       <EditInsuranceModal
         editInsurance={editInsurance}
         data={editedInsurance}
-        insuranceType={insuranceType}
-        insuranceStatus={insuranceStatus}
+        insuranceType={insuranceTypeDataClass}
+        insuranceStatus={insuranceStatusDataClass}
         FUSelectInsuranceType={FUSelectInsuranceType}
         FUSelectInsuranceStatus={FUSelectInsuranceStatus}
       />

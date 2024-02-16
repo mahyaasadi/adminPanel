@@ -3,7 +3,7 @@ import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
 import selectfieldColourStyles from "class/selectfieldStyle";
 import DatePicker from "components/commonComponents/datepicker/DatePicker";
-import articleLanguageDataClass from "class/articleLanguageDataClass.js";
+import { articleLanguageDataClass } from "class/staticDropdownOptions";
 
 const AddArticleModal = ({ addArticle, setArticleDateInDB, isLoading }) => {
   // article date
@@ -137,7 +137,7 @@ const AddArticleModal = ({ addArticle, setArticleDateInDB, isLoading }) => {
                     hidden="hidden"
                     id="showInSlider"
                     name="articleShowInSlider"
-                    // required
+                  // required
                   />
                   <label
                     className="showInsliderSwitch font-12"

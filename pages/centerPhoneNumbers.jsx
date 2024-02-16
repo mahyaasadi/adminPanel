@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import FeatherIcon from "feather-icons-react";
 import { useRouter } from "next/router";
+import { getSession } from "lib/session";
+import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
-import centerPhoneTypeDataClass from "class/centerPhoneTypeDataClass.js";
+import { centerPhoneTypeDataClass } from "class/staticDropdownOptions";
 import CenterPhoneNumbersList from "components/dashboard/centers/centerPhoneNumbers/centerPhoneNumbersList";
 import AddPhoneNumberModal from "components/dashboard/centers/centerPhoneNumbers/addPhoneNumberModal";
 import EditPhoneNumberModal from "components/dashboard/centers/centerPhoneNumbers/editPhoneNumberModal";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -29,7 +29,7 @@ export const getServerSideProps = async ({ req, res }) => {
 };
 
 let CenterID = null;
-const Insurance = ({ UserData }) => {
+const CenterPhoneNumbers = ({ UserData }) => {
   const Router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -184,18 +184,13 @@ const Insurance = ({ UserData }) => {
   };
 
   useEffect(() => {
-    if (Router.isReady) {
+    if (Router.isReady)
       CenterID = Router.query.id;
-      getAllPhoneNumbers();
+    getAllPhoneNumbers();
 
-      setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
+    setHiddenData(JSON.parse(localStorage.getItem("hiddenData")));
+    if (hiddenData) localStorage.removeItem("hiddenData")
 
-      if (hiddenData) {
-        localStorage.removeItem("hiddenData");
-      }
-
-      // if (!CenterID) return null;
-    }
   }, [Router.isReady]);
 
   return (
@@ -267,4 +262,4 @@ const Insurance = ({ UserData }) => {
   );
 };
 
-export default Insurance;
+export default CenterPhoneNumbers;

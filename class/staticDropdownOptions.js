@@ -5,3 +5,24 @@ export const dateShortcutsData = [
   { label: "هفته گذشته", value: "lastWeek" },
   { label: "ماه گذشته", value: "lastMonth" },
 ];
+
+export const insuranceTypeDataClass = [
+  { label: "بیمه پایه", value: "بیمه پایه" },
+  { label: "بیمه تکمیلی", value: "بیمه تکمیلی" },
+];
+
+export const insuranceStatusDataClass = [
+  { label: "محاسبه بصورت آنلاین", value: "محاسبه بصورت آنلاین" },
+  { label: "ارائه فاکتور", value: "ارائه فاکتور" },
+];
+
+export const articleLanguageDataClass = [
+  { label: "انگلیسی", value: 1 },
+  { label: "فارسی", value: 0 },
+];
+
+export const centerPhoneTypeDataClass = [
+  { label: "ثابت", value: "ثابت" },
+  { label: "همراه", value: "همراه" },
+  { label: "فکس", value: "فکس" },
+];

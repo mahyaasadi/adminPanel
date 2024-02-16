@@ -79,7 +79,6 @@ const Dashboard = ({ UserData }) => {
     axiosClient
       .post(url)
       .then((response) => {
-        console.log(response.data);
         setGeneralStats(response.data);
         setStatsIsLoading(false);
       })
@@ -96,6 +95,7 @@ const Dashboard = ({ UserData }) => {
 
         for (let i = 0; i < response.data.length; i++) {
           const item = response.data[i];
+
           if (item) {
             labels.push(item?.Center);
             counts.push(item?.Count);
