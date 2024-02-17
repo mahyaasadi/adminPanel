@@ -10296,4 +10296,46 @@ input:checked + .showInsliderSwitch:active::before {
 
 .linkStyle {
   color: rgb(13, 177, 202);
+  text-decoration: none;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  padding: 10px 15px;
+}
+
+.blockQuoteContainer {
+  background: #f5f5f5;
+  padding: 10px 20px 10px 24px;
+  border-right: 4px solid #08508e;
+  border-radius: 4px;
+}
+
+.style3btn {
+  display: inline-block;
+  color: #1b5a90;
+  min-width: 154px;
+  text-decoration: none;
+  margin-right: 50px;
+  padding: 20px;
+  position: relative;
+  text-align: center;
+}
+.style3btn:hover .button-stroke:nth-child(2) {
+  stroke-dashoffset: 0;
+}
+.button-stroke {
+  display: block;
+  width: calc(100% - 40px);
+  height: 20px;
+  stroke: #0db1ca;
+  position: absolute;
+  left: 20px;
+  bottom: -10px;
+  stroke-width: 4;
+}
+.button-stroke:nth-child(2) {
+  stroke-dasharray: 650px;
+  stroke-dashoffset: 650px;
+  stroke: #1b5a90;
+  stroke-width: 5;
+  transition: stroke-dashoffset 850ms ease-out;
 }

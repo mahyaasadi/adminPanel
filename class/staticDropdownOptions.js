@@ -31,16 +31,33 @@ export const styleLinkOptions = [
   {
     label: "style1", value: [
       `
-      .linkContainer {
-        display: flex;
-        justify-content: center;
-        color: rgb(13, 177, 202)
-      },
       .buttonContainer {
         width: 100%;
       }
+      
+      .linkContainer {
+        display: flex;
+        justify-content: center;
+      }
+      
       .linkStyle {
         color: rgb(13, 177, 202);
+        text-decoration: none;
+        border-top: 1px solid lightgray;
+        border-bottom: 1px solid lightgray;
+        padding: 10px 15px;
+      }
+      `
+    ]
+  },
+  {
+    label: "style2", value: [
+      `
+      .blockQuoteContainer {
+        background: #f5f5f5;
+        padding: 10px 20px 10px 24px;
+        border-right: 4px solid #08508e;
+        border-radius: 4px;
       }
       `
     ]
