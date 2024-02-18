@@ -36,7 +36,7 @@ const RefDocTable = ({ data, deleteRefDoc, openEditRefDocModal }) => {
     },
     {
       name: "آدرس",
-      selector: (row) => row.Address,
+      selector: (row) => row.Address.substr(0, 50) + " ...",
       sortable: true,
       width: "auto",
     },
