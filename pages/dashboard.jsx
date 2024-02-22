@@ -7,6 +7,8 @@ import { getSession } from "lib/session";
 import OverviewStats from "components/dashboard/overview/overviewStats";
 import Loading from "components/commonComponents/loading/loading";
 import PieChartComponent from "components/dashboard/overview/statsPieChart";
+import RequestsBarChart from "components/dashboard/overview/requestsBarChart";
+// import { handleDateOptionsSelect } from "utils/defaultDateRanges";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -46,11 +48,17 @@ const Dashboard = ({ UserData }) => {
     },
   ];
 
+
+  const [DateFrom, setDateFrom] = useState(jdate.format("YYYY/MM/DD"));
+  const [DateTo, setDateTo] = useState(jdate.format("YYYY/MM/DD"));
+  const [selectedDateOption, setSelectedDateOption] = useState(null);
+
   const getGeneralStats = (duration) => {
     setStatsIsLoading(true);
     setPieStatIsLoading(true);
     let url = "Dashboard";
     let centerStatsUrl = "Dashboard";
+    let centerReportsUrl = "Dashboard/CenterCountAppointment"
 
     if (duration === "today") {
       url += "/MngTodayStatistics";
@@ -75,6 +83,43 @@ const Dashboard = ({ UserData }) => {
     } else if (duration === "lastMonth") {
       centerStatsUrl += "/MngMonthStatisticsGroupByCenter";
     }
+
+    // let reportsData = {
+    //   DateFrom: DateFrom,
+    //   DateTo: DateTo,
+    // };
+
+
+    // if (duration === "today") {
+    //   reportsData = {
+    //     DateFrom: jdate.format("YYYY/MM/DD"),
+    //     DateTo: jdate.format("YYYY/MM/DD")
+    //   }
+    // } else if (duration === "yesterday") {
+    //   console.log("y");
+    //   handleDateOptionsSelect(
+    //     "yesterday",
+    //     setSelectedDateOption,
+    //     setDateTo,
+    //     setDateFrom
+    //   );
+    // } else if (duration === "lastWeek") {
+    //   handleDateOptionsSelect(
+    //     "lastWeek",
+    //     setSelectedDateOption,
+    //     setDateTo,
+    //     setDateFrom
+    //   );
+    // } else {
+    //   handleDateOptionsSelect(
+    //     "lastMonth",
+    //     setSelectedDateOption,
+    //     setDateTo,
+    //     setDateFrom
+    //   );
+    // }
+
+    // console.log({ reportsData });
 
     axiosClient
       .post(url)
@@ -109,6 +154,19 @@ const Dashboard = ({ UserData }) => {
         console.log(err);
         setPieStatIsLoading(false);
       });
+
+
+
+
+
+
+    // axiosClient.post(centerReportsUrl)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   })
   };
 
   useEffect(() => getGeneralStats(selectedDuration), [selectedDuration]);
@@ -158,7 +216,9 @@ const Dashboard = ({ UserData }) => {
                 </div>
                 <div className="col-md-5 col-12">
                   <div className="card">
-                    <div className="card-body"></div>
+                    <div className="card-body">
+                      {/* <RequestsBarChart /> */}
+                    </div>
                   </div>
                 </div>
               </div>

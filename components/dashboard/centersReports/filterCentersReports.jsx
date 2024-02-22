@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { axiosClient } from "class/axiosConfig";
-import { Dropdown } from "primereact/dropdown";
-import { Tooltip } from "primereact/tooltip";
 import JDate from "jalali-date";
-// import Loading from "components/commonComponents/loading/loading";
-import DatePicker from "components/commonComponents/datepicker/DatePicker";
+import { axiosClient } from "class/axiosConfig";
+import { Tooltip } from "primereact/tooltip";
+import { Dropdown } from "primereact/dropdown";
 import { dateShortcutsData } from "class/staticDropdownOptions";
 import { handleDateOptionsSelect } from "utils/defaultDateRanges";
+import DatePicker from "components/commonComponents/datepicker/DatePicker";
 
 const jdate = new JDate();
 const FilterCentersReports = ({ getFilteredCenters }) => {
@@ -16,6 +15,7 @@ const FilterCentersReports = ({ getFilteredCenters }) => {
   const [selectedDateOption, setSelectedDateOption] = useState(null);
 
   const handleSelect = (option) => {
+    // console.log({ option });
     handleDateOptionsSelect(
       option,
       setSelectedDateOption,

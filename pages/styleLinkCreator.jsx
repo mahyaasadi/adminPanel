@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import Head from "next/head";
 import { getSession } from "lib/session";
 import { Toast } from "primereact/toast";
@@ -38,12 +38,23 @@ const StyleLinkCreator = ({ UserData }) => {
     (x) => x.value === defaultStyle
   );
 
-  const handleLinkQtyChange = (event) => {
-    const newQty = parseInt(event.target.value);
+  const handleLinkQtyChange = (e) => {
+    const newQty = parseInt(e.target.value);
     setLinkQty(newQty);
-    setLinkData(
-      Array.from({ length: newQty }, () => ({ linkHref: "", anchorText: "" }))
-    );
+
+    // Preserve existing values
+    setLinkData((prevLinkData) => {
+      const newLinkData = [...prevLinkData];
+      if (newLinkData.length < newQty) {
+        for (let i = newLinkData.length; i < newQty; i++) {
+          newLinkData.push({ linkHref: "", anchorText: "" });
+        }
+      } else if (newLinkData.length > newQty) {
+        // Remove excess elements
+        newLinkData.splice(newQty);
+      }
+      return newLinkData;
+    });
   };
 
   const handleLinkChange = (index, field, value) => {

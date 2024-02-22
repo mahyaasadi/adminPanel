@@ -77,6 +77,7 @@ const CentersManagement = ({ UserData }) => {
       .get(url)
       .then((response) => {
         setCentersData(response.data);
+        // console.log({ centersData });
         setIsLoading(false);
       })
       .catch((error) => {
@@ -541,6 +542,7 @@ const CentersManagement = ({ UserData }) => {
         });
     }
   };
+
   const [selectedSearchByOption, setSelectedSearchByOption] =
     useState("centersName");
 
@@ -577,17 +579,34 @@ const CentersManagement = ({ UserData }) => {
       });
   };
 
+  // const applyCenterSearch = (searchBy, searchedText) => {
+  //   fetchCenterData(searchBy, searchedText, selectedProvinceList, SelectedCity);
+
+  //   router.push({
+  //     pathname: router.pathname,
+  //     query: {
+  //       searchBy: searchBy,
+  //       searchedText: searchedText,
+  //       province: selectedProvinceList,
+  //       city: SelectedCity,
+  //       page: selectedPage,
+  //     },
+  //   });
+  // };
+
   const applyCenterSearch = (searchBy, searchedText) => {
     fetchCenterData(searchBy, searchedText, selectedProvinceList, SelectedCity);
 
+    const query = {
+      searchBy: searchBy,
+      searchedText: searchedText,
+      province: selectedProvinceList,
+      city: SelectedCity,
+    };
+
     router.push({
       pathname: router.pathname,
-      query: {
-        searchBy: searchBy,
-        searchedText: searchedText,
-        province: selectedProvinceList,
-        city: SelectedCity,
-      },
+      query: query,
     });
   };
 
@@ -599,15 +618,15 @@ const CentersManagement = ({ UserData }) => {
     }
   }, [router.isReady]);
 
-  useEffect(() => {
-    const { searchBy, searchedText, province, city } = router.query;
+  // useEffect(() => {
+  //   const { searchBy, searchedText, province, city } = router.query;
 
-    if (searchBy || searchedText || searchBy || province || city) {
-      fetchCenterData(searchBy, searchedText, province, city);
-      // setSelectedProvinceList(province);
-      // setSelectedCity(city);
-    }
-  }, [router.query]);
+  //   if (searchBy || searchedText || searchBy || province || city) {
+  //     fetchCenterData(searchBy, searchedText, province, city);
+  //     // setSelectedProvinceList(province);
+  //     // setSelectedCity(city);
+  //   }
+  // }, [router.query]);
 
   return (
     <>
@@ -647,17 +666,18 @@ const CentersManagement = ({ UserData }) => {
 
                   <CentersListTable
                     data={centersData}
-                    updateCenterInfo={updateCenterInfo}
-                    openBusinessHoursModal={openBusinessHoursModal}
-                    openAboutUsModal={openAboutUsModal}
+                    // updateCenterInfo={updateCenterInfo}
+                    // openBusinessHoursModal={openBusinessHoursModal}
+                    // openAboutUsModal={openAboutUsModal}
                     selectedPage={selectedPage}
                     ChangeTablePage={ChangeTablePage}
-                    activeOR={activeOR}
-                    deActiveOR={deActiveOR}
-                    activateCenter={activateCenter}
-                    deActivateCenter={deActivateCenter}
-                    setSerachableCenter={setSerachableCenter}
-                    removeSearchableCenter={removeSearchableCenter}
+                    // activeOR={activeOR}
+                    // deActiveOR={deActiveOR}
+                    // activateCenter={activateCenter}
+                    // deActivateCenter={deActivateCenter}
+                    // setSerachableCenter={setSerachableCenter}
+                    // removeSearchableCenter={removeSearchableCenter}
+                    fetchCenterData={fetchCenterData}
                   />
                 </div>
               </div>
@@ -677,7 +697,7 @@ const CentersManagement = ({ UserData }) => {
         />
         <EditCenterModal
           data={editCenterData}
-          editCenter={editCenter}
+          // editCenter={editCenter}
           provinceOptionsList={provinceOptionsList}
           FUSelectProvince={FUSelectProvince}
           FUSelectCity={FUSelectCity}
@@ -687,7 +707,7 @@ const CentersManagement = ({ UserData }) => {
           selectedProvinceList={selectedProvinceList}
           isLoading={isLoading}
         />
-        <BusinessHoursModal
+        {/* <BusinessHoursModal
           data={businessHourData}
           updateBusinessHour={updateBusinessHour}
           changeToAllDayMode={changeToAllDayMode}
@@ -706,7 +726,7 @@ const CentersManagement = ({ UserData }) => {
           data={centerAboutUsData}
           isLoading={isLoading}
           editCenterAboutUs={editCenterAboutUs}
-        />
+        /> */}
       </div>
     </>
   );

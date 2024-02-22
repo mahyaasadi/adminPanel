@@ -1,6 +1,6 @@
 import { Chart } from "primereact/chart";
 import { useState, useEffect } from "react";
-import Loading from "components/commonComponents/loading/loading";
+// import Loading from "components/commonComponents/loading/loading";
 // import * as d3 from "d3";
 
 const PieChartComponent = ({ labels, data }) => {

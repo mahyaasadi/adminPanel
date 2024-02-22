@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Tooltip } from "primereact/tooltip";
@@ -22,8 +22,16 @@ const CentersListTable = ({
   activateCenter,
   setSerachableCenter,
   removeSearchableCenter,
+  fetchCenterData,
 }) => {
   const router = useRouter();
+
+  useEffect(() => {
+    const { searchBy, searchedText, province, city } = router.query;
+    if (searchBy && searchedText) {
+      fetchCenterData(searchBy, searchedText, province, city);
+    }
+  }, []);
 
   data?.map((center, index) => (data[index].rowNumber = index + 1));
 
@@ -67,7 +75,7 @@ const CentersListTable = ({
               className="btn removeImgBtn tooltip-button"
               type="button"
               data-pr-position="top"
-              // onClick={}
+            // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>
