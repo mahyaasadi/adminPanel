@@ -93,7 +93,7 @@ const ClinicListTable = ({
             onClick={() => updateClinic(row, row._id)}
             data-pr-position="top"
           >
-            <Tooltip target=".editDoctorBtn">ویرایش پزشک</Tooltip>
+            <Tooltip target=".editDoctorBtn">ویرایش</Tooltip>
             <FeatherIcon
               style={{ width: "16px", height: "16px" }}
               icon="edit-3"

@@ -48,7 +48,6 @@ const Dashboard = ({ UserData }) => {
     },
   ];
 
-
   const [DateFrom, setDateFrom] = useState(jdate.format("YYYY/MM/DD"));
   const [DateTo, setDateTo] = useState(jdate.format("YYYY/MM/DD"));
   const [selectedDateOption, setSelectedDateOption] = useState(null);
@@ -58,7 +57,7 @@ const Dashboard = ({ UserData }) => {
     setPieStatIsLoading(true);
     let url = "Dashboard";
     let centerStatsUrl = "Dashboard";
-    let centerReportsUrl = "Dashboard/CenterCountAppointment"
+    let centerReportsUrl = "Dashboard/CenterCountAppointment";
 
     if (duration === "today") {
       url += "/MngTodayStatistics";
@@ -89,14 +88,12 @@ const Dashboard = ({ UserData }) => {
     //   DateTo: DateTo,
     // };
 
-
     // if (duration === "today") {
     //   reportsData = {
     //     DateFrom: jdate.format("YYYY/MM/DD"),
     //     DateTo: jdate.format("YYYY/MM/DD")
     //   }
     // } else if (duration === "yesterday") {
-    //   console.log("y");
     //   handleDateOptionsSelect(
     //     "yesterday",
     //     setSelectedDateOption,
@@ -118,8 +115,6 @@ const Dashboard = ({ UserData }) => {
     //     setDateFrom
     //   );
     // }
-
-    // console.log({ reportsData });
 
     axiosClient
       .post(url)
@@ -155,14 +150,8 @@ const Dashboard = ({ UserData }) => {
         setPieStatIsLoading(false);
       });
 
-
-
-
-
-
     // axiosClient.post(centerReportsUrl)
     //   .then((response) => {
-    //     console.log(response.data);
     //   })
     //   .catch((err) => {
     //     console.log(err);

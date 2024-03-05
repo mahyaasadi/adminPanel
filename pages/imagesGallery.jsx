@@ -91,7 +91,6 @@ const ImagesGallery = ({ UserData }) => {
           Des: formProps.Des,
         };
 
-        console.log(data);
         axiosClient
           .post(url, data)
           .then((response) => {

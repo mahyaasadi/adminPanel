@@ -15,7 +15,6 @@ const FilterCentersReports = ({ getFilteredCenters }) => {
   const [selectedDateOption, setSelectedDateOption] = useState(null);
 
   const handleSelect = (option) => {
-    // console.log({ option });
     handleDateOptionsSelect(
       option,
       setSelectedDateOption,
@@ -65,7 +64,7 @@ const FilterCentersReports = ({ getFilteredCenters }) => {
       data = {
         DateFrom: jdate.format("YYYY/MM/DD"),
         DateTo: jdate.format("YYYY/MM/DD"),
-      }
+      };
     }
 
     axiosClient
@@ -86,7 +85,7 @@ const FilterCentersReports = ({ getFilteredCenters }) => {
       });
   };
 
-  useEffect(() => applyFilterOnReports(null, 0, true), [])
+  useEffect(() => applyFilterOnReports(null, 0, true), []);
 
   return (
     <div className="card shadow filterReceptionCard p-relative">

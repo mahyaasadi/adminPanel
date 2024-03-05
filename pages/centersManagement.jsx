@@ -77,7 +77,6 @@ const CentersManagement = ({ UserData }) => {
       .get(url)
       .then((response) => {
         setCentersData(response.data);
-        // console.log({ centersData });
         setIsLoading(false);
       })
       .catch((error) => {
@@ -274,7 +273,6 @@ const CentersManagement = ({ UserData }) => {
   const updateBusinessHour = (data) => {
     $("#editCenterBusinessHourModal").modal("show");
     setEditBusinessHourData(data);
-    console.log(data);
   };
 
   const changeToAllDayMode = async (data) => {
@@ -666,17 +664,17 @@ const CentersManagement = ({ UserData }) => {
 
                   <CentersListTable
                     data={centersData}
-                    // updateCenterInfo={updateCenterInfo}
-                    // openBusinessHoursModal={openBusinessHoursModal}
-                    // openAboutUsModal={openAboutUsModal}
+                    updateCenterInfo={updateCenterInfo}
+                    openBusinessHoursModal={openBusinessHoursModal}
+                    openAboutUsModal={openAboutUsModal}
                     selectedPage={selectedPage}
                     ChangeTablePage={ChangeTablePage}
-                    // activeOR={activeOR}
-                    // deActiveOR={deActiveOR}
-                    // activateCenter={activateCenter}
-                    // deActivateCenter={deActivateCenter}
-                    // setSerachableCenter={setSerachableCenter}
-                    // removeSearchableCenter={removeSearchableCenter}
+                    activeOR={activeOR}
+                    deActiveOR={deActiveOR}
+                    activateCenter={activateCenter}
+                    deActivateCenter={deActivateCenter}
+                    setSerachableCenter={setSerachableCenter}
+                    removeSearchableCenter={removeSearchableCenter}
                     fetchCenterData={fetchCenterData}
                   />
                 </div>
@@ -697,7 +695,7 @@ const CentersManagement = ({ UserData }) => {
         />
         <EditCenterModal
           data={editCenterData}
-          // editCenter={editCenter}
+          editCenter={editCenter}
           provinceOptionsList={provinceOptionsList}
           FUSelectProvince={FUSelectProvince}
           FUSelectCity={FUSelectCity}
@@ -707,7 +705,7 @@ const CentersManagement = ({ UserData }) => {
           selectedProvinceList={selectedProvinceList}
           isLoading={isLoading}
         />
-        {/* <BusinessHoursModal
+        <BusinessHoursModal
           data={businessHourData}
           updateBusinessHour={updateBusinessHour}
           changeToAllDayMode={changeToAllDayMode}
@@ -726,7 +724,7 @@ const CentersManagement = ({ UserData }) => {
           data={centerAboutUsData}
           isLoading={isLoading}
           editCenterAboutUs={editCenterAboutUs}
-        /> */}
+        />
       </div>
     </>
   );
