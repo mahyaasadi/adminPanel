@@ -261,7 +261,7 @@ const ClinicUsersManagement = ({ UserData }) => {
                   <div className="row align-items-center">
                     <div className="col">
                       <p className="card-title font-14 text-secondary">
-                        لیست کاربران کلینیک {ActiveClinicName}
+                        لیست کاربران {ActiveClinicName}
                       </p>
                     </div>
                   </div>

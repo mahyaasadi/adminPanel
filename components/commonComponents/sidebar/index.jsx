@@ -9,6 +9,16 @@ const Sidebar = ({ UserData }) => {
 
   const [submenuOpen, setSubmenuOpen] = useState(false);
 
+  const handlesidebarmobilemenu = () => {
+    document.body.classList.toggle("slide-nav");
+    $(".sidebar-overlay").attr(
+      "style",
+      "background-color: transparent !important"
+    );
+
+    $(".sidebar-overlay").attr("style", "display: contents !important");
+  };
+
   useEffect(() => {
     const articleSubroutes = ["/articles", "/articleGroups", "/articleTags"];
     if (articleSubroutes.includes(router.pathname)) {
@@ -25,7 +35,10 @@ const Sidebar = ({ UserData }) => {
               <li className="menu-title">
                 <span>اصلی</span>
               </li>
-              <li className={router.pathname == "/dashboard" ? "active" : ""}>
+              <li
+                className={router.pathname == "/dashboard" ? "active" : ""}
+                onClick={handlesidebarmobilemenu}
+              >
                 <Link href="/dashboard">
                   <FeatherIcon icon="home" />
 
@@ -148,8 +161,9 @@ const Sidebar = ({ UserData }) => {
                   <span className="menu-arrow"></span>
                 </a>
                 <ul
-                  className={`hiddenSidebar ${submenuOpen ? "d-block" : "hidden"
-                    }`}
+                  className={`hiddenSidebar ${
+                    submenuOpen ? "d-block" : "hidden"
+                  }`}
                 >
                   <li
                     className={router.pathname == "/articles" ? "active" : ""}
@@ -267,7 +281,10 @@ const Sidebar = ({ UserData }) => {
                 }
               >
                 <Link href="/styleLinkCreator">
-                  <FeatherIcon icon="link" style={{ width: "15px", height: "15px" }} />
+                  <FeatherIcon
+                    icon="link"
+                    style={{ width: "15px", height: "15px" }}
+                  />
 
                   <span>لینک سازی داخلی</span>
                 </Link>

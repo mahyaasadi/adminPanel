@@ -1,5 +1,3 @@
-import ExtraSmallLoader from "components/commonComponents/loading/extraSmallLoader";
-
 const OverviewStats = ({ generalStats }) => {
   return (
     <div className="row">
@@ -27,11 +25,9 @@ const OverviewStats = ({ generalStats }) => {
                 <h5 className="dash-title">تعداد درخواست ها</h5>
                 <div className="dash-counts">
                   <p>
-                    {generalStats.Total === undefined ? (
-                      <ExtraSmallLoader />
-                    ) : (
-                      generalStats.Total.toLocaleString()
-                    )}
+                    {generalStats.Total === undefined
+                      ? "-"
+                      : generalStats.Total.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -65,11 +61,9 @@ const OverviewStats = ({ generalStats }) => {
                 <h5 className="dash-title">در حال مکالمه</h5>
                 <div className="dash-counts mt-1">
                   <p>
-                    {generalStats.Talking === undefined ? (
-                      <ExtraSmallLoader />
-                    ) : (
-                      generalStats.Talking.toLocaleString()
-                    )}
+                    {generalStats.Talking === undefined
+                      ? "-"
+                      : generalStats.Talking.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -103,11 +97,9 @@ const OverviewStats = ({ generalStats }) => {
                 <h5 className="dash-title">در انتظار پرداخت</h5>
                 <div className="dash-counts mt-1">
                   <p>
-                    {generalStats.WaitingForPayment === undefined ? (
-                      <ExtraSmallLoader />
-                    ) : (
-                      generalStats.WaitingForPayment.toLocaleString()
-                    )}
+                    {generalStats.WaitingForPayment === undefined
+                      ? "-"
+                      : generalStats.WaitingForPayment.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -141,11 +133,9 @@ const OverviewStats = ({ generalStats }) => {
                 <h5 className="dash-title">نوبت های داده شده</h5>
                 <div className="dash-counts mt-1">
                   <p>
-                    {generalStats.TurnGiven === undefined ? (
-                      <ExtraSmallLoader />
-                    ) : (
-                      generalStats.TurnGiven.toLocaleString()
-                    )}
+                    {generalStats.TurnGiven === undefined
+                      ? "-"
+                      : generalStats.TurnGiven.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -158,3 +148,4 @@ const OverviewStats = ({ generalStats }) => {
 };
 
 export default OverviewStats;
+
