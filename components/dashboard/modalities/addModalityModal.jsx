@@ -1,4 +1,3 @@
-import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 
 const AddModalityModal = ({ addModality, isLoading }) => {
@@ -113,7 +112,7 @@ const AddModalityModal = ({ addModality, isLoading }) => {
                   hidden="hidden"
                   id="disabledModalityCheckbox"
                   name="modalityDisabledSwitch"
-                  // required
+                // required
                 />
                 <label
                   className="showInsliderSwitch font-12"

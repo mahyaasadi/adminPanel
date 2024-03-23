@@ -41,7 +41,7 @@ const ClinicListTable = ({
               className="btn removeImgBtn tooltip-button"
               type="button"
               data-pr-position="top"
-              // onClick={}
+            // onClick={}
             >
               <FeatherIcon className="removeLogoBtnIcon" icon="x-circle" />
             </button>
@@ -95,8 +95,8 @@ const ClinicListTable = ({
           >
             <Tooltip target=".editDoctorBtn">ویرایش</Tooltip>
             <FeatherIcon
-              style={{ width: "16px", height: "16px" }}
-              icon="edit-3"
+              style={{ width: "14px", height: "14px" }}
+              icon="edit-2"
             />
           </button>
 
@@ -106,7 +106,7 @@ const ClinicListTable = ({
               pathname: "/clinicUsersManagement",
               query: { id: row._id, name: row.Name },
             }}
-            data-pr-position="top"
+            data-pr-position="right"
           >
             <Tooltip target=".addUserBtn">افزودن کاربر</Tooltip>
             <FeatherIcon

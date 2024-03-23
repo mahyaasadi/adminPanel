@@ -67,6 +67,7 @@ const SubArticlesModal = ({
               </i>
             </button>
           </div>
+
           <div className="modal-body centerModalBody">
             <div dir="rtl" className="row align-items-center">
               <div className="col-md-12 d-flex justify-content-end gap-1">
@@ -130,7 +131,7 @@ const SubArticlesModal = ({
                               className="btn removeImgBtn"
                               type="button"
                               data-pr-position="top"
-                              // onClick={}
+                            // onClick={}
                             >
                               <Tooltip target=".removeImgBtn">
                                 حذف تصویر

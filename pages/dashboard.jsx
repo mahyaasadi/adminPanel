@@ -7,8 +7,7 @@ import { getSession } from "lib/session";
 import OverviewStats from "components/dashboard/overview/overviewStats";
 import Loading from "components/commonComponents/loading/loading";
 import PieChartComponent from "components/dashboard/overview/statsPieChart";
-import RequestsBarChart from "components/dashboard/overview/requestsBarChart";
-// import { handleDateOptionsSelect } from "utils/defaultDateRanges";
+// import RequestsBarChart from "components/dashboard/overview/requestsBarChart";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -48,10 +47,6 @@ const Dashboard = ({ UserData }) => {
     },
   ];
 
-  const [DateFrom, setDateFrom] = useState(jdate.format("YYYY/MM/DD"));
-  const [DateTo, setDateTo] = useState(jdate.format("YYYY/MM/DD"));
-  const [selectedDateOption, setSelectedDateOption] = useState(null);
-
   const getGeneralStats = (duration) => {
     setStatsIsLoading(true);
     setPieStatIsLoading(true);
@@ -82,39 +77,6 @@ const Dashboard = ({ UserData }) => {
     } else if (duration === "lastMonth") {
       centerStatsUrl += "/MngMonthStatisticsGroupByCenter";
     }
-
-    // let reportsData = {
-    //   DateFrom: DateFrom,
-    //   DateTo: DateTo,
-    // };
-
-    // if (duration === "today") {
-    //   reportsData = {
-    //     DateFrom: jdate.format("YYYY/MM/DD"),
-    //     DateTo: jdate.format("YYYY/MM/DD")
-    //   }
-    // } else if (duration === "yesterday") {
-    //   handleDateOptionsSelect(
-    //     "yesterday",
-    //     setSelectedDateOption,
-    //     setDateTo,
-    //     setDateFrom
-    //   );
-    // } else if (duration === "lastWeek") {
-    //   handleDateOptionsSelect(
-    //     "lastWeek",
-    //     setSelectedDateOption,
-    //     setDateTo,
-    //     setDateFrom
-    //   );
-    // } else {
-    //   handleDateOptionsSelect(
-    //     "lastMonth",
-    //     setSelectedDateOption,
-    //     setDateTo,
-    //     setDateFrom
-    //   );
-    // }
 
     axiosClient
       .post(url)
@@ -149,13 +111,6 @@ const Dashboard = ({ UserData }) => {
         console.log(err);
         setPieStatIsLoading(false);
       });
-
-    // axiosClient.post(centerReportsUrl)
-    //   .then((response) => {
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
   };
 
   useEffect(() => getGeneralStats(selectedDuration), [selectedDuration]);

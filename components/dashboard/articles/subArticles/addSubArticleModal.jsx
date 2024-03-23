@@ -1,7 +1,5 @@
 import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
-import { axiosClient } from "class/axiosConfig.js";
-import Loading from "@/components/commonComponents/loading/loading";
 
 const AddSubArticleModal = ({ addSubArticle, isLoading }) => {
   // subArticle img preview

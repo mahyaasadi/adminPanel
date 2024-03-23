@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 
 const EditSubArticleModal = ({
@@ -111,8 +110,6 @@ const EditSubArticleModal = ({
                   defaultValue={data.Image}
                   key={data.Image}
                   id="editSubArticleImg"
-                // required
-                // id="SubArticleImg"
                 />
 
                 {/* Img variations */}

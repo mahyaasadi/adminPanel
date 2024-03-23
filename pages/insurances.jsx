@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
+import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import InsuranceListTable from "components/dashboard/insurances/insuranceListTable";
 import AddInsuranceModal from "components/dashboard/insurances/addInsuranceModal";
 import EditInsuranceModal from "components/dashboard/insurances/editInsuranceModal";
 import { insuranceTypeDataClass, insuranceStatusDataClass } from "class/staticDropdownOptions";
-import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -136,7 +136,6 @@ const Insurance = ({ UserData }) => {
     g = newArr;
 
     if (index === -1) {
-      // handle error
       console.log("no match");
     } else
       setInsuranceList([

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
 import selectfieldColourStyles from "class/selectfieldStyle";
-import DatePicker from "components/commonComponents/datepicker/DatePicker";
+import SingleDatePicker from "@/components/commonComponents/datepicker/singleDatePicker";
 import { articleLanguageDataClass } from "class/staticDropdownOptions";
 
 const EditArticleModal = ({
@@ -149,7 +149,7 @@ const EditArticleModal = ({
 
               <div className="row media-flex-col">
                 <div className="form-group col">
-                  <DatePicker
+                  <SingleDatePicker
                     defaultDate={data.Date}
                     setDate={setArticleDate}
                     label="تاریخ"

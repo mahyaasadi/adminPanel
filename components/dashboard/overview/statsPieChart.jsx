@@ -1,7 +1,5 @@
 import { Chart } from "primereact/chart";
 import { useState, useEffect } from "react";
-// import Loading from "components/commonComponents/loading/loading";
-// import * as d3 from "d3";
 
 const PieChartComponent = ({ labels, data }) => {
   const [chartData, setChartData] = useState({});
@@ -32,33 +30,6 @@ const PieChartComponent = ({ labels, data }) => {
         },
       ],
     };
-
-
-    // const colors = [
-    //   "#e38766",
-    //   "#6491af",
-    //   "#2d5246",
-    //   "#E91E63",
-    //   "#0E76BC",
-    //   "#cbdc42",
-    //   "#8752a3",
-    //   "#b58298",
-    //   "#03595c",
-    //   "#545238",
-    //   "#6e1f0f"
-    // ];
-
-    // // Assign colors to data elements based on index
-    // const backgroundColors = labels.map((label, index) => {
-    //   return colors[index % colors.length]; // Loop over colors if labels exceed the number of colors
-    // });
-
-    // Define a color scale using D3
-    // const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-
-    // const backgroundColors = labels.map((label, index) => {
-    //   return colorScale(index); // Assign color based on index
-    // });
 
     const options = {
       responsive: true,

@@ -1,7 +1,6 @@
 import React, { useId } from "react";
 import Select from "react-select";
 
-// create a component
 const SelectField = ({
   value,
   options,

@@ -11,7 +11,6 @@ const AddCenterModal = ({
   FUSelectCity,
   setCityOption,
   cityOptionsList,
-  defaultData,
   isLoading,
 }) => {
   const displayPreview = (e) => {

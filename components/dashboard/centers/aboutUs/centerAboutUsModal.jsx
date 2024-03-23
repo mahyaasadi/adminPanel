@@ -1,4 +1,3 @@
-import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 import { Tooltip } from "primereact/tooltip";
 
@@ -34,9 +33,7 @@ const CenterAboutUsModal = ({ data, CenterName, updateAboutUs }) => {
                 onClick={() => updateAboutUs(data)}
                 className="btn btn-primary font-13 editAboutUs"
               >
-                {/* <i className="me-1"> */}
                 <FeatherIcon icon="edit-3" style={{ width: "16px" }} />
-                {/* </i>{" "} */}
                 <Tooltip target=".editAboutUs">ویرایش</Tooltip>
               </button>
             </div>

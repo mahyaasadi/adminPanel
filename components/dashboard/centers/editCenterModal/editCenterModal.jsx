@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useEffect } from "react";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
 import selectfieldColourStyles from "class/selectfieldStyle";
@@ -14,7 +13,6 @@ const EditCenterModal = ({
   setCityOption,
   cityOptionsList,
   setSelectedProvinceList,
-  selectedProvinceList,
   isLoading,
 }) => {
   const displayPreview = (e) => {

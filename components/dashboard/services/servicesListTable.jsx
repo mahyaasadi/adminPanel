@@ -1,5 +1,3 @@
-"use client";
-import React from "react";
 import FeatherIcon from "feather-icons-react";
 import { Tooltip } from "primereact/tooltip";
 import DataTable from "react-data-table-component";

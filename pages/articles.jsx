@@ -8,6 +8,7 @@ import { axiosClient } from "class/axiosConfig.js";
 import { convertBase64 } from "utils/convertBase64";
 import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
+import Paginator from "components/commonComponents/paginator";
 import ArticlesListTable from "components/dashboard/articles/articlesListTable";
 import ArticleSearch from "components/dashboard/articles/articleSearch";
 import AddArticleModal from "components/dashboard/articles/addArticleModal";
@@ -26,7 +27,6 @@ import EditFAQModal from "components/dashboard/articles/FAQ/editFaqModal";
 import RelatedArticlesList from "components/dashboard/articles/attachments/relatedArticleList";
 import SubTextEditor from "components/dashboard/articles/subArticles/subTextEditor";
 import AddEntityToArticleModal from "components/dashboard/articles/attachments/addEntityToArticleModal";
-import Paginator from "components/commonComponents/paginator";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -77,9 +77,10 @@ const Articles = ({ UserData }) => {
 
   const handleCloseEntityModal = () => setShowEntityModal(false);
 
-  // Get all articles
+  // Get All Articles
   const getAllArticles = () => {
     setIsLoading(true);
+
     let url = "/Article/getAll";
 
     axiosClient
@@ -115,7 +116,7 @@ const Articles = ({ UserData }) => {
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const itemsPerPage = 8;
   const indexOfLastRecord = currentPage * itemsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - itemsPerPage;
   const currentItems = searchedArticles.slice(
@@ -220,7 +221,6 @@ const Articles = ({ UserData }) => {
         e.target.reset();
         $("#addArticleImg").val("");
         $("#articleFileUploadPreview").attr("src", "");
-
         $("#addArticleModal").modal("hide");
         setIsLoading(false);
       })
@@ -282,16 +282,16 @@ const Articles = ({ UserData }) => {
     index === -1
       ? console.log("no match")
       : setArticlesData([
-          ...articlesData.slice(0, index),
-          g,
-          ...articlesData.slice(index + 1),
-        ]);
+        ...articlesData.slice(0, index),
+        g,
+        ...articlesData.slice(index + 1),
+      ]);
   };
 
   // Delete Article
   const deleteArticle = async (id) => {
     let result = await QuestionAlert(
-      "حذف مقاله !",
+      "",
       "آیا از حذف مقاله اطمینان دارید؟"
     );
 
@@ -313,7 +313,7 @@ const Articles = ({ UserData }) => {
     }
   };
 
-  // -------------SubArticles----------------------
+  // -------------SubArticles------------------ //
   const openSubArticleModal = (data, id) => {
     setSubArticlesData(data.Sub);
     $("#subArticlesModal").modal("show");
@@ -325,7 +325,7 @@ const Articles = ({ UserData }) => {
     ActiveArticleID = id;
   };
 
-  // add SubArticle
+  // Add SubArticle
   let subArticleImg = null;
   const addSubArticle = async (e) => {
     e.preventDefault();
@@ -442,7 +442,7 @@ const Articles = ({ UserData }) => {
   // Delete SubArticle
   const deleteSubArticle = async (id) => {
     let result = await QuestionAlert(
-      "حذف زیر مقاله !",
+      "",
       "آیا از حذف زیر مقاله اطمینان دارید؟"
     );
 
@@ -467,7 +467,7 @@ const Articles = ({ UserData }) => {
   // ----- change subArticle Order -----
   const updateSubDataOrder = async () => {
     let result = await QuestionAlert(
-      "تغییر ترتیب زیر مقالات!",
+      "",
       "آیا از تغییر ترتیب زیر مقالات اطمینان دارید؟"
     );
 
@@ -624,8 +624,6 @@ const Articles = ({ UserData }) => {
   };
 
   // ------- articleGrps --------
-
-  // Get All Article Groups
   const getAllArticleGroups = () => {
     let url = "ArticleGroup/getAll";
 
@@ -664,7 +662,7 @@ const Articles = ({ UserData }) => {
   const [selectedGroup, setSelectedGroup] = useState("");
   const FUSelectArticleGroup = (value) => setSelectedGroup(value);
 
-  // add group
+  // Add group
   const addGrpToArticle = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -677,8 +675,6 @@ const Articles = ({ UserData }) => {
     axiosClient
       .post(url, data)
       .then((response) => {
-        console.log(response.data);
-        // setSelectedArticleGrp([...selectedGroup, response.data]);
         getAllArticles();
 
         response.data.msg === "گروه تکراری"
@@ -1178,29 +1174,29 @@ const Articles = ({ UserData }) => {
             entityType === "tag"
               ? articleTagsOptionsList
               : entityType === "group"
-              ? articleGroupsOptionsList
-              : relatedArticlesOptions
+                ? articleGroupsOptionsList
+                : relatedArticlesOptions
           }
           FUSelectEntity={
             entityType === "tag"
               ? FUSelectArticleTag
               : entityType === "group"
-              ? FUSelectArticleGroup
-              : FUSelectRelatedArticle
+                ? FUSelectArticleGroup
+                : FUSelectRelatedArticle
           }
           onSubmit={
             entityType === "tag"
               ? addTagToArticle
               : entityType === "group"
-              ? addGrpToArticle
-              : addRelatedArticle
+                ? addGrpToArticle
+                : addRelatedArticle
           }
           selectedOption={
             entityType === "tag"
               ? selectedTag
               : entityType === "group"
-              ? selectedGroup
-              : selectedRelatedArticle
+                ? selectedGroup
+                : selectedRelatedArticle
           }
         />
 

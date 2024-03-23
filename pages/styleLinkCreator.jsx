@@ -353,15 +353,6 @@ const StyleLinkCreator = ({ UserData }) => {
                     </div>
                   </div>
                 )}
-
-                {/* {defaultStyle && (
-                  <div className="px-4 p-relative">
-                    <label className="lblAbs">Generated CSS</label>
-                    <div className="generated-css form-group col-12 d-flex flex-wrap p-relative">
-                      <pre className="mt-3">{defaultStyle}</pre>
-                    </div>
-                  </div>
-                )} */}
               </form>
             </div>
           </div>

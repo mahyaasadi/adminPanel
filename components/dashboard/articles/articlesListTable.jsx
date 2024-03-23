@@ -65,7 +65,7 @@ const ArticlesListTable = ({
                 >
                   <button
                     type="button"
-                    data-pr-position="top"
+                    data-pr-position="right"
                     className="padding-sm btn btn-sm btn-outline-primary font-12 subArticle d-flex align-items-center"
                     onClick={() =>
                       openSubArticleModal(articleData, articleData._id)
@@ -177,13 +177,13 @@ const ArticlesListTable = ({
                     <Tooltip target=".editArticle">ویرایش</Tooltip>
                     <FeatherIcon
                       style={{ width: "14px", height: "14px" }}
-                      icon="edit-3"
+                      icon="edit-2"
                     />
                   </button>
                   <button
                     type="button"
                     className="padding-sm btn btn-sm btn-outline-danger deleteArticle d-flex align-items-center"
-                    data-pr-position="top"
+                    data-pr-position="left"
                     onClick={() => deleteArticle(articleData._id)}
                   >
                     <Tooltip target=".deleteArticle">حذف</Tooltip>

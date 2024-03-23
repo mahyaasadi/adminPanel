@@ -1,7 +1,7 @@
 import { Modal } from "react-bootstrap";
 
 const RefDocModal = ({
-  mode = "add", // Default is 'add'
+  mode = "add",
   onSubmit,
   data = {},
   isLoading,
@@ -11,12 +11,13 @@ const RefDocModal = ({
   const modalTitle = mode === "edit" ? "ویرایش اطلاعات" : "اضافه کردن پزشک";
   const submitText = mode === "edit" ? "ثبت تغییرات" : "ثبت";
   return (
-    <Modal show={show} onHide={onHide} centered>
+    <Modal show={show} onHide={onHide} centered size="lg">
       <Modal.Header closeButton>
         <Modal.Title>
           <p className="mb-0 text-secondary font-14 fw-bold">{modalTitle}</p>
         </Modal.Title>
       </Modal.Header>
+
       <Modal.Body>
         <form onSubmit={onSubmit}>
           {mode === "edit" && (
@@ -86,7 +87,6 @@ const RefDocModal = ({
                 name="refDocTel"
                 defaultValue={mode === "edit" ? data.Tel : ""}
                 key={data.Tel}
-                // required
               />
             </div>
           </div>
@@ -100,7 +100,7 @@ const RefDocModal = ({
                 name="refDocAddress"
                 defaultValue={mode === "edit" ? data.Address : ""}
                 key={data.Address}
-                // required
+              // required
               ></textarea>
             </div>
           </div>
@@ -115,7 +115,6 @@ const RefDocModal = ({
                 name="refDocLocation"
                 defaultValue={mode === "edit" ? data.Location : ""}
                 key={data.Location}
-                // required
               />
             </div>
           </div>

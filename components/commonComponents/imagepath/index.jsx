@@ -1,11 +1,7 @@
-export { default as headerLogo } from "public/assets/img/irannobatLogo.png";
+export { default as headerLogo } from "public/assets/img/icon/irannobatLogo.png";
 export { default as managementLogo } from "public/assets/img/managementLogo.jpg";
-export { default as urology } from "public/assets/img/icon/urology.png";
-export { default as neurology } from "public/assets/img/icon/neurology.png";
-export { default as ortho } from "public/assets/img/icon/ortho.png";
-export { default as cardio } from "public/assets/img/icon/cardio.png";
-export { default as dental } from "public/assets/img/icon/dental.png";
 export { default as favicon } from "public/assets/img/icon/mngIcon.png";
 export { default as error404 } from "public/assets/img/404.png";
 export { default as error505 } from "public/assets/img/505.png";
 export { default as loading } from "public/assets/img/inoLoading.gif";
+export { default as avatar01 } from "public/assets/img/avatar01.jpg"

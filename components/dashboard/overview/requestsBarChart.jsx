@@ -44,9 +44,7 @@ const RequestsBarChart = () => {
     }, []);
 
     return (
-        // <div className="card">
         <Chart type="bar" data={chartData} options={chartOptions} />
-        // </div>
     )
 }
 

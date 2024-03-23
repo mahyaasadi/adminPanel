@@ -50,7 +50,6 @@ export default function MyApp({ Component, pageProps }) {
         </DashboardLayout>
       </PrimeReactProvider>
 
-      {/* Provide the client to your App */}
       {/* <QueryClientProvider client={queryClient}> */}
       {/* </QueryClientProvider> */}
     </>

@@ -1,7 +1,6 @@
 import FeatherIcon from "feather-icons-react";
 
 const AddSubMenuModal = ({
-  menuList,
   permissionsList,
   handleCheckedSubMenuPermissions,
   addSubMenu,

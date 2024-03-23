@@ -20,7 +20,6 @@ export const getServerSideProps = async ({ req, res }) => {
 
 
 const Profile = ({ UserData }) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(UserData);
 
   return (

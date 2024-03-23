@@ -15,7 +15,6 @@ const PasswordSettings = ({
   const validatePasswordLength = (e) => {
     e.preventDefault();
 
-    // password length
     if (newPassword.length < 7) {
       $("#newPassValidationText1").show();
       $("#submitNewPasswordBtn").attr("disabled", true);
@@ -29,13 +28,9 @@ const PasswordSettings = ({
   const validateConfirmPassword = (e) => {
     e.preventDefault();
 
-    let formData = new FormData(document.getElementById("passwordSettingsFrm"));
-    const formProps = Object.fromEntries(formData);
-
     let passValue = $("#newPassword").val();
     let confpassValue = $("#confirmNewPassword").val();
 
-    // confirm password validation
     if (passValue !== confpassValue) {
       $("#newPassValidationText2").show();
       $("#submitNewPasswordBtn").attr("disabled", true);
@@ -80,9 +75,8 @@ const PasswordSettings = ({
                   />
                   <span
                     onClick={onEyeClick}
-                    className={`fa toggle-password-current" ${
-                      eye ? "fa-eye-slash" : "fa-eye"
-                    }`}
+                    className={`fa toggle-password-current" ${eye ? "fa-eye-slash" : "fa-eye"
+                      }`}
                   />
                 </div>
 
@@ -104,9 +98,8 @@ const PasswordSettings = ({
                     />
                     <span
                       onClick={onEyeClick}
-                      className={`fa toggle-password-newPass" ${
-                        eye ? "fa-eye-slash" : "fa-eye"
-                      }`}
+                      className={`fa toggle-password-newPass" ${eye ? "fa-eye-slash" : "fa-eye"
+                        }`}
                     />
                   </div>
                 </div>
@@ -143,9 +136,8 @@ const PasswordSettings = ({
                     />
                     <span
                       onClick={onEyeClick}
-                      className={`fa toggle-password-confPass" ${
-                        eye ? "fa-eye-slash" : "fa-eye"
-                      }`}
+                      className={`fa toggle-password-confPass" ${eye ? "fa-eye-slash" : "fa-eye"
+                        }`}
                     />
                   </div>
                 </div>

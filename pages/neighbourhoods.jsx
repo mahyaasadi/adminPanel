@@ -37,7 +37,7 @@ const Neighbourhoods = ({ UserData }) => {
 
   const handleCloseModal = () => setShowModal(false);
 
-  //get all states
+  // get all states
   const getAllStates = () => {
     let url = "State/getAll";
     setIsLoading(true);
@@ -118,8 +118,8 @@ const Neighbourhoods = ({ UserData }) => {
       });
   };
 
-  const FUSelectProvince = (province) => setSelectedProvinceList(province);
   let SelectedCity = "";
+  const FUSelectProvince = (province) => setSelectedProvinceList(province);
   const FUSelectCity = (city) => SelectedCity = city;
   const setCityOption = (data) => setCityOptionsList(data);
 
@@ -181,7 +181,7 @@ const Neighbourhoods = ({ UserData }) => {
 
   // Delete State
   const deleteState = async (id) => {
-    let result = await QuestionAlert("حذف محله!", "آیا از حذف مطمئن هستید");
+    let result = await QuestionAlert("", "آیا از حذف مطمئن هستید");
 
     if (result) {
       setIsLoading(true);

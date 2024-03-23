@@ -38,10 +38,10 @@ const EditBusinessHourModal = ({ data, editBusinessHours, isLoading }) => {
               </i>
             </button>
           </div>
+
           <div className="modal-body">
             <form onSubmit={editBusinessHours}>
               <div className="row">
-                {/* <div className="col"> */}
                 <div className="col p-0">
                   {data.empty !== 1
                     ? data.map((item, index) => (
@@ -123,7 +123,6 @@ const EditBusinessHourModal = ({ data, editBusinessHours, isLoading }) => {
                     : ""}
                 </div>
               </div>
-              {/* </div> */}
 
               <div className="submit-section mt-0">
                 {!isLoading ? (

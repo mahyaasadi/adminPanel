@@ -2,9 +2,7 @@ import { useEffect } from "react";
 
 const NavLink = ({ data, getDepServices, activeClass }) => {
   useEffect(() => {
-    if (activeClass == "active") {
-      getDepServices(data._id, data.PerFullName);
-    }
+    if (activeClass == "active") getDepServices(data._id, data.PerFullName);
   }, []);
 
   return (

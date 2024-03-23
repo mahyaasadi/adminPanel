@@ -20,6 +20,7 @@ const AddEntityToArticleModal = ({
                     <p className="mb-0 text-secondary font-14 fw-bold">{modalTitle}</p>
                 </Modal.Title>
             </Modal.Header>
+
             <Modal.Body>
                 <form onSubmit={onSubmit}>
                     <div className="col media-w-100 font-12">

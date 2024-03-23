@@ -1,4 +1,3 @@
-import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
 
 const BusinessHoursModal = ({
@@ -30,7 +29,7 @@ const BusinessHoursModal = ({
               </i>
             </button>
           </div>
-          
+
           <div className="modal-body">
             <div className="d-flex justify-flex-end gap-1 marginb-1">
               <button
@@ -60,8 +59,8 @@ const BusinessHoursModal = ({
                         <div key={index} className="row marginb-md1">
                           <div
                             className={`col-5 left ${item.Close === "1" || item.Close === true
-                                ? "text-danger"
-                                : ""
+                              ? "text-danger"
+                              : ""
                               }`}
                           >
                             <p>{item.Name}</p>
@@ -71,8 +70,8 @@ const BusinessHoursModal = ({
                           </div>
                           <div
                             className={`col-5 right ${item.Close === "1" || item.Close === true
-                                ? "text-danger"
-                                : ""
+                              ? "text-danger"
+                              : ""
                               }`}
                           >
                             <span dir="ltr" className="">

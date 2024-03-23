@@ -49,26 +49,25 @@ const ClinicUserModal = ({
     }
   };
 
-  //   const NationalIdValidate = (e) => {
-  //     e.preventDefault();
+  // const NationalIdValidate = (e) => {
+  //   e.preventDefault();
 
-  //     let userNID = $("#userNID").val();
+  //   let userNID = $("#userNID").val();
 
-  //     if (userNID.length !== 10) {
-  //       setShowValidationText4(true);
-  //       $("#submitUserBtn").attr("disabled", true);
-  //     } else {
-  //       setShowValidationText4(false);
-  //       $("#submitUserBtn").attr("disabled", false);
-  //     }
-  //   };
+  //   if (userNID.length < 10) {
+  //     setShowValidationText4(true);
+  //     $("#submitUserBtn").attr("disabled", true);
+  //   } else {
+  //     setShowValidationText4(false);
+  //     $("#submitUserBtn").attr("disabled", false);
+  //   }
+  // };
 
-  // user telNumber validation
   const telNumberValidate = (e) => {
     e.preventDefault();
+
     let userTel = $("#clinicUserTel").val();
 
-    // tel length
     if (userTel.length !== 11) {
       setShowValidationText3(true);
       $("#submitUserBtn").attr("disabled", true);
@@ -152,7 +151,7 @@ const ClinicUserModal = ({
                 required
                 defaultValue={mode == "edit" ? data.NID : ""}
                 key={data.NID}
-                // onBlur={NationalIdValidate}
+              // onBlur={NationalIdValidate}
               />
             </div>
           </div>
@@ -172,13 +171,12 @@ const ClinicUserModal = ({
                   value={password}
                   onChange={handlePassword}
                   className="form-control inputPadding rounded"
-                  //   onBlur={validatePassword}
+                //   onBlur={validatePassword}
                 />
                 <span
                   onClick={onEyeClick}
-                  className={`fa toggle-password" ${
-                    eye ? "fa-eye-slash" : "fa-eye"
-                  }`}
+                  className={`fa toggle-password" ${eye ? "fa-eye-slash" : "fa-eye"
+                    }`}
                 />
               </div>
 
@@ -215,9 +213,8 @@ const ClinicUserModal = ({
                 />
                 <span
                   onClick={onEyeClick}
-                  className={`fa toggle-password" ${
-                    eye ? "fa-eye-slash" : "fa-eye"
-                  }`}
+                  className={`fa toggle-password" ${eye ? "fa-eye-slash" : "fa-eye"
+                    }`}
                 />
               </div>
 

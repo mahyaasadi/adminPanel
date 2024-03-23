@@ -702,7 +702,6 @@ const CentersManagement = ({ UserData }) => {
           cityOptionsList={cityOptionsList}
           setCityOption={setCityOption}
           setSelectedProvinceList={setSelectedProvinceList}
-          selectedProvinceList={selectedProvinceList}
           isLoading={isLoading}
         />
         <BusinessHoursModal

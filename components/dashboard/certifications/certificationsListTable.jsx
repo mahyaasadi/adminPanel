@@ -1,11 +1,9 @@
-import React from "react";
-import Link from "next/link";
 import FeatherIcon from "feather-icons-react";
+import { Tooltip } from "primereact/tooltip";
 import DataTable from "react-data-table-component";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { tableCustomStyles } from "components/commonComponents/customTableStyle/tableStyle.jsx";
-import { Tooltip } from "primereact/tooltip";
 
 const CertificationsListTable = ({
   data,

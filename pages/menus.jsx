@@ -1,4 +1,3 @@
-"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
@@ -56,8 +55,8 @@ const MenusManagement = ({ UserData }) => {
     checked
       ? setMenuPermissionStatus({ menuAccessList: [...menuAccessList, value] })
       : setMenuPermissionStatus({
-          menuAccessList: menuAccessList.filter((e) => e !== value),
-        });
+        menuAccessList: menuAccessList.filter((e) => e !== value),
+      });
   };
 
   // subMenu permission checkbox
@@ -463,7 +462,6 @@ const MenusManagement = ({ UserData }) => {
         />
 
         <AddSubMenuModal
-          menuList={menuList}
           permissionsList={permissionsList}
           addSubMenu={addSubMenu}
           handleCheckedSubMenuPermissions={handleCheckedSubMenuPermissions}

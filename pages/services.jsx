@@ -203,7 +203,7 @@ const Services = ({ UserData }) => {
   // delete service
   const deleteService = async (id) => {
     let result = await QuestionAlert(
-      "حذف سرویس!",
+      "",
       "آیا از حذف سرویس مطمئن هستید"
     );
 

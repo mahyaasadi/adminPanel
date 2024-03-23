@@ -7,7 +7,6 @@ import { tableCustomStyles } from "components/commonComponents/customTableStyle/
 
 const MenuListTable = ({
   data,
-  addSubMenuModal,
   SetSubMenuInDT,
   deleteMenu,
   updateMenu,
@@ -27,7 +26,7 @@ const MenuListTable = ({
         <div className="actions">
           <FeatherIcon
             icon={row.Icon}
-            style={{ width: "16px", height: "16px" }}
+            style={{ width: "15px", height: "15px" }}
           />
         </div>
       ),
@@ -40,30 +39,30 @@ const MenuListTable = ({
       cell: (row) => (
         <div className="actions d-flex gap-1">
           <Link
-            className="btn btn-sm btn-outline-danger"
+            className="btn btn-outline-danger d-flex align-items-center"
             href="#"
             onClick={() => deleteMenu(row._id)}
           >
             <FeatherIcon
               icon="trash-2"
-              style={{ width: "16px", height: "16px" }}
+              style={{ width: "15px", height: "15px" }}
             />
           </Link>
           <Link
-            className="btn btn-sm btn-outline-secondary btn-border-left"
+            className="btn  btn-outline-secondary btn-border-left d-flex align-items-center"
             href="#"
             onClick={() => updateMenu(row)}
           >
             <FeatherIcon
               icon="edit-3"
-              style={{ width: "16px", height: "16px" }}
+              style={{ width: "15px", height: "15px" }}
             />
           </Link>
 
           {/* SubMenu */}
           <Link
             href="#"
-            className="m-0 btn btn-sm btn-outline-primary btn-border-left-primary font-13"
+            className="m-0 btn btn-outline-primary btn-border-left-primary font-13 d-flex align-items-center"
             data-bs-toggle="modal"
             data-bs-target="#subMenuModal"
             onClick={() => SetSubMenuInDT(row.subMenu, row._id, row.Name)}

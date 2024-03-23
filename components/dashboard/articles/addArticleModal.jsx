@@ -2,7 +2,7 @@ import Image from "next/image";
 import FeatherIcon from "feather-icons-react";
 import SelectField from "components/commonComponents/selectfield";
 import selectfieldColourStyles from "class/selectfieldStyle";
-import DatePicker from "components/commonComponents/datepicker/DatePicker";
+import SingleDatePicker from "@/components/commonComponents/datepicker/singleDatePicker";
 import { articleLanguageDataClass } from "class/staticDropdownOptions";
 
 const AddArticleModal = ({ addArticle, setArticleDateInDB, isLoading }) => {
@@ -112,7 +112,7 @@ const AddArticleModal = ({ addArticle, setArticleDateInDB, isLoading }) => {
 
               <div className="row media-flex-col">
                 <div className="form-group col">
-                  <DatePicker setDate={setArticleDate} label="تاریخ" />
+                  <SingleDatePicker setDate={setArticleDate} label="تاریخ" />
                 </div>
 
                 <div className="form-group col">
@@ -137,7 +137,6 @@ const AddArticleModal = ({ addArticle, setArticleDateInDB, isLoading }) => {
                     hidden="hidden"
                     id="showInSlider"
                     name="articleShowInSlider"
-                  // required
                   />
                   <label
                     className="showInsliderSwitch font-12"

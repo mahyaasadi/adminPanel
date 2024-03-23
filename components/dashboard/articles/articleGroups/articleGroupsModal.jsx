@@ -1,7 +1,7 @@
 import { Modal } from "react-bootstrap";
 
 const ArticleGroupsModal = ({
-  mode = "add", // Default is 'add'
+  mode = "add",
   onSubmit,
   data = {},
   isLoading,
@@ -17,6 +17,7 @@ const ArticleGroupsModal = ({
           <p className="mb-0 text-secondary font-14 fw-bold">{modalTitle}</p>
         </Modal.Title>
       </Modal.Header>
+
       <Modal.Body>
         <form onSubmit={onSubmit}>
           {mode === "edit" && (

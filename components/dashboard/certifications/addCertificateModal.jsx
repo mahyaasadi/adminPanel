@@ -1,7 +1,4 @@
 import FeatherIcon from "feather-icons-react";
-import JDate from "jalali-date";
-
-const jdate = new JDate();
 
 const AddCertificateModal = ({ addCertificate }) => {
   return (

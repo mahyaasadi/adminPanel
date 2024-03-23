@@ -1,7 +1,7 @@
 import { Modal } from 'react-bootstrap';
 
 const SpecialDiseasesModal = ({
-    mode = "add", // Default is 'add'
+    mode = "add",
     onSubmit,
     data = {},
     isLoading,

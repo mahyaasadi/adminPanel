@@ -1,7 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
-import Link from "next/link";
 import Head from "next/head";
+import { useState, useEffect } from "react";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
@@ -40,7 +39,7 @@ const Modalities = ({ UserData }) => {
   const [subModalityData, setSubModalityData] = useState([]);
   const [editSubModalityData, setEditSubModalityData] = useState([]);
 
-  // get all modalities
+  // Get all modalities
   const getModalities = () => {
     let url = "Modality/getAll";
     setIsLoading(true);
@@ -220,7 +219,7 @@ const Modalities = ({ UserData }) => {
   // delete
   const deleteSubModality = async (id) => {
     let result = await QuestionAlert(
-      "حذف زیر مجموعه !",
+      "",
       "آیا از حذف زیر مجموعه اطمینان دارید؟"
     );
 
@@ -330,9 +329,7 @@ const Modalities = ({ UserData }) => {
                   <div className="card-header border-bottom-0">
                     <div className="row align-items-center">
                       <div className="col">
-                        <h5 className="card-title font-16">
-                          لیست بخش های مرکز
-                        </h5>
+
                       </div>
                       <div className="col-auto d-flex flex-wrap">
                         <div className="form-custom me-2">

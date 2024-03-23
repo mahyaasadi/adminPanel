@@ -1,9 +1,9 @@
 import { Modal } from "react-bootstrap";
 import FeatherIcon from "feather-icons-react";
-import DatePicker from "components/commonComponents/datepicker/DatePicker";
+import SingleDatePicker from "@/components/commonComponents/datepicker/singleDatePicker";
 
 const ClinicModal = ({
-  mode = "add", // Default is 'add'
+  mode = "add",
   onSubmit,
   data = {},
   isLoading,
@@ -80,7 +80,7 @@ const ClinicModal = ({
           </div>
 
           <div className="form-group">
-            <DatePicker
+            <SingleDatePicker
               defaultDate={mode == "edit" ? data.ExpireDate : ""}
               setDate={addClinicExpireDate}
               label="تاریخ پایان قرارداد"

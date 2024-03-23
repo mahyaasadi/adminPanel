@@ -5,7 +5,7 @@ import { Tooltip } from "primereact/tooltip";
 import { Dropdown } from "primereact/dropdown";
 import { dateShortcutsData } from "class/staticDropdownOptions";
 import { handleDateOptionsSelect } from "utils/defaultDateRanges";
-import DatePicker from "components/commonComponents/datepicker/DatePicker";
+import SingleDatePicker from "@/components/commonComponents/datepicker/singleDatePicker";
 
 const jdate = new JDate();
 const FilterCentersReports = ({ getFilteredCenters }) => {
@@ -88,16 +88,16 @@ const FilterCentersReports = ({ getFilteredCenters }) => {
   useEffect(() => applyFilterOnReports(null, 0, true), []);
 
   return (
-    <div className="card shadow filterReceptionCard p-relative">
+    <div className="card shadow-sm filterReceptionCard p-relative">
       <label className="lblAbs fw-bold font-13">فیلتر گزارشات</label>
       <form onSubmit={(e) => applyFilterOnReports(e, 0, false)}>
         <div className="card-body row align-items-center mt-3 searchContainerPadding receptionSearch-header">
           <div className="col-12 col-lg-3 mb-3">
-            <DatePicker setDate={changeDateTo} label="از تاریخ" />
+            <SingleDatePicker setDate={changeDateTo} label="از تاریخ" />
           </div>
 
           <div className="col-12 col-lg-3 mb-3">
-            <DatePicker setDate={changeDateFrom} label="تا تاریخ" />
+            <SingleDatePicker setDate={changeDateFrom} label="تا تاریخ" />
           </div>
 
           <div className="col-12 col-lg-2 mb-3">

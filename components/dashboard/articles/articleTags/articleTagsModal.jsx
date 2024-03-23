@@ -1,7 +1,7 @@
 import { Modal } from 'react-bootstrap';
 
 const ArticleTagsModal = ({
-    mode = "add", // Default is 'add'
+    mode = "add",
     onSubmit,
     data = {},
     isLoading,
@@ -11,13 +11,13 @@ const ArticleTagsModal = ({
     const modalTitle = mode === "edit" ? "ویرایش اطلاعات" : "افزودن تگ های مقاله";
     const submitText = mode === "edit" ? "ثبت تغییرات" : "ثبت";
     return (
-
         <Modal show={show} onHide={onHide} centered>
             <Modal.Header closeButton>
                 <Modal.Title>
                     <p className="mb-0 text-secondary font-14 fw-bold">{modalTitle}</p>
                 </Modal.Title>
             </Modal.Header>
+
             <Modal.Body>
                 <form onSubmit={onSubmit}>
                     {mode === "edit" && (
