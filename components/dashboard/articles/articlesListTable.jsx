@@ -43,7 +43,7 @@ const ArticlesListTable = ({
                 {/* cardDetails */}
                 <div className="px-4 height-11">
                   <p className="py-1 font-15 mt-2 fw-bold">
-                    {articleData.Title.substr(0, 35) + " ..."}
+                    {articleData.Title.length > 35 ? (articleData.Title.substr(0, 35) + " ...") : articleData.Title}
                   </p>
                   <div className="pb-2 font-12 text-secondary">
                     عنوان انگلیسی :{" "}

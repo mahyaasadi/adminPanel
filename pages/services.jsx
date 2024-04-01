@@ -1,15 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
+import { updateItem } from "utils/updateItem";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import ModalitiesHeader from "components/dashboard/services/modalitiesHeader/modalitiesHeader";
 import ServicesListTable from "components/dashboard/services/servicesListTable";
 import AddServiceModal from "components/dashboard/services/addServiceModal";
 import EditServiceModal from "components/dashboard/services/editServiceModal";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -173,7 +174,12 @@ const Services = ({ UserData }) => {
     await axiosClient
       .put(url, data)
       .then((response) => {
-        updateItem(formProps.editSrvID, response.data);
+        updateItem(
+          formProps.editSrvID,
+          response.data,
+          servicesData,
+          setServicesData
+        );
         $("#editServiceModal").modal("hide");
         setIsLoading(false);
       })
@@ -182,22 +188,6 @@ const Services = ({ UserData }) => {
         setIsLoading(false);
         ErrorAlert("خطا", "ویرایش اطلاعات سرویس با خطا مواجه گردید!");
       });
-  };
-
-  const updateItem = (id, newArr) => {
-    let index = servicesData.findIndex((x) => x._id === id);
-    let g = servicesData[index];
-    g = newArr;
-
-    if (index === -1) {
-      // handle error
-      console.log("no match");
-    } else
-      setServicesData([
-        ...servicesData.slice(0, index),
-        g,
-        ...servicesData.slice(index + 1),
-      ]);
   };
 
   // delete service
@@ -241,7 +231,7 @@ const Services = ({ UserData }) => {
           />
           <div className="page-header">
             <div className="row align-items-center">
-              <div className="col-md-12 d-flex justify-content-end mt-4">
+              <div className="col-md-12 d-flex justify-content-end">
                 <button
                   onClick={openAddSrvModal}
                   className="btn btn-primary btn-add"

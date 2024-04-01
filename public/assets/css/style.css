@@ -10261,6 +10261,7 @@ input:checked + .showInsliderSwitch:active::before {
 .p-tooltip {
   font-size: 10px !important;
   box-shadow: none !important;
+  z-index: 10;
 }
 
 .p-chart {

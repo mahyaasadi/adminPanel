@@ -4,8 +4,9 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { getSession } from "lib/session";
 import { axiosClient } from "class/axiosConfig.js";
-import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
+import { updateItem } from "utils/updateItem";
 import { convertBase64 } from "utils/convertBase64";
+import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import CenterSearch from "components/dashboard/centers/centerSearch";
 import CentersListTable from "components/dashboard/centers/centersListTable";
@@ -214,7 +215,12 @@ const CentersManagement = ({ UserData }) => {
         .put(url, data)
         .then((response) => {
           response.data._id = ActiveCenterID;
-          updateItem(formProps.editCenterID, response.data);
+          updateItem(
+            formProps.editCenterID,
+            response.data,
+            centersData,
+            setCentersData
+          );
 
           $("#editCenterModal").modal("hide");
           // e.target.reset();
@@ -226,21 +232,6 @@ const CentersManagement = ({ UserData }) => {
     } else {
       ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید");
     }
-  };
-
-  const updateItem = (id, newArr) => {
-    let index = centersData.findIndex((x) => x._id === id);
-    let g = centersData[index];
-    g = newArr;
-
-    if (index === -1) {
-      console.log("no match");
-    } else
-      setCentersData([
-        ...centersData.slice(0, index),
-        g,
-        ...centersData.slice(index + 1),
-      ]);
   };
 
   // ----- business hours -----

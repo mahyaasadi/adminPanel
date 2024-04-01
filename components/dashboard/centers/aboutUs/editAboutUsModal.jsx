@@ -1,19 +1,6 @@
 import FeatherIcon from "feather-icons-react";
 
 const EditAboutUsModal = ({ data, isLoading, editCenterAboutUs }) => {
-  //   const handleStartTime = (e) => {
-  //     let index = e.target.id.replace("ST", "");
-  //     data[index].Start = e.target.value;
-  //   };
-  //   const handleEndTime = (e) => {
-  //     let index = e.target.id.replace("ET", "");
-  //     data[index].End = e.target.value;
-  //   };
-  //   const handleClosedSwitch = (e) => {
-  //     let index = e.target.id.replace("closeCenterSwitch", "");
-  //     data[index].Close = !e.target.checked;
-  //   };
-
   return (
     <div
       className="modal fade contentmodal"
@@ -38,6 +25,7 @@ const EditAboutUsModal = ({ data, isLoading, editCenterAboutUs }) => {
               </i>
             </button>
           </div>
+
           <div className="modal-body">
             <form onSubmit={editCenterAboutUs}>
               <div className="row">

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { getSession } from "lib/session";
+import { updateItem } from "utils/updateItem";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert } from "class/AlertManage.js";
@@ -122,7 +123,12 @@ const SpecialDiseases = ({ UserData }) => {
       axiosClient
         .post(url, data)
         .then((response) => {
-          updateItem(formProps.diseaseId, response.data);
+          updateItem(
+            formProps.diseaseId,
+            response.data,
+            diseasesList,
+            setDiseasesList
+          );
           setShowModal(false);
           setIsLoading(false);
         })
@@ -132,21 +138,6 @@ const SpecialDiseases = ({ UserData }) => {
           ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
         });
     }
-  };
-
-  const updateItem = (id, newArr) => {
-    let index = diseasesList.findIndex((x) => x._id === id);
-    let g = diseasesList[index];
-    g = newArr;
-
-    if (index === -1) {
-      console.log("no match");
-    } else
-      setDiseasesList([
-        ...diseasesList.slice(0, index),
-        g,
-        ...diseasesList.slice(index + 1),
-      ]);
   };
 
   // delete disease

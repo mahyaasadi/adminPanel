@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
+import { updateItem } from "utils/updateItem";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import { centerPhoneTypeDataClass } from "class/staticDropdownOptions";
@@ -125,7 +126,12 @@ const CenterPhoneNumbers = ({ UserData }) => {
       axiosClient
         .put(url, data)
         .then((response) => {
-          updateItem(formProps.editCenterPhoneeID, response.data);
+          updateItem(
+            formProps.editCenterPhoneeID,
+            response.data,
+            phoneNumbersList,
+            setPhoneNumbersList
+          );
           $("#editCenterPhoneModal").modal("hide");
           setIsLoading(false);
         })
@@ -134,23 +140,7 @@ const CenterPhoneNumbers = ({ UserData }) => {
           setIsLoading(false);
         });
     }
-  };
-
-  const updateItem = (id, newArr) => {
-    let index = phoneNumbersList.findIndex((x) => x._id === id);
-    let g = phoneNumbersList[index];
-    g = newArr;
-
-    if (index === -1) {
-      // handle error
-      console.log("no match");
-    } else
-      setPhoneNumbersList([
-        ...phoneNumbersList.slice(0, index),
-        g,
-        ...phoneNumbersList.slice(index + 1),
-      ]);
-  };
+  }
 
   // delete phone number
   const deletePhoneNumber = async (id) => {

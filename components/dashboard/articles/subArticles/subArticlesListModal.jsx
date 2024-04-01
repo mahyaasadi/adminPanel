@@ -1,7 +1,7 @@
 import FeatherIcon from "feather-icons-react";
 import { Tooltip } from "primereact/tooltip";
 
-const SubArticlesModal = ({
+const SubArticlesListModal = ({
   data,
   openAddSubArticleModal,
   ActiveArticleID,
@@ -266,4 +266,4 @@ const SubArticlesModal = ({
   );
 };
 
-export default SubArticlesModal;
+export default SubArticlesListModal;

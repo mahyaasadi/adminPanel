@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
+import { updateItem } from "utils/updateItem";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import DoctorsListTable from "components/dashboard/doctors/doctorsListTable";
@@ -103,34 +104,21 @@ const DoctorsList = ({ UserData }) => {
       Spe: formProps.EditDoctorSpe,
     };
 
-    // if (CenterID) {
     axiosClient
       .put(url, Data)
       .then((response) => {
-        updateItem(formProps.EditDoctorID, response.data);
+        updateItem(
+          formProps.EditDoctorID,
+          response.data,
+          doctorsList,
+          setDoctorsList
+        );
         $("#editPhysicianModal").modal("hide");
       })
       .catch((error) => {
         console.log(error);
         ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
       });
-    // }
-  };
-
-  const updateItem = (id, newArr) => {
-    let index = doctorsList.findIndex((x) => x._id === id);
-    let g = doctorsList[index];
-    g = newArr;
-
-    if (index === -1) {
-      // handle error
-      console.log("no match");
-    } else
-      setDoctorsList([
-        ...doctorsList.slice(0, index),
-        g,
-        ...doctorsList.slice(index + 1),
-      ]);
   };
 
   const updatePhysician = (data) => {
@@ -241,4 +229,3 @@ const DoctorsList = ({ UserData }) => {
 };
 
 export default DoctorsList;
-

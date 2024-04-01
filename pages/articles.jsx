@@ -6,6 +6,7 @@ import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
 import { convertBase64 } from "utils/convertBase64";
+import { updateItem } from "utils/updateItem";
 import { QuestionAlert, ErrorAlert, SuccessAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import Paginator from "components/commonComponents/paginator";
@@ -13,17 +14,16 @@ import ArticlesListTable from "components/dashboard/articles/articlesListTable";
 import ArticleSearch from "components/dashboard/articles/articleSearch";
 import AddArticleModal from "components/dashboard/articles/addArticleModal";
 import EditArticleModal from "components/dashboard/articles/editArticleModal";
-import SubArticlesModal from "components/dashboard/articles/subArticles/subArticleModal";
+import SubArticlesListModal from "@/components/dashboard/articles/subArticles/subArticlesListModal";
+// import SubArticleModal from "@/components/dashboard/articles/subArticles/subArticleModal";
 import AddSubArticleModal from "components/dashboard/articles/subArticles/addSubArticleModal";
 import EditSubArticleModal from "components/dashboard/articles/subArticles/editSubArticleModal";
 import ArticleVideosList from "components/dashboard/articles/articleVideos/articleVideosList";
-import AddArticleVideoModal from "components/dashboard/articles/articleVideos/addArticleVideoModal";
-import EditArticleVideoModal from "components/dashboard/articles/articleVideos/editArticleVideoModal";
+import ArticleVideosModal from "components/dashboard/articles/articleVideos/articleVideosModal"
 import GrpAttachmentList from "components/dashboard/articles/attachments/grpAttachmentsList";
 import TagAttachmentList from "components/dashboard/articles/attachments/tagAttachmentsList";
 import FAQListTableModal from "components/dashboard/articles/FAQ/faqListTableModal";
-import AddFAQModal from "components/dashboard/articles/FAQ/addFaqModal";
-import EditFAQModal from "components/dashboard/articles/FAQ/editFaqModal";
+import ArticleFAQsModal from "components/dashboard/articles/FAQ/faqModal";
 import RelatedArticlesList from "components/dashboard/articles/attachments/relatedArticleList";
 import SubTextEditor from "components/dashboard/articles/subArticles/subTextEditor";
 import AddEntityToArticleModal from "components/dashboard/articles/attachments/addEntityToArticleModal";
@@ -266,26 +266,17 @@ const Articles = ({ UserData }) => {
     axiosClient
       .put(url, Data)
       .then((response) => {
-        updateArticleItem(formProps.editArticleID, response.data);
+        updateItem(
+          formProps.editArticleID,
+          response.data,
+          articlesData,
+          setArticlesData
+        );
         $("#editArticleModal").modal("hide");
       })
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  const updateArticleItem = (id, newArr) => {
-    let index = articlesData.findIndex((x) => x._id === id);
-    let g = articlesData[index];
-    g = newArr;
-
-    index === -1
-      ? console.log("no match")
-      : setArticlesData([
-        ...articlesData.slice(0, index),
-        g,
-        ...articlesData.slice(index + 1),
-      ]);
   };
 
   // Delete Article
@@ -406,14 +397,18 @@ const Articles = ({ UserData }) => {
     axiosClient
       .put(url, Data)
       .then((response) => {
-        updateSubArticleItem(formProps.editSubArticleID, response.data);
+        updateItem(
+          response.data._id,
+          response.data,
+          subArticlesData,
+          setSubArticlesData
+        );
 
         // reset
         getAllArticles();
         e.target.reset();
         newSubArticleImg = null;
         $("#editSubArticleImg").val("");
-
         $("#editSubArticleModal").modal("hide");
         setIsLoading(false);
       })
@@ -422,21 +417,6 @@ const Articles = ({ UserData }) => {
         setIsLoading(false);
         ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
       });
-  };
-
-  const updateSubArticleItem = (id, newArr) => {
-    let index = subArticlesData.findIndex((x) => x._id === id);
-    let g = subArticlesData[index];
-    g = newArr;
-
-    if (index === -1) {
-      console.log("no match");
-    } else
-      setSubArticlesData([
-        ...subArticlesData.slice(0, index),
-        g,
-        ...subArticlesData.slice(index + 1),
-      ]);
   };
 
   // Delete SubArticle
@@ -498,52 +478,27 @@ const Articles = ({ UserData }) => {
   };
 
   // --------- videos ----------
+  const [videoModalMode, setVideoModalMode] = useState("add");
+  const [showVideosListModal, setShowVideosListModal] = useState(false)
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const closeVideosModal = () => setShowVideoModal(false);
+  const closeVideosListModal = () => setShowVideosListModal(false)
+
   const openArticleVideoModal = (data, id) => {
+    setShowVideosListModal(true)
     setArticleVideosData(data.Videos);
-    $("#articleVideosModal").modal("show");
     ActiveArticleID = id;
   };
 
-  const openAddArticleVideoModal = () =>
-    $("#addArticleVideoModal").modal("show");
+  const openAddArticleVideoModal = () => {
+    setVideoModalMode("add");
+    setShowVideoModal(true)
+  }
 
   // Add Article Video
-  let articleVideo = null;
-  const addVideoToArticle = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    let formData = new FormData(e.target);
-    const formProps = Object.fromEntries(formData);
-
-    if (formProps.addVideoToArticle && formProps.addVideoToArticle.size != 0) {
-      articleVideo = await convertBase64(formProps.addVideoToArticle);
-    }
-
-    let url = `/Article/addVideo/${ActiveArticleID}`;
-    let data = {
-      Title: formProps.addVideoTitle,
-      Video: articleVideo,
-    };
-
-    axiosClient
-      .post(url, data)
-      .then((response) => {
-        setArticleVideosData([...articleVideosData, response.data]);
-        $("#addArticleVideoModal").modal("hide");
-        setIsLoading(false);
-
-        // reset
-        getAllArticles();
-        e.target.reset();
-        articleVideo = null;
-        $("#ArticleVideoPreview").attr("src", "");
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-        ErrorAlert("خطا", "افزودن ویدیو با خطا مواجه گردید!");
-      });
+  const addVideoToArticle = (data) => {
+    setArticleVideosData([...articleVideosData, data]);
+    getAllArticles();
   };
 
   // Delete Article Video
@@ -559,7 +514,7 @@ const Articles = ({ UserData }) => {
 
       await axiosClient
         .delete(url)
-        .then((response) => {
+        .then(() => {
           setArticleVideosData(articleVideosData.filter((a) => a._id !== id));
           getAllArticles();
           setIsLoading(false);
@@ -573,54 +528,20 @@ const Articles = ({ UserData }) => {
 
   // Edit Article Video
   const updateArticleVideo = (data, id) => {
-    $("#editArticleVideoModal").modal("show");
+    setVideoModalMode("edit");
+    setShowVideoModal(true)
     setEditArticleVideoData(data);
     ActiveVideoID = id;
   };
 
-  const editArticleVideo = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    let url = `Article/updateVideo/${ActiveArticleID}/${ActiveVideoID}`;
-    let formData = new FormData(e.target);
-    const formProps = Object.fromEntries(formData);
-
-    let data = {
-      Title: formProps.editVideoTitle,
-      Name: formProps.editVideoName,
-    };
-
-    axiosClient
-      .post(url, data)
-      .then((response) => {
-        updateArticleVideoItem(formProps.editVideoID, response.data);
-
-        // reset
-        getAllArticles();
-        $("#editArticleVideoModal").modal("hide");
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
-      });
-  };
-
-  const updateArticleVideoItem = (id, newArr) => {
-    let index = articleVideosData.findIndex((x) => x._id === id);
-    let g = articleVideosData[index];
-    g = newArr;
-
-    if (index === -1) {
-      console.log("no match");
-    } else
-      setArticleVideosData([
-        ...articleVideosData.slice(0, index),
-        g,
-        ...articleVideosData.slice(index + 1),
-      ]);
+  const editArticleVideo = (videoID, data) => {
+    updateItem(
+      videoID,
+      data,
+      articleVideosData,
+      setArticleVideosData
+    );
+    getAllArticles();
   };
 
   // ------- articleGrps --------
@@ -630,8 +551,6 @@ const Articles = ({ UserData }) => {
     axiosClient
       .get(url)
       .then((response) => {
-        // setArticleGroupsData(response.data);
-
         let selectGroupsData = [];
         for (let i = 0; i < response.data.length; i++) {
           const item = response.data[i];
@@ -824,44 +743,28 @@ const Articles = ({ UserData }) => {
   };
 
   // ------ FAQ ---------
+  const [showFaqListModal, setShowFaqListModal] = useState(false);
+  const [showFaqModal, setShowFaqModal] = useState(false);
+  const [faqMode, setFaqMode] = useState("add");
+  const closeFaqListModal = () => setShowFaqListModal(false)
+  const closeFaqModal = () => setShowFaqModal(false);
+
   const openFAQModal = (articleTitle, data, articleId) => {
-    $("#FAQListModal").modal("show");
+    setShowFaqListModal(true)
     setArticleFAQData(data.FAQ);
     ActiveArticleID = articleId;
     ActiveArticleTitle = articleTitle;
   };
 
-  const openAddFAQModal = () => $("#addFAQModal").modal("show");
+  const openAddFAQModal = () => {
+    setShowFaqModal(true);
+    setFaqMode("add")
+  }
 
   // Add FAQ
-  const addFAQ = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    let formData = new FormData(e.target);
-    const formProps = Object.fromEntries(formData);
-
-    let url = `Article/addFAQ/${ActiveArticleID}`;
-    let data = {
-      Qu: formProps.addFAQuestion,
-      Ans: formProps.addFAQAnswer,
-    };
-
-    axiosClient
-      .post(url, data)
-      .then((response) => {
-        setArticleFAQData([...articleFAQData, response.data]);
-        getAllArticles();
-
-        $("#addFAQModal").modal("hide");
-        setIsLoading(false);
-        e.target.reset();
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-        ErrorAlert("خطا", "افزودن سوال متداول با خطا مواجه گردید!");
-      });
+  const addFAQ = (data) => {
+    setArticleFAQData([...articleFAQData, data]);
+    getAllArticles();
   };
 
   // remove FAQ from article
@@ -890,56 +793,22 @@ const Articles = ({ UserData }) => {
     }
   };
 
-  //edit FAQ
+  // edit FAQ
   const updateFAQ = (articleID, data) => {
-    $("#editFAQModal").modal("show");
-    ActiveArticleID = articleID;
+    setShowFaqModal(true);
+    setFaqMode("edit")
     setEditedFAQData(data);
+    ActiveArticleID = articleID;
   };
 
-  const editFAQ = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    let formData = new FormData(e.target);
-    const formProps = Object.fromEntries(formData);
-    let FAQID = formProps.editFAQId;
-
-    let url = `Article/updateFAQ/${ActiveArticleID}/${FAQID}`;
-    let data = {
-      Qu: formProps.editFAQuestion,
-      Ans: formProps.editFAQAnswer,
-    };
-
-    axiosClient
-      .put(url, data)
-      .then((response) => {
-        updateFAQItem(formProps.editFAQId, response.data);
-
-        getAllArticles();
-        $("#editFAQModal").modal("hide");
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-        ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
-      });
-  };
-
-  const updateFAQItem = (id, newArr) => {
-    let index = articleFAQData.findIndex((x) => x._id === id);
-    let g = articleFAQData[index];
-    g = newArr;
-
-    if (index === -1) {
-      console.log("no match");
-    } else
-      setArticleFAQData([
-        ...articleFAQData.slice(0, index),
-        g,
-        ...articleFAQData.slice(index + 1),
-      ]);
+  const editFAQ = (data) => {
+    updateItem(
+      data._id,
+      data,
+      articleFAQData,
+      setArticleFAQData
+    );
+    getAllArticles();
   };
 
   // ------ related articles -------
@@ -1111,7 +980,7 @@ const Articles = ({ UserData }) => {
         />
 
         {/* subArticles */}
-        <SubArticlesModal
+        <SubArticlesListModal
           data={subArticlesData}
           ActiveArticleID={ActiveArticleID}
           openAddSubArticleModal={openAddSubArticleModal}
@@ -1121,10 +990,27 @@ const Articles = ({ UserData }) => {
           isLoading={isLoading}
           openSubTextEditor={openSubTextEditor}
         />
+
+        {/* <SubArticleModal
+          show={showSubArticleModal}
+          onHide={closeSubArticleModal}
+          mode={subArticleModalMode}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          data={editSubArticleData}
+          handleCheckedCallToActionOptions={handleCheckedCallToActionOptions}
+          handleCallToActionSwitch={handleCallToActionSwitch}
+          onSubmit={subArticleModalMode == "add" ? addSubArticle : editSubArticle}
+          ActiveArticleID={ActiveArticleID}
+          ActiveSubArticleID={ActiveSubArticleID}
+          actionCheckboxStatus={actionCheckboxStatus}
+        /> */}
+
         <AddSubArticleModal
           addSubArticle={addSubArticle}
           isLoading={isLoading}
         />
+
         <EditSubArticleModal
           data={editSubArticleData}
           editSubArticle={editSubArticle}
@@ -1135,23 +1021,30 @@ const Articles = ({ UserData }) => {
 
         {/* videos */}
         <ArticleVideosList
+          show={showVideosListModal}
+          onHide={closeVideosListModal}
           data={articleVideosData}
           openAddArticleVideoModal={openAddArticleVideoModal}
           deleteArticleVideo={deleteArticleVideo}
           updateArticleVideo={updateArticleVideo}
         />
 
-        <AddArticleVideoModal
-          addVideoToArticle={addVideoToArticle}
+        <ArticleVideosModal
+          mode={videoModalMode}
+          show={showVideoModal}
+          onHide={closeVideosModal}
           isLoading={isLoading}
-        />
-        <EditArticleVideoModal
+          setIsLoading={setIsLoading}
+          onSubmit={videoModalMode == "add" ? addVideoToArticle : editArticleVideo}
           data={editArticleVideoData}
-          editArticleVideo={editArticleVideo}
+          ActiveArticleID={ActiveArticleID}
+          ActiveVideoID={ActiveVideoID}
         />
 
         {/* FAQ */}
         <FAQListTableModal
+          show={showFaqListModal}
+          onHide={closeFaqListModal}
           data={articleFAQData}
           articleTitle={ActiveArticleTitle}
           openAddFAQModal={openAddFAQModal}
@@ -1159,8 +1052,17 @@ const Articles = ({ UserData }) => {
           ActiveArticleID={ActiveArticleID}
           updateFAQ={updateFAQ}
         />
-        <AddFAQModal addFAQ={addFAQ} />
-        <EditFAQModal data={editedFAQData} editFAQ={editFAQ} />
+
+        <ArticleFAQsModal
+          show={showFaqModal}
+          mode={faqMode}
+          onHide={closeFaqModal}
+          data={editedFAQData}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          onSubmit={faqMode == "add" ? addFAQ : editFAQ}
+          ActiveArticleID={ActiveArticleID}
+        />
 
         {/* sub text editor */}
         <SubTextEditor data={editSubArticleData} />

@@ -27,6 +27,7 @@ const CenterAboutUsModal = ({ data, CenterName, updateAboutUs }) => {
               </i>
             </button>
           </div>
+
           <div className="modal-body">
             <div className="d-flex justify-flex-end gap-1 marginb-1">
               <button
@@ -53,4 +54,5 @@ const CenterAboutUsModal = ({ data, CenterName, updateAboutUs }) => {
     </div>
   );
 };
+
 export default CenterAboutUsModal;

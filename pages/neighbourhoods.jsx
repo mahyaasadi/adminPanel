@@ -4,6 +4,7 @@ import Head from "next/head";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
+import { updateItem } from "utils/updateItem";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import NeighbourhoodsListTable from "@/components/dashboard/neighbourhoods/neighbourhoodsTable";
@@ -146,7 +147,12 @@ const Neighbourhoods = ({ UserData }) => {
       axiosClient
         .put(url, data)
         .then((response) => {
-          updateItem(StateID, response.data);
+          updateItem(
+            StateID,
+            response.data,
+            neighbourhoodsData,
+            setNeighbourhoodsData
+          );
           setIsLoading(false);
           setShowModal(false)
         })
@@ -156,21 +162,6 @@ const Neighbourhoods = ({ UserData }) => {
           ErrorAlert("خطا", "ویرایش اطلاعات با خطا  مواجه گردید!");
         });
     }
-  };
-
-  const updateItem = (id, newArr) => {
-    let index = neighbourhoodsData.findIndex((x) => x._id === id);
-    let g = neighbourhoodsData[index];
-    g = newArr;
-
-    if (index === -1) {
-      console.log("no match");
-    } else
-      setNeighbourhoodsData([
-        ...neighbourhoodsData.slice(0, index),
-        g,
-        ...neighbourhoodsData.slice(index + 1),
-      ]);
   };
 
   const updateState = (data) => {

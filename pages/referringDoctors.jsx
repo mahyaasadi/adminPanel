@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
+import { updateItem } from "utils/updateItem";
 import { axiosClient } from "class/axiosConfig.js";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
@@ -116,7 +117,12 @@ const referringDoctors = ({ UserData }) => {
     axiosClient
       .put(url, data)
       .then((response) => {
-        updateItem(formProps.refDocID, response.data);
+        updateItem(
+          formProps.refDocID,
+          response.data,
+          refDocData,
+          setRefDocData
+        );
         setShowModal(false);
         setIsLoading(false);
       })
@@ -125,22 +131,7 @@ const referringDoctors = ({ UserData }) => {
         setIsLoading(false);
         ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
       });
-  };
-
-  const updateItem = (id, newArr) => {
-    let index = refDocData.findIndex((x) => x._id === id);
-    let g = refDocData[index];
-    g = newArr;
-
-    if (index === -1) {
-      console.log("no match");
-    } else
-      setRefDocData([
-        ...refDocData.slice(0, index),
-        g,
-        ...refDocData.slice(index + 1),
-      ]);
-  };
+  }
 
   // delete doctor
   const deleteRefDoc = async (id) => {

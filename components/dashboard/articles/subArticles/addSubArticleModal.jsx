@@ -57,8 +57,6 @@ const AddSubArticleModal = ({ addSubArticle, isLoading }) => {
                     name="addSubArticleText"
                     className="form-control floating inputPadding rounded"
                     rows="10"
-                  // cols="50"
-                  // maxlength="200"
                   ></textarea>
                 </div>
               </div>

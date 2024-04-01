@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { axiosClient } from "class/axiosConfig.js";
+import { getSession } from "lib/session";
+import { updateItem } from "utils/updateItem";
 import FeatherIcon from "feather-icons-react";
+import { axiosClient } from "class/axiosConfig.js";
+import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import CertificationsListTable from "/components/dashboard/certifications/certificationsListTable";
 import AddCertificateModal from "components/dashboard/certifications/addCertificateModal";
 import EditCertificateModal from "components/dashboard/certifications/editCertificateModal";
-import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
-import { getSession } from "lib/session";
 
 export const getServerSideProps = async ({ req, res }) => {
   const result = getSession(req, res);
@@ -116,7 +117,13 @@ const Certifications = ({ UserData }) => {
       axiosClient
         .put(url, Data)
         .then((response) => {
-          updateItem(formProps.EditCertificateID, response.data);
+          updateItem(
+            formProps.EditCertificateID,
+            response.data,
+            certificationsList,
+            setCertificationsList
+          );
+
           $("#editCertificateModal").modal("hide");
           setIsLoading(false);
         })
@@ -126,22 +133,6 @@ const Certifications = ({ UserData }) => {
           ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
         });
     }
-  };
-
-  const updateItem = (id, newArr) => {
-    let index = certificationsList.findIndex((x) => x._id === id);
-    let g = certificationsList[index];
-    g = newArr;
-
-    if (index === -1) {
-      // handle error
-      console.log("no match");
-    } else
-      setCertificationsList([
-        ...certificationsList.slice(0, index),
-        g,
-        ...certificationsList.slice(index + 1),
-      ]);
   };
 
   const updateCertificate = (data) => {

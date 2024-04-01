@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { getSession } from "lib/session";
 import FeatherIcon from "feather-icons-react";
 import { axiosClient } from "class/axiosConfig.js";
+import { updateItem } from "utils/updateItem";
 import { QuestionAlert, ErrorAlert } from "class/AlertManage.js";
 import Loading from "components/commonComponents/loading/loading";
 import InsuranceListTable from "components/dashboard/insurances/insuranceListTable";
@@ -118,7 +119,12 @@ const Insurance = ({ UserData }) => {
       axiosClient
         .put(url, Data)
         .then((response) => {
-          updateItem(formProps.EditInsuranceID, response.data);
+          updateItem(
+            formProps.EditInsuranceID,
+            response.data,
+            insuranceList,
+            setInsuranceList
+          );
           $("#editInsuranceModal").modal("hide");
           setIsLoading(false);
         })
@@ -128,21 +134,6 @@ const Insurance = ({ UserData }) => {
           ErrorAlert("خطا", "ویرایش اطلاعات با خطا مواجه گردید!");
         });
     }
-  };
-
-  const updateItem = (id, newArr) => {
-    let index = insuranceList.findIndex((x) => x._id === id);
-    let g = insuranceList[index];
-    g = newArr;
-
-    if (index === -1) {
-      console.log("no match");
-    } else
-      setInsuranceList([
-        ...insuranceList.slice(0, index),
-        g,
-        ...insuranceList.slice(index + 1),
-      ]);
   };
 
   const updateInsurance = (data) => {
